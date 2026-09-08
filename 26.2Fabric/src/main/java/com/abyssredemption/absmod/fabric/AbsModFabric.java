@@ -4,6 +4,8 @@ import com.abyssredemption.absmod.AbsMod;
 import com.abyssredemption.absmod.command.ModCommands;
 import com.abyssredemption.absmod.item.MeowBladeItem;
 import com.abyssredemption.absmod.item.MeowBladeStage;
+import com.abyssredemption.absmod.item.MilkshakeItem;
+import com.abyssredemption.absmod.item.MilkshakeVariant;
 import java.util.Arrays;
 import java.util.List;
 import net.fabricmc.api.ModInitializer;
@@ -25,8 +27,13 @@ public final class AbsModFabric implements ModInitializer {
                 .toList();
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> meowBlades.forEach(item -> entries.accept(item)));
+        List<Item> milkshakes = Arrays.stream(MilkshakeVariant.values())
+                .map(AbsModFabric::registerMilkshake).toList();
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS)
+                .register(entries -> milkshakes.forEach(item -> entries.accept(item)));
         CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) ->
-                ModCommands.register(dispatcher, stage -> meowBlades.get(stage.number() - 1)));
+                ModCommands.register(dispatcher, stage -> meowBlades.get(stage.number() - 1),
+                        variant -> milkshakes.get(variant.ordinal())));
     }
 
     private static Item registerMeowBlade(MeowBladeStage stage) {
@@ -34,5 +41,12 @@ public final class AbsModFabric implements ModInitializer {
                 Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, stage.itemId()));
         return Registry.register(BuiltInRegistries.ITEM, key,
                 new MeowBladeItem(new Item.Properties().setId(key), stage));
+    }
+
+    private static Item registerMilkshake(MilkshakeVariant variant) {
+        ResourceKey<Item> key = ResourceKey.create(Registries.ITEM,
+                Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, variant.itemId()));
+        return Registry.register(BuiltInRegistries.ITEM, key,
+                new MilkshakeItem(new Item.Properties().setId(key), variant));
     }
 }

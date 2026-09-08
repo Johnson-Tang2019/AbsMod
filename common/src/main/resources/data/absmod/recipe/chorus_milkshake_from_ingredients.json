@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:milk_bucket",
+    "minecraft:sugar",
+    "minecraft:chorus_fruit"
+  ],
+  "result": {
+    "count": 2,
+    "id": "absmod:chorus_milkshake"
+  }
+}

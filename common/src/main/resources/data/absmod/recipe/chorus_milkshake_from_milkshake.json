@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "absmod:milkshake",
+    "minecraft:chorus_fruit"
+  ],
+  "result": {
+    "count": 1,
+    "id": "absmod:chorus_milkshake"
+  }
+}

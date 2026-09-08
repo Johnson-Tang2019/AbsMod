@@ -52,6 +52,44 @@ All nine 1254 × 1254 RGBA PNGs are copied byte-for-byte, preserving transparenc
 Matching models reference `absmod:item/<item_id>`. Both loaders share the same textures.
 In-game appearance, atlas mipmapping and performance at this resolution still need client verification.
 
+## Milkshakes
+
+Ported from the author's [MilkShakeMod](https://github.com/Johnson-Tang2019/MilkShakeMod/tree/b9a1ac762b18c29973301048f6984987a4601fe2) (`master`, commit `b9a1ac7`).
+All four implemented drinks and their original 16 × 16 RGBA textures are included in both loaders.
+The unused green texture in the source repository has no registered item or recipe and is not included as a new drink.
+
+| Item ID | Display name | Effects |
+| --- | --- | --- |
+| `absmod:milkshake` | Milkshake | Health Boost II, 120 seconds |
+| `absmod:chorus_milkshake` | Chorus Fruit Milkshake | Health Boost II, 120 seconds; random teleport |
+| `absmod:gold_milkshake` | Gold Milkshake | Health Boost II and Absorption IV, 120 seconds; Fire Resistance II and Resistance II, 300 seconds; Regeneration II, 20 seconds |
+| `absmod:pink_milkshake` | The Best Milkshake | Health Boost II, 120 seconds; Speed IV, 300 seconds |
+
+All drinks restore 6 hunger points, use saturation modifier 1.0 (12 saturation points), can be consumed
+at full hunger, take 3 seconds to drink, use the honey drinking sound, stack to 16 and have Uncommon rarity.
+Crafting with a milkshake returns a bucket, matching the original `craftRemainder` behavior.
+Drinking does not add a new empty-container return or clear status effects.
+Chorus milkshakes retain the original 15 random teleport attempts within roughly 8 blocks of the start,
+with portal particles and success/failure sounds, performed only on the server.
+
+All six recipes are shapeless:
+
+| Ingredients | Result |
+| --- | --- |
+| Milk bucket + sugar | 2 milkshakes |
+| Milk bucket + sugar + chorus fruit | 2 chorus fruit milkshakes |
+| Milkshake + chorus fruit | 1 chorus fruit milkshake |
+| Milk bucket + sugar + gold block | 2 gold milkshakes |
+| Milkshake + gold block | 1 gold milkshake |
+| Milkshake + cherry sapling | 1 best milkshake |
+
+Obtaining a milk bucket unlocks all six recipes. Invalid legacy recipe conditions, the inventory trigger
+and incomplete recipe reward references were replaced with valid 26.2 data.
+The new namespace is `absmod`; this does not automatically convert existing `armilkshake` items in old saves.
+Find drinks in the Food & Drinks creative tab or run `/absmod milkshakes @s` for one of each.
+Use `/give @s absmod:gold_milkshake 16` to test a full stack of one variant.
+Verify drinking, effects, teleportation, crafting remainders and recipe-book unlocks in-game on both loaders.
+
 ## Commands
 
 All commands require the same game-master permission as vanilla `/give` (normally operator level 2).
@@ -62,6 +100,7 @@ All commands require the same game-master permission as vanilla `/give` (normall
 | `/absmod stages` | List all nine stages, IDs and base damage/attack speed, with a placeholder notice |
 | `/absmod give <targets> <stage>` | Give each target one blade of the specified stage |
 | `/absmod kit <targets>` | Give each target all nine stages, one blade per stage |
+| `/absmod milkshakes <targets>` | Give each target one of each milkshake |
 | `/absmod inspect <targets>` | Report each target's main-hand blade stage and remaining/maximum durability |
 
 ```mcfunction
@@ -94,6 +133,7 @@ multiple targets, console use and a full inventory. A successful build does not 
 
 `build` also runs `:fabric:verifyCommands` against the shared command logic to check valid syntax, invalid stage values,
 missing arguments, permission restrictions and read-only command execution without a game server.
+The verification also checks the migrated milkshake effect durations, amplifiers and counts.
 Both loader modules are compiled; NeoForge runtime behavior, inventory delivery and inspection still require in-game verification.
 
 The nine-stage builds and packaged shared resources were verified on 2026-09-08 using JDK 25 / Gradle 9.5.1.

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_milk_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:milk_bucket"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_milk_bucket"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "absmod:milkshake",
+      "absmod:gold_milkshake_from_ingredients",
+      "absmod:gold_milkshake_from_milkshake",
+      "absmod:pink_milkshake",
+      "absmod:chorus_milkshake_from_ingredients",
+      "absmod:chorus_milkshake_from_milkshake"
+    ]
+  }
+}

@@ -13,22 +13,26 @@ public final class CommandVerification {
     public static void main(String[] args) throws Exception {
         net.minecraft.SharedConstants.tryDetectVersion();
         net.minecraft.server.Bootstrap.bootStrap();
+        com.abyssredemption.absmod.item.MilkshakeVerification.verify();
         CommandDispatcher<CommandSourceStack> dispatcher = new CommandDispatcher<>();
         ModCommands.register(dispatcher, stage -> {
             throw new AssertionError("Parsing must not grant items");
+        }, variant -> {
+            throw new AssertionError("Parsing must not grant milkshakes");
         });
         CommandSourceStack operator = source(PermissionSet.ALL_PERMISSIONS);
         CommandSourceStack player = source(PermissionSet.NO_PERMISSIONS);
         for (String command : new String[] {"absmod", "absmod help", "absmod stages",
                 "absmod give TestPlayer 1", "absmod give TestPlayer 9",
                 "absmod give @a 9", "absmod kit @s", "absmod inspect @a",
+                "absmod milkshakes @s", "absmod milkshakes TestPlayer",
                 "absmod kit TestPlayer", "absmod inspect TestPlayer"}) {
             check(parses(dispatcher, operator, command), "Expected valid command: " + command);
             check(!parses(dispatcher, player, command), "Permission bypass: " + command);
         }
         for (String command : new String[] {"absmod give TestPlayer 0", "absmod give TestPlayer 10",
                 "absmod give TestPlayer 1.5", "absmod give TestPlayer", "absmod kit",
-                "absmod inspect", "absmod unknown", "absmod stages extra"}) {
+                "absmod inspect", "absmod milkshakes", "absmod unknown", "absmod stages extra"}) {
             check(!parses(dispatcher, operator, command), "Accepted invalid command: " + command);
         }
         check(dispatcher.execute("absmod stages", operator) == 9, "Expected nine stage entries");

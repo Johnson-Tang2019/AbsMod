@@ -2,6 +2,7 @@ package com.abyssredemption.absmod.command;
 
 import com.abyssredemption.absmod.item.MeowBladeStage;
 import com.abyssredemption.absmod.item.MeowBladeItem;
+import com.abyssredemption.absmod.item.MilkshakeVariant;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import java.util.Collection;
@@ -19,12 +20,16 @@ public final class ModCommands {
     private ModCommands() {}
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher,
-            Function<MeowBladeStage, Item> itemLookup) {
+            Function<MeowBladeStage, Item> itemLookup, Function<MilkshakeVariant, Item> milkshakeLookup) {
         dispatcher.register(Commands.literal("absmod")
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(context -> help(context.getSource()))
                 .then(Commands.literal("help").executes(context -> help(context.getSource())))
                 .then(Commands.literal("stages").executes(context -> stages(context.getSource())))
+                .then(Commands.literal("milkshakes")
+                        .then(Commands.argument("targets", EntityArgument.players())
+                                .executes(context -> milkshakes(context.getSource(),
+                                        EntityArgument.getPlayers(context, "targets"), milkshakeLookup))))
                 .then(Commands.literal("kit")
                         .then(Commands.argument("targets", EntityArgument.players())
                                 .executes(context -> kit(context.getSource(),
@@ -45,6 +50,18 @@ public final class ModCommands {
     private static int help(CommandSourceStack source) {
         source.sendSuccess(() -> Component.translatable("commands.absmod.help"), false);
         return 1;
+    }
+
+    private static int milkshakes(CommandSourceStack source, Collection<ServerPlayer> targets,
+            Function<MilkshakeVariant, Item> itemLookup) {
+        for (ServerPlayer player : targets) {
+            for (MilkshakeVariant variant : MilkshakeVariant.values()) {
+                deliver(player, itemLookup.apply(variant));
+            }
+        }
+        source.sendSuccess(() -> Component.translatable(
+                "commands.absmod.milkshakes.success", targets.size()), true);
+        return targets.size();
     }
 
     private static int stages(CommandSourceStack source) {

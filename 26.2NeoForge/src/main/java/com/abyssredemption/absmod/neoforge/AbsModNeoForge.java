@@ -20,12 +20,16 @@ public final class AbsModNeoForge {
 
     private static void registerCommands(RegisterCommandsEvent event) {
         ModCommands.register(event.getDispatcher(),
-                stage -> ModItems.MEOW_BLADES.get(stage.number() - 1).get());
+                stage -> ModItems.MEOW_BLADES.get(stage.number() - 1).get(),
+                variant -> ModItems.MILKSHAKES.get(variant.ordinal()).get());
     }
 
     private static void addCreativeItems(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {
             ModItems.MEOW_BLADES.forEach(item -> event.accept(item));
+        }
+        if (event.getTabKey().equals(CreativeModeTabs.FOOD_AND_DRINKS)) {
+            ModItems.MILKSHAKES.forEach(item -> event.accept(item));
         }
     }
 }

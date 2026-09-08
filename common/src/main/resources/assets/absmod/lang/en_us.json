@@ -9,10 +9,15 @@
   "item.absmod.meow_blade_stage_7": "Meow Blade - Stage 7",
   "item.absmod.meow_blade_stage_8": "Meow Blade - Stage 8",
   "item.absmod.meow_blade_stage_9": "Meow Blade - Stage 9",
-  "commands.absmod.help": "/absmod give <targets> <stage 1-9> | kit <targets> | stages | inspect <targets> | help",
+  "commands.absmod.help": "/absmod give <targets> <stage 1-9> | kit <targets> | stages | inspect <targets> | help | milkshakes <targets>",
   "commands.absmod.stages.header": "Meow Blade stages (base values; damage values are placeholders):",
   "commands.absmod.stages.entry": "Stage %s | %s | damage %s | attack speed %s",
   "commands.absmod.kit.success": "Gave one complete nine-stage Meow Blade kit to each of %s player(s).",
   "commands.absmod.inspect.entry": "%s: main-hand Meow Blade stage %s, durability %s/%s.",
-  "commands.absmod.inspect.empty": "%s is not holding a Meow Blade in the main hand."
+  "commands.absmod.inspect.empty": "%s is not holding a Meow Blade in the main hand.",
+  "item.absmod.milkshake": "Milkshake",
+  "item.absmod.chorus_milkshake": "Chorus Fruit Milkshake",
+  "item.absmod.gold_milkshake": "Gold Milkshake",
+  "item.absmod.pink_milkshake": "The Best Milkshake",
+  "commands.absmod.milkshakes.success": "Gave one of each of the four milkshakes to each of %s player(s)."
 }
