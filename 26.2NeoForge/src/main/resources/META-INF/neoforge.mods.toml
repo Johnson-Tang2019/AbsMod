@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="absmod"
+version="${version}"
+displayName="Ab's Mod"
+authors="AbyssRedemption"
+description='''Ab's Mod for Minecraft 26.2.'''
+
+[[dependencies.absmod]]
+modId="neoforge"
+type="required"
+versionRange="[26.2.0.77,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.absmod]]
+modId="minecraft"
+type="required"
+versionRange="[26.2]"
+ordering="NONE"
+side="BOTH"
