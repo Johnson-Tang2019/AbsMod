@@ -22,6 +22,13 @@ and select compatible shared code and resources; do not assume binary compatibil
 Install JDK 25, import the root `settings.gradle` in your IDE, and select JDK 25 as the Gradle JVM.
 The first build downloads Gradle, Minecraft and loader dependencies.
 
+Open the repository root, not only `26.2NeoForge` or `26.2Fabric`, as the Gradle project.
+If the IDE reports `Task 'wrapper' not found in project ':neoforge'`, reimport the root
+`settings.gradle`. Both loader subprojects also provide a `wrapper` task that delegates
+to the root task, so `:neoforge:wrapper` and `:fabric:wrapper` generate the same root Wrapper.
+The Wrapper task is pinned to Gradle 9.5.1 with its distribution checksum.
+When intentionally changing Wrapper options, target `:wrapper` at the root.
+
 ```powershell
 ./gradlew.bat build
 ./gradlew.bat :neoforge:runClient

@@ -4,6 +4,12 @@ plugins {
     id 'net.fabricmc.fabric-loom' version '1.17.20' apply false
 }
 
+tasks.named('wrapper', Wrapper) {
+    gradleVersion = '9.5.1'
+    distributionType = Wrapper.DistributionType.BIN
+    distributionSha256Sum = 'bafc141b619ad6350fd975fc903156dd5c151998cc8b058e8c1044ab5f7b031f'
+}
+
 subprojects {
     apply plugin: 'java-library'
     group = rootProject.mod_group_id
@@ -17,6 +23,12 @@ subprojects {
     sourceSets.main.resources.srcDir rootProject.file('common/src/main/resources')
     tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
     tasks.withType(ProcessResources).configureEach { filteringCharset = 'UTF-8' }
+    // IDEs may request wrapper relative to a loader subproject.
+    tasks.register('wrapper') {
+        group = 'build setup'
+        description = 'Generate the shared Gradle Wrapper in the repository root.'
+        dependsOn rootProject.tasks.named('wrapper')
+    }
 }
 
 tasks.named('build') { dependsOn ':fabric:build', ':neoforge:build' }

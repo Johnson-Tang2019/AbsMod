@@ -22,6 +22,13 @@
 安装 JDK 25，在 IDE 中以根目录的 `settings.gradle` 导入项目，将 Gradle JVM 设置为 JDK 25。
 首次构建需要联网下载 Gradle、Minecraft 和加载器依赖。
 
+请将仓库根目录作为 Gradle 项目打开，而不是仅导入 `26.2NeoForge` 或 `26.2Fabric`。
+若 IDE 报错 `Task 'wrapper' not found in project ':neoforge'`，请重新导入根目录的
+`settings.gradle`。两个加载器子项目也提供转发到根任务的 `wrapper` 入口，
+`:neoforge:wrapper` 和 `:fabric:wrapper` 均生成同一套根目录 Wrapper。
+Wrapper 任务固定为 Gradle 9.5.1，并保留发行包校验值。
+需要主动修改 Wrapper 参数时，请调用根项目的 `:wrapper`。
+
 ```powershell
 ./gradlew.bat build
 ./gradlew.bat :neoforge:runClient
