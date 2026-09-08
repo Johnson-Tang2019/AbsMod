@@ -44,11 +44,13 @@ Install the JAR matching your loader, excluding `-sources` JARs. Fabric requires
 - Obtain items from the Combat tab or use `/give @s absmod:meow_blade` or `/give @s absmod:meow_blade_stage_9`.
 - Progression, stage switching and crafting recipes are not implemented.
 
-Each stage has its own client item definition and model JSON, currently using the vanilla diamond sword texture.
-Place final PNGs in `common/src/main/resources/assets/absmod/textures/item/`, with the corresponding item ID
-as the filename, such as `meow_blade.png` or `meow_blade_stage_2.png`.
-Update `textures.layer0` in the matching file under `common/src/main/resources/assets/absmod/models/item/`,
-for example to `absmod:item/meow_blade_stage_2`. Both loaders share these resources.
+Each stage has its own client item definition, model JSON and supplied texture.
+The supplied `meowsword1.png` through `meowsword9.png` map to stages 1–9 respectively.
+They are stored in `common/src/main/resources/assets/absmod/textures/item/` as `meow_blade.png`
+and `meow_blade_stage_2.png` through `meow_blade_stage_9.png`.
+All nine 1254 × 1254 RGBA PNGs are copied byte-for-byte, preserving transparency and artwork.
+Matching models reference `absmod:item/<item_id>`. Both loaders share the same textures.
+In-game appearance, atlas mipmapping and performance at this resolution still need client verification.
 
 ## Commands
 

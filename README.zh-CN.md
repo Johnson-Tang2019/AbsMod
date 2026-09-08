@@ -44,12 +44,13 @@ Linux 或 macOS 下将 `./gradlew.bat` 换成 `./gradlew`。
 - 例如 `/give @s absmod:meow_blade_stage_9` 可取得九阶喵刀。
 - 暂不实现升级、阶段切换或合成配方。
 
-每阶段都有独立的客户端物品定义和模型 JSON，贴图暂引用原版钻石剑。
-收到正式 PNG 后，将文件放入 `common/src/main/resources/assets/absmod/textures/item/`，
-文件名与该阶段 ID 对应，例如 `meow_blade.png`、`meow_blade_stage_2.png`。
-在 `common/src/main/resources/assets/absmod/models/item/` 中修改同名 JSON 的
-`textures.layer0`，例如二阶改为 `absmod:item/meow_blade_stage_2`。
-两种加载器会同时使用新贴图，各阶段可单独替换。
+每阶段都有独立的客户端物品定义、模型 JSON 和已提供的贴图。
+原文件 `meowsword1.png` 至 `meowsword9.png` 按编号对应一至九阶。
+项目文件位于 `common/src/main/resources/assets/absmod/textures/item/`，命名为 `meow_blade.png`
+及 `meow_blade_stage_2.png` 至 `meow_blade_stage_9.png`。
+九张贴图均为 1254 × 1254 RGBA PNG，按字节原样复制，保留透明度和原画。
+对应模型引用 `absmod:item/<item_id>`，两种加载器共用同一套贴图。
+此分辨率下的游戏内显示、图集 mipmap 和性能仍需客户端验证。
 
 ## 命令
 
