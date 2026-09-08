@@ -1,24 +1,26 @@
 # Ab's Mod
 
-包名：`com.abyssredemption.absmod`，模组 ID：`absmod`。
+English | [简体中文](README.zh-CN.md)
 
-## 项目结构
+Base package: `com.abyssredemption.absmod`. Mod ID: `absmod`.
 
-| 目录 | 用途 |
+## Project layout
+
+| Directory | Purpose |
 | --- | --- |
-| `common/src/main/java` | 26.2 两种加载器共用的物品行为与常量 |
-| `common/src/main/resources` | 共用语言、模型和物品标签 |
-| `26.2NeoForge` | NeoForge 入口、注册与元数据 |
-| `26.2Fabric` | Fabric 入口、注册与元数据 |
+| `common/src/main/java` | Shared Minecraft 26.2 item behavior, commands and constants |
+| `common/src/main/resources` | Shared translations, models and item tags |
+| `26.2NeoForge` | NeoForge entry point, registration and metadata |
+| `26.2Fabric` | Fabric entry point, registration and metadata |
 
-根项目统一构建两种加载器，分别输出 JAR，无需 Architectury 运行时。
-目前支持 Minecraft Java 26.2；其他游戏版本尚未实现。扩展版本时添加对应子项目，
-按该版本的 API 选择共享代码和资源，不能直接假定跨版本二进制兼容。
+The root project builds separate JARs for both loaders without an Architectury runtime dependency.
+Only Minecraft Java 26.2 is currently implemented. Add separate subprojects for other game versions
+and select compatible shared code and resources; do not assume binary compatibility across versions.
 
-## 构建与运行
+## Build and run
 
-安装 JDK 25，在 IDE 中以根目录的 `settings.gradle` 导入项目，将 Gradle JVM 设置为 JDK 25。
-首次构建需要联网下载 Gradle、Minecraft 和加载器依赖。
+Install JDK 25, import the root `settings.gradle` in your IDE, and select JDK 25 as the Gradle JVM.
+The first build downloads Gradle, Minecraft and loader dependencies.
 
 ```powershell
 ./gradlew.bat build
@@ -26,41 +28,78 @@
 ./gradlew.bat :fabric:runClient
 ```
 
-分别构建：`./gradlew.bat :neoforge:build` 或 `./gradlew.bat :fabric:build`。
-产物位于 `26.2NeoForge/build/libs` 与 `26.2Fabric/build/libs`；安装不带 `-sources` 的 JAR，
-并选择与加载器对应的文件。Fabric 端需要安装 Fabric API。
+On Linux or macOS, use `./gradlew` instead of `./gradlew.bat`.
+Build separately with `:neoforge:build` or `:fabric:build`.
+Outputs are in `26.2NeoForge/build/libs` and `26.2Fabric/build/libs`.
+Install the JAR matching your loader, excluding `-sources` JARs. Fabric requires Fabric API.
 
-## 喵刀
+## Meow Blade
 
-- 共九个独立阶段，显示为“喵刀·1阶”至“喵刀·9阶”，按阶段顺序加入战斗栏。
-- 一阶段保留 ID `absmod:meow_blade`；二至九阶段为 `absmod:meow_blade_stage_2` 至 `absmod:meow_blade_stage_9`。
-- 各阶段的独立伤害参数集中在 `common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java`。
-  参数表示玩家默认基础属性下的总攻击伤害。具体平衡数值尚未提供，九阶段目前均以 7 占位，攻速均为 1.6。
-- 耐久、附魔能力和修理材料也沿用钻石剑，加入 `minecraft:swords` 标签。
-- 可从创造模式战斗栏取得，或执行 `/give @s absmod:meow_blade`。
-- 例如 `/give @s absmod:meow_blade_stage_9` 可取得九阶喵刀。
-- 暂不实现升级、阶段切换或合成配方。
+- Nine independent stages appear in stage order in the Combat creative tab.
+- Stage 1 retains `absmod:meow_blade`. Stages 2–9 use `absmod:meow_blade_stage_2` through `absmod:meow_blade_stage_9`.
+- Independent damage values are defined in `common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java`.
+  They represent total damage for a player with vanilla base attributes. Final values have not been supplied:
+  all stages currently use placeholder damage **7** and attack speed **1.6**.
+- Durability, enchantability and repair material follow the diamond sword. All stages belong to `minecraft:swords`.
+- Obtain items from the Combat tab or use `/give @s absmod:meow_blade` or `/give @s absmod:meow_blade_stage_9`.
+- Progression, stage switching and crafting recipes are not implemented.
 
-每阶段都有独立的客户端物品定义和模型 JSON，贴图暂引用原版钻石剑。
-收到正式 PNG 后，将文件放入 `common/src/main/resources/assets/absmod/textures/item/`，
-文件名与该阶段 ID 对应，例如 `meow_blade.png`、`meow_blade_stage_2.png`。
-在 `common/src/main/resources/assets/absmod/models/item/` 中修改同名 JSON 的
-`textures.layer0`，例如二阶改为 `absmod:item/meow_blade_stage_2`。
-两种加载器会同时使用新贴图，各阶段可单独替换。
+Each stage has its own client item definition and model JSON, currently using the vanilla diamond sword texture.
+Place final PNGs in `common/src/main/resources/assets/absmod/textures/item/`, with the corresponding item ID
+as the filename, such as `meow_blade.png` or `meow_blade_stage_2.png`.
+Update `textures.layer0` in the matching file under `common/src/main/resources/assets/absmod/models/item/`,
+for example to `absmod:item/meow_blade_stage_2`. Both loaders share these resources.
 
-## 游戏内验收
+## Commands
 
-分别运行两种加载器的客户端，确认模组加载、战斗栏物品、中文/英文名称和手持模型；
-用原版钻石剑对照喵刀的属性提示、攻击冷却和攻击行为，检查附魔与钻石修理。
-构建成功只能验证编译和打包，不能代替游戏内验收。
+All commands require the same game-master permission as vanilla `/give` (normally operator level 2).
 
-2026-09-08 验证结果：JDK 25 / Gradle 9.5.1 下两个加载器均构建成功；
-已对照 Minecraft 26.2 原版 `Items` 中的钻石剑配置，并检查两个 JAR 的共享资源、
-物品类、版本元数据及加载器隔离。尚未进行游戏内实测。
+| Command | Purpose |
+| --- | --- |
+| `/absmod` or `/absmod help` | Show command usage |
+| `/absmod stages` | List all nine stages, IDs and base damage/attack speed, with a placeholder notice |
+| `/absmod give <targets> <stage>` | Give each target one blade of the specified stage |
+| `/absmod kit <targets>` | Give each target all nine stages, one blade per stage |
+| `/absmod inspect <targets>` | Report each target's main-hand blade stage and remaining/maximum durability |
 
-## 构建依据
+```mcfunction
+/absmod give @s 1
+/absmod give @a 9
+/absmod give PlayerName 4
+/absmod kit @s
+/absmod stages
+/absmod inspect @s
+```
+
+Syntax: `/absmod give <targets> <stage>`.
+The stage must be an integer from 1 through 9; each selected online player receives one blade.
+The command also works from the server console when targeting a player name or `@a`.
+An inventory overflow drops the blade at the target player's location for that player to pick up.
+This command grants a new item; it does not switch the stage of an existing item.
+Command behavior is shared by Fabric and NeoForge; feedback is translated into English and Chinese.
+
+## Development conventions
+
+Use meaningful English technical names, never pinyin. Comments and docstrings are in English.
+Keep this README and `README.zh-CN.md` in sync. See [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md).
+
+## In-game validation
+
+Run both loaders and check loading, creative items, English/Chinese names and held models.
+Compare damage, cooldown and attacks with a vanilla diamond sword; check enchanting and diamond repairs.
+For commands, check stages 1 and 9, rejection of 0 and 10, operator/non-operator permissions,
+multiple targets, console use and a full inventory. A successful build does not replace in-game testing.
+
+`build` also runs `:fabric:verifyCommands` against the shared command logic to check valid syntax, invalid stage values,
+missing arguments, permission restrictions and read-only command execution without a game server.
+Both loader modules are compiled; NeoForge runtime behavior, inventory delivery and inspection still require in-game verification.
+
+The nine-stage builds and packaged shared resources were verified on 2026-09-08 using JDK 25 / Gradle 9.5.1.
+The sword configuration was checked against vanilla Minecraft 26.2. In-game testing has not been performed.
+
+## Build references
 
 - [NeoForge 26.2 MDK](https://github.com/NeoForgeMDKs/MDK-26.2-ModDevGradle)
-- [Fabric 26.2 示例](https://github.com/FabricMC/fabric-example-mod/tree/26.2)
+- [Fabric 26.2 example](https://github.com/FabricMC/fabric-example-mod/tree/26.2)
 
-依赖版本在根目录 `gradle.properties` 和 `build.gradle` 中固定。
+Dependency versions are pinned in the root `gradle.properties` and `build.gradle`.

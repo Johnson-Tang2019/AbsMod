@@ -1,11 +1,13 @@
 package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.AbsMod;
+import com.abyssredemption.absmod.command.ModCommands;
 import com.abyssredemption.absmod.item.MeowBladeItem;
 import com.abyssredemption.absmod.item.MeowBladeStage;
 import java.util.Arrays;
 import java.util.List;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,6 +25,8 @@ public final class AbsModFabric implements ModInitializer {
                 .toList();
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> meowBlades.forEach(item -> entries.accept(item)));
+        CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) ->
+                ModCommands.register(dispatcher, stage -> meowBlades.get(stage.number() - 1)));
     }
 
     private static Item registerMeowBlade(MeowBladeStage stage) {

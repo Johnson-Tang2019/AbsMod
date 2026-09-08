@@ -6,7 +6,9 @@
 - Keep Fabric and NeoForge imports in their corresponding platform projects.
 - Use `com.abyssredemption.absmod` as the base Java package and `absmod` as the namespace.
 - Preserve registered item IDs when changing stages to avoid breaking existing saves.
-- Keep code comments and technical identifiers in English. Update both `en_us` and `zh_cn` translations.
+- Use meaningful English technical names, never pinyin, for files, packages, classes, methods, variables, item IDs and commands.
+- Keep code comments and docstrings in English. Update both `en_us` and `zh_cn` translations.
+- Maintain `README.md` in English and `README.zh-CN.md` in Simplified Chinese with matching content and cross-links.
 - Follow `.editorconfig` and `.gitattributes`. Do not commit IDE settings, caches, game runs, credentials or build outputs.
 - Commit the Gradle Wrapper, including its JAR, and preserve the verified distribution checksum.
 
@@ -22,6 +24,8 @@ git diff --cached --stat
 ```
 
 On Linux or macOS, use `./gradlew build`. Both loader builds must pass.
+The build includes `:fabric:verifyCommands` for shared command grammar, stage bounds and permissions.
+NeoForge is compiled too; runtime validation requires launching FML and remains an in-game check.
 For item changes, inspect both output JARs for matching shared assets, language keys,
 models and tags. Test gameplay in both loaders when changing gameplay behavior,
 and explicitly report when game testing has not been performed.

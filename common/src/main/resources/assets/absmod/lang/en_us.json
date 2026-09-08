@@ -1,4 +1,5 @@
 {
+  "commands.absmod.give.success": "Gave one Stage %s Meow Blade to each of %s player(s).",
   "item.absmod.meow_blade": "Meow Blade - Stage 1",
   "item.absmod.meow_blade_stage_2": "Meow Blade - Stage 2",
   "item.absmod.meow_blade_stage_3": "Meow Blade - Stage 3",
@@ -7,5 +8,11 @@
   "item.absmod.meow_blade_stage_6": "Meow Blade - Stage 6",
   "item.absmod.meow_blade_stage_7": "Meow Blade - Stage 7",
   "item.absmod.meow_blade_stage_8": "Meow Blade - Stage 8",
-  "item.absmod.meow_blade_stage_9": "Meow Blade - Stage 9"
+  "item.absmod.meow_blade_stage_9": "Meow Blade - Stage 9",
+  "commands.absmod.help": "/absmod give <targets> <stage 1-9> | kit <targets> | stages | inspect <targets> | help",
+  "commands.absmod.stages.header": "Meow Blade stages (base values; damage and textures are placeholders):",
+  "commands.absmod.stages.entry": "Stage %s | %s | damage %s | attack speed %s",
+  "commands.absmod.kit.success": "Gave one complete nine-stage Meow Blade kit to each of %s player(s).",
+  "commands.absmod.inspect.entry": "%s: main-hand Meow Blade stage %s, durability %s/%s.",
+  "commands.absmod.inspect.empty": "%s is not holding a Meow Blade in the main hand."
 }

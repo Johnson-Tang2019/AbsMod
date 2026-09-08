@@ -1,4 +1,5 @@
 {
+  "commands.absmod.give.success": "已向 %2$s 名玩家各发放一把 %1$s 阶喵刀。",
   "item.absmod.meow_blade": "喵刀·1阶",
   "item.absmod.meow_blade_stage_2": "喵刀·2阶",
   "item.absmod.meow_blade_stage_3": "喵刀·3阶",
@@ -7,5 +8,11 @@
   "item.absmod.meow_blade_stage_6": "喵刀·6阶",
   "item.absmod.meow_blade_stage_7": "喵刀·7阶",
   "item.absmod.meow_blade_stage_8": "喵刀·8阶",
-  "item.absmod.meow_blade_stage_9": "喵刀·9阶"
+  "item.absmod.meow_blade_stage_9": "喵刀·9阶",
+  "commands.absmod.help": "/absmod give <目标> <阶段1-9>：发放 | kit <目标>：九阶段套装 | stages：阶段参数 | inspect <目标>：检查主手 | help：帮助",
+  "commands.absmod.stages.header": "喵刀阶段（基础参数；伤害与贴图尚为占位值）：",
+  "commands.absmod.stages.entry": "%s 阶 | %s | 伤害 %s | 攻速 %s",
+  "commands.absmod.kit.success": "已向 %s 名玩家各发放一套九阶段喵刀。",
+  "commands.absmod.inspect.entry": "%s：主手喵刀为 %s 阶，耐久 %s/%s。",
+  "commands.absmod.inspect.empty": "%s 的主手未持有喵刀。"
 }

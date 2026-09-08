@@ -10,3 +10,25 @@ processResources {
     inputs.property 'version', project.version
     filesMatching('fabric.mod.json') { expand version: project.version }
 }
+
+// Verify shared commands with vanilla bootstrap; NeoForge bootstrap requires FML.
+sourceSets {
+    verification {
+        java.srcDir rootProject.file('common/src/verification/java')
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+    }
+}
+def verifyCommands = tasks.register('verifyCommands', JavaExec) {
+    group = 'verification'
+    description = 'Verify command parsing, stage bounds and permission checks.'
+    dependsOn tasks.named('verificationClasses')
+    classpath = sourceSets.verification.runtimeClasspath
+    mainClass = 'com.abyssredemption.absmod.command.CommandVerification'
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+    workingDir = layout.buildDirectory.dir('command-verification').get().asFile
+    doFirst { workingDir.mkdirs() }
+}
+tasks.named('check') { dependsOn verifyCommands }
