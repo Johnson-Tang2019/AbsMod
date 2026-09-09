@@ -7,7 +7,10 @@
   "authors": ["AbyssRedemption"],
   "license": "All Rights Reserved",
   "environment": "*",
-  "entrypoints": { "main": ["com.abyssredemption.absmod.fabric.AbsModFabric"] },
+  "entrypoints": {
+    "main": ["com.abyssredemption.absmod.fabric.AbsModFabric"],
+    "client": ["com.abyssredemption.absmod.fabric.AbsModFabricClient"]
+  },
   "depends": {
     "fabricloader": ">=0.19.5",
     "minecraft": "26.2",

@@ -14,6 +14,7 @@ public final class CommandVerification {
         net.minecraft.SharedConstants.tryDetectVersion();
         net.minecraft.server.Bootstrap.bootStrap();
         com.abyssredemption.absmod.item.MilkshakeVerification.verify();
+        com.abyssredemption.absmod.client.SlashVerification.verify();
         CommandDispatcher<CommandSourceStack> dispatcher = new CommandDispatcher<>();
         ModCommands.register(dispatcher, stage -> {
             throw new AssertionError("Parsing must not grant items");

@@ -131,6 +131,34 @@ Command behavior is shared by Fabric and NeoForge; feedback is translated into E
 Use meaningful English technical names, never pinyin. Comments and docstrings are in English.
 Keep this README and `README.zh-CN.md` in sync. See [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md).
 
+## Meow Blade slash effects
+
+All nine stages emit pink-white curved light ribbons when the held blade swings, including air swings.
+The client observes vanilla swing animations for the local player and other tracked players, so no extra
+damage, entities or networking packets are introduced. Block-breaking swings also produce the visual.
+The actual swinging hand determines the effect; left-handed players and off-hand swings are mirrored.
+Each blade swing immediately advances through six visual motions: opposing diagonals, a horizontal sweep,
+an upward sweep, a steep diagonal and a reverse sweep. Each player has an independent sequence, with
+no added delay or idle timeout reset. This changes the slash effect, not the vanilla arm animation;
+clients joining or starting to track a player mid-sequence may begin at a different visual step.
+
+The original procedural mesh combines a pearl-white edge, translucent pink veils, flowing filaments and
+drifting light motes. A cherry-blossom pink alpha-blended body preserves the hue on bright backgrounds,
+with a separate additive glow pass. Brightness holds through the first half of the effect before fading.
+Both passes use depth testing, no depth writes and no face culling.
+The enlarged sweep has 12 ribbon layers, an expanding halo and 32 rotating petal-shaped light motes.
+Each slash lasts 18 game ticks (0.9 seconds at 20 TPS); up to 32 effects within 32 blocks are retained.
+The larger visual radius does not change attack reach or damage.
+Effects clear on disconnect/world changes and freeze when the game pauses. Higher stages have a small
+visual size increase. This is an interpretation of the concept image, not a pixel-identical reproduction.
+No SlashBlade OBJ/PNG assets or generated concept backgrounds are packaged.
+
+Use `/absmod kit @s`, select a blade and swing to preview. Check stages 1 and 9 in first/third person,
+left/right main arm, repeated swings, looking up/down, wall occlusion, pause/resume and world changes.
+In multiplayer, check that a second client sees one effect per observed swing. Compare diamond swords
+and empty hands (no effect). Automated geometry/swing checks run with `:fabric:verifyCommands`;
+they do not verify GPU output or replace in-game visual acceptance on both loaders.
+
 ## In-game validation
 
 Run both loaders and check loading, creative items, English/Chinese names and held models.

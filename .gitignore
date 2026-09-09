@@ -15,3 +15,6 @@ hs_err_pid*
 !.env.example
 *.jks
 *.keystore
+
+# Local third-party visual references; excluded from distribution.
+/references/slashblade/
