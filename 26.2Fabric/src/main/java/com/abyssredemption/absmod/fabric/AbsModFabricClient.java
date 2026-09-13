@@ -18,7 +18,19 @@ public final class AbsModFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.abyssredemption.absmod.entity.SpiritEntityType.get(),
+                com.abyssredemption.absmod.client.spirit.BladeSpiritRenderer::new);
+        var probe = new com.abyssredemption.absmod.client.BladeCombatClient();
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                com.abyssredemption.absmod.network.CombatProbePayload.TYPE,
+                (payload, context) -> probe.setEnabled(context.client(), payload.enabled()));
+        ClientTickEvents.END_CLIENT_TICK.register(client -> probe.tick(client,
+                payload -> net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(payload)));
         MeowSlashEffects effects = new MeowSlashEffects();
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                com.abyssredemption.absmod.network.BladeSwingPayload.TYPE,
+                (payload, context) -> effects.confirm(context.client(), payload));
         ClientTickEvents.END_CLIENT_TICK.register(effects::tick);
         LevelExtractionEvents.END_EXTRACTION.register(context -> context.levelState().setData(SLASHES,
                 effects.extract(context.camera().position(), context.deltaTracker().getGameTimeDeltaPartialTick(false))));

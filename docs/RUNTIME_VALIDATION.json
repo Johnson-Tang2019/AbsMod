@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-12",
+  "command": "./gradlew.bat --gradle-user-home .gradle-user-home -PgameTests build",
+  "build": "PASS_BOTH_LOADERS",
+  "runtime": "FABRIC_SERVER_WORLD",
+  "reported_required_tests": 8,
+  "absmod_tests": 7,
+  "test_source_sha256": "566465361c48b25d6c3ddbf06ba34085e25ba5e12bfe4d77d215e03ace1d1bd0",
+  "tests": [
+    "sixAttacksPerSecondDealSixtyFullHits",
+    "otherDamageRetainsItsCooldownHistory",
+    "armorStillReducesAuthorizedDamage",
+    "authorizedHitsBypassChargeAndPreserveCooldown",
+    "vanillaAttackStillUsesCharge",
+    "immunityIsPreserved",
+    "creativeTabIsRegistered"
+  ],
+  "limitations": [
+    "mock players with explicit attributes",
+    "no client input/network targeting verification",
+    "no NeoForge runtime",
+    "no shield/PvP/multiplayer visual acceptance",
+    "no final balance claim"
+  ],
+  "minecraft_server_started": true,
+  "minecraft_client_started": false,
+  "log": "build/runtime-validation-final.log"
+}

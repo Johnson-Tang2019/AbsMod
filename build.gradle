@@ -21,6 +21,8 @@ subprojects {
     }
     sourceSets.main.java.srcDir rootProject.file('common/src/main/java')
     sourceSets.main.resources.srcDir rootProject.file('common/src/main/resources')
+    // Isolated client-only source adapter, compiled against each loader's real 26.2 API.
+    apply from: rootProject.file('client-bedrock/module.gradle')
     tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
     tasks.withType(ProcessResources).configureEach { filteringCharset = 'UTF-8' }
     // IDEs may request wrapper relative to a loader subproject.

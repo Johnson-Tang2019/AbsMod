@@ -1,0 +1,303 @@
+{
+  "schema_version": 2,
+  "profile_id": "absmod_pve_combo_v1",
+  "document_revision": "2026-09-10.repository-progress.1",
+  "status": "PROPOSED_NOT_GAMEPLAY_VALIDATED",
+  "runtime_configuration": false,
+  "scope": "PvE-first design; not a shipped configuration or a PvP balance claim.",
+  "repository_baseline": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+  "confirmed_intent": [
+    "Normal Meow Blade has nine stages, pink/white identity, fast repeated melee and stacking damage.",
+    "Dark Meow Blade has eight stages, pink/purple identity, higher single-hit damage, lower attack speed and heavy-hit stun.",
+    "The user wants a rapid-slash feel at normal stage nine and a modest attack-speed increase during combos.",
+    "The user requests holding the attack key (default left mouse) to repeat swings without the vanilla attack recharge requirement."
+  ],
+  "units": {
+    "damage": "total base attack damage for a vanilla-base player, before armor, crits, enchantments, effects and external modifiers",
+    "attack_speed": "target server-authorized primary action frequency at 20 TPS; full designed strength after local vanilla recharge replacement, before mitigation; not measured hit rate",
+    "dps": "ideal sustained single-target raw DPS, not measured gameplay DPS"
+  },
+  "combo": {
+    "damage_bonus_per_stack": 0.03,
+    "attack_speed_bonus_per_stack": 0.01,
+    "stack_gain_per_valid_primary_attack": 1,
+    "damage_scaling": "additive from the stage base, never recursive multiplication",
+    "apply_new_stack_to": "subsequent attack; first hit uses zero stacks",
+    "grace_ticks": 60,
+    "decay_one_stack_every_ticks": 5,
+    "retarget_keeps_stacks": true,
+    "miss_resets_stacks": false,
+    "miss_refreshes_grace": false,
+    "clear_on": [
+      "main-hand soul change",
+      "death",
+      "disconnect",
+      "spirit transformation",
+      "stage change or upgrade"
+    ],
+    "affection_is_separate": true,
+    "hard_max_attack_speed_without_external_modifiers": 6.0
+  },
+  "normal": [
+    {
+      "stage": 1,
+      "item_id": "absmod:meow_blade",
+      "base_total_damage": 7,
+      "base_attack_speed": 1.8,
+      "max_combo_stacks": 5,
+      "derived": {
+        "max_combo_total_damage": 8.05,
+        "max_combo_attack_speed": 1.89,
+        "ideal_base_dps": 12.6,
+        "ideal_max_combo_dps": 15.2145
+      }
+    },
+    {
+      "stage": 2,
+      "item_id": "absmod:meow_blade_stage_2",
+      "base_total_damage": 8,
+      "base_attack_speed": 2.0,
+      "max_combo_stacks": 6,
+      "derived": {
+        "max_combo_total_damage": 9.44,
+        "max_combo_attack_speed": 2.12,
+        "ideal_base_dps": 16.0,
+        "ideal_max_combo_dps": 20.0128
+      }
+    },
+    {
+      "stage": 3,
+      "item_id": "absmod:meow_blade_stage_3",
+      "base_total_damage": 9,
+      "base_attack_speed": 2.2,
+      "max_combo_stacks": 8,
+      "derived": {
+        "max_combo_total_damage": 11.16,
+        "max_combo_attack_speed": 2.376,
+        "ideal_base_dps": 19.8,
+        "ideal_max_combo_dps": 26.51616
+      }
+    },
+    {
+      "stage": 4,
+      "item_id": "absmod:meow_blade_stage_4",
+      "base_total_damage": 10,
+      "base_attack_speed": 2.5,
+      "max_combo_stacks": 10,
+      "derived": {
+        "max_combo_total_damage": 13.0,
+        "max_combo_attack_speed": 2.75,
+        "ideal_base_dps": 25.0,
+        "ideal_max_combo_dps": 35.75
+      }
+    },
+    {
+      "stage": 5,
+      "item_id": "absmod:meow_blade_stage_5",
+      "base_total_damage": 12,
+      "base_attack_speed": 2.8,
+      "max_combo_stacks": 12,
+      "derived": {
+        "max_combo_total_damage": 16.32,
+        "max_combo_attack_speed": 3.136,
+        "ideal_base_dps": 33.6,
+        "ideal_max_combo_dps": 51.17952
+      }
+    },
+    {
+      "stage": 6,
+      "item_id": "absmod:meow_blade_stage_6",
+      "base_total_damage": 14,
+      "base_attack_speed": 3.2,
+      "max_combo_stacks": 14,
+      "derived": {
+        "max_combo_total_damage": 19.88,
+        "max_combo_attack_speed": 3.648,
+        "ideal_base_dps": 44.8,
+        "ideal_max_combo_dps": 72.52224
+      }
+    },
+    {
+      "stage": 7,
+      "item_id": "absmod:meow_blade_stage_7",
+      "base_total_damage": 16,
+      "base_attack_speed": 3.6,
+      "max_combo_stacks": 16,
+      "derived": {
+        "max_combo_total_damage": 23.68,
+        "max_combo_attack_speed": 4.176,
+        "ideal_base_dps": 57.6,
+        "ideal_max_combo_dps": 98.88768
+      }
+    },
+    {
+      "stage": 8,
+      "item_id": "absmod:meow_blade_stage_8",
+      "base_total_damage": 18,
+      "base_attack_speed": 4.0,
+      "max_combo_stacks": 18,
+      "derived": {
+        "max_combo_total_damage": 27.72,
+        "max_combo_attack_speed": 4.72,
+        "ideal_base_dps": 72.0,
+        "ideal_max_combo_dps": 130.8384
+      }
+    },
+    {
+      "stage": 9,
+      "item_id": "absmod:meow_blade_stage_9",
+      "base_total_damage": 22,
+      "base_attack_speed": 5.0,
+      "max_combo_stacks": 20,
+      "derived": {
+        "max_combo_total_damage": 35.2,
+        "max_combo_attack_speed": 6.0,
+        "ideal_base_dps": 110.0,
+        "ideal_max_combo_dps": 211.2
+      }
+    }
+  ],
+  "dark": [
+    {
+      "stage": 1,
+      "proposed_item_id": "absmod:dark_meow_blade",
+      "base_total_damage": 14,
+      "base_attack_speed": 1.1,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 15.4
+      }
+    },
+    {
+      "stage": 2,
+      "proposed_item_id": "absmod:dark_meow_blade_stage_2",
+      "base_total_damage": 17,
+      "base_attack_speed": 1.15,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 19.55
+      }
+    },
+    {
+      "stage": 3,
+      "proposed_item_id": "absmod:dark_meow_blade_stage_3",
+      "base_total_damage": 21,
+      "base_attack_speed": 1.2,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 25.2
+      }
+    },
+    {
+      "stage": 4,
+      "proposed_item_id": "absmod:dark_meow_blade_stage_4",
+      "base_total_damage": 26,
+      "base_attack_speed": 1.25,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 32.5
+      }
+    },
+    {
+      "stage": 5,
+      "proposed_item_id": "absmod:dark_meow_blade_stage_5",
+      "base_total_damage": 31,
+      "base_attack_speed": 1.3,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 40.3
+      }
+    },
+    {
+      "stage": 6,
+      "proposed_item_id": "absmod:dark_meow_blade_stage_6",
+      "base_total_damage": 37,
+      "base_attack_speed": 1.4,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 51.8
+      }
+    },
+    {
+      "stage": 7,
+      "proposed_item_id": "absmod:dark_meow_blade_stage_7",
+      "base_total_damage": 43,
+      "base_attack_speed": 1.5,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 64.5
+      }
+    },
+    {
+      "stage": 8,
+      "proposed_item_id": "absmod:dark_meow_blade_stage_8",
+      "base_total_damage": 50,
+      "base_attack_speed": 1.6,
+      "combo_enabled": false,
+      "derived": {
+        "ideal_basic_attack_dps": 80.0
+      }
+    }
+  ],
+  "heavy_attack": {
+    "trigger": null,
+    "multiplier": null,
+    "stun_duration_ticks": null,
+    "cooldown_ticks": null,
+    "reason": "Not specified by the user; do not substitute zero or silently disable the planned feature."
+  },
+  "pvp": {
+    "status": "TBD_NOT_BALANCED",
+    "use_pve_profile_as_final_pvp": false
+  },
+  "not_changed": [
+    "affection thresholds",
+    "death penalties",
+    "durability values",
+    "recipes",
+    "boss statistics",
+    "spirit combat transition input"
+  ],
+  "input_system": {
+    "goal_status": "USER_REQUESTED_NOT_IMPLEMENTED",
+    "policy_status": "PROPOSED",
+    "specification": "CONTINUOUS_COMBAT.md",
+    "hold_to_repeat_requested": true,
+    "remove_vanilla_attack_recharge_requested": true,
+    "recommended_scope": [
+      "normal_meow_basic_attack",
+      "dark_meow_basic_attack"
+    ],
+    "respect_rebound_attack_key": true,
+    "vanilla_charge_policy": "replace requirement and damage scaling only inside server-authorized AbsMod attack context",
+    "custom_action_cadence_retained": true,
+    "cadence_source": "current server-validated weapon attack speed including eligible combo modifiers",
+    "one_authoritative_attack_pipeline": true,
+    "requires_current_aim_and_line_of_sight": true,
+    "automatic_target_selection": false,
+    "block_interaction_policy": "prefer vanilla block interaction; do not also perform melee",
+    "air_swing_policy": "allow visuals at weapon cadence, no hit reward or stored burst",
+    "rapid_tap_cannot_reset_cadence": true,
+    "bank_missed_attacks": false,
+    "more_than_one_primary_attack_per_server_tick": false,
+    "stop_on": [
+      "release",
+      "screen_open",
+      "focus_lost",
+      "weapon_change",
+      "item_use_priority",
+      "death",
+      "disconnect",
+      "spirit_form",
+      "expired_input_session"
+    ],
+    "heartbeat_ticks": null,
+    "input_timeout_ticks": null,
+    "network_tuning_status": "TBD_TRANSPORT_TUNING_NOT_GAMEPLAY_NUMBERS",
+    "dark_hold_implies_heavy_attack": false,
+    "globally_disable_damage_invulnerability": false,
+    "globally_override_attack_speed": false,
+    "preserve_armor_shields_and_boss_immunity": true,
+    "spirit_auto_recall_trigger": "TBD_SEPARATE_FROM_SWORD_FORM_INPUT"
+  }
+}

@@ -12,8 +12,39 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @Mod(AbsMod.MOD_ID)
 public final class AbsModNeoForge {
+    private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.entity.EntityType<?>> ENTITIES =
+            net.neoforged.neoforge.registries.DeferredRegister.create(
+                    net.minecraft.core.registries.Registries.ENTITY_TYPE, AbsMod.MOD_ID);
+    static {
+        ENTITIES.register("blade_spirit", com.abyssredemption.absmod.entity.SpiritEntityType::create);
+    }
+    private static void attributes(net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event) {
+        event.put(com.abyssredemption.absmod.entity.SpiritEntityType.get(),
+                com.abyssredemption.absmod.entity.BladeSpiritEntity.attributes().build());
+    }
+    private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.CreativeModeTab> TABS =
+            net.neoforged.neoforge.registries.DeferredRegister.create(
+                    net.minecraft.core.registries.Registries.CREATIVE_MODE_TAB, AbsMod.MOD_ID);
+    static {
+        TABS.register(com.abyssredemption.absmod.item.ModCreativeTab.ID.getPath(), () ->
+                com.abyssredemption.absmod.item.ModCreativeTab.create(net.minecraft.world.item.CreativeModeTab.builder(),
+                        stage -> ModItems.MEOW_BLADES.get(stage.number() - 1).get(),
+                        variant -> ModItems.MILKSHAKES.get(variant.ordinal()).get()));
+    }
+    private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.core.component.DataComponentType<?>> COMPONENTS =
+            net.neoforged.neoforge.registries.DeferredRegister.create(
+                    net.minecraft.core.registries.Registries.DATA_COMPONENT_TYPE, AbsMod.MOD_ID);
+    static {
+        COMPONENTS.register("blade_soul", () -> com.abyssredemption.absmod.spirit.BladeSoulComponents.REFERENCE);
+    }
+
     public AbsModNeoForge(IEventBus modEventBus) {
+        new NeoForgeCombatProbe(modEventBus);
+        COMPONENTS.register(modEventBus);
+        ENTITIES.register(modEventBus);
+        modEventBus.addListener(AbsModNeoForge::attributes);
         ModItems.ITEMS.register(modEventBus);
+        TABS.register(modEventBus);
         modEventBus.addListener(AbsModNeoForge::addCreativeItems);
         NeoForge.EVENT_BUS.addListener(AbsModNeoForge::registerCommands);
     }

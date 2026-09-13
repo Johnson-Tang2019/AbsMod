@@ -1,0 +1,843 @@
+{
+  "schema_version": 2,
+  "document_revision": "2026-09-12.repository-progress.1",
+  "generated_at_utc": "2026-09-12T06:29:16.650232+00:00",
+  "scope": "Document package integrity, preserved source bytes, JSON, local link file targets, and independent balance formula checks only.",
+  "source_package": {
+    "name": "AbsMod-docs-2026-09-10.zip",
+    "bytes": 91035,
+    "sha256": "2a588fd35f2f5adfbda15ea50b86c46e2e4e498143ebbe6a66536b93597f3112",
+    "revision": "2026-09-10.repository-progress.1"
+  },
+  "java_build_run": false,
+  "java_verification_run": false,
+  "minecraft_run": false,
+  "input_simulation_run_this_update": false,
+  "historical_reports_rerun": false,
+  "historical_reports": [
+    "docs/BALANCE_VALIDATION.json",
+    "docs/CONTINUOUS_COMBAT_VALIDATION.json"
+  ],
+  "numeric_formula_recheck": true,
+  "checks_count": 163,
+  "passed_count": 163,
+  "failed_count": 0,
+  "checks": [
+    {
+      "check": "source_zip_crc",
+      "passed": true,
+      "detail": "Original ZIP testzip() returned None."
+    },
+    {
+      "check": "source_manifest_hashes",
+      "passed": true,
+      "detail": "Every listed file matched the original size and SHA-256."
+    },
+    {
+      "check": "source_file_count",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:AGENTS_APPEND.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:AGENTS_APPEND.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:AGENTS_APPEND.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:APPLY_TO_REPO.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:APPLY_TO_REPO.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:APPLY_TO_REPO.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/ART_GUIDE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/ART_GUIDE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/ART_GUIDE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/BALANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/BALANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/BALANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/BALANCE_PROFILE.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/BALANCE_PROFILE.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "json:docs/BALANCE_PROFILE.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/BALANCE_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/BALANCE_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "json:docs/BALANCE_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/COMBAT_INPUT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/COMBAT_INPUT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/COMBAT_INPUT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/CONTINUOUS_COMBAT_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/CONTINUOUS_COMBAT_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "json:docs/CONTINUOUS_COMBAT_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/CURRENT_TASK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/CURRENT_TASK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/CURRENT_TASK.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/DEVELOPMENT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/DEVELOPMENT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/DEVELOPMENT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/DOCUMENT_CHANGELOG.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/DOCUMENT_CHANGELOG.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/DOCUMENT_CHANGELOG.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/DOCUMENT_MANIFEST.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/DOCUMENT_MANIFEST.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "json:docs/DOCUMENT_MANIFEST.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/LORE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/LORE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/LORE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/PACKAGE_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/PACKAGE_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "json:docs/PACKAGE_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/README.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/README.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/README.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/REPOSITORY_AUDIT.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/REPOSITORY_AUDIT.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "json:docs/REPOSITORY_AUDIT.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/SPIRIT_SYSTEM.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/SPIRIT_SYSTEM.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/SPIRIT_SYSTEM.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "nonempty:docs/STATUS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "utf8:docs/STATUS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "balanced_code_fences:docs/STATUS.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/LORE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/SPIRIT_SYSTEM.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/ART_GUIDE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/BALANCE.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/BALANCE_PROFILE.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/COMBAT_INPUT.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/BALANCE_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:docs/CONTINUOUS_COMBAT_VALIDATION.json",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "preserved_bytes:AGENTS_APPEND.md",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_stage_count",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_stage_count",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "design_not_runtime_config",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_1:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_1:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_1:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_1:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_2:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_2:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_2:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_2:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_3:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_3:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_3:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_3:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_4:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_4:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_4:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_4:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_5:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_5:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_5:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_5:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_6:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_6:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_6:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_6:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_7:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_7:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_7:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_7:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_8:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_8:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_8:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_8:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_9:max_combo_total_damage",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_9:max_combo_attack_speed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_9:ideal_base_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "normal_9:ideal_max_combo_dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_1:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_2:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_3:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_4:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_5:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_6:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_7:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "dark_8:dps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "head_unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "task_states_not_promoted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source_stage_observation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "local_link:docs/BALANCE.md:BALANCE_PROFILE.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/BALANCE.md:CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/COMBAT_INPUT.md:CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/COMBAT_INPUT.md:STATUS.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/COMBAT_INPUT.md:CURRENT_TASK.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/CONTINUOUS_COMBAT.md:CURRENT_TASK.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/DEVELOPMENT.md:REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/DEVELOPMENT.md:CURRENT_TASK.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/DEVELOPMENT.md:STATUS.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/DEVELOPMENT.md:REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/DEVELOPMENT.md:CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/DEVELOPMENT.md:SPIRIT_SYSTEM.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/DEVELOPMENT.md:BALANCE.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:STATUS.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:CURRENT_TASK.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:DEVELOPMENT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:LORE.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:SPIRIT_SYSTEM.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:ART_GUIDE.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:BALANCE.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:BALANCE_PROFILE.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:COMBAT_INPUT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:STATUS.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:CURRENT_TASK.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:REPOSITORY_AUDIT.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:DOCUMENT_CHANGELOG.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:BALANCE_VALIDATION.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:CONTINUOUS_COMBAT_VALIDATION.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:PACKAGE_VALIDATION.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:DOCUMENT_MANIFEST.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:../APPLY_TO_REPO.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/README.md:../AGENTS_APPEND.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/REPOSITORY_AUDIT.md:CURRENT_TASK.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/REPOSITORY_AUDIT.md:REPOSITORY_AUDIT.json",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/SPIRIT_SYSTEM.md:CONTINUOUS_COMBAT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/STATUS.md:REPOSITORY_AUDIT.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    },
+    {
+      "check": "local_link:docs/STATUS.md:CURRENT_TASK.md",
+      "passed": true,
+      "detail": "File target only; heading anchors and remote pages are not checked."
+    }
+  ],
+  "archive_check_note": "Final ZIP CRC, unique/safe entry names and all manifest SHA-256 hashes are verified after construction. No Java/game/network claim."
+}

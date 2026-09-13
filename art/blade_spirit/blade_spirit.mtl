@@ -1,0 +1,3 @@
+newmtl floral
+Kd 1 1 1
+map_Kd ../../common/src/main/resources/assets/absmod/textures/entity/blade_spirit/borrowed_cat_spirit.png

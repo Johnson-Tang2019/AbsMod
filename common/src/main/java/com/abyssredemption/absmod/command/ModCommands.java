@@ -21,6 +21,8 @@ public final class ModCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher,
             Function<MeowBladeStage, Item> itemLookup, Function<MilkshakeVariant, Item> milkshakeLookup) {
+        SoulCommands.register(dispatcher);
+        SpiritCommands.register(dispatcher);
         dispatcher.register(Commands.literal("absmod")
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(context -> help(context.getSource()))
@@ -68,7 +70,7 @@ public final class ModCommands {
         source.sendSuccess(() -> Component.translatable("commands.absmod.stages.header"), false);
         for (MeowBladeStage stage : MeowBladeStage.values()) {
             source.sendSuccess(() -> Component.translatable("commands.absmod.stages.entry",
-                    stage.number(), "absmod:" + stage.itemId(), stage.attackDamage(), 1.6F), false);
+                    stage.number(), "absmod:" + stage.itemId(), stage.attackDamage(), stage.baseAttackSpeed()), false);
         }
         return MeowBladeStage.values().length;
     }
@@ -92,6 +94,7 @@ public final class ModCommands {
                 source.sendSuccess(() -> Component.translatable("commands.absmod.inspect.entry",
                         player.getDisplayName(), blade.stage().number(),
                         stack.getMaxDamage() - stack.getDamageValue(), stack.getMaxDamage()), false);
+                SoulCommands.inspect(source, player);
                 matches++;
             } else {
                 source.sendSuccess(() -> Component.translatable(

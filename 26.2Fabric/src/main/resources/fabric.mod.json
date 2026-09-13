@@ -4,17 +4,26 @@
   "version": "${version}",
   "name": "Ab's Mod",
   "description": "Ab's Mod for Minecraft 26.2.",
-  "authors": ["AbyssRedemption"],
+  "authors": [
+    "AbyssRedemption"
+  ],
   "license": "All Rights Reserved",
   "environment": "*",
   "entrypoints": {
-    "main": ["com.abyssredemption.absmod.fabric.AbsModFabric"],
-    "client": ["com.abyssredemption.absmod.fabric.AbsModFabricClient"]
+    "main": [
+      "com.abyssredemption.absmod.fabric.AbsModFabric"
+    ],
+    "client": [
+      "com.abyssredemption.absmod.fabric.AbsModFabricClient"
+    ]
   },
   "depends": {
     "fabricloader": ">=0.19.5",
     "minecraft": "26.2",
     "java": ">=25",
     "fabric-api": ">=0.159.0+26.2"
-  }
+  },
+  "mixins": [
+    "absmod.mixins.json"
+  ]
 }

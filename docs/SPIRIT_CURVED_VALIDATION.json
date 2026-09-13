@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-13",
+  "task": "ART-02 curved silhouette revision",
+  "quads": 1768,
+  "renderer": "shared ModelPart with authored curved quad surfaces",
+  "texture_changed": false,
+  "reference": "https://github.com/TartaricAcid/TouhouLittleMaid",
+  "reference_scope": "Public project model/renderer separation; exact model JSON retrieval failed (API HTTP 403). No model geometry or textures copied.",
+  "build_log": "build/spirit-curved-final.log",
+  "build": "passed",
+  "checks": [
+    "finite geometry and normals",
+    "UV bounds",
+    "required bones",
+    "animation resets",
+    "front/back/three-quarter browser preview",
+    "git diff --check"
+  ],
+  "minecraft_launched": false,
+  "commit_or_push": false,
+  "identical_shared_resources": 65,
+  "geometry_sha256": "8402665d43af1224330bcb219a0d4833d370d9119798832ccb137c78f7e74828"
+}

@@ -22,15 +22,31 @@ public final class AbsModNeoForgeClient {
     private static final ContextKey<List<MeowSlashGeometry.Slash>> SLASHES = new ContextKey<>(
             Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "meow_slashes"));
     private final MeowSlashEffects effects = new MeowSlashEffects();
+    private final com.abyssredemption.absmod.client.BladeCombatClient probe = new com.abyssredemption.absmod.client.BladeCombatClient();
 
-    public AbsModNeoForgeClient() {
+    public AbsModNeoForgeClient(net.neoforged.bus.api.IEventBus modBus) {
+        modBus.addListener(this::payloads);
+        modBus.addListener(AbsModNeoForgeClient::renderers);
         NeoForge.EVENT_BUS.addListener(this::tick);
         NeoForge.EVENT_BUS.addListener(this::extract);
         NeoForge.EVENT_BUS.addListener(this::submit);
     }
 
+    private static void renderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(com.abyssredemption.absmod.entity.SpiritEntityType.get(),
+                com.abyssredemption.absmod.client.spirit.BladeSpiritRenderer::new);
+    }
+
     private void tick(ClientTickEvent.Post event) {
+        probe.tick(Minecraft.getInstance(), payload -> net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload));
         effects.tick(Minecraft.getInstance());
+    }
+
+    private void payloads(net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent event) {
+        event.register(com.abyssredemption.absmod.network.BladeSwingPayload.TYPE,
+                (payload, context) -> effects.confirm(Minecraft.getInstance(), payload));
+        event.register(com.abyssredemption.absmod.network.CombatProbePayload.TYPE,
+                (payload, context) -> probe.setEnabled(Minecraft.getInstance(), payload.enabled()));
     }
 
     private void extract(ExtractLevelRenderStateEvent event) {

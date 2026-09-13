@@ -1,5 +1,8 @@
 # Ab's Mod
 
+The spirit now uses an isolated Bedrock 1.12 geometry source adapter and the Minecraft 26.2 model submission path. The active model has an unrestricted bone hierarchy and configurable texture dimensions; the old humanoid/128×64 skin is fallback only. An original ten-bone diagnostic model/PNG, walk/head/tail animation and resource failure recovery are included. Both builds and CPU checks pass; Fabric server tests pass without loading our client model classes. NeoForge client resource loading succeeded, but in-world display, animation and F3+T visual acceptance remain pending. The old HTML preview still depicts the previous borrowed model. See [implementation and validation](docs/IMPLEMENTATION_BEDROCK_RENDERER.md) and [source/license record](client-bedrock/UPSTREAM.md).
+
+
 English | [简体中文](README.zh-CN.md)
 
 Base package: `com.abyssredemption.absmod`. Mod ID: `absmod`.
@@ -45,8 +48,9 @@ Install the JAR matching your loader, excluding `-sources` JARs. Fabric requires
 - Nine independent stages appear in stage order in the Combat creative tab.
 - Stage 1 retains `absmod:meow_blade`. Stages 2–9 use `absmod:meow_blade_stage_2` through `absmod:meow_blade_stage_9`.
 - Independent damage values are defined in `common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java`.
-  They represent total damage for a player with vanilla base attributes. Final values have not been supplied:
-  all stages currently use placeholder damage **7** and attack speed **1.6**.
+  They represent totals for a player with vanilla base attributes. The PROPOSED PvE profile now supplies
+  stage damage **7/8/9/10/12/14/16/18/22** and total speed **1.8/2/2.2/2.5/2.8/3.2/3.6/4/5**.
+  These are prototype values, not final balance. Combo bonuses and full-strength rapid hits are not implemented.
 - Durability, enchantability and repair material follow the diamond sword. All stages belong to `minecraft:swords`.
 - Obtain items from the Combat tab or use `/give @s absmod:meow_blade` or `/give @s absmod:meow_blade_stage_9`.
 - Progression, stage switching and crafting recipes are not implemented.
@@ -180,3 +184,80 @@ The sword configuration was checked against vanilla Minecraft 26.2. In-game test
 - [Fabric 26.2 example](https://github.com/FabricMC/fabric-example-mod/tree/26.2)
 
 Dependency versions are pinned in the root `gradle.properties` and `build.gradle`.
+
+## Blade Soul persistence prototype
+
+Operators can test the blade held in a player's main hand:
+
+```text
+/absmod soul init <target>
+/absmod soul inspect <target>
+/absmod soul affection set <target> <value>
+/absmod soul affection add <target> <value>
+```
+
+Initialization is explicit and records the target as owner for this test. It does not define automatic binding gameplay. Each blade carries only its soul UUID; the server archive stores owner, route, stage, optional affection, form, schema and revision. Affection starts unset; finite test values are accepted without inventing a final default or range. Queries never initialize blades. Missing or unreadable archives are rejected rather than recreated.
+
+Duplicate diagnostics cover online inventories, ender chests and loaded dropped items. They block these commands but do not scan offline players, unloaded/nested containers or enforce a global combat lock. Stage migration currently produces a plan only, preserving identity and affection while retaining target item defaults; no upgrade is applied. See [current implementation and runtime checklist](docs/IMPLEMENTATION_BATCH_1.md).
+
+The pink slash now has a wider translucent veil and outer halo, with lower outer opacity and the bright core retained. In-game visual acceptance remains pending.
+
+## Continuous Meow Blade attacks
+
+Hold the configured Attack key with a Meow Blade in your main hand to attack along your current aim. The server controls the cadence using effective attack speed; clicks and holds share one budget. Release, screens, focus loss, block targeting/mining, item use, death and weapon/world changes stop the session. Release and press again after an interruption.
+
+Authorized primary attacks use full attack strength and a local hurt-window bypass, retaining the normal melee damage pipeline. Other weapons, secondary damage and vanilla cooldown history keep their usual behavior. Server confirmations trigger the existing pink slash motions with attack-ID deduplication. The vanilla charge indicator is hidden only while holding a Meow Blade with this pipeline available.
+
+`/absmod combat probe @s true` enables tracing, `false` disables tracing, and `/absmod combat inspect @s` displays session state. These commands do not toggle automatic damage or reset attack recovery. Log counts represent authorized actions, not successful hits.
+
+Both loader builds and standalone logic checks pass. In-game damage, physical input, shield/armor interactions and multiplayer visuals remain unverified. See [implementation and acceptance checklist](docs/IMPLEMENTATION_AUTOMATIC_DAMAGE.md).
+
+## Creative inventory
+
+Open the **Ab's Mod** creative tab (Meow Blade icon) to find all nine blade stages in order, followed by the four milkshakes. Items also remain in their vanilla Combat and Food & Drinks categories.
+
+## Runtime combat tests
+
+Run `./gradlew.bat --gradle-user-home .gradle-user-home -PgameTests :fabric:runGameTest` with JDK 25. The opt-in `-PgameTests build` also runs these tests alongside both loader builds. The separate test mod is excluded from release JARs.
+
+Eight AbsMod server-world tests cover repeated full-strength damage, 60 actual hits over 200 game ticks, vanilla attack charge, armor, immunity, ordinary damage cooldown history, primary hit confirmation (including absorption) and creative-tab registration/icon. These controlled fixtures use mock players with explicit attributes; they do not verify physical input, targeting/networking, shields, multiplayer visuals, NeoForge runtime or final balance. See [runtime validation](docs/RUNTIME_VALIDATION.md).
+
+## Combo state prototype (BAL-02)
+
+Authorized primary attacks that actually remove health or absorption now gain one server-side combo stack. Caps follow the PROPOSED balance table (5–20 stacks). Misses and immune hits do not refresh the timer. Release keeps stacks; decay begins 65 game ticks after the last valid hit and removes one stack every 5 ticks. Replacing the weapon, changing its soul reference/slot/world, death or disconnect clears this temporary state.
+
+Use `/absmod combat inspect @s` to read `comboStacks`; `/absmod combat probe @s true` logs the before/after count and confirmed primary-hit result. **Damage and attack-speed bonuses are not applied yet.** This slice establishes hit confirmation and state lifecycle before connecting attribute bonuses. No new textures are required. See [implementation record](docs/IMPLEMENTATION_COMBO_STATE.md).
+
+## Catgirl blade spirit prototype
+
+The first manual spirit prototype has a pink-white placeholder skin, cat ears, a gently moving tail, humanoid walking and owner following. It retains the full original sword while manifested. With a Meow Blade in the main hand, an operator can run:
+
+```text
+/absmod soul init @s
+/absmod spirit manifest @s
+/absmod spirit recall @s @e[type=absmod:blade_spirit,sort=nearest,limit=1] 7
+```
+
+Slot 7 is the eighth hotbar slot and must be empty; allowed slots are 0–35. Use the returned entity UUID instead of the selector when testing multiple spirits. No automatic recall, progression, affection gain or death penalties are implemented. Use a test world: interrupted-save recovery and global duplicate detection remain incomplete. Health, movement and following distances are test values; the prototype is invulnerable.
+
+A ninth AbsMod server-world test covers manifestation/recall, sword preservation and rejected operations; all ten required tests (including one framework test) passed. Both loader builds and SavedData file reload checks passed; no client or NeoForge server was launched. Rendering and actual following still require in-game acceptance. See [implementation](docs/IMPLEMENTATION_SPIRIT_PROTOTYPE.md) and [texture/model requirements](docs/SPIRIT_ART_REQUIREMENTS.md).
+
+## Floral spirit model
+
+The normal-route spirit now uses a model adapted from the supplied pink-white catgirl artwork: layered long hair, pointed ears, flower/crystal ornaments, a flared skirt and a curved five-part tail. The 33-piece model uses a newly arranged texture atlas with per-face UVs. Original artwork and the earlier placeholder are preserved; the atlas is AI-assisted artwork adaptation rather than pixel-exact repacking.
+
+[Rotate the model](art/blade_spirit/preview.html) or inspect the [editable geometry and OBJ export](art/blade_spirit/README.md). Both loader builds, geometry/UV/animation-reset checks and browser visual inspection passed. Minecraft was not launched for this art change; lighting and motion intersections still need client acceptance. See [validation](docs/SPIRIT_MODEL_VALIDATION.json).
+
+## Softer spirit silhouette
+
+The latest revision replaces the box-shaped head, hair and skirt with a shaped jaw, curved tapered locks, fitted waist, round sleeves/legs, a bell-shaped skirt and a continuous curved tail (1768 quads). The existing atlas is unchanged. Both loader builds and geometry/UV/animation checks pass; front/back/angled browser views were inspected. Minecraft lighting and movement still await in-game acceptance. [Validation](docs/SPIRIT_CURVED_VALIDATION.json).
+
+## Proportions measured from installed maid models
+
+The latest model uses the actual Chen, Goutokuzi Mike and Hakurei Reimu rigs in the supplied local pack as dimensional references: base height 26, head height 8 (3.25 heads), leg length 9, leg width 3 and arm length 8. Hair, skirt and pivots were adjusted together. The original art and atlas are unchanged. Both builds, geometry/proportion/animation checks and browser views passed; Minecraft was not launched. [Measurements and evidence](docs/SPIRIT_PROPORTION_REFERENCES.json).
+
+Side-view refinement adds head/torso depth, anchors flowers at the temples and flattens the frontal face region to prevent eyes wrapping onto the profile. Both builds and model checks passed (`build/spirit-side-validation.log`); this remains a draft model without Minecraft visual acceptance.
+
+## Temporary existing maid model
+
+The active spirit now uses Chen from the user-supplied Touhou Little Maid pack with its paired texture. Original AbsMod art is preserved. Geometry rotation conventions are adapted; the blink overlay is disabled until expression animation is implemented. Existing humanoid walking/look and manifestation/recall remain. See [third-party provenance](art/blade_spirit/BORROWED_MODEL_NOTICE.md). Both loader builds and model checks pass; Minecraft client acceptance remains pending.

@@ -1,0 +1,276 @@
+{
+  "revision": "2026-09-09.continuous-combat.1",
+  "status": "PASS_OFFLINE_REFERENCE_AND_DOCUMENT_CHECKS_ONLY",
+  "checks_count": 49,
+  "checks": [
+    {
+      "name": "new_requested_hold_flag",
+      "result": "PASS"
+    },
+    {
+      "name": "new_requested_no_vanilla_charge_flag",
+      "result": "PASS"
+    },
+    {
+      "name": "retain_custom_cadence",
+      "result": "PASS"
+    },
+    {
+      "name": "profile_not_runtime_config",
+      "result": "PASS"
+    },
+    {
+      "name": "no_auto_target",
+      "result": "PASS"
+    },
+    {
+      "name": "not_implicitly_dark_heavy",
+      "result": "PASS"
+    },
+    {
+      "name": "not_global_invulnerability_removal",
+      "result": "PASS"
+    },
+    {
+      "name": "not_global_attack_speed_override",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_nine_base_200_tick_count",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_nine_base_unique_ticks",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_nine_full_200_tick_count",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_nine_full_unique_ticks",
+      "result": "PASS"
+    },
+    {
+      "name": "six_per_second_keeps_fraction",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_eight_basic_200_tick_count",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_eight_basic_unique_ticks",
+      "result": "PASS"
+    },
+    {
+      "name": "first_ready_action",
+      "result": "PASS"
+    },
+    {
+      "name": "duplicate_same_tick_no_action",
+      "result": "PASS"
+    },
+    {
+      "name": "next_tick_no_free_start",
+      "result": "PASS"
+    },
+    {
+      "name": "repress_does_not_outpace_hold",
+      "result": "PASS"
+    },
+    {
+      "name": "release_stops_future_actions",
+      "result": "PASS"
+    },
+    {
+      "name": "invalid_context_stops",
+      "result": "PASS"
+    },
+    {
+      "name": "idle_cannot_store_multiple",
+      "result": "PASS"
+    },
+    {
+      "name": "time_jump_no_catchup_burst",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh_intent",
+      "result": "PASS"
+    },
+    {
+      "name": "duplicate_sequence_rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "stale_stop_rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "lease_valid_before_timeout",
+      "result": "PASS"
+    },
+    {
+      "name": "lease_expires",
+      "result": "PASS"
+    },
+    {
+      "name": "stop_intent",
+      "result": "PASS"
+    },
+    {
+      "name": "reference_heartbeats_keep_lease",
+      "result": "PASS"
+    },
+    {
+      "name": "reference_stop_wins",
+      "result": "PASS"
+    },
+    {
+      "name": "old_optional_policy_removed",
+      "result": "PASS"
+    },
+    {
+      "name": "new_spec_has_scope",
+      "result": "PASS"
+    },
+    {
+      "name": "new_spec_preserves_unknown_heavy",
+      "result": "PASS"
+    },
+    {
+      "name": "SPIRIT_SYSTEM.md_fences_balanced",
+      "result": "PASS"
+    },
+    {
+      "name": "SPIRIT_SYSTEM.md_has_revision",
+      "result": "PASS"
+    },
+    {
+      "name": "ART_GUIDE.md_fences_balanced",
+      "result": "PASS"
+    },
+    {
+      "name": "ART_GUIDE.md_has_revision",
+      "result": "PASS"
+    },
+    {
+      "name": "DEVELOPMENT.md_fences_balanced",
+      "result": "PASS"
+    },
+    {
+      "name": "DEVELOPMENT.md_has_revision",
+      "result": "PASS"
+    },
+    {
+      "name": "LORE.md_fences_balanced",
+      "result": "PASS"
+    },
+    {
+      "name": "LORE.md_has_revision",
+      "result": "PASS"
+    },
+    {
+      "name": "CONTINUOUS_COMBAT.md_fences_balanced",
+      "result": "PASS"
+    },
+    {
+      "name": "CONTINUOUS_COMBAT.md_has_revision",
+      "result": "PASS"
+    },
+    {
+      "name": "STATUS.md_fences_balanced",
+      "result": "PASS"
+    },
+    {
+      "name": "STATUS.md_has_revision",
+      "result": "PASS"
+    },
+    {
+      "name": "BALANCE.md_fences_balanced",
+      "result": "PASS"
+    },
+    {
+      "name": "BALANCE.md_has_revision",
+      "result": "PASS"
+    },
+    {
+      "name": "repo_snapshot_updated",
+      "result": "PASS"
+    }
+  ],
+  "reference_counts": {
+    "normal_nine_base": {
+      "ticks": 200,
+      "actions": 50,
+      "initial_ready_action_included": true,
+      "first_ticks": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44
+      ]
+    },
+    "normal_nine_full": {
+      "ticks": 200,
+      "actions": 60,
+      "initial_ready_action_included": true,
+      "first_ticks": [
+        0,
+        4,
+        7,
+        10,
+        14,
+        17,
+        20,
+        24,
+        27,
+        30,
+        34,
+        37
+      ]
+    },
+    "dark_eight_basic": {
+      "ticks": 200,
+      "actions": 16,
+      "initial_ready_action_included": true,
+      "first_ticks": [
+        0,
+        13,
+        25,
+        38,
+        50,
+        63,
+        75,
+        88,
+        100,
+        113,
+        125,
+        138
+      ]
+    }
+  },
+  "transport_reference_example": {
+    "heartbeat_ticks": 4,
+    "timeout_ticks": 12,
+    "final_game_transport_parameters": false
+  },
+  "limitations": [
+    "This is a Python design reference, not the Java implementation.",
+    "No client/server connection, damage hook, Minecraft runtime, framebuffer or multiplayer test was run.",
+    "The accepted-input predicate is simulated; no real target/range/armor/shield/invulnerability verification is claimed.",
+    "No game code or GitHub files were changed."
+  ],
+  "java_build_run": false,
+  "game_test_run": false,
+  "profile_sha256": "3ddfb380cd6e3268012c36945132a1a257f29f516d99be2d9c5ba33bf135e3b4"
+}

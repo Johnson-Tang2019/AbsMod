@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-12",
+  "tasks": [
+    "SPIRIT-01 partial",
+    "SPIRIT-02 partial"
+  ],
+  "branch": "main",
+  "head": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+  "committed": false,
+  "pushed": false,
+  "build_command": "gradlew.bat --gradle-user-home .gradle-user-home -PgameTests build",
+  "logs": {
+    "build\\spirit-validation-final.log": "f0c0da921cd125448d3f753d92e6640f6d88505e543948c607137689ad928b1e",
+    "build\\spirit-validation-complete.log": "26cf7e4d82656e3c57f7b6e3633d8007d570c0787fcc0506c222a4239e0fe766"
+  },
+  "shared_resources_identical": 62,
+  "test_classes_in_release_jars": false,
+  "localization_keys_match": true,
+  "client_launched": false,
+  "fabric_gametest_server_launched": true,
+  "neoforge_server_launched": false,
+  "game_tests": {
+    "required": 10,
+    "absmod": 9,
+    "framework": 1,
+    "result": "passed"
+  },
+  "remaining": [
+    "client visual and actual following acceptance",
+    "entity chunk reload and cross-file interrupted save recovery",
+    "automatic recall and death rules",
+    "BAL-02 attribute bonuses"
+  ],
+  "artifacts": {
+    "26.2Fabric\\build\\libs\\absmod-fabric-0.1.0+26.2.jar": "0fb3528208472b2fd44111a4e79dd9a74ab2d2a016916531f933ab0469bbf5ba",
+    "26.2NeoForge\\build\\libs\\absmod-neoforge-0.1.0+26.2.jar": "611b14733295bc9456e970daf904b99742138f8764d93596bbca8405f8d37bba"
+  }
+}

@@ -5,4 +5,22 @@
 - Keep `README.md` (English) and `README.zh-CN.md` (Simplified Chinese) in sync.
 - Implement shared behavior in `common`; register platform events in the Fabric and NeoForge modules.
 - Validate both loader builds and follow `CONTRIBUTING.md` before pushing.
-- Stage damage values remain placeholders until supplied by the user. The nine stage textures have been supplied and integrated; preserve the original artwork. Do not invent progression or stage-switching mechanics.
+- Stage values may use the PROPOSED PvE table in docs/BALANCE.md for clearly labeled prototypes; they are not final or gameplay-validated. The nine stage textures have been supplied and integrated; preserve the original artwork. Do not invent progression or stage-switching mechanics.
+- Before implementation, read `docs/STATUS.md` and all relevant specifications completely.
+- After implementation, update `docs/STATUS.md` with actual code and validation evidence; distinguish automated checks from in-game acceptance.
+- Synchronize new confirmed settings into the relevant documents; preserve CONFIRMED, PROPOSED, DRAFT and TBD distinctions. Never finalize unspecified parameters.
+
+## Specification workflow
+
+- Read `docs/README.md`, `docs/STATUS.md`, and `docs/CURRENT_TASK.md` before planning changes.
+- Read the relevant detailed specification before implementing gameplay, art, entities, progression, or combat.
+- `docs/CONTINUOUS_COMBAT.md` is the canonical hold-to-attack specification. `docs/COMBAT_INPUT.md` is a legacy pointer only.
+- Latest explicit user decisions describe desired behavior. Repository source describes implemented behavior. Actual test results describe validation. Do not substitute one for another.
+- Treat CONFIRMED as user decisions, PROPOSED/DRAFT as proposals, and TBD as unresolved. Numerical candidates may be used for clearly labeled prototypes; do not call them final balance.
+- The current repository uses ModDevGradle and Fabric Loom. Do not migrate build tools to match older chat suggestions.
+- Preserve item IDs, existing milkshakes, original textures, and existing slash effects unless the user explicitly authorizes a change.
+- Visual slash sequences are not damage combos. Do not double-trigger vanilla swing observers and custom attack acknowledgments.
+- Before updating STATUS, inspect the actual local branch and uncommitted work. Do not overwrite newer local progress with a remote-only snapshot.
+- After a task, record the changed files, task IDs, checks actually executed, remaining work, and whether Minecraft was launched. Never mark gameplay verified because a formula or geometry test passed.
+- Keep existing English identifiers/comments and synchronized English/Chinese READMEs. Do not change licensing automatically.
+- Do not commit or push unless authorized for the current task.

@@ -1,0 +1,459 @@
+{
+  "revision": "2026-09-09.continuous-combat.1",
+  "status": "PASS_FORMULA_CHECKS_ONLY",
+  "checks_count": 112,
+  "checks": [
+    {
+      "name": "stage_counts",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged_v1_normal",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged_v1_dark",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged_v1_combo",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged_v1_heavy_attack",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged_v1_not_changed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_clamp_5",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_1_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_clamp_6",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_2_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_clamp_8",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_3_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_clamp_10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_4_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_clamp_12",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_5_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_clamp_14",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_6_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_clamp_16",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_7_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_clamp_18",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_8_id",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_max_combo_total_damage",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_max_combo_attack_speed",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_ideal_base_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_ideal_max_combo_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_clamp_-10",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_clamp_0",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_clamp_1",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_clamp_20",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_clamp_999",
+      "result": "PASS"
+    },
+    {
+      "name": "normal_9_id",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_1_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_1_combo_is_disabled",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_2_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_2_combo_is_disabled",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_3_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_3_combo_is_disabled",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_4_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_4_combo_is_disabled",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_5_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_5_combo_is_disabled",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_6_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_6_combo_is_disabled",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_7_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_7_combo_is_disabled",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_8_dps",
+      "result": "PASS"
+    },
+    {
+      "name": "dark_8_combo_is_disabled",
+      "result": "PASS"
+    }
+  ],
+  "profile_sha256": "3ddfb380cd6e3268012c36945132a1a257f29f516d99be2d9c5ba33bf135e3b4",
+  "java_build_run": false,
+  "game_test_run": false,
+  "note": "Rerun using Decimal; unchanged v1 numerical rows and derived values. Not validation of engine hooks, server hit rate or GPU output."
+}

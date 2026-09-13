@@ -1,0 +1,112 @@
+{
+  "revision": "2026-09-12.repository-progress.1",
+  "date": "2026-09-12",
+  "repository": "Johnson-Tang2019/AbsMod",
+  "branch": "main",
+  "repository_observed_head": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+  "previous_delivered_head": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+  "head_changed_since_previous_package": false,
+  "new_main_commits": 0,
+  "source_package_name": "AbsMod-docs-2026-09-10.zip",
+  "path_base": "archive_root",
+  "manifest_excludes_itself": true,
+  "repository_changed_by_this_update": false,
+  "user_local_worktree_accessed": false,
+  "java_build_run": false,
+  "game_test_run": false,
+  "canonical_combat_spec": "docs/CONTINUOUS_COMBAT.md",
+  "legacy_combat_pointer": "docs/COMBAT_INPUT.md",
+  "numeric_design_changed": false,
+  "unchanged_content_files": [
+    "docs/LORE.md",
+    "docs/SPIRIT_SYSTEM.md",
+    "docs/ART_GUIDE.md",
+    "docs/BALANCE.md",
+    "docs/BALANCE_PROFILE.json",
+    "docs/CONTINUOUS_COMBAT.md",
+    "docs/COMBAT_INPUT.md",
+    "docs/BALANCE_VALIDATION.json",
+    "docs/CONTINUOUS_COMBAT_VALIDATION.json",
+    "AGENTS_APPEND.md"
+  ],
+  "historical_validation_notice": "BALANCE_VALIDATION and CONTINUOUS_COMBAT_VALIDATION are preserved historical reports. PACKAGE_VALIDATION records current offline checks.",
+  "sync_note": "Library write success is established only by upload tool receipts. The archive does not push to GitHub or alter a local project.",
+  "files": {
+    "AGENTS_APPEND.md": {
+      "bytes": 2318,
+      "sha256": "0b50b6edd8e1de4d589d8543c6f220b6fd25f3a670e1beaa686f593172572ae1"
+    },
+    "APPLY_TO_REPO.md": {
+      "bytes": 2775,
+      "sha256": "d4d3966ab0ccabc0bb7d7f87867a89a66bcc52c9b8017309fa73afb7d0d1b920"
+    },
+    "docs/ART_GUIDE.md": {
+      "bytes": 13046,
+      "sha256": "26391e9392deca3dd31c52df40ce5a20661059e27e3d7b4a240894c83b453fae"
+    },
+    "docs/BALANCE.md": {
+      "bytes": 20947,
+      "sha256": "6708904ba350c2cb9a28bf70752f149909e512d5baaa686c313ab695ae9bf8a9"
+    },
+    "docs/BALANCE_PROFILE.json": {
+      "bytes": 9408,
+      "sha256": "9f1ab4a421ee26f61c2837b886462b6e512b9b9d8ae772e556d4ea88dfb8d56e"
+    },
+    "docs/BALANCE_VALIDATION.json": {
+      "bytes": 8731,
+      "sha256": "46f608202c8b79539b5ca87f84ae42c089b01484b2b02e4c43bbd5e36ffc5173"
+    },
+    "docs/COMBAT_INPUT.md": {
+      "bytes": 805,
+      "sha256": "56dc8201965a3e5d8843382d8bec4adfe0ec0da857579cd997f0b4e1c9523f86"
+    },
+    "docs/CONTINUOUS_COMBAT.md": {
+      "bytes": 19827,
+      "sha256": "fea35dfb3a435bdfa1057d4b6f529a36ff256267d8064a2f7b0a2053e4a8d399"
+    },
+    "docs/CONTINUOUS_COMBAT_VALIDATION.json": {
+      "bytes": 5614,
+      "sha256": "bfc60d1074dfaa9d1175ad8cfd8952d562e672278efd8bfe3a3c1b3e565347ec"
+    },
+    "docs/CURRENT_TASK.md": {
+      "bytes": 7030,
+      "sha256": "d0765155d9acd97a2fd24b91a108b3ab71ba9cf01d7ee41b196f5981d4c9fac7"
+    },
+    "docs/DEVELOPMENT.md": {
+      "bytes": 24724,
+      "sha256": "261a3037ec5e33acbe0f4ffa96dd77bfe6c3fb7f9ccc9176f5b642a180a4d8ee"
+    },
+    "docs/DOCUMENT_CHANGELOG.md": {
+      "bytes": 3220,
+      "sha256": "7ed8f7896277dba95b739ad50453a6cf8099496fd474d77000000222baba9735"
+    },
+    "docs/LORE.md": {
+      "bytes": 14561,
+      "sha256": "db6d64777ca8dede6699ad054fbb9c5928fce333716af33dc3e10347a30646ec"
+    },
+    "docs/PACKAGE_VALIDATION.json": {
+      "bytes": 21095,
+      "sha256": "c4edc9efdac3ecf23ec32dbb9d79cebc04c171b097adc7e7a1b8d3334186a61c"
+    },
+    "docs/README.md": {
+      "bytes": 3338,
+      "sha256": "12466196f7b5540f9526272cca9a51313db0d186c2418182ac5cc0e327ee0b91"
+    },
+    "docs/REPOSITORY_AUDIT.json": {
+      "bytes": 13786,
+      "sha256": "d9dd1dec55666a12e425f9be15a9eecb63ce43f12542c8d43a81852bb66ed4f6"
+    },
+    "docs/REPOSITORY_AUDIT.md": {
+      "bytes": 9243,
+      "sha256": "f45684b44ad0e1824e2c8b391c2ad96f9429447497d9d6984beef8ad9aa0cdfd"
+    },
+    "docs/SPIRIT_SYSTEM.md": {
+      "bytes": 33233,
+      "sha256": "85aa649260ba59233904567754ab4b5d62b59d718cd629294b2c97d7eea85cbc"
+    },
+    "docs/STATUS.md": {
+      "bytes": 10418,
+      "sha256": "9249513984c5b4a0022129d305220ad6f6f6a4023e3308834991a5f18e5aedf1"
+    }
+  }
+}

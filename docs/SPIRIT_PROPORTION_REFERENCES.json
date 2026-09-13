@@ -1,0 +1,248 @@
+{
+  "date": "2026-09-13",
+  "read_only_source": true,
+  "references": [
+    {
+      "source_file": "C:\\Program Files\\PCL2\\.minecraft\\versions\\香草纪元：食旅纪行\\tlm_custom_pack\\touhou_little_maid-1.0.0\\assets\\touhou_little_maid\\models\\entity\\hakurei_reimu.json",
+      "sha256": "b096965e3db4c334d112d9762ea5d689bdcba55b00bad20ec7e352f3c05963b3",
+      "head_size": [
+        8,
+        8,
+        8
+      ],
+      "head_bottom_y": 18,
+      "base_height": 26,
+      "arm_size": [
+        2,
+        8,
+        2
+      ],
+      "leg_size": [
+        3,
+        9,
+        3
+      ],
+      "shoulder_pivot": [
+        3,
+        17.5,
+        0
+      ],
+      "hip_pivot": [
+        2,
+        9,
+        0
+      ],
+      "skirt_cubes": [
+        [
+          [
+            -5,
+            4,
+            -5
+          ],
+          [
+            10,
+            2,
+            10
+          ]
+        ],
+        [
+          [
+            -4.5,
+            6,
+            -4.5
+          ],
+          [
+            9,
+            2,
+            9
+          ]
+        ],
+        [
+          [
+            -4,
+            8,
+            -4
+          ],
+          [
+            8,
+            2,
+            8
+          ]
+        ],
+        [
+          [
+            -3.5,
+            10,
+            -3.5
+          ],
+          [
+            7,
+            1,
+            7
+          ]
+        ],
+        [
+          [
+            -3,
+            11,
+            -3
+          ],
+          [
+            6,
+            1,
+            6
+          ]
+        ]
+      ],
+      "scope": "base rest-pose cubes, excluding decorations, inflation and posed bounds"
+    },
+    {
+      "source_file": "C:\\Program Files\\PCL2\\.minecraft\\versions\\香草纪元：食旅纪行\\tlm_custom_pack\\touhou_little_maid-1.0.0\\assets\\touhou_little_maid\\models\\entity\\chen.json",
+      "sha256": "a402f96685ace735bc6ae53b13535b2b05f7b39959585fc6450e1beb2a849140",
+      "head_size": [
+        8,
+        8,
+        8
+      ],
+      "head_bottom_y": 18,
+      "base_height": 26,
+      "arm_size": [
+        2,
+        8,
+        2
+      ],
+      "leg_size": [
+        3,
+        9,
+        3
+      ],
+      "shoulder_pivot": [
+        3,
+        17.5,
+        0
+      ],
+      "hip_pivot": [
+        2,
+        9,
+        0
+      ],
+      "skirt_cubes": [
+        [
+          [
+            -5,
+            7,
+            -5
+          ],
+          [
+            10,
+            3,
+            10
+          ]
+        ],
+        [
+          [
+            -4,
+            10,
+            -4
+          ],
+          [
+            8,
+            3,
+            8
+          ]
+        ]
+      ],
+      "scope": "base rest-pose cubes, excluding decorations, inflation and posed bounds"
+    },
+    {
+      "source_file": "C:\\Program Files\\PCL2\\.minecraft\\versions\\香草纪元：食旅纪行\\tlm_custom_pack\\touhou_little_maid-1.0.0\\assets\\touhou_little_maid\\models\\entity\\goutokuzi_mike.json",
+      "sha256": "ac0ee381fd122eae6915b3b24fa59e119b5ea36ea68c8f330931b00be6a7a009",
+      "head_size": [
+        8,
+        8,
+        8
+      ],
+      "head_bottom_y": 18,
+      "base_height": 26,
+      "arm_size": [
+        2,
+        8,
+        2
+      ],
+      "leg_size": [
+        3,
+        9,
+        3
+      ],
+      "shoulder_pivot": [
+        3,
+        17,
+        0
+      ],
+      "hip_pivot": [
+        2,
+        9,
+        0
+      ],
+      "skirt_cubes": [
+        [
+          [
+            -4,
+            10,
+            -4
+          ],
+          [
+            8,
+            2,
+            8
+          ]
+        ],
+        [
+          [
+            0.5,
+            9,
+            -4.5
+          ],
+          [
+            3,
+            4,
+            1
+          ]
+        ]
+      ],
+      "scope": "base rest-pose cubes, excluding decorations, inflation and posed bounds"
+    }
+  ],
+  "target": {
+    "base_height": 26,
+    "head_height": 8,
+    "body_below_head": 18,
+    "leg_length": 9,
+    "leg_width": 3,
+    "arm_length": 8,
+    "head_body_ratio": 3.25
+  },
+  "previous": {
+    "base_height": 32,
+    "head_height": 8,
+    "head_body_ratio": 4,
+    "leg_length": 12,
+    "leg_width": 2.4,
+    "arm_length": 11.5
+  },
+  "validation": {
+    "both_loader_builds": "passed",
+    "log": "build/spirit-proportions-validation.log",
+    "geometry_checks": "passed, including head 8, leg length 9, leg width 3 and post-animation head/body/hip pivots",
+    "browser_views": [
+      "front",
+      "back",
+      "three-quarter"
+    ],
+    "source_files_unchanged": true,
+    "shared_resource_count": 65,
+    "minecraft_launched": false,
+    "committed": false,
+    "pushed": false
+  }
+}

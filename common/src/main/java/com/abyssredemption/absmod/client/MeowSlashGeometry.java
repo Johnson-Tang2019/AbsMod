@@ -29,11 +29,11 @@ public final class MeowSlashGeometry {
         float fade = (0.85F + 0.15F * Math.min(slash.age(), 1.0F))
                 * (1.0F - tail * tail * (3.0F - 2.0F * tail));
         // Saturated cherry-blossom pink remains distinct beneath the pale luminous edge.
-        ribbon(slash, progress, fade * 0.36F, 1.60, 0.48, 0.0, 0xFF52A0, sink);
+        ribbon(slash, progress, fade * 0.24F, 1.60, 0.78, 0.0, 0xFF52A0, sink);
         ribbon(slash, progress, fade * 0.72F, 1.80, 0.28, 0.6, 0xFF70B5, sink);
         ribbon(slash, progress, fade, 1.96, 0.085, 0.0, 0xFFD1E8, sink);
         // An expanding halo and two raised crossing ribbons give the sweep volume.
-        ribbon(slash, progress, fade * 0.24F, 2.05 + progress * 0.35, 0.55, 0.4, 0xFF4599, sink);
+        ribbon(slash, progress, fade * 0.16F, 2.05 + progress * 0.35, 0.88, 0.4, 0xFF4599, sink);
         ribbon(slash, progress, fade * 0.72F, 2.16, 0.045, 2.2, 0xFFB8DA, sink);
         ribbon(slash, progress, fade * 0.48F, 1.76, 0.15, 4.8, 0xFF77BA, sink);
         for (int i = 0; i < 6; i++) {

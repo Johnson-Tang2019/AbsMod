@@ -19,6 +19,7 @@ public final class MeowSlashEffects {
     public static final double MAX_DISTANCE = 32.0;
     private final Map<UUID, SlashSwingTracker> swings = new HashMap<>();
     private final List<ActiveSlash> active = new ArrayList<>();
+    private final java.util.LinkedHashSet<UUID> confirmations = new java.util.LinkedHashSet<>();
     private ClientLevel level;
     private int ticks;
 
@@ -27,6 +28,7 @@ public final class MeowSlashEffects {
             level = client.level;
             active.clear();
             swings.clear();
+            confirmations.clear();
             ticks = 0;
         }
         if (level == null || client.isPaused()) {
@@ -38,6 +40,8 @@ public final class MeowSlashEffects {
         for (var player : level.players()) {
             present.add(player.getUUID());
             SlashSwingTracker tracker = swings.computeIfAbsent(player.getUUID(), key -> new SlashSwingTracker());
+            if (BladeCombatClient.isAvailable() && player.getMainHandItem().getItem() instanceof MeowBladeItem
+                    && player.swingingArm != InteractionHand.OFF_HAND) { continue; }
             boolean started = tracker.update(player.swinging, player.swingTime);
             if (!started || player.isSpectator() || !player.isAlive()) {
                 continue;
@@ -46,11 +50,38 @@ public final class MeowSlashEffects {
             if (!(player.getItemInHand(hand).getItem() instanceof MeowBladeItem blade)) {
                 continue;
             }
+            emit(client, player, blade, hand, tracker);
+
+        }
+        swings.keySet().retainAll(present);
+    }
+
+    public void confirm(Minecraft client, com.abyssredemption.absmod.network.BladeSwingPayload payload) {
+        if (level != client.level) {
+            level = client.level;
+            active.clear();
+            swings.clear();
+            confirmations.clear();
+            ticks = 0;
+        }
+        if (level == null || !confirmations.add(payload.attackId())) { return; }
+        if (confirmations.size() > 256) { confirmations.removeFirst(); }
+        var player = level.getPlayerByUUID(payload.playerId());
+        if (player == null || !(player.getMainHandItem().getItem() instanceof MeowBladeItem blade)) { return; }
+        player.swingingArm = InteractionHand.MAIN_HAND;
+        player.swinging = true;
+        player.swingTime = 0;
+        emit(client, player, blade, InteractionHand.MAIN_HAND,
+                swings.computeIfAbsent(player.getUUID(), key -> new SlashSwingTracker()));
+    }
+
+    private void emit(Minecraft client, net.minecraft.world.entity.player.Player player, MeowBladeItem blade,
+                      InteractionHand hand, SlashSwingTracker tracker) {
             // Advance even when culled so moving the camera does not restart the sequence.
             SlashMotion motion = tracker.takeMotion();
             if (client.getCameraEntity() == null
                     || player.distanceToSqr(client.getCameraEntity()) > MAX_DISTANCE * MAX_DISTANCE) {
-                continue;
+                return;
             }
             int direction = player.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
             if (hand == InteractionHand.OFF_HAND) {
@@ -69,8 +100,6 @@ public final class MeowSlashEffects {
             }
             active.add(new ActiveSlash(origin, tiltedRight, forward, tiltedUp,
                     1.20F + blade.stage().number() * 0.025F, motion.direction(direction), ticks));
-        }
-        swings.keySet().retainAll(present);
     }
 
     public List<MeowSlashGeometry.Slash> extract(Vec3 camera, float partialTick) {

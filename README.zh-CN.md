@@ -1,5 +1,8 @@
 # Ab's Mod
 
+剑灵现已采用独立 Bedrock 1.12 几何源码适配模块和 Minecraft 26.2 模型提交路径。正式路径支持自由骨骼层级和模型声明的贴图尺寸；旧人形/128×64皮肤只作失败回退。本批包含原创十骨骼测试模型/PNG、行走/转头/尾摆和资源加载恢复。双端构建与CPU检查通过，Fabric服务端测试通过且未加载本模组客户端模型类。NeoForge客户端资源加载成功，游戏世界内显示、动画和F3+T视觉验收仍待完成。旧HTML预览仍是之前借用的模型。详见[实现与验证](docs/IMPLEMENTATION_BEDROCK_RENDERER.md)和[源码/许可记录](client-bedrock/UPSTREAM.md)。
+
+
 [English](README.md) | 简体中文
 
 包名：`com.abyssredemption.absmod`，模组 ID：`absmod`。
@@ -45,7 +48,9 @@ Linux 或 macOS 下将 `./gradlew.bat` 换成 `./gradlew`。
 - 共九个独立阶段，显示为“喵刀·1阶”至“喵刀·9阶”，按阶段顺序加入战斗栏。
 - 一阶段保留 ID `absmod:meow_blade`；二至九阶段为 `absmod:meow_blade_stage_2` 至 `absmod:meow_blade_stage_9`。
 - 各阶段的独立伤害参数集中在 `common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java`。
-  参数表示玩家默认基础属性下的总攻击伤害。具体平衡数值尚未提供，九阶段目前均以 7 占位，攻速均为 1.6。
+  参数表示玩家默认基础属性下的总值。已采用 PROPOSED PvE 候选表：
+  伤害 **7/8/9/10/12/14/16/18/22**，总攻速 **1.8/2/2.2/2.5/2.8/3.2/3.6/4/5**。
+  这些是原型测试值，尚非最终平衡；连击加成及高速满威力命中尚未实现。
 - 耐久、附魔能力和修理材料也沿用钻石剑，加入 `minecraft:swords` 标签。
 - 可从创造模式战斗栏取得，或执行 `/give @s absmod:meow_blade`。
 - 例如 `/give @s absmod:meow_blade_stage_9` 可取得九阶喵刀。
@@ -104,7 +109,7 @@ Linux 或 macOS 下将 `./gradlew.bat` 换成 `./gradlew`。
 | 命令 | 用途 |
 | --- | --- |
 | `/absmod` 或 `/absmod help` | 查看命令帮助 |
-| `/absmod stages` | 列出九阶段、ID、基础伤害和攻速，并提示占位状态 |
+| `/absmod stages` | 列出九阶段、ID、基础伤害和攻速，并提示候选测试状态 |
 | `/absmod give <targets> <stage>` | 给每个目标发放一把指定阶段喵刀 |
 | `/absmod kit <targets>` | 给每个目标发放九阶段各一把的测试套装 |
 | `/absmod milkshakes <targets>` | 给每个目标发放四种奶昔各一杯 |
@@ -172,3 +177,80 @@ Linux 或 macOS 下将 `./gradlew.bat` 换成 `./gradlew`。
 - [Fabric 26.2 示例](https://github.com/FabricMC/fabric-example-mod/tree/26.2)
 
 依赖版本在根目录 `gradle.properties` 和 `build.gradle` 中固定。
+
+## 器灵身份与持久化原型
+
+管理员可对目标玩家主手的喵刀进行测试：
+
+```text
+/absmod soul init <玩家>
+/absmod soul inspect <玩家>
+/absmod soul affection set <玩家> <数值>
+/absmod soul affection add <玩家> <数值>
+```
+
+初始化必须明确执行，并为本次测试将目标玩家记录为主人，不代表已实现自动绑定玩法。刀上只保存器灵 UUID；服务端档案保存主人、路线、阶段、可选好感、形态、格式版本和修订号。好感初始未设置，测试命令接受有限数值，未擅自确定正式初始值或范围。查询不会初始化刀；档案缺失或无法读取时会拒绝操作，不会自动重建。
+
+重复身份诊断覆盖在线背包、末影箱和已加载掉落物，阻止相关测试命令；尚不扫描离线玩家、未加载或嵌套容器，也没有全局战斗锁。阶段迁移当前只生成方案，保留身份和好感并采用目标物品默认属性，不实际升级。详见[当前实现及游戏内验收清单](docs/IMPLEMENTATION_BATCH_1.md)。
+
+粉色刀光已扩大半透明光幕和外层光晕，降低外层不透明度并保留亮芯；游戏内视觉验收待完成。
+
+## 喵刀连续攻击
+
+主手持喵刀，按住游戏中绑定的攻击键，即可沿当前准星方向连续攻击。服务端按实际攻速控制出刀；单击和长按共享一个预算。松键、界面、失焦、瞄准方块/挖掘、使用物品、死亡、换物品/世界都会停止会话。中断后需松开并重新按下。
+
+授权主攻击采用满攻击强度，并局部绕过目标受伤窗口，保留正常近战伤害流程。其他武器、额外伤害和原版受伤冷却历史保持原有行为。服务端确认后播放原有粉色刀光，并按 attackId 去重。主手持喵刀且连斩通道可用时，隐藏原版蓄力指示。
+
+`/absmod combat probe @s true` 开启日志，`false` 关闭日志，`/absmod combat inspect @s` 查看会话状态。这些命令不切换自动伤害，也不重置出刀恢复。日志统计的是授权动作，不是成功命中。
+
+双加载器构建与独立逻辑检查通过。游戏内伤害、真实按键、盾牌/护甲交互和多人刀光尚未实测。详见[实现与验收清单](docs/IMPLEMENTATION_AUTOMATIC_DAMAGE.md)。
+
+## 创造模式物品栏
+
+打开 **Ab's Mod** 专属标签页（喵刀图标），即可按顺序找到九阶喵刀和四种奶昔。物品也保留在原版战斗、食物与饮品分类中。
+
+## 战斗运行时测试
+
+使用 JDK 25 执行 `./gradlew.bat --gradle-user-home .gradle-user-home -PgameTests :fabric:runGameTest`。`-PgameTests build` 会同时运行这些测试和双加载器构建。测试模组独立，不进入发布 JAR。
+
+八项 AbsMod 服务器世界测试覆盖连续满强度伤害、200 游戏 tick 内 60 次实际命中、原版蓄力、护甲、无敌保护、普通伤害冷却历史、主命中确认（含吸收值）和创造标签注册/图标。受控测试使用显式属性的模拟玩家；不代表真实按键、选目标/网络、盾牌、多人视觉、NeoForge 运行时或最终平衡已验收。详见[运行时验证](docs/RUNTIME_VALIDATION.md)。
+
+## 连击状态原型（BAL-02）
+
+服务端授权的主攻击实际扣除目标生命或吸收值后，增加一层短期连击。上限采用 PROPOSED 平衡表（5～20 层）；空挥和免疫命中不刷新计时。松键保留层数，最后有效命中后第 65 游戏 tick 首次减层，之后每 5 tick 减一层。换刀、改变器灵引用/槽位/世界、死亡或断线会清空短期状态。
+
+使用 `/absmod combat inspect @s` 查看 `comboStacks`；`/absmod combat probe @s true` 记录攻击前后层数及有效主命中结果。**尚未应用连击增伤和攻速加成。** 本批先完成命中确认和状态清理，再接属性增益。目前不需要新贴图。详见[实现记录](docs/IMPLEMENTATION_COMBO_STATE.md)。
+
+## 喵娘剑灵原型
+
+第一版手动剑灵已使用粉白占位皮肤，带猫耳、轻摆尾巴、人形行走与主人跟随。显现期间保留原剑完整数据。主手拿喵刀，由管理员执行：
+
+```text
+/absmod soul init @s
+/absmod spirit manifest @s
+/absmod spirit recall @s @e[type=absmod:blade_spirit,sort=nearest,limit=1] 7
+```
+
+槽位 7 是第八个快捷栏槽，必须为空；允许槽位 0～35。多只剑灵测试时，请用显现返回的实体 UUID 替换选择器。尚未实现自动召回、升级、好感增长或死亡扣罚。请在测试世界使用：中断存档恢复和全局重复检查尚未完成。生命、移动和跟随距离为测试数值，原型设为无敌。
+
+新增第九项 AbsMod 服务器世界测试，覆盖显现/召回、原剑数据保留及拒绝操作；含一项框架测试共十项通过。双加载器构建和 SavedData 文件重读检查通过；未启动客户端或 NeoForge 服务器，渲染与实际跟随仍需游戏内验收。详见[实现记录](docs/IMPLEMENTATION_SPIRIT_PROTOTYPE.md)和[贴图/模型需求](docs/SPIRIT_ART_REQUIREMENTS.md)。
+
+## 花饰长发剑灵模型
+
+普通路线剑灵现已按提供的粉白猫娘原画制作模型：分层长发、尖猫耳、花饰/水晶、外扩裙摆及五段弯尾。33 个立体部件通过逐面 UV 使用新排布图集。原画与旧占位资源均保留；图集是 AI 辅助的美术适配，并非逐像素裁切重排。
+
+可[旋转查看模型](art/blade_spirit/preview.html)，或查看[可编辑几何与 OBJ 导出](art/blade_spirit/README.md)。双加载器构建、几何/UV/动画重置检查和浏览器视觉检查已通过。本次美术改动未启动 Minecraft，光照和运动穿插仍需客户端验收。详见[验证记录](docs/SPIRIT_MODEL_VALIDATION.json)。
+
+## 剑灵柔和轮廓修订
+
+最新版把方盒头、直板头发和整块裙子改为收下颌脸型、弯曲收尖发束、收腰身体、圆袖/腿、钟形裙摆及连续弯尾，共 1768 四边面。现有图集不变。双加载器构建与几何/UV/动画检查通过，已检查浏览器正面、背面和斜侧视图。Minecraft 光照与走动效果仍待游戏内验收。[验证记录](docs/SPIRIT_CURVED_VALIDATION.json)。
+
+## 按整合包女仆模型实测比例
+
+最新版已读取指定本地整合包内橙、豪德寺三花和博丽灵梦模型作尺寸参考：基础总高 26、头高 8（3.25 头身）、腿长 9、腿宽 3、手臂长 8。头发、裙摆和关节同步调整，原图与图集不变。双加载器构建、几何/比例/动画检查及浏览器视图检查通过；未启动 Minecraft。[测量与验证记录](docs/SPIRIT_PROPORTION_REFERENCES.json)。
+
+侧视修订补足头和躯干厚度，将花饰连接到太阳穴附近，并压平正面五官区域，避免眼睛绕到侧面。双加载器构建与模型检查通过（`build/spirit-side-validation.log`）；目前仍是草模，未作 Minecraft 视觉验收。
+
+## 临时使用现成女仆模型
+
+当前剑灵改用指定车万女仆包中的橙及原配贴图，自制粉白资源保留。已适配旋转方向，闭眼覆盖层在表情动画接入前暂不显示；保留人形走路/转头与显现/召回。详见[第三方来源](art/blade_spirit/BORROWED_MODEL_NOTICE.md)。双加载器构建与模型检查通过，Minecraft 客户端验收仍待完成。

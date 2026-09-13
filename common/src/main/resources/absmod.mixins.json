@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.abyssredemption.absmod.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "PlayerAttackMixin",
+    "LivingDamageMixin",
+    "ServerAttackPacketMixin"
+  ],
+  "client": [
+    "client.MinecraftAttackMixin",
+    "client.BladeAttackIndicatorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

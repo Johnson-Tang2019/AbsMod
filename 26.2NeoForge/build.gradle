@@ -15,3 +15,16 @@ processResources {
     inputs.property 'version', project.version
     filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }
 }
+
+// ModDevGradle 2.0.146 leaves apostrophes unquoted in Java argument files.
+// A checkout such as Ab'sMod otherwise resolves its asset directory as D:\Ab.
+tasks.named('prepareClientRun') {
+    doLast {
+        ['clientRunProgramArgs.txt', 'clientRunVmArgs.txt'].each { name ->
+            def argsFile = layout.buildDirectory.file("moddev/${name}").get().asFile
+            argsFile.setText(argsFile.readLines('UTF-8').collect { line ->
+                line.contains("'") && !line.startsWith('"') ? '"' + line + '"' : line
+            }.join(System.lineSeparator()) + System.lineSeparator(), 'UTF-8')
+        }
+    }
+}

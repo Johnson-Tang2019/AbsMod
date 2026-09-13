@@ -25,6 +25,7 @@ def verifyCommands = tasks.register('verifyCommands', JavaExec) {
     dependsOn tasks.named('verificationClasses')
     classpath = sourceSets.verification.runtimeClasspath
     mainClass = 'com.abyssredemption.absmod.command.CommandVerification'
+    systemProperty 'absmod.balanceProfile', rootProject.file('docs/BALANCE_PROFILE.json').absolutePath
     javaLauncher = javaToolchains.launcherFor {
         languageVersion = JavaLanguageVersion.of(25)
     }
@@ -32,3 +33,13 @@ def verifyCommands = tasks.register('verifyCommands', JavaExec) {
     doFirst { workingDir.mkdirs() }
 }
 tasks.named('check') { dependsOn verifyCommands }
+
+// Opt-in world tests use a separate mod and never enter release artifacts.
+if (providers.gradleProperty('gameTests').isPresent()) {
+    fabricApi.configureTests {
+        createSourceSet = true
+        modId = 'absmod_test'
+        enableGameTests = true
+        enableClientGameTests = false
+    }
+}

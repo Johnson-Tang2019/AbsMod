@@ -1,0 +1,285 @@
+{
+  "schema_version": 2,
+  "document_revision": "2026-09-12.repository-progress.1",
+  "audit_date": "2026-09-12",
+  "repository": "Johnson-Tang2019/AbsMod",
+  "branch": "main",
+  "head_sha": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+  "head_commit_date_utc": "2026-09-09T01:35:52Z",
+  "previous_delivered_head_sha": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+  "new_main_commits_since_previous_delivery": 0,
+  "head_commit_subject": "feat: add pink Meow Blade slash effects with six swing motions",
+  "head_tree_sha": "84e811a4a0bdc32d685530b7a132c64a129dcc3b",
+  "observations": {
+    "repository_docs_request_http_status": 404,
+    "compare_status": "identical",
+    "ahead_by": 0,
+    "behind_by": 0,
+    "changed_files": 0,
+    "branches_returned": [
+      "main"
+    ],
+    "github_actions_runs_for_head": null,
+    "combined_status_entries": null,
+    "ci_checked_this_update": false,
+    "build_pass_evidence": "UNCHANGED_HEAD_COMMIT_MESSAGE_REPORT; NOT_RERUN",
+    "in_game_acceptance": "NO_NEW_RESULTS; PREVIOUS_REPOSITORY_REPORT_PENDING"
+  },
+  "verification_this_update": {
+    "remote_read": true,
+    "selected_source_review": true,
+    "java_build": false,
+    "java_verification": false,
+    "minecraft_runtime": false,
+    "gpu_visual": false,
+    "user_local_worktree_access": false,
+    "repository_write": false
+  },
+  "scope_limits": [
+    "Only the visible remote repository was inspected; local or unpushed work is unknown.",
+    "Main HEAD and identical compare, one returned branch, docs lookup, stage and item files reread this update.",
+    "Other source-file evidence retained from the same immutable HEAD inspected on 2026-09-10; no broad source reread this update.",
+    "No Java build, Java tests, Minecraft runtime, GPU, or input simulation was run.",
+    "No repository or local project writes. A document package is not evidence of GitHub synchronization."
+  ],
+  "source_files": [
+    {
+      "id": "R01",
+      "path": "build.gradle",
+      "git_blob_sha": "c875785d7393d32102be187c88103c257b35dae2",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/build.gradle",
+      "observation": "ModDevGradle 2.0.146 / Loom 1.17.20 / Java 25; shared source injection; root build delegates both loaders.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R02",
+      "path": "settings.gradle",
+      "git_blob_sha": "cfccf8957ec02a56b4b12c5c9bf9c60eb1ddf5de",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/settings.gradle",
+      "observation": "Only :neoforge and :fabric are included; common is a source directory.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R03",
+      "path": "gradle.properties",
+      "git_blob_sha": "1469c1c7fbf569f29e9765c20317512b65d0b63a",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/gradle.properties",
+      "observation": "MC26.2 and pinned loaders, mod 0.1.0, configuration cache false.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R04",
+      "path": "AGENTS.md",
+      "git_blob_sha": "2f5430aec2b0792e00abb199743d4089634be968",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/AGENTS.md",
+      "observation": "English technical names/comments, bilingual READMEs, preserve textures and do not invent progression.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R05",
+      "path": "README.zh-CN.md",
+      "git_blob_sha": "c4d4a698a4a03c547c0d510aef55bfb8b1047b42",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/README.zh-CN.md",
+      "observation": "Nine swords/four milkshakes/six recipes; texture and slash parameters; runtime acceptance pending. Metadata and quoted sections read, not asset remeasurement.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R06",
+      "path": "common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java",
+      "git_blob_sha": "d99a23418045587b8fa991d6a939982ffbd48d22",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java",
+      "observation": "Nine entries all attackDamage 7.0F; no stage speed field.",
+      "read_scope": "REREAD_2026_09_12",
+      "evidence_date": "2026-09-12"
+    },
+    {
+      "id": "R07",
+      "path": "common/src/main/java/com/abyssredemption/absmod/item/MeowBladeItem.java",
+      "git_blob_sha": "b3afd57e742596571787ae306b74687f0d4e2876",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/main/java/com/abyssredemption/absmod/item/MeowBladeItem.java",
+      "observation": "Reread: total-damage conversion and -2.4F speed modifier; no spirit/combo logic in this item class.",
+      "read_scope": "REREAD_2026_09_12",
+      "evidence_date": "2026-09-12"
+    },
+    {
+      "id": "R08",
+      "path": "common/src/main/java/com/abyssredemption/absmod/client/MeowSlashEffects.java",
+      "git_blob_sha": "7610f9dd857f7aeaaca70c9613404403e8449aef",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/main/java/com/abyssredemption/absmod/client/MeowSlashEffects.java",
+      "observation": "Observes swinging/swingTime; 32 effect and 32 block caps; per-player visual sequence and world/pause cleanup.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R09",
+      "path": "common/src/main/java/com/abyssredemption/absmod/client/SlashSwingTracker.java",
+      "git_blob_sha": "a39a6bb7c732c8c9e84fd4510b807f04b6827fd4",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/main/java/com/abyssredemption/absmod/client/SlashSwingTracker.java",
+      "observation": "Visual swing restart detection and motion cycling, not attack cadence or damage.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R10",
+      "path": "26.2Fabric/src/main/java/com/abyssredemption/absmod/fabric/AbsModFabricClient.java",
+      "git_blob_sha": "2f0a3133f4f80e662af73cdba2145979a0385a83",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/26.2Fabric/src/main/java/com/abyssredemption/absmod/fabric/AbsModFabricClient.java",
+      "observation": "Registers client tick/extraction/submission callbacks.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R11",
+      "path": "26.2NeoForge/src/main/java/com/abyssredemption/absmod/neoforge/AbsModNeoForgeClient.java",
+      "git_blob_sha": "bc7c21498ff285655ffdec387aaf45d6e6aeb586",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/26.2NeoForge/src/main/java/com/abyssredemption/absmod/neoforge/AbsModNeoForgeClient.java",
+      "observation": "Client-dist Mod with tick/extraction/geometry callbacks.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R12",
+      "path": "26.2Fabric/src/main/java/com/abyssredemption/absmod/fabric/AbsModFabric.java",
+      "git_blob_sha": "ac072a19d55431dce1dfebe4543b0c5ecd35d512",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/26.2Fabric/src/main/java/com/abyssredemption/absmod/fabric/AbsModFabric.java",
+      "observation": "Registers sword and milkshake variants, creative tabs and shared commands.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R13",
+      "path": "26.2NeoForge/src/main/java/com/abyssredemption/absmod/registry/ModItems.java",
+      "git_blob_sha": "412d18015c295fc4d5cd4f31be0ec6dcc957e667",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/26.2NeoForge/src/main/java/com/abyssredemption/absmod/registry/ModItems.java",
+      "observation": "Deferred sword and milkshake registration only.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R14",
+      "path": "26.2Fabric/build.gradle",
+      "git_blob_sha": "c2b94e28791680ca12fb5d99d3f7f4d8ceed5767",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/26.2Fabric/build.gradle",
+      "observation": "check depends on verifyCommands; verification source set and JavaExec.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R15",
+      "path": "common/src/verification/java/com/abyssredemption/absmod/command/CommandVerification.java",
+      "git_blob_sha": "ca8d6035abdcd3fc11af187738728b189f8fa96f",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/verification/java/com/abyssredemption/absmod/command/CommandVerification.java",
+      "observation": "Calls MilkshakeVerification and SlashVerification; command grammar/permissions; not an actual game server.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    },
+    {
+      "id": "R16",
+      "path": "common/src/verification/java/com/abyssredemption/absmod/client/SlashVerification.java",
+      "git_blob_sha": "75dfe6dd96cb20f7b6d97b64592f3b700c2ed876",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/verification/java/com/abyssredemption/absmod/client/SlashVerification.java",
+      "observation": "Six visual motions, idle persistence, independent players, mirror/dedup/restart, geometry budget, fading. Not GPU acceptance.",
+      "read_scope": "RETAINED_SAME_COMMIT_2026_09_10_AUDIT",
+      "evidence_date": "2026-09-10"
+    }
+  ],
+  "api_evidence": [
+    {
+      "id": "N01",
+      "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/git/ref/heads/main",
+      "date": "2026-09-12",
+      "result": {
+        "sha": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f"
+      }
+    },
+    {
+      "id": "N02",
+      "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/compare/2e420203619b5d9cf0f1af7fbc5135ff8858f34f...2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+      "date": "2026-09-12",
+      "result": {
+        "status": "identical",
+        "ahead_by": 0,
+        "behind_by": 0,
+        "total_commits": 0,
+        "files": []
+      }
+    },
+    {
+      "id": "N03",
+      "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/branches?per_page=100",
+      "date": "2026-09-12",
+      "result": [
+        {
+          "name": "main",
+          "sha": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f"
+        }
+      ]
+    },
+    {
+      "id": "N04",
+      "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/contents/docs?ref=2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+      "date": "2026-09-12",
+      "result": {
+        "status": 404,
+        "message": "Not Found"
+      }
+    },
+    {
+      "id": "N05",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java",
+      "date": "2026-09-12",
+      "result": {
+        "blob_sha": "d99a23418045587b8fa991d6a939982ffbd48d22",
+        "stages": 9,
+        "all_stage_damage": 7.0,
+        "stage_speed_field": false
+      }
+    },
+    {
+      "id": "N06",
+      "url": "https://github.com/Johnson-Tang2019/AbsMod/blob/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/common/src/main/java/com/abyssredemption/absmod/item/MeowBladeItem.java",
+      "date": "2026-09-12",
+      "result": {
+        "blob_sha": "b3afd57e742596571787ae306b74687f0d4e2876",
+        "sword_attack_speed_modifier": -2.4
+      }
+    }
+  ],
+  "historical_ci_observations": {
+    "date": "2026-09-10",
+    "head_sha": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+    "github_actions_runs_for_head": 0,
+    "combined_status_entries": 0,
+    "evidence": "Previous package audit, not queried this update."
+  },
+  "previous_api_evidence": {
+    "date": "2026-09-10",
+    "entries": [
+      {
+        "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/git/ref/heads/main",
+        "result": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f"
+      },
+      {
+        "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/git/commits/2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+        "result": "Commit metadata and reported build status read."
+      },
+      {
+        "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/contents/docs?ref=2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+        "http_status": 404
+      },
+      {
+        "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/actions/runs?head_sha=2e420203619b5d9cf0f1af7fbc5135ff8858f34f&per_page=10",
+        "total_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/Johnson-Tang2019/AbsMod/commits/2e420203619b5d9cf0f1af7fbc5135ff8858f34f/status",
+        "result": "Connector combined-status entries empty."
+      }
+    ]
+  }
+}

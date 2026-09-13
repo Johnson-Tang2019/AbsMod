@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "absmod_test",
+  "version": "1.0.0",
+  "name": "Ab's Mod Runtime Tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "com.abyssredemption.absmod.gametest.BladeCombatGameTests",
+      "com.abyssredemption.absmod.gametest.SpiritGameTests"
+    ]
+  },
+  "depends": {
+    "absmod": "*",
+    "fabric-gametest-api-v1": "*"
+  }
+}

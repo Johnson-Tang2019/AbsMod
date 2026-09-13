@@ -22,6 +22,15 @@ import net.minecraft.world.item.Item;
 public final class AbsModFabric implements ModInitializer {
     @Override
     public void onInitialize() {
+        FabricCombatProbe.register();
+        var spiritType = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+                com.abyssredemption.absmod.entity.SpiritEntityType.KEY,
+                com.abyssredemption.absmod.entity.SpiritEntityType.create());
+        net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry.register(spiritType,
+                com.abyssredemption.absmod.entity.BladeSpiritEntity.attributes());
+        Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE,
+                com.abyssredemption.absmod.spirit.BladeSoulComponents.ID,
+                com.abyssredemption.absmod.spirit.BladeSoulComponents.REFERENCE);
         List<Item> meowBlades = Arrays.stream(MeowBladeStage.values())
                 .map(AbsModFabric::registerMeowBlade)
                 .toList();
@@ -31,6 +40,11 @@ public final class AbsModFabric implements ModInitializer {
                 .map(AbsModFabric::registerMilkshake).toList();
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS)
                 .register(entries -> milkshakes.forEach(item -> entries.accept(item)));
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB,
+                com.abyssredemption.absmod.item.ModCreativeTab.ID,
+                com.abyssredemption.absmod.item.ModCreativeTab.create(
+                        net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab.builder(),
+                        stage -> meowBlades.get(stage.number() - 1), variant -> milkshakes.get(variant.ordinal())));
         CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) ->
                 ModCommands.register(dispatcher, stage -> meowBlades.get(stage.number() - 1),
                         variant -> milkshakes.get(variant.ordinal())));

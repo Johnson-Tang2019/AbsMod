@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-10",
+  "head": "2e420203619b5d9cf0f1af7fbc5135ff8858f34f",
+  "worktree_changes_uncommitted": true,
+  "scope": [
+    "BAL-01 proposed stage attributes",
+    "AUTO-01/AUTO-02 diagnostic input and cadence"
+  ],
+  "build_command": "./gradlew.bat --gradle-user-home .gradle-user-home build",
+  "build_result": "PASS both loaders",
+  "automated_verification": "PASS shared Java command/milkshake/slash/soul/combat checks",
+  "packaged_resources": "PASS byte comparison of all shared resources in both JARs",
+  "original_nine_blade_textures": "PASS byte comparison with HEAD",
+  "git_diff_check": "PASS",
+  "minecraft_client_launched": false,
+  "dedicated_server_launched": false,
+  "runtime_networking_tested": false,
+  "continuous_damage_implemented": false,
+  "artifacts": [
+    {
+      "path": "26.2Fabric/build/libs/absmod-fabric-0.1.0+26.2.jar",
+      "sha256": "e66df09986cd317a688eeacc94cdea43c8a7b2015d275391b982abcb53da15ac"
+    },
+    {
+      "path": "26.2NeoForge/build/libs/absmod-neoforge-0.1.0+26.2.jar",
+      "sha256": "b853ea1ccc74db95c5c32b3eb99507929eb2055765fb1b74a922a7d53c7f24ac"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-13",
+  "task": "ART-02 normal-route floral model",
+  "source": "art/blade_spirit/reference.png",
+  "source_sha256": "ac0839c4e57ba17a7e8ac61ff8efcb38941674dbe9ee75b9c4e751a3bb79aa71",
+  "source_preserved": true,
+  "atlas": "common/src/main/resources/assets/absmod/textures/entity/blade_spirit/floral_atlas.png",
+  "atlas_method": "Image-generation edit from user reference; not a pixel-exact rearrangement",
+  "model": "common/src/main/resources/assets/absmod/models/entity/blade_spirit.json",
+  "cube_count": 33,
+  "quad_count": 198,
+  "preview": "art/blade_spirit/preview.html",
+  "client_launched": false,
+  "server_launched_this_task": false,
+  "browser_preview_checked": [
+    "front",
+    "back",
+    "three-quarter"
+  ],
+  "build_log": "build/spirit-floral-validation.log",
+  "build_result": "passed",
+  "geometry_checks": "actual JSON bake, normals, UV range, named bones, repeated animation reset passed",
+  "commit_or_push": false,
+  "atlas_sha256": "0cf0c4d24c96d55f62ba74d5c034ec7b60f673b82f3855721742b9d227a767f5",
+  "atlas_size": [
+    1254,
+    1254
+  ],
+  "atlas_alpha": "RGB opaque; accessory geometry samples opaque interior areas, never checkerboard backgrounds",
+  "matching_shared_resources": 65
+}
