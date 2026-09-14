@@ -63,6 +63,9 @@ public final class BedrockGeometry {
             }
         }
         List<ModelPart.Cube> cubes = new ArrayList<>();
+        if (bone.has("poly_mesh")) {
+            cubes.addAll(BedrockPolyMesh.bake(bone.getAsJsonObject("poly_mesh"), pivot, width, height));
+        }
         var source = bone.has("cubes") ? bone.getAsJsonArray("cubes") : new JsonArray();
         if (source.size() > 512) { throw new IllegalArgumentException("Too many cubes"); }
         int index = 0;

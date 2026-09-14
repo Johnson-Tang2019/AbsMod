@@ -1,5 +1,7 @@
 # Ab's Mod
 
+当前剑灵已改为原创 Bedrock 曲面模型并重绘粉白图集。圆润脸颊、收尖发束、外扩裙摆和弯曲尾巴替换方体测试轮廓，保留行走/转头/尾摆和失败回退。查看[当前预览](art/blade_spirit/preview.html)与[美术修订记录](docs/IMPLEMENTATION_ETHEREAL_SPIRIT.md)。
+
 剑灵现已采用独立 Bedrock 1.12 几何源码适配模块和 Minecraft 26.2 模型提交路径。正式路径支持自由骨骼层级和模型声明的贴图尺寸；旧人形/128×64皮肤只作失败回退。本批包含原创十骨骼测试模型/PNG、行走/转头/尾摆和资源加载恢复。双端构建与CPU检查通过，Fabric服务端测试通过且未加载本模组客户端模型类。NeoForge客户端资源加载成功，游戏世界内显示、动画和F3+T视觉验收仍待完成。旧HTML预览仍是之前借用的模型。详见[实现与验证](docs/IMPLEMENTATION_BEDROCK_RENDERER.md)和[源码/许可记录](client-bedrock/UPSTREAM.md)。
 
 

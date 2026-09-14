@@ -1,5 +1,14 @@
 # Ab's Mod 美术与生图执行指南
 
+## 2026-09-14：粉白曲面剑灵与重绘贴图（ART-02）
+
+CONFIRMED：用户要求重绘贴图，人物不要原版方正模型。以本地 main / 8a035c5 为基线，开工前工作树干净。
+
+本批新增原创21骨骼/2314多边面模型 blade_spirit_ethereal.geo.json、AI重绘1254×1254图集 ethereal_atlas.png；脸部、长发、裙摆、袖腿和尾巴为真实多边面曲面。Bedrock适配模块新增有限 poly_mesh 子集（索引三角/四边面），仍采用26.2模型提交路径，不依赖GeckoLib/YSM。保留旧资产/占位失败回退及服务端行为。
+
+双加载器 build 与实际资源/法线/UV/姿态隔离/错误索引及加载恢复检查通过，日志 build/ethereal-final-build.log。浏览器正/背/斜/侧面检查（开启背面剔除）已执行，预览现在对应当前新模型。未启动Minecraft，本轮不声称游戏内光照、动画和多人验收。未提交/推送。文件清单与剩余项见 [修订记录](IMPLEMENTATION_ETHEREAL_SPIRIT.md)。
+
+
 ## 最新模型路线（CONFIRMED，2026-09-13）
 
 正式外观采用 BedrockModel 同类的独立骨骼模型加载/动画/绘制，不限制原版人形或128×64共享UV，不以GeckoLib/YSM作为替代主方案。下方旧的人形皮肤布局仅适用于失败回退与历史模型，旧GeckoLib工具链建议已被本次决定替代。

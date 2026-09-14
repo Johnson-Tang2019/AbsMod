@@ -1,5 +1,7 @@
 # Ab's Mod
 
+The active spirit now uses an original curved Bedrock polygon model with a newly painted pink-white atlas. Rounded cheeks, tapered hair, a flared skirt and curved tail replace the box-only diagnostic silhouette. Walk/look/tail animation and failure fallback remain. See [current preview](art/blade_spirit/preview.html) and [art revision](docs/IMPLEMENTATION_ETHEREAL_SPIRIT.md).
+
 The spirit now uses an isolated Bedrock 1.12 geometry source adapter and the Minecraft 26.2 model submission path. The active model has an unrestricted bone hierarchy and configurable texture dimensions; the old humanoid/128×64 skin is fallback only. An original ten-bone diagnostic model/PNG, walk/head/tail animation and resource failure recovery are included. Both builds and CPU checks pass; Fabric server tests pass without loading our client model classes. NeoForge client resource loading succeeded, but in-world display, animation and F3+T visual acceptance remain pending. The old HTML preview still depicts the previous borrowed model. See [implementation and validation](docs/IMPLEMENTATION_BEDROCK_RENDERER.md) and [source/license record](client-bedrock/UPSTREAM.md).
 
 

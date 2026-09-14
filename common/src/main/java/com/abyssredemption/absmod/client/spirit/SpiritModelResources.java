@@ -14,8 +14,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 
 public final class SpiritModelResources {
-    public static final Identifier MODEL = id("models/entity/blade_spirit_test.geo.json");
-    public static final Identifier TEXTURE = id("textures/entity/blade_spirit/bedrock_test.png");
+    public static final Identifier MODEL = id("models/entity/blade_spirit_ethereal.geo.json");
+    public static final Identifier TEXTURE = id("textures/entity/blade_spirit/ethereal_atlas.png");
     private static final Identifier PLACEHOLDER = id("textures/entity/blade_spirit/placeholder.png");
     private SpiritModelResources() {}
     public record Loaded(BedrockSpiritModel model, Identifier texture, boolean fallback) {}

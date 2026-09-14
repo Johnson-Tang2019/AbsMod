@@ -1,4 +1,4 @@
-"""Export the runtime spirit geometry to OBJ and a self-contained interactive preview."""
+"""Export the legacy borrowed spirit geometry to OBJ and a self-contained interactive preview."""
 import base64
 import json
 import math
@@ -69,5 +69,5 @@ function draw(){gl.viewport(0,0,1600,1100);gl.clearColor(0,0,0,0);gl.clear(gl.CO
 atlas.onload=()=>{gl.bindTexture(gl.TEXTURE_2D,texture);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,atlas);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);draw()};atlas.src='data:image/png;base64,ATLAS_DATA';
 canvas.onpointerdown=e=>{canvas.setPointerCapture(e.pointerId);canvas.onpointermove=m=>{yaw+=m.movementX*.012;draw()}};canvas.onpointerup=()=>canvas.onpointermove=null;canvas.onwheel=e=>{e.preventDefault();zoom=Math.max(15,Math.min(35,zoom-e.deltaY*.01));draw()};
 </script>""".replace("FACES",json.dumps(faces,separators=(",",":"))).replace("ATLAS_DATA",texture)
-(OUT/"preview.html").write_text(html,encoding="utf-8")
+(OUT/"borrowed-preview.html").write_text(html,encoding="utf-8")
 print(f"Exported {len(faces)} quads to OBJ and interactive preview")

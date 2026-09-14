@@ -14,6 +14,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 public final class BedrockModelVerification {
     private BedrockModelVerification() {}
     public static void verify() throws Exception {
+        verifyCurvedModel();
         byte[] geometry;
         try (var stream=BedrockModelVerification.class.getResourceAsStream("/assets/absmod/models/entity/blade_spirit_test.geo.json")) {
             geometry=java.util.Objects.requireNonNull(stream).readAllBytes();
@@ -82,4 +83,33 @@ public final class BedrockModelVerification {
         throw new AssertionError("Invalid geometry accepted");
     }
     private static void require(boolean result,String message) { if (!result) { throw new AssertionError(message); } }
+
+    private static void verifyCurvedModel() throws Exception {
+        String json;
+        try (var stream=BedrockModelVerification.class.getResourceAsStream("/assets/absmod/models/entity/blade_spirit_ethereal.geo.json")) {
+            json=new String(java.util.Objects.requireNonNull(stream).readAllBytes(),StandardCharsets.UTF_8);
+        }
+        var baked=BedrockGeometry.read(new StringReader(json));
+        var model=new BedrockSpiritModel(baked);
+        require(baked.bones().size()==21,"curved rig bone count");
+        int[] polygons={0};
+        baked.root().visit(new com.mojang.blaze3d.vertex.PoseStack(),(pose,path,index,cube)->{
+            for (var polygon:cube.polygons) {
+                polygons[0]++;
+                require(Math.abs(polygon.normal().lengthSquared()-1)<0.001,"curved normal");
+                for (var v:polygon.vertices()) { require(Float.isFinite(v.x()+v.y()+v.z()) && v.u()>=0 && v.u()<=1 && v.v()>=0 && v.v()<=1,"curved vertex/UV"); }
+            }
+        });
+        require(polygons[0]>2000 && polygons[0]<3000,"curved surface budget");
+        var a=new LivingEntityRenderState(); a.ageInTicks=30; a.yRot=35; a.walkAnimationSpeed=.8F;
+        var b=new LivingEntityRenderState(); b.ageInTicks=60; b.yRot=-35;
+        model.setupAnim(a);float tail=baked.bones().get("tail").yRot;
+        model.setupAnim(b); model.setupAnim(a);
+        require(baked.bones().get("tail").yRot==tail,"curved pose isolation");
+        var broken=JsonParser.parseString(json).getAsJsonObject();
+        var mesh=broken.getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject().getAsJsonArray("bones").get(0).getAsJsonObject().getAsJsonObject("poly_mesh");
+        mesh.getAsJsonArray("polys").get(0).getAsJsonArray().get(0).getAsJsonArray().set(0,new com.google.gson.JsonPrimitive(-1));
+        reject(broken.toString());
+        System.out.println("Curved spirit mesh checks passed: indexed geometry, normals, UV, animation and invalid indices.");
+    }
 }
