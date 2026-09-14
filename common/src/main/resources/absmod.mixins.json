@@ -10,7 +10,13 @@
   ],
   "client": [
     "client.MinecraftAttackMixin",
-    "client.BladeAttackIndicatorMixin"
+    "client.BladeAttackIndicatorMixin",
+    "client.SpectralBladeTintMixin",
+    "client.BladeFirstPersonMixin",
+    "client.BladePoseStateMixin",
+    "client.BladePoseExtractionMixin",
+    "client.BladePlayerPoseMixin",
+    "client.BladeMotionReloadMixin"
   ],
   "injectors": {
     "defaultRequire": 1

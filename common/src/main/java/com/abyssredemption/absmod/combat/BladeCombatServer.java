@@ -50,6 +50,16 @@ public final class BladeCombatServer {
         boolean newEpoch = payload.epoch() > state.session.epoch();
         if (!state.session.accept(payload.epoch(), payload.sequence(), payload.held(), tick)) { return; }
         if (!payload.held()) { state.weapon = null; return; }
+        if (payload.dimension().equals(player.level().dimension().identifier())
+                && payload.slot() == player.getInventory().getSelectedSlot()
+                && player.isAlive() && !player.isSpectator() && !player.isSleeping() && !player.isUsingItem()
+                && !player.isChangingDimension() && player.connection.hasClientLoaded()
+                && player.containerMenu == player.inventoryMenu
+                && player.getMainHandItem().getItem() instanceof com.abyssredemption.absmod.item.SpectralBladeItem) {
+            if (!com.abyssredemption.absmod.spirit.SpiritTransformationService.recallForAttack(player)) {
+                state.session.stop(); return;
+            }
+        }
         if (!payload.dimension().equals(player.level().dimension().identifier())
                 || !eligible(player) || payload.slot() != player.getInventory().getSelectedSlot()) {
             state.session.stop();
@@ -100,7 +110,8 @@ public final class BladeCombatServer {
                     LogUtils.getLogger().info("AbsMod blade attack player={} tick={} attackId={} epoch={} stage={} speed={} primaryHit={} stacksBefore={} stacksAfter={}",
                             player.getUUID(), tick, state.lastAttackId, state.session.epoch(), blade.stage().number(), speed, confirmedHit, stacksBefore, state.combo.stacks());
                 }
-                var swing = new com.abyssredemption.absmod.network.BladeSwingPayload(player.getUUID(), state.lastAttackId);
+                var swing = new com.abyssredemption.absmod.network.BladeSwingPayload(player.getUUID(), state.lastAttackId,
+                        state.authorized,player.level().getGameTime(),(float)(20.0/speed));
                 for (var viewer : server.getPlayerList().getPlayers()) {
                     if (viewer.level() == player.level() && viewer.distanceToSqr(player) <= 32 * 32) { send.accept(viewer, swing); }
                 }

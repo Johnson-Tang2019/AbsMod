@@ -11,12 +11,19 @@ import net.minecraft.world.phys.HitResult;
 public final class BladeCombatClient {
     public static BladeCombatClient instance;
     private boolean pendingClick;
+    private net.minecraft.world.item.ItemStack previousWeapon = net.minecraft.world.item.ItemStack.EMPTY;
+    private int previousSlot = -1;
+
+    private static boolean accepts(net.minecraft.world.item.ItemStack stack) {
+        return stack.getItem() instanceof MeowBladeItem
+                || stack.getItem() instanceof com.abyssredemption.absmod.item.SpectralBladeItem;
+    }
 
     public BladeCombatClient() { instance = this; }
 
     public static boolean interceptPress(Minecraft minecraft) {
         if (instance == null || !instance.enabled || minecraft.player == null
-                || !(minecraft.player.getMainHandItem().getItem() instanceof MeowBladeItem)
+                || !accepts(minecraft.player.getMainHandItem())
                 || minecraft.player.isSpectator() || minecraft.hitResult == null
                 || minecraft.hitResult.getType() == HitResult.Type.BLOCK) { return false; }
         instance.pendingClick = true;
@@ -57,8 +64,20 @@ public final class BladeCombatClient {
                 && !minecraft.isPaused() && minecraft.gui.screen() == null && minecraft.isWindowActive()
                 && player.isAlive() && !player.isSpectator() && !player.isSleeping() && !player.isHandsBusy()
                 && !player.isUsingItem() && !minecraft.options.keyUse.isDown() && !minecraft.gameMode.isDestroying()
-                && player.getMainHandItem().getItem() instanceof MeowBladeItem
+                && accepts(player.getMainHandItem())
                 && (minecraft.hitResult == null || minecraft.hitResult.getType() != HitResult.Type.BLOCK);
+        if (player != null) {
+            var current = player.getMainHandItem();
+            var reference = previousWeapon.get(com.abyssredemption.absmod.spirit.BladeSoulComponents.REFERENCE);
+            if (previousSlot == player.getInventory().getSelectedSlot()
+                    && previousWeapon.getItem() instanceof com.abyssredemption.absmod.item.SpectralBladeItem
+                    && current.getItem() instanceof MeowBladeItem && reference != null
+                    && reference.equals(current.get(com.abyssredemption.absmod.spirit.BladeSoulComponents.REFERENCE))) {
+                tracker.replaceWeapon(previousWeapon, current);
+            }
+            previousWeapon = current;
+            previousSlot = player.getInventory().getSelectedSlot();
+        }
         var intent = tracker.tick(tick, minecraft.options.keyAttack.isDown() || pendingClick, eligible,
                 player == null ? null : player.getMainHandItem(), player == null ? -1 : player.getInventory().getSelectedSlot());
         pendingClick = false;

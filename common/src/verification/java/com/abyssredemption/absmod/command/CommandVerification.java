@@ -23,6 +23,7 @@ public final class CommandVerification {
         net.minecraft.server.Bootstrap.bootStrap();
         com.abyssredemption.absmod.item.MilkshakeVerification.verify();
         com.abyssredemption.absmod.client.SlashVerification.verify();
+        com.abyssredemption.absmod.client.BladeMotionVerification.verify();
         com.abyssredemption.absmod.client.SpiritModelVerification.verify();
         com.abyssredemption.absmod.spirit.SoulVerification.verify();
         com.abyssredemption.absmod.combat.CombatVerification.verify();

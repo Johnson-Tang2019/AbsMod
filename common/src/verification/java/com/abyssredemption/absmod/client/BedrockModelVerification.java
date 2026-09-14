@@ -15,6 +15,7 @@ public final class BedrockModelVerification {
     private BedrockModelVerification() {}
     public static void verify() throws Exception {
         verifyCurvedModel();
+        verifyNurseFox();
         byte[] geometry;
         try (var stream=BedrockModelVerification.class.getResourceAsStream("/assets/absmod/models/entity/blade_spirit_test.geo.json")) {
             geometry=java.util.Objects.requireNonNull(stream).readAllBytes();
@@ -77,6 +78,24 @@ public final class BedrockModelVerification {
         }
         System.out.println("Bedrock model checks passed: hierarchy, poses, fallback and reload recovery (CPU only).");
     }
+    private static void verifyNurseFox() throws Exception {
+        try (var stream=BedrockModelVerification.class.getResourceAsStream("/assets/absmod/models/entity/nurse_wine_fox.geo.json")) {
+            var baked=BedrockGeometry.read(new InputStreamReader(java.util.Objects.requireNonNull(stream),StandardCharsets.UTF_8));
+            require(baked.bones().size()==196,"complete nurse fox hierarchy");
+            require(baked.bones().get("Tail6").getChild("Tail7")==baked.bones().get("Tail7"),"original tail hierarchy");
+            var model=new BedrockSpiritModel(baked);
+            var a=new LivingEntityRenderState(); a.ageInTicks=20; a.yRot=30; a.walkAnimationSpeed=.8F; a.walkAnimationPos=2;
+            var b=new LivingEntityRenderState(); b.ageInTicks=70; b.yRot=-20;
+            model.setupAnim(a);
+            float leg=baked.bones().get("LeftLeg").xRot, tail=baked.bones().get("Tail").yRot;
+            require(Math.abs(leg)>.01,"nurse fox walk binding");
+            require(!baked.bones().get("FOX").visible && !baked.bones().get("Backgrounds").visible,"alternate form and GUI are retained but hidden");
+            require(baked.bones().get("NurseCap").visible && baked.bones().get("BaseHair").visible,"authored costume and hair visible");
+            require(baked.bones().get("GuiRoot").xScale==.6F,"pack display scale");
+            model.setupAnim(b); model.setupAnim(a);
+            require(baked.bones().get("LeftLeg").xRot==leg && baked.bones().get("Tail").yRot==tail,"nurse fox pose isolation");
+        }
+    }
     private static void reject(String json) {
         try { BedrockGeometry.read(new StringReader(json)); }
         catch (IllegalArgumentException exception) { return; }
@@ -91,7 +110,7 @@ public final class BedrockModelVerification {
         }
         var baked=BedrockGeometry.read(new StringReader(json));
         var model=new BedrockSpiritModel(baked);
-        require(baked.bones().size()==21,"curved rig bone count");
+        require(baked.bones().size()==24,"curved rig bone count");
         int[] polygons={0};
         baked.root().visit(new com.mojang.blaze3d.vertex.PoseStack(),(pose,path,index,cube)->{
             for (var polygon:cube.polygons) {
@@ -100,7 +119,7 @@ public final class BedrockModelVerification {
                 for (var v:polygon.vertices()) { require(Float.isFinite(v.x()+v.y()+v.z()) && v.u()>=0 && v.u()<=1 && v.v()>=0 && v.v()<=1,"curved vertex/UV"); }
             }
         });
-        require(polygons[0]>2000 && polygons[0]<3000,"curved surface budget");
+        require(polygons[0]>2000 && polygons[0]<6000,"curved surface budget");
         var a=new LivingEntityRenderState(); a.ageInTicks=30; a.yRot=35; a.walkAnimationSpeed=.8F;
         var b=new LivingEntityRenderState(); b.ageInTicks=60; b.yRot=-35;
         model.setupAnim(a);float tail=baked.bones().get("tail").yRot;

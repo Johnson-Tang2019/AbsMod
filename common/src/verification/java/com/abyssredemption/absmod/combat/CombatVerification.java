@@ -187,6 +187,13 @@ public final class CombatVerification {
         input.tick(16, false, true, blade, 0);
         input.tick(17, true, true, blade, 0);
         check(!input.tick(18, false, true, blade, 0).held(), "Key release did not stop immediately");
+        var projection = new Object();
+        input.tick(19, false, true, projection, 0);
+        var manifestAttack = input.tick(20, true, true, projection, 0);
+        input.replaceWeapon(projection, blade);
+        check(input.tick(21, true, true, blade, 0) == null, "Recall restarted or stopped the held attack");
+        var continued = input.tick(27, true, true, blade, 0);
+        check(continued != null && continued.held() && continued.epoch() == manifestAttack.epoch(), "Recall lost the original attack epoch");
     }
 
     private static void verifyPayloads() {
@@ -198,6 +205,10 @@ public final class CombatVerification {
             check(payload.equals(AttackIntentPayload.CODEC.decode(buffer)), "Intent codec mismatch");
             CombatProbePayload.CODEC.encode(buffer, new CombatProbePayload(true));
             check(CombatProbePayload.CODEC.decode(buffer).enabled(), "Control codec mismatch");
+            var swing = new com.abyssredemption.absmod.network.BladeSwingPayload(
+                    java.util.UUID.randomUUID(), java.util.UUID.randomUUID(), 7654, 987654321L, 20F / 6);
+            com.abyssredemption.absmod.network.BladeSwingPayload.CODEC.encode(buffer, swing);
+            check(swing.equals(com.abyssredemption.absmod.network.BladeSwingPayload.CODEC.decode(buffer)), "Motion timing codec mismatch");
         } finally { buffer.release(); }
     }
 

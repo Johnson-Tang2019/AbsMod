@@ -34,6 +34,10 @@ public final class AbsModFabric implements ModInitializer {
         List<Item> meowBlades = Arrays.stream(MeowBladeStage.values())
                 .map(AbsModFabric::registerMeowBlade)
                 .toList();
+        for (var stage : MeowBladeStage.values()) {
+            var key = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "spectral_" + stage.itemId()));
+            Registry.register(BuiltInRegistries.ITEM, key, new com.abyssredemption.absmod.item.SpectralBladeItem(new Item.Properties().setId(key)));
+        }
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> meowBlades.forEach(item -> entries.accept(item)));
         List<Item> milkshakes = Arrays.stream(MilkshakeVariant.values())

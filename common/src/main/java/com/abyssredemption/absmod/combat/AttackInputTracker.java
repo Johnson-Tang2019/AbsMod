@@ -37,5 +37,10 @@ public final class AttackInputTracker {
 
     public void requireRelease() { requiresRelease = true; }
 
+    /** Keep the same held intent across a server-confirmed spectral-to-sword replacement. */
+    public void replaceWeapon(Object previous, Object replacement) {
+        if (active && weapon == previous) { weapon = replacement; }
+    }
+
     public record Intent(long epoch, long sequence, boolean held, int slot) {}
 }

@@ -1,0 +1,17 @@
+{
+  "author": "JumDa5he",
+  "pack_version": "1.0.0",
+  "pack_date": "2026-09-12",
+  "files": [
+    {
+      "source": "art\\\u62a4\u58eb\u9152\u72d0\u5973\u4ec6\u5305\\assets\\nurse_wine_fox\\models\\entity\\maid_fox.json",
+      "runtime": "common\\src\\main\\resources\\assets\\absmod\\models\\entity\\nurse_wine_fox.geo.json",
+      "sha256": "dc94d9987fd703990d6ab7f3125306979bfe4d6edb2b9759e26062342bf70b4d"
+    },
+    {
+      "source": "art\\\u62a4\u58eb\u9152\u72d0\u5973\u4ec6\u5305\\assets\\nurse_wine_fox\\textures\\entity\\maid_fox.png",
+      "runtime": "common\\src\\main\\resources\\assets\\absmod\\textures\\entity\\blade_spirit\\nurse_wine_fox.png",
+      "sha256": "ecce9e13ab8f934e56293d23f5de05e8fd32381b28c76eb8fff6de73a7054623"
+    }
+  ]
+}

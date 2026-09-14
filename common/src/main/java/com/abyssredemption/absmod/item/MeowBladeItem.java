@@ -22,6 +22,13 @@ public final class MeowBladeItem extends Item {
     }
 
     @Override
+    public net.minecraft.world.InteractionResult use(net.minecraft.world.level.Level level,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        var result = com.abyssredemption.absmod.spirit.SpiritInteraction.manifest(player, hand);
+        return result == net.minecraft.world.InteractionResult.PASS ? super.use(level, player, hand) : result;
+    }
+
+    @Override
     public void appendHoverText(net.minecraft.world.item.ItemStack stack, Item.TooltipContext context,
                                 net.minecraft.world.item.component.TooltipDisplay display,
                                 java.util.function.Consumer<net.minecraft.network.chat.Component> lines,
@@ -29,5 +36,7 @@ public final class MeowBladeItem extends Item {
         super.appendHoverText(stack, context, display, lines, flag);
         lines.accept(net.minecraft.network.chat.Component.translatable("item.absmod.meow_blade.prototype")
                 .withStyle(net.minecraft.ChatFormatting.GRAY));
+        lines.accept(net.minecraft.network.chat.Component.translatable("item.absmod.meow_blade.manifest_hint")
+                .withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
     }
 }

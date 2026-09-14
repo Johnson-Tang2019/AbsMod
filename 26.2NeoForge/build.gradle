@@ -1,5 +1,13 @@
 plugins { id 'net.neoforged.moddev' }
 
+// Explicit opt-in client visual harness. Excluded from normal artifacts.
+if (providers.gradleProperty('spiritVisualTest').isPresent()) {
+    sourceSets.main.java.srcDir 'src/visualtest/java'
+}
+if (providers.gradleProperty('motionVisualTest').isPresent()) {
+    sourceSets.main.java.srcDir 'src/motiontest/java'
+}
+
 neoForge {
     version = rootProject.neo_version
     runs {

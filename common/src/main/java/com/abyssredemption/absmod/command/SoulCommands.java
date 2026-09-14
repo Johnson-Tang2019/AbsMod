@@ -115,7 +115,8 @@ public final class SoulCommands {
             for (var entity : level.getAllEntities()) {
                 if (entity instanceof ItemEntity item && item.isAlive()) {
                     BladeSoulReference reference = item.getItem().get(BladeSoulComponents.REFERENCE);
-                    if (reference != null && reference.soulId().equals(id)) {
+                    if (reference != null && reference.soulId().equals(id)
+                            && !(item.getItem().getItem() instanceof com.abyssredemption.absmod.item.SpectralBladeItem)) {
                         locations.add(level.dimension().identifier() + "/item/" + item.getUUID());
                     }
                 }
@@ -127,7 +128,8 @@ public final class SoulCommands {
     private static void scan(Container container, String prefix, UUID id, List<String> locations) {
         for (int slot = 0; slot < container.getContainerSize(); slot++) {
             BladeSoulReference reference = container.getItem(slot).get(BladeSoulComponents.REFERENCE);
-            if (reference != null && reference.soulId().equals(id)) { locations.add(prefix + slot); }
+            if (reference != null && reference.soulId().equals(id)
+                    && !(container.getItem(slot).getItem() instanceof com.abyssredemption.absmod.item.SpectralBladeItem)) { locations.add(prefix + slot); }
         }
     }
 }

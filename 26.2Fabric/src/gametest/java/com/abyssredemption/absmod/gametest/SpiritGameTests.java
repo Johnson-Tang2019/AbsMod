@@ -12,6 +12,50 @@ import net.minecraft.world.level.GameType;
 
 public final class SpiritGameTests {
     @GameTest
+    public void invulnerableSpiritRecallsBeforeAttack(GameTestHelper helper) {
+        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));
+        player.setPos(pos.getX(),pos.getY(),pos.getZ());
+        var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
+        sword.setDamageValue(31);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sword);
+        BladeSoulService.initialize(BladeSoulStore.forInitialization(player.level().getServer()),sword,player.getUUID());
+        var spirit=SpiritTransformationService.manifest(player);
+        float health=spirit.getHealth();
+        helper.assertTrue(!spirit.hurtServer(helper.getLevel(),spirit.damageSources().generic(),1000)
+                && !spirit.hurtServer(helper.getLevel(),spirit.damageSources().fellOutOfWorld(),1000)
+                && spirit.getHealth()==health && spirit.active(),"Spirit accepted damage");
+        var stranger=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        stranger.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,player.getMainHandItem().copy());
+        helper.assertTrue(!SpiritTransformationService.recallForAttack(stranger) && spirit.active(),"Stranger recalled a copied link");
+        helper.assertTrue(SpiritTransformationService.recallForAttack(player) && spirit.isRemoved()
+                && ItemStack.matches(player.getMainHandItem(),sword),"Attack recall did not restore the exact sword");
+        helper.assertTrue(!SpiritTransformationService.recallForAttack(player),"Repeated recall succeeded");
+        helper.succeed();
+    }
+    @GameTest
+    public void sneakUseSwitchesThroughSpectralLink(GameTestHelper helper) {
+        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));
+        player.setPos(pos.getX(),pos.getY(),pos.getZ());
+        var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
+        sword.setDamageValue(23);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sword);
+        var item=sword.getItem();
+        item.use(player.level(),player,net.minecraft.world.InteractionHand.MAIN_HAND);
+        helper.assertTrue(!sword.has(BladeSoulComponents.REFERENCE),"Ordinary use initialized a soul");
+        player.setShiftKeyDown(true);
+        item.use(player.level(),player,net.minecraft.world.InteractionHand.MAIN_HAND);
+        var id=sword.get(BladeSoulComponents.REFERENCE).soulId();
+        var record=BladeSoulStore.find(player.level().getServer()).orElseThrow().find(id).orElseThrow();
+        var spirit=(com.abyssredemption.absmod.entity.BladeSpiritEntity)player.level().getEntity(record.carrier().orElseThrow().entityId());
+        helper.assertTrue(com.abyssredemption.absmod.item.SpectralBladeItem.represents(player.getMainHandItem(),id),"No spectral link");
+        helper.assertTrue(!(player.getMainHandItem().getItem() instanceof com.abyssredemption.absmod.item.MeowBladeItem),"Projection is a usable blade");
+        spirit.interact(player,net.minecraft.world.InteractionHand.MAIN_HAND,net.minecraft.world.phys.Vec3.ZERO);
+        helper.assertTrue(ItemStack.matches(player.getMainHandItem(),sword) && spirit.isRemoved(),"Sneak interaction did not restore the original sword");
+        helper.succeed();
+    }
+    @GameTest
     public void manifestationPreservesSwordAndRejectsRepeatedRecall(GameTestHelper helper) {
         var player = (ServerPlayer) helper.makeMockServerPlayer(GameType.SURVIVAL);
         var pos = helper.absolutePos(new net.minecraft.core.BlockPos(1, 2, 1));
@@ -25,7 +69,7 @@ public final class SpiritGameTests {
         var original = BladeSoulService.initialize(store, sword, player.getUUID());
         var expected = sword.copy();
         var spirit = SpiritTransformationService.manifest(player);
-        helper.assertTrue(player.getMainHandItem().isEmpty() && spirit.active(), "Manifestation did not transfer the carrier");
+        helper.assertTrue(com.abyssredemption.absmod.item.SpectralBladeItem.represents(player.getMainHandItem(), original.soulId()) && spirit.active(), "Manifestation did not transfer the carrier");
         var ops = helper.getLevel().registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE);
         var encoded = BladeSoulStore.CODEC.encodeStart(ops, store).getOrThrow();
         var decoded = BladeSoulStore.CODEC.parse(ops, encoded).getOrThrow();

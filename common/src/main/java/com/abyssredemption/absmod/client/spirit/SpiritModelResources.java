@@ -14,8 +14,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 
 public final class SpiritModelResources {
-    public static final Identifier MODEL = id("models/entity/blade_spirit_ethereal.geo.json");
-    public static final Identifier TEXTURE = id("textures/entity/blade_spirit/ethereal_atlas.png");
+    public static final Identifier MODEL = id("models/entity/nurse_wine_fox.geo.json");
+    public static final Identifier TEXTURE = id("textures/entity/blade_spirit/nurse_wine_fox.png");
     private static final Identifier PLACEHOLDER = id("textures/entity/blade_spirit/placeholder.png");
     private SpiritModelResources() {}
     public record Loaded(BedrockSpiritModel model, Identifier texture, boolean fallback) {}
@@ -27,10 +27,10 @@ public final class SpiritModelResources {
                 if (image==null || image.getWidth()!=baked.width() || image.getHeight()!=baked.height()) { throw new IOException("Model and PNG dimensions differ"); }
             }
             var loaded=new Loaded(new BedrockSpiritModel(baked),TEXTURE,false);
-            LogUtils.getLogger().info("Ab's Mod Bedrock spirit loaded: {} ({} bones)",MODEL,baked.bones().size());
+            LogUtils.getLogger().info("Ab's Mod spirit appearance: model={} texture={} fallback=false bones={}",MODEL,TEXTURE,baked.bones().size());
             return loaded;
         } catch (IOException | RuntimeException exception) {
-            LogUtils.getLogger().warn("Cannot load {}. Using spirit placeholder until next resource reload.",MODEL,exception);
+            LogUtils.getLogger().warn("Ab's Mod spirit appearance: requestedModel={} requestedTexture={} actualModel=absmod:builtin_placeholder actualTexture={} fallback=true",MODEL,TEXTURE,PLACEHOLDER,exception);
             return fallback();
         }
     }

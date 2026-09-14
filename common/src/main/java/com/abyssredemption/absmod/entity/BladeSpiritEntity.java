@@ -31,6 +31,20 @@ public final class BladeSpiritEntity extends PathfinderMob {
     public UUID soulId() { return soulId; }
     public UUID ownerId() { return ownerId; }
 
+    /** Spirit form is immune to damage, including sources that bypass the vanilla invulnerable flag. */
+    @Override
+    public boolean hurtServer(net.minecraft.server.level.ServerLevel level,
+            net.minecraft.world.damagesource.DamageSource source, float amount) {
+        return false;
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand) {
+        var result = com.abyssredemption.absmod.spirit.SpiritInteraction.recall(player, hand, this);
+        return result == net.minecraft.world.InteractionResult.PASS ? super.mobInteract(player, hand) : result;
+    }
+
     @Override protected void registerGoals() { goalSelector.addGoal(0, new FloatGoal(this)); }
 
     @Override public void tick() {

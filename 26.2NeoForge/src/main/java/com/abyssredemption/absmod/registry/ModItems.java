@@ -18,6 +18,9 @@ public final class ModItems {
                             properties -> new MeowBladeItem(properties, stage)))
                     .toList();
     public static final DeferredItem<MeowBladeItem> MEOW_BLADE = MEOW_BLADES.getFirst();
+    public static final List<DeferredItem<com.abyssredemption.absmod.item.SpectralBladeItem>> SPECTRAL_BLADES =
+            Arrays.stream(MeowBladeStage.values()).map(stage -> ITEMS.registerItem("spectral_" + stage.itemId(),
+                    com.abyssredemption.absmod.item.SpectralBladeItem::new)).toList();
     public static final List<DeferredItem<MilkshakeItem>> MILKSHAKES =
             Arrays.stream(MilkshakeVariant.values())
                     .map(variant -> ITEMS.registerItem(variant.itemId(),

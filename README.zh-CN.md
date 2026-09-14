@@ -1,9 +1,12 @@
 # Ab's Mod
 
-当前剑灵已改为原创 Bedrock 曲面模型并重绘粉白图集。圆润脸颊、收尖发束、外扩裙摆和弯曲尾巴替换方体测试轮廓，保留行走/转头/尾摆和失败回退。查看[当前预览](art/blade_spirit/preview.html)与[美术修订记录](docs/IMPLEMENTATION_ETHEREAL_SPIRIT.md)。
+可替换的 `slashblade_baseline` 预设已在 26.2 接入真实第一人称武器变换及第三人称身体/手臂姿态，读取移植的 SlashBlade VMD 采样，不复制其伤害回调。保留九阶原图及服务端战斗。双加载器构建与 Fabric 12 项 GameTest 通过；已交付实际 NeoForge 连续截图，完整多人/输入/姿态验收尚未完成。见[实现与边界](docs/IMPLEMENTATION_SLASHBLADE_BASELINE.md)、[游戏截图](art/animation/slashblade_baseline/game/preview.html)、[来源许可](art/animation/slashblade_baseline/NOTICE.md)。
 
-剑灵现已采用独立 Bedrock 1.12 几何源码适配模块和 Minecraft 26.2 模型提交路径。正式路径支持自由骨骼层级和模型声明的贴图尺寸；旧人形/128×64皮肤只作失败回退。本批包含原创十骨骼测试模型/PNG、行走/转头/尾摆和资源加载恢复。双端构建与CPU检查通过，Fabric服务端测试通过且未加载本模组客户端模型类。NeoForge客户端资源加载成功，游戏世界内显示、动画和F3+T视觉验收仍待完成。旧HTML预览仍是之前借用的模型。详见[实现与验证](docs/IMPLEMENTATION_BEDROCK_RENDERER.md)和[源码/许可记录](client-bedrock/UPSTREAM.md)。
+剑灵免疫伤害。手持虚化剑攻击时，先自动收回对应已加载剑灵，再由原攻击流程出刀；持续按住无需松开重按。空挥也收回，挖方块不触发。停止攻击不会自动显现。
 
+潜行右键主手喵刀显现剑灵，原槽位留下半透明虚化剑占位。手持对应虚化剑（或所选槽位为空）潜行右键自己的剑灵，恢复原剑及身份、耐久和组件，无需管理员命令。其他物品不会被覆盖。崩溃恢复仍未完成。
+
+剑灵默认使用用户提供的**护士酒狐**原模型及贴图（196骨骼），沿用Bedrock渲染器。双加载器构建通过，NeoForge已进入世界检查四视图及资源重载，确认未回退。已绑定基础剑灵动作，尚不支持原包Gecko/Molang完整动画。查看[接入与验证](docs/IMPLEMENTATION_NURSE_WINE_FOX.md)、[游戏截图](art/blade_spirit/preview.html)和[资源来源](art/blade_spirit/nurse-wine-fox/NOTICE.md)。
 
 [English](README.md) | 简体中文
 

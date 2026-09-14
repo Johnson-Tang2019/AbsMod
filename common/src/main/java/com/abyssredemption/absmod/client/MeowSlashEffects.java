@@ -24,6 +24,7 @@ public final class MeowSlashEffects {
     private int ticks;
 
     public void tick(Minecraft client) {
+        com.abyssredemption.absmod.client.animation.BladeMotionPlayer.tick(client);
         if (level != client.level) {
             level = client.level;
             active.clear();
@@ -50,13 +51,14 @@ public final class MeowSlashEffects {
             if (!(player.getItemInHand(hand).getItem() instanceof MeowBladeItem blade)) {
                 continue;
             }
-            emit(client, player, blade, hand, tracker);
+            emit(client, player, blade, hand, tracker, null);
 
         }
         swings.keySet().retainAll(present);
     }
 
     public void confirm(Minecraft client, com.abyssredemption.absmod.network.BladeSwingPayload payload) {
+        if(!com.abyssredemption.absmod.client.animation.BladeMotionPlayer.confirm(client,payload)) { return; }
         if (level != client.level) {
             level = client.level;
             active.clear();
@@ -68,15 +70,14 @@ public final class MeowSlashEffects {
         if (confirmations.size() > 256) { confirmations.removeFirst(); }
         var player = level.getPlayerByUUID(payload.playerId());
         if (player == null || !(player.getMainHandItem().getItem() instanceof MeowBladeItem blade)) { return; }
-        player.swingingArm = InteractionHand.MAIN_HAND;
-        player.swinging = true;
-        player.swingTime = 0;
         emit(client, player, blade, InteractionHand.MAIN_HAND,
-                swings.computeIfAbsent(player.getUUID(), key -> new SlashSwingTracker()));
+                swings.computeIfAbsent(player.getUUID(), key -> new SlashSwingTracker()),
+                com.abyssredemption.absmod.client.animation.BladeMotionPlayer.pose(player,0));
     }
 
     private void emit(Minecraft client, net.minecraft.world.entity.player.Player player, MeowBladeItem blade,
-                      InteractionHand hand, SlashSwingTracker tracker) {
+                      InteractionHand hand, SlashSwingTracker tracker,
+                      com.abyssredemption.absmod.client.animation.BladeMotionPreset.Pose pose) {
             // Advance even when culled so moving the camera does not restart the sequence.
             SlashMotion motion = tracker.takeMotion();
             if (client.getCameraEntity() == null
@@ -91,7 +92,7 @@ public final class MeowSlashEffects {
             double yaw = Math.toRadians(player.getYRot());
             Vec3 right = new Vec3(Math.cos(yaw), 0, Math.sin(yaw));
             Vec3 up = forward.cross(right).normalize();
-            double roll = motion.rollRadians(direction);
+            double roll = pose==null?motion.rollRadians(direction):Math.toRadians(pose.effectRoll()*direction);
             Vec3 tiltedRight = right.scale(Math.cos(roll)).add(up.scale(Math.sin(roll)));
             Vec3 tiltedUp = up.scale(Math.cos(roll)).subtract(right.scale(Math.sin(roll)));
             Vec3 origin = player.getEyePosition().add(0, -0.40, 0).add(forward.scale(0.12));
@@ -99,10 +100,11 @@ public final class MeowSlashEffects {
                 active.removeFirst();
             }
             active.add(new ActiveSlash(origin, tiltedRight, forward, tiltedUp,
-                    1.20F + blade.stage().number() * 0.025F, motion.direction(direction), ticks));
+                    1.20F + blade.stage().number() * 0.025F, pose==null?motion.direction(direction):direction, ticks));
     }
 
     public List<MeowSlashGeometry.Slash> extract(Vec3 camera, float partialTick) {
+        if (com.abyssredemption.absmod.client.animation.BladeMotionPlayer.hideEffects) { return List.of(); }
         List<MeowSlashGeometry.Slash> frame = new ArrayList<>();
         for (ActiveSlash effect : active) {
             if (effect.origin().distanceToSqr(camera) <= MAX_DISTANCE * MAX_DISTANCE) {

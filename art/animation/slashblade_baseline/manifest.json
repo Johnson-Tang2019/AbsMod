@@ -1,0 +1,21 @@
+{
+  "commit": "6e2a0a092fb794d7ea56fd83452869674f3ab1c7",
+  "files": [
+    {
+      "path": "combostate/motion.vmd",
+      "sha256": "e19477361b5d2dd61d15cb2477a1464645531d2e4730af87ee78220e85a68733"
+    },
+    {
+      "path": "model/bladeholder.pmd",
+      "sha256": "99e51e3d9f3cfd0f8c790c2f181bf653eb660ff45997cbac7975de8c641535d7"
+    },
+    {
+      "path": "model/pa/player_motion.vmd",
+      "sha256": "339addd939a7d7ec11facb43df0afa9785a3d488bc1bf15c9956f8fde204b850"
+    },
+    {
+      "path": "model/pa/alex.pmd",
+      "sha256": "143eb49595af95110f183e4ecdc2b2b5cb58ca41198cdda838f7ac3f5888e202"
+    }
+  ]
+}
