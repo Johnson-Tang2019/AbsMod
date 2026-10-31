@@ -1,5 +1,7 @@
 # Ab's Mod
 
+动作预设不可用时，第一人称自定义渲染会退出。界面打开或正在挖掘时忽略迟到的本地动作确认，远端玩家表现保持独立。
+
 可替换的 `slashblade_baseline` 预设已在 26.2 接入真实第一人称武器变换及第三人称身体/手臂姿态，读取移植的 SlashBlade VMD 采样，不复制其伤害回调。保留九阶原图及服务端战斗。双加载器构建与 Fabric 12 项 GameTest 通过；已交付实际 NeoForge 连续截图，完整多人/输入/姿态验收尚未完成。见[实现与边界](docs/IMPLEMENTATION_SLASHBLADE_BASELINE.md)、[游戏截图](art/animation/slashblade_baseline/game/preview.html)、[来源许可](art/animation/slashblade_baseline/NOTICE.md)。
 
 剑灵免疫伤害。手持虚化剑攻击时，先自动收回对应已加载剑灵，再由原攻击流程出刀；持续按住无需松开重按。空挥也收回，挖方块不触发。停止攻击不会自动显现。

@@ -1,5 +1,9 @@
 # 下一批开发任务单
 
+## 2026-10-31：MOTION-02
+
+已补动作资源失败时的第一人称退出，以及界面/挖掘期间迟到确认的拦截。离线双端构建与既有共享自动检查通过；下一步游戏实测资源失败/恢复与界面中断，之后继续原有动作和多人验收。本批未启动游戏。
+
 ## 2026-09-14：真实挥刀动作初版（MOTION-01 / AUTO-05）
 
 CONFIRMED：以 SlashBlade: Resharped `6e2a0a092fb794d7ea56fd83452869674f3ab1c7` 为可替换参考，保留本地 `78ff086` 上全部未提交工作。独立 `slashblade_baseline` 预设已导入原始 VMD/PMD 并解码为明确的 absmod_motion_v1；A3 拆成两个单次授权片段，未复制伤害/眩晕/位移回调。来源和单独许可范围见 [素材记录](../art/animation/slashblade_baseline/NOTICE.md)。

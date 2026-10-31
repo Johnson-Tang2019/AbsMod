@@ -15,6 +15,12 @@ public final class BladeMotionPlayer {
     public static boolean hideEffects;
     private record Playback(long sequence,long start,float interval,Object item) {}
     private BladeMotionPlayer() {}
+    public static boolean isReady() { return preset!=null; }
+    private static boolean locallyBlocked(Player player) {
+        var client=Minecraft.getInstance();
+        return player==client.player && (client.gui.screen()!=null || client.gameMode==null
+                || client.gameMode.isDestroying());
+    }
     public static void reload(net.minecraft.server.packs.resources.ResourceManager resources) {
         clear();
         try { preset=BladeMotionPreset.load(resources); }
@@ -26,7 +32,7 @@ public final class BladeMotionPlayer {
         if(client.level==null) { return; }
         ACTIVE.entrySet().removeIf(entry->{var p=client.level.getPlayerByUUID(entry.getKey());return p==null || !eligible(p)
                 || p.getMainHandItem().getItem()!=entry.getValue().item || client.level.getGameTime()-entry.getValue().start>50;});
-        if(client.player!=null && (client.gui.screen()!=null || client.gameMode.isDestroying())) { ACTIVE.remove(client.player.getUUID()); }
+        if(client.player!=null && locallyBlocked(client.player)) { ACTIVE.remove(client.player.getUUID()); }
     }
     private static boolean eligible(Player p) { return p.isAlive() && !p.isSpectator() && !p.isUsingItem() && p.getMainHandItem().getItem() instanceof MeowBladeItem; }
     public static boolean confirm(Minecraft client,BladeSwingPayload packet) {
@@ -34,14 +40,14 @@ public final class BladeMotionPlayer {
         if(client.level==null || !Float.isFinite(packet.intervalTicks()) || packet.intervalTicks()<=0 || packet.sequence()<1 || !SEEN.add(packet.attackId())) { return false; }
         if(SEEN.size()>512) { SEEN.removeFirst(); }
         var player=client.level.getPlayerByUUID(packet.playerId());
-        if(player==null || !eligible(player)) { return false; }
+        if(player==null || !eligible(player) || locallyBlocked(player)) { return false; }
         var old=ACTIVE.get(packet.playerId());
         if(old!=null && packet.sequence()<=old.sequence) { return false; }
         ACTIVE.put(packet.playerId(),new Playback(packet.sequence(),packet.startedTick(),packet.intervalTicks(),player.getMainHandItem().getItem()));
         return true;
     }
     public static BladeMotionPreset.Pose pose(Player player,float partial) {
-        if(preset==null || !eligible(player)) { return null; }
+        if(preset==null || !eligible(player) || locallyBlocked(player)) { return null; }
         var active=ACTIVE.get(player.getUUID());
         if(active==null || active.item!=player.getMainHandItem().getItem()) { return null; }
         float elapsed=player.level().getGameTime()-active.start+partial;

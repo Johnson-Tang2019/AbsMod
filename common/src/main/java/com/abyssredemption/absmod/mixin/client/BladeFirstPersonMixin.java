@@ -21,7 +21,7 @@ public abstract class BladeFirstPersonMixin {
     @Inject(method="submitArmWithItem",at=@At("HEAD"),cancellable=true)
     private void bladeMotion(AbstractClientPlayer player,float partial,float pitch,InteractionHand hand,float attack,
             ItemStack item,float equip,PoseStack stack,SubmitNodeCollector collector,int light,CallbackInfo ci) {
-        if(hand!=InteractionHand.MAIN_HAND || !(item.getItem() instanceof com.abyssredemption.absmod.item.MeowBladeItem)) { return; }
+        if(!BladeMotionPlayer.isReady() || hand!=InteractionHand.MAIN_HAND || !(item.getItem() instanceof com.abyssredemption.absmod.item.MeowBladeItem)) { return; }
         var pose=BladeMotionPlayer.pose(player,partial);
         var client=net.minecraft.client.Minecraft.getInstance();
         if(player.isUsingItem() || client.gui.screen()!=null || client.gameMode==null || client.gameMode.isDestroying()) { return; }

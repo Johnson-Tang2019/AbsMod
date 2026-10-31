@@ -1,5 +1,11 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-10-31：动作退出边界（MOTION-02）
+
+修复 BladeMotionPlayer / BladeFirstPersonMixin：资源预设加载失败时不接管第一人称；打开界面、缺少交互控制器或挖掘期间拒绝本地迟到确认，并在渲染采样时再次检查。远端玩家不受本地界面限制。服务器攻击及伤害逻辑未变。
+
+本次离线双端 build 与既有共享自动检查通过，日志 build/motion-boundary-build.log；未启动 Minecraft，不能视为游戏验收通过。保留原有动作、多人及逐阶握持验收待办。
+
 ## 2026-09-14：真实挥刀动作初版（MOTION-01 / AUTO-05）
 
 CONFIRMED：以 SlashBlade: Resharped `6e2a0a092fb794d7ea56fd83452869674f3ab1c7` 为可替换参考，保留本地 `78ff086` 上全部未提交工作。独立 `slashblade_baseline` 预设已导入原始 VMD/PMD 并解码为明确的 absmod_motion_v1；A3 拆成两个单次授权片段，未复制伤害/眩晕/位移回调。来源和单独许可范围见 [素材记录](../art/animation/slashblade_baseline/NOTICE.md)。
