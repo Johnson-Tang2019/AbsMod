@@ -1,5 +1,7 @@
 # Ab's Mod
 
+A short pose transition now smooths consecutive blade actions. Two real NeoForge clients were connected locally and 54 observer screenshots were captured; see [validation](docs/MOTION_MULTIPLAYER_VALIDATION.md). The [growth and recipe design](docs/MEOW_BLADE_PROGRESSION_PROPOSAL.md) is a proposal, not implemented gameplay.
+
 Custom first-person rendering now yields when its motion preset is unavailable. Late local animation confirmations are ignored while a screen is open or mining is active; remote players remain independent.
 
 The replaceable `slashblade_baseline` preset now drives real first-person weapon transforms and third-person torso/arm poses on 26.2, using imported SlashBlade VMD samples without its damage callbacks. Original nine-stage art and server combat are preserved. Both loader builds and 12 Fabric GameTests passed. Actual NeoForge screenshot sequences are available; full multiplayer/input/pose acceptance remains incomplete. See [implementation and limits](docs/IMPLEMENTATION_SLASHBLADE_BASELINE.md), [game screenshots](art/animation/slashblade_baseline/game/preview.html), and [source/licenses](art/animation/slashblade_baseline/NOTICE.md).

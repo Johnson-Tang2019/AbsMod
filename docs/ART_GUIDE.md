@@ -1,5 +1,12 @@
 # Ab's Mod 美术与生图执行指南
 
+## 2026-10-31：MOTION-03 与成长方案
+
+新增连续挥刀前 0.75 tick 的前姿态过渡，服务端节奏和伤害不变。已启动真实 NeoForge 游戏及两个独立客户端，第二客户端经 TCP 进入同一测试世界，记录 connected=2 并保存 54 张关闭刀光的观察者截图；详见 [实际测试记录](MOTION_MULTIPLAYER_VALIDATION.md)。本机双客户端不等于公网延迟或全部姿态验收。
+
+新增[合成、成长与数值 v2](MEOW_BLADE_PROGRESSION_PROPOSAL.md)：九阶材料/好感/耐久、保留身份的升级事务、暗黑对照与重击候选。全部新增参数为 PROPOSED，尚未改运行时配方和数值。下一批优先完善动作边缘显示与完整操作回归，再按评审后的设计接升级。
+
+
 ## 2026-09-14：真实挥刀动作初版（MOTION-01 / AUTO-05）
 
 CONFIRMED：以 SlashBlade: Resharped `6e2a0a092fb794d7ea56fd83452869674f3ab1c7` 为可替换参考，保留本地 `78ff086` 上全部未提交工作。独立 `slashblade_baseline` 预设已导入原始 VMD/PMD 并解码为明确的 absmod_motion_v1；A3 拆成两个单次授权片段，未复制伤害/眩晕/位移回调。来源和单独许可范围见 [素材记录](../art/animation/slashblade_baseline/NOTICE.md)。

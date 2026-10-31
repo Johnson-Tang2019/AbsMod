@@ -1,5 +1,14 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-10-31：MOTION-03 与成长方案
+
+实际检查：双端 build 与共享验证通过，Fabric 12 项 GameTest 通过（build/motion-peers-validation.log），两端正式 JAR 均排除联机测试入口。Minecraft 主机和观察者已正常退出。
+
+新增连续挥刀前 0.75 tick 的前姿态过渡，服务端节奏和伤害不变。已启动真实 NeoForge 游戏及两个独立客户端，第二客户端经 TCP 进入同一测试世界，记录 connected=2 并保存 54 张关闭刀光的观察者截图；详见 [实际测试记录](MOTION_MULTIPLAYER_VALIDATION.md)。本机双客户端不等于公网延迟或全部姿态验收。
+
+新增[合成、成长与数值 v2](MEOW_BLADE_PROGRESSION_PROPOSAL.md)：九阶材料/好感/耐久、保留身份的升级事务、暗黑对照与重击候选。全部新增参数为 PROPOSED，尚未改运行时配方和数值。下一批优先完善动作边缘显示与完整操作回归，再按评审后的设计接升级。
+
+
 ## 2026-10-31：动作退出边界（MOTION-02）
 
 修复 BladeMotionPlayer / BladeFirstPersonMixin：资源预设加载失败时不接管第一人称；打开界面、缺少交互控制器或挖掘期间拒绝本地迟到确认，并在渲染采样时再次检查。远端玩家不受本地界面限制。服务器攻击及伤害逻辑未变。

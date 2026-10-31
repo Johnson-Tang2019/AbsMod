@@ -2,6 +2,8 @@
 .gradle-user-home/
 **/build/
 **/run/
+**/run-host/
+**/run-observer/
 **/out/
 **/.idea/
 *.iml

@@ -13,7 +13,7 @@ public final class BladeMotionPlayer {
     private static Object level;
     private static BladeMotionPreset preset;
     public static boolean hideEffects;
-    private record Playback(long sequence,long start,float interval,Object item) {}
+    private record Playback(long sequence,long start,float interval,Object item,BladeMotionPreset.Pose previous) {}
     private BladeMotionPlayer() {}
     public static boolean isReady() { return preset!=null; }
     private static boolean locallyBlocked(Player player) {
@@ -43,7 +43,8 @@ public final class BladeMotionPlayer {
         if(player==null || !eligible(player) || locallyBlocked(player)) { return false; }
         var old=ACTIVE.get(packet.playerId());
         if(old!=null && packet.sequence()<=old.sequence) { return false; }
-        ACTIVE.put(packet.playerId(),new Playback(packet.sequence(),packet.startedTick(),packet.intervalTicks(),player.getMainHandItem().getItem()));
+        var previous=pose(player,0);
+        ACTIVE.put(packet.playerId(),new Playback(packet.sequence(),packet.startedTick(),packet.intervalTicks(),player.getMainHandItem().getItem(),previous));
         return true;
     }
     public static BladeMotionPreset.Pose pose(Player player,float partial) {
@@ -53,6 +54,14 @@ public final class BladeMotionPlayer {
         float elapsed=player.level().getGameTime()-active.start+partial;
         if(elapsed<0 || elapsed>50) { return null; }
         var pose=preset.sample(active.sequence,elapsed,active.interval);
+        if(active.previous!=null && elapsed<.75F) {
+            float blend=Math.clamp(elapsed/.75F,0,1);
+            Map<String,BladeMotionPreset.Transform> bones=new HashMap<>();
+            for(var entry:pose.bones().entrySet()) {
+                bones.put(entry.getKey(),active.previous.bone(entry.getKey()).blend(entry.getValue(),blend));
+            }
+            pose=new BladeMotionPreset.Pose(Map.copyOf(bones),pose.weight(),pose.effectRoll());
+        }
         return pose.weight()<=0?null:pose;
     }
 }

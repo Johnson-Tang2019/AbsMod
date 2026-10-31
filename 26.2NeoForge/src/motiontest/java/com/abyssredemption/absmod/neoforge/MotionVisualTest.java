@@ -24,12 +24,14 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /** Opt-in visual fixtures send authoritative presentation packets; they never assert gameplay damage. */
 @Mod(value="absmod",dist=Dist.CLIENT)
 public final class MotionVisualTest {
+    private final MotionPeerTest peer = new MotionPeerTest();
     private boolean started;
     private int tick;
     private long sequence;
     private net.minecraft.client.player.RemotePlayer remote;
     public MotionVisualTest() { NeoForge.EVENT_BUS.addListener(this::tick); }
     private void tick(ClientTickEvent.Post event) {
+        if(System.getProperty("absmod.motionPeer")!=null) { peer.tick();return; }
         var mc=Minecraft.getInstance();
         if(!started && mc.gui.screen() instanceof TitleScreen) {
             started=true;mc.options.pauseOnLostFocus=false;mc.options.fov().set(65);mc.options.renderDistance().set(5);mc.getWindow().setWindowed(1280,900);

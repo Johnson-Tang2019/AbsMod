@@ -11,7 +11,14 @@ if (providers.gradleProperty('motionVisualTest').isPresent()) {
 neoForge {
     version = rootProject.neo_version
     runs {
-        client { client() }
+        client {
+            client()
+            if (providers.gradleProperty('motionPeer').isPresent()) {
+                systemProperty 'absmod.motionPeer', providers.gradleProperty('motionPeer').get()
+                programArguments.addAll('--username', providers.gradleProperty('motionPeer').get() == 'observer' ? 'MotionGuest' : 'MotionHost')
+                programArguments.addAll('--gameDir', layout.projectDirectory.dir('run-' + providers.gradleProperty('motionPeer').get()).asFile.absolutePath)
+            }
+        }
         server { server(); programArgument '--nogui' }
     }
     mods {
