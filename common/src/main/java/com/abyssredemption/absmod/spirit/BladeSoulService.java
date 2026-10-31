@@ -15,8 +15,8 @@ public final class BladeSoulService {
         if (stack.has(BladeSoulComponents.REFERENCE)) { return requireRecord(store, stack); }
         UUID id;
         do { id = UUID.randomUUID(); } while (store.find(id).isPresent());
-        BladeSoulRecord record = new BladeSoulRecord(id, Optional.of(testOwner), BladeRoute.NORMAL,
-                blade.stage().number(), Optional.empty(), 0, 1, "sword");
+        BladeSoulRecord record = new BladeSoulRecord(id, Optional.of(testOwner), blade.stage().route(),
+                blade.stage().number(), Optional.of(0D), 0, 1, "sword");
         store.insert(record);
         stack.set(BladeSoulComponents.REFERENCE, new BladeSoulReference(id));
         return record;
@@ -27,7 +27,7 @@ public final class BladeSoulService {
         BladeSoulReference reference = stack.get(BladeSoulComponents.REFERENCE);
         if (reference == null) { throw new IllegalStateException("uninitialized"); }
         BladeSoulRecord record = store.find(reference.soulId()).orElseThrow(() -> new IllegalStateException("missing_record"));
-        if (record.route() != BladeRoute.NORMAL || record.stage() != blade.stage().number() || !record.form().equals("sword")) {
+        if (record.route() != blade.stage().route() || record.stage() != blade.stage().number() || !record.form().equals("sword")) {
             throw new IllegalStateException("mismatch");
         }
         return record;
@@ -43,7 +43,7 @@ public final class BladeSoulService {
     /** Pure migration plan: not an inventory transaction or a playable upgrade entry point. */
     public static MigrationPlan planMigration(BladeSoulStore store, ItemStack source, MeowBladeItem target) {
         BladeSoulRecord before = requireRecord(store, source);
-        if (target.stage().number() != before.stage() + 1) { throw new IllegalStateException("invalid_stage"); }
+        if (target.stage().route()!=before.route() || target.stage().number() != before.stage() + 1) { throw new IllegalStateException("invalid_stage"); }
         ItemStack result = new ItemStack(target);
         // Only identity transfers. Combat defaults come from the target; other policies remain TBD.
         result.set(BladeSoulComponents.REFERENCE, source.get(BladeSoulComponents.REFERENCE));

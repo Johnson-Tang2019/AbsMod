@@ -46,11 +46,15 @@ public final class BladeCombatClient {
         tracker.requireRelease();
     }
 
-    public void tick(Minecraft minecraft, Consumer<AttackIntentPayload> send) {
+    private long heavySequence;
+    private boolean heavyRequested;
+    public void tick(Minecraft minecraft, Consumer<AttackIntentPayload> send,
+            Consumer<com.abyssredemption.absmod.network.HeavyIntentPayload> sendHeavy) {
         if (connection != minecraft.getConnection()) {
             connection = minecraft.getConnection();
             enabled = false;
             tracker = new AttackInputTracker();
+            heavySequence=0;heavyRequested=false;
         }
         tick++;
         if (connection == null) { return; }
@@ -66,6 +70,19 @@ public final class BladeCombatClient {
                 && !player.isUsingItem() && !minecraft.options.keyUse.isDown() && !minecraft.gameMode.isDestroying()
                 && accepts(player.getMainHandItem())
                 && (minecraft.hitResult == null || minecraft.hitResult.getType() != HitResult.Type.BLOCK);
+        boolean heavyClick=false;
+        while(BladeKeys.HEAVY.consumeClick())heavyClick=true;
+        if(player!=null && dimension!=null) {
+            if(!eligible && heavyRequested) {
+                sendHeavy.accept(new com.abyssredemption.absmod.network.HeavyIntentPayload(++heavySequence,false,player.getInventory().getSelectedSlot(),dimension));
+                heavyRequested=false;
+            }
+            if(eligible && heavyClick && player.getMainHandItem().getItem() instanceof MeowBladeItem blade
+                && blade.stage().route()==com.abyssredemption.absmod.item.BladeRoute.DARK) {
+                sendHeavy.accept(new com.abyssredemption.absmod.network.HeavyIntentPayload(++heavySequence,true,player.getInventory().getSelectedSlot(),dimension));
+                heavyRequested=true;
+            }
+        }
         if (player != null) {
             var current = player.getMainHandItem();
             var reference = previousWeapon.get(com.abyssredemption.absmod.spirit.BladeSoulComponents.REFERENCE);

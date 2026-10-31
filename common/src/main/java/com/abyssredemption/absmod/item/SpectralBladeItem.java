@@ -24,7 +24,7 @@ public final class SpectralBladeItem extends Item {
         return stack.getItem() instanceof SpectralBladeItem && reference != null && reference.soulId().equals(soul);
     }
 
-    public static ItemStack create(MeowBladeStage stage, ItemStack original) {
+    public static ItemStack create(BladeStage stage, ItemStack original) {
         var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(
                 net.minecraft.resources.Identifier.fromNamespaceAndPath("absmod", "spectral_" + stage.itemId()));
         if (!(item instanceof SpectralBladeItem)) { throw new IllegalStateException("missing_projection"); }

@@ -17,6 +17,7 @@ public abstract class ServerAttackPacketMixin {
     @Inject(method = "handleAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;hasClientLoaded()Z"), cancellable = true)
     private void absmod$singleDamageEntry(ServerboundAttackPacket packet, CallbackInfo callback) {
         // After vanilla's thread handoff; raw packets cannot bypass the shared cadence.
+        if (!(player.getMainHandItem().getItem() instanceof MeowBladeItem))com.abyssredemption.absmod.combat.BladeComboAttributes.update(player,0);
         if (player.getMainHandItem().getItem() instanceof MeowBladeItem
                 || player.getMainHandItem().getItem() instanceof com.abyssredemption.absmod.item.SpectralBladeItem) { callback.cancel(); }
     }

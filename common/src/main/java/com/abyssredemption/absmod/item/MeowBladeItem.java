@@ -4,20 +4,22 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
 
 public final class MeowBladeItem extends Item {
-    private final MeowBladeStage stage;
+    private final BladeStage stage;
 
     public MeowBladeItem(Properties properties) {
         this(properties, MeowBladeStage.STAGE_1);
     }
 
-    public MeowBladeItem(Properties properties, MeowBladeStage stage) {
+    public MeowBladeItem(Properties properties, BladeStage stage) {
         // Remove the player base and material bonus to obtain the sword-specific bonus.
-        super(properties.sword(ToolMaterial.DIAMOND,
-                stage.attackDamage() - 1.0F - ToolMaterial.DIAMOND.attackDamageBonus(), stage.baseAttackSpeed() - 4.0F));
+        super(properties.sword(material(stage),
+                stage.attackDamage() - 1.0F - material(stage).attackDamageBonus(), stage.baseAttackSpeed() - 4.0F).durability(stage.durability()));
         this.stage = stage;
     }
 
-    public MeowBladeStage stage() {
+    private static ToolMaterial material(BladeStage stage) { return stage.route()==BladeRoute.DARK?ToolMaterial.NETHERITE:ToolMaterial.DIAMOND; }
+
+    public BladeStage stage() {
         return stage;
     }
 

@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "absmod:resonance_heart"
+    },
+    "title": {
+      "translate": "advancement.absmod.resonance.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.resonance.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "absmod:resonance_heart"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "parent": "absmod:progression/root"
+}

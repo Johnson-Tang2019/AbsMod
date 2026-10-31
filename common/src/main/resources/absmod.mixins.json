@@ -6,7 +6,11 @@
   "mixins": [
     "PlayerAttackMixin",
     "LivingDamageMixin",
-    "ServerAttackPacketMixin"
+    "ServerAttackPacketMixin",
+    "BladeDurabilityMixin",
+    "BladeCraftRepairMixin",
+    "BladeCombineMenuMixin",
+    "BladeStunMixin"
   ],
   "client": [
     "client.MinecraftAttackMixin",

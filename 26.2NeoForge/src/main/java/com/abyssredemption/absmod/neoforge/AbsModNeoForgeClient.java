@@ -26,6 +26,7 @@ public final class AbsModNeoForgeClient {
 
     public AbsModNeoForgeClient(net.neoforged.bus.api.IEventBus modBus) {
         modBus.addListener(this::payloads);
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event)->event.register(com.abyssredemption.absmod.client.BladeKeys.HEAVY));
         modBus.addListener(AbsModNeoForgeClient::renderers);
         NeoForge.EVENT_BUS.addListener(this::tick);
         NeoForge.EVENT_BUS.addListener(this::extract);
@@ -38,7 +39,7 @@ public final class AbsModNeoForgeClient {
     }
 
     private void tick(ClientTickEvent.Post event) {
-        probe.tick(Minecraft.getInstance(), payload -> net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload));
+        probe.tick(Minecraft.getInstance(), payload -> net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload), payload -> net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload));
         effects.tick(Minecraft.getInstance());
     }
 

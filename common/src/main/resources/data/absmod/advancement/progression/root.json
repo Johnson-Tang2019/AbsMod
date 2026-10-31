@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "id": "absmod:resonance_heart"
+    },
+    "title": {
+      "translate": "advancement.absmod.root.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.root.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false,
+    "background": "minecraft:gui/advancements/backgrounds/stone",
+    "show_toast": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:amethyst_shard",
+              "minecraft:crying_obsidian"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

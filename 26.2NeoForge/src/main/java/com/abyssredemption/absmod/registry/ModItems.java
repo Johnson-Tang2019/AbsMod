@@ -17,9 +17,10 @@ public final class ModItems {
                     .map(stage -> ITEMS.registerItem(stage.itemId(),
                             properties -> new MeowBladeItem(properties, stage)))
                     .toList();
+    public static final List<DeferredItem<MeowBladeItem>> DARK_BLADES = Arrays.stream(com.abyssredemption.absmod.item.DarkBladeStage.values()).map(stage->ITEMS.registerItem(stage.itemId(),properties->new MeowBladeItem(properties,stage))).toList();
     public static final DeferredItem<MeowBladeItem> MEOW_BLADE = MEOW_BLADES.getFirst();
     public static final List<DeferredItem<com.abyssredemption.absmod.item.SpectralBladeItem>> SPECTRAL_BLADES =
-            Arrays.stream(MeowBladeStage.values()).map(stage -> ITEMS.registerItem("spectral_" + stage.itemId(),
+            java.util.stream.Stream.concat(Arrays.stream(MeowBladeStage.values()),Arrays.stream(com.abyssredemption.absmod.item.DarkBladeStage.values())).map(stage -> ITEMS.registerItem("spectral_" + stage.itemId(),
                     com.abyssredemption.absmod.item.SpectralBladeItem::new)).toList();
     public static final List<DeferredItem<MilkshakeItem>> MILKSHAKES =
             Arrays.stream(MilkshakeVariant.values())
@@ -27,5 +28,6 @@ public final class ModItems {
                             properties -> new MilkshakeItem(properties, variant)))
                     .toList();
 
+    public static final DeferredItem<com.abyssredemption.absmod.item.ResonanceHeartItem> RESONANCE_HEART = ITEMS.registerItem("resonance_heart",com.abyssredemption.absmod.item.ResonanceHeartItem::new);
     private ModItems() {}
 }

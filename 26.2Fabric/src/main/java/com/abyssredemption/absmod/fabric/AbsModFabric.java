@@ -23,6 +23,11 @@ public final class AbsModFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         FabricCombatProbe.register();
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"meow_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"dark_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER);
+        var resonanceKey=ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"resonance_heart"));
+        var resonance=Registry.register(BuiltInRegistries.ITEM,resonanceKey,new com.abyssredemption.absmod.item.ResonanceHeartItem(new Item.Properties().setId(resonanceKey)));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(entries->entries.accept(resonance));
         var spiritType = Registry.register(BuiltInRegistries.ENTITY_TYPE,
                 com.abyssredemption.absmod.entity.SpiritEntityType.KEY,
                 com.abyssredemption.absmod.entity.SpiritEntityType.create());
@@ -34,7 +39,9 @@ public final class AbsModFabric implements ModInitializer {
         List<Item> meowBlades = Arrays.stream(MeowBladeStage.values())
                 .map(AbsModFabric::registerMeowBlade)
                 .toList();
-        for (var stage : MeowBladeStage.values()) {
+        var darkBlades=Arrays.stream(com.abyssredemption.absmod.item.DarkBladeStage.values()).map(AbsModFabric::registerMeowBlade).toList();
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(entries->darkBlades.forEach(entries::accept));
+        for (var stage : java.util.stream.Stream.concat(Arrays.stream(MeowBladeStage.values()),Arrays.stream(com.abyssredemption.absmod.item.DarkBladeStage.values())).toList()) {
             var key = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "spectral_" + stage.itemId()));
             Registry.register(BuiltInRegistries.ITEM, key, new com.abyssredemption.absmod.item.SpectralBladeItem(new Item.Properties().setId(key)));
         }
@@ -54,7 +61,7 @@ public final class AbsModFabric implements ModInitializer {
                         variant -> milkshakes.get(variant.ordinal())));
     }
 
-    private static Item registerMeowBlade(MeowBladeStage stage) {
+    private static Item registerMeowBlade(com.abyssredemption.absmod.item.BladeStage stage) {
         ResourceKey<Item> key = ResourceKey.create(
                 Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, stage.itemId()));
         return Registry.register(BuiltInRegistries.ITEM, key,

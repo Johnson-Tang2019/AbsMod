@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "id": "absmod:meow_blade_stage_7"
+    },
+    "title": {
+      "translate": "advancement.absmod.normal_stage_7.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.normal_stage_7.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "parent": "absmod:progression/normal_stage_6"
+}

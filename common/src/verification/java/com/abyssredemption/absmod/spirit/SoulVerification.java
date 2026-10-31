@@ -61,7 +61,7 @@ public final class SoulVerification {
         var record = BladeSoulService.initialize(store, source, owner);
         var otherRecord = BladeSoulService.initialize(store, other, owner);
         check(!record.soulId().equals(otherRecord.soulId()), "Independent blades share identity");
-        check(record.affection().isEmpty(), "Invented default affection");
+        check(record.affection().orElseThrow()==0D, "Initial affection must be zero");
         store.setDirty(false);
         check(BladeSoulService.initialize(store, source, owner).equals(record) && !store.isDirty(), "Repeated init changed identity");
         check(BladeSoulService.requireRecord(store, source).equals(record) && !store.isDirty(), "Query dirtied store");

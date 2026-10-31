@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "absmod:meow_blade"
+    },
+    "title": {
+      "translate": "advancement.absmod.normal_stage_1.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.normal_stage_1.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "absmod:meow_blade"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "parent": "absmod:progression/root"
+}

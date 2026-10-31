@@ -1,9 +1,9 @@
 package com.abyssredemption.absmod.item;
 
 /** Shared stage definitions used by both loaders. */
-public enum MeowBladeStage {
+public enum MeowBladeStage implements BladeStage {
     // PROPOSED PvE profile v1; not gameplay-validated final balance.
-    STAGE_1(1, "meow_blade", 7.0F, 1.8F),
+    STAGE_1(1, "meow_blade", 7.0F, 1.6F),
     STAGE_2(2, "meow_blade_stage_2", 8.0F, 2.0F),
     STAGE_3(3, "meow_blade_stage_3", 9.0F, 2.2F),
     STAGE_4(4, "meow_blade_stage_4", 10.0F, 2.5F),
@@ -39,6 +39,9 @@ public enum MeowBladeStage {
             case STAGE_9 -> 20;
         };
     }
+
+    public int durability() { return new int[]{1561,1800,2100,2400,2800,3200,3700,4200,4800}[number-1]; }
+    public BladeRoute route(){return BladeRoute.NORMAL;}
 
     public int number() {
         return number;

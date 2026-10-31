@@ -1,5 +1,10 @@
 # Ab's Mod 战斗平衡与连击节奏 v1
 
+## 2026-10-31：v2 实施记录
+
+用户授权将 MEOW_BLADE_PROGRESSION_PROPOSAL.md 用作原型。普通一阶攻速改为1.6，逐阶耐久与连击属性已接入；暗黑八阶与1.8倍基础伤害重击已接入。精确参数是 PROPOSED 可迭代候选，实机单次伤害检查不是长期平衡验收。暗黑耐久未另定，沿用下界合金2031。详见 IMPLEMENTATION_PROGRESSION.md。
+
+
 > 2026-09-12 本地状态：BAL-01 候选基础属性已接入；BAL-02 现已实现有效主命中计层、上限与衰减/清理，增伤和提速尚未应用。所有精确数值仍为 PROPOSED。详见 [本批记录](IMPLEMENTATION_COMBO_STATE.md)。
 
 

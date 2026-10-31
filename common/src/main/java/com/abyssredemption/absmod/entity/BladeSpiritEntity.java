@@ -15,6 +15,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public final class BladeSpiritEntity extends PathfinderMob {
     private UUID ownerId;
     private UUID soulId;
+    private net.minecraft.world.phys.Vec3 lastGrowthPosition;
 
     public BladeSpiritEntity(EntityType<? extends BladeSpiritEntity> type, Level level) {
         super(type, level);
@@ -41,6 +42,10 @@ public final class BladeSpiritEntity extends PathfinderMob {
     @Override
     protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand) {
+        if(player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            var growth=com.abyssredemption.absmod.spirit.BladeAffection.interact(serverPlayer,this,hand);
+            if(growth!=net.minecraft.world.InteractionResult.PASS)return growth;
+        }
         var result = com.abyssredemption.absmod.spirit.SpiritInteraction.recall(player, hand, this);
         return result == net.minecraft.world.InteractionResult.PASS ? super.mobInteract(player, hand) : result;
     }
@@ -54,6 +59,11 @@ public final class BladeSpiritEntity extends PathfinderMob {
             if (owner == null || !owner.isAlive() || owner.isSpectator() || !active()) {
                 getNavigation().stop();
             } else {
+                if(owner instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+                    boolean moved=lastGrowthPosition!=null && owner.position().distanceToSqr(lastGrowthPosition)>.01;
+                    com.abyssredemption.absmod.spirit.BladeAffection.follow(serverPlayer,this,moved);
+                    lastGrowthPosition=owner.position();
+                }
                 getLookControl().setLookAt(owner, 30, 30);
                 double distance = distanceToSqr(owner);
                 if (distance > 9 && distance < 24 * 24) { getNavigation().moveTo(owner, 1.0); }

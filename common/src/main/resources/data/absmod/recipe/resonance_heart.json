@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:amethyst_shard",
+    "minecraft:amethyst_shard",
+    "minecraft:amethyst_shard",
+    "minecraft:amethyst_shard",
+    "minecraft:gold_ingot",
+    "minecraft:pink_dye"
+  ],
+  "result": {
+    "id": "absmod:resonance_heart",
+    "count": 1
+  }
+}

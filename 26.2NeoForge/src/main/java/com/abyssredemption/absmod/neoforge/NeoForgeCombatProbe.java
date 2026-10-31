@@ -27,9 +27,11 @@ public final class NeoForgeCombatProbe {
     }
 
     private void payloads(RegisterPayloadHandlersEvent event) {
-        var registrar = event.registrar("2");
+        var registrar = event.registrar("3");
         registrar.playToServer(AttackIntentPayload.TYPE, AttackIntentPayload.CODEC,
                 (payload, context) -> probe.receive((ServerPlayer) context.player(), payload));
+        registrar.playToServer(com.abyssredemption.absmod.network.HeavyIntentPayload.TYPE,com.abyssredemption.absmod.network.HeavyIntentPayload.CODEC,
+            (payload,context)->probe.receiveHeavy((ServerPlayer)context.player(),payload));
         registrar.playToClient(CombatProbePayload.TYPE, CombatProbePayload.CODEC);
         registrar.playToClient(com.abyssredemption.absmod.network.BladeSwingPayload.TYPE, com.abyssredemption.absmod.network.BladeSwingPayload.CODEC);
     }

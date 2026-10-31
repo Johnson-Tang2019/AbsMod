@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "id": "absmod:spectral_meow_blade"
+    },
+    "title": {
+      "translate": "advancement.absmod.manifest.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.manifest.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "parent": "absmod:progression/resonance"
+}

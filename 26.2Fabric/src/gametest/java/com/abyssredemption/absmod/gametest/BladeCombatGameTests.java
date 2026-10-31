@@ -15,6 +15,23 @@ import net.minecraft.world.level.GameType;
 
 /** Exercises transformed Player/LivingEntity methods in a real server world, without client input. */
 public final class BladeCombatGameTests {
+    @GameTest(maxTicks=130)
+    public void heavyStunExpiresAndRejectsImmuneTargets(GameTestHelper helper) {
+        var target=helper.spawn(EntityTypes.HUSK,1,1,1);
+        helper.assertTrue(com.abyssredemption.absmod.combat.BladeStun.apply(target),"Ordinary hostile refused stun");
+        helper.assertTrue(com.abyssredemption.absmod.combat.BladeStun.active(target),"Stun not active");
+        helper.assertTrue(!com.abyssredemption.absmod.combat.BladeStun.apply(target),"Repeated stun bypassed immunity");
+        helper.assertTrue(!com.abyssredemption.absmod.combat.BladeStun.apply(player(helper)),"Player accepted stun");
+        var boss=helper.spawn(EntityTypes.WITHER,3,1,3);boss.setNoAi(true);
+        helper.assertTrue(!com.abyssredemption.absmod.combat.BladeStun.apply(boss),"Boss accepted stun");boss.discard();
+        helper.runAfterDelay(13,()->{
+            helper.assertTrue(!com.abyssredemption.absmod.combat.BladeStun.active(target),"Stun did not expire");
+            helper.assertTrue(!com.abyssredemption.absmod.combat.BladeStun.apply(target),"Post-stun immunity missing");
+        });
+        helper.runAfterDelay(113,()->{
+            helper.assertTrue(com.abyssredemption.absmod.combat.BladeStun.apply(target),"Immunity never expired");helper.succeed();
+        });
+    }
     @GameTest
     public void onlyActualPrimaryLossConfirmsHit(GameTestHelper helper) {
         Player player = player(helper);

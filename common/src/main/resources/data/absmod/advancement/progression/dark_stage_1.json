@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "absmod:dark_meow_blade"
+    },
+    "title": {
+      "translate": "advancement.absmod.dark_stage_1.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.dark_stage_1.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "absmod:dark_meow_blade"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "parent": "absmod:progression/root"
+}

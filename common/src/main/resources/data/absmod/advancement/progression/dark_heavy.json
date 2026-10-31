@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "id": "absmod:dark_meow_blade"
+    },
+    "title": {
+      "translate": "advancement.absmod.dark_heavy.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.dark_heavy.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "parent": "absmod:progression/dark_stage_1"
+}

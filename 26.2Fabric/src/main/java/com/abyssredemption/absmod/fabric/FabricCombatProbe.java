@@ -26,6 +26,8 @@ public final class FabricCombatProbe {
         PayloadTypeRegistry.serverboundPlay().register(AttackIntentPayload.TYPE, AttackIntentPayload.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(CombatProbePayload.TYPE, CombatProbePayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(AttackIntentPayload.TYPE, (payload, context) -> probe.receive(context.player(), payload));
+        PayloadTypeRegistry.serverboundPlay().register(com.abyssredemption.absmod.network.HeavyIntentPayload.TYPE,com.abyssredemption.absmod.network.HeavyIntentPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(com.abyssredemption.absmod.network.HeavyIntentPayload.TYPE,(payload,context)->probe.receiveHeavy(context.player(),payload));
         ServerTickEvents.END_SERVER_TICK.register(probe::tick);
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> probe.disconnect(handler.player));
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> probe.clear());

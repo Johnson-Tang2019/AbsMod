@@ -1,5 +1,18 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-10-31：合成、成长、暗黑重击与原版进度（PROG-01 / PROG-02 / DARK-01 / ADV-01）
+
+交付状态：本批已完成本地 Git 提交。HTTPS 推送连续出现 Connection was reset；当前已核对远端 main 仍为 fb84ffc，尚未确认推送成功。此前本地 75f74c3 也随本批等待推送。最终远端结果以交付回复为准。
+
+CONFIRMED：用户授权实施成长方案，并明确本次加入暗黑八阶、独立重击和原版进度引导。数值仍为可迭代 PROPOSED 原型，非最终生存平衡。
+
+SOURCE_PRESENT：普通/暗黑保留数据的初始配方，共鸣之心与菜单，二至八阶保留身份/附魔/使用比例的升阶事务；好感每日收入账本；普通连击属性与逐阶耐久、断刃保留；暗黑八阶、可改键 G 重击（12 tick前摇、160 tick冷却、1.8倍基础伤害、普通怪12 tick眩晕及后续100 tick免疫）；中英原版进度树。心魔未实现，普通八升九仍锁定。新增共鸣之心/暗黑基础图由内置图像生成工具制作，原九阶剑图未改，暗黑八阶暂共用基础图。
+
+VALIDATION：两端构建与 Fabric 20 项 GameTest 最近一次通过；NeoForge真实世界共鸣开关/发包升级/重放拒绝/返还通过；暗黑重击只造成一次90伤害并正确拒绝重复/冷却请求；原版进度真实授予与显示已检查。截图 `art/progression/`，日志 `build/progression-client.log`、`build/progression-final-validation.log`。实际启动 Minecraft，不将测试夹具或编译等同于全生存/多人验收。
+
+剩余：心魔资格与Boss、完整崩溃恢复、真实双玩家同时升级、Fabric图形客户端、长期平衡、独立运行时配置、暗黑逐阶原画及专属动作。保留模型原始参考目录未提交。实现文件、边界与完整证据见 [实施记录](IMPLEMENTATION_PROGRESSION.md)。
+
+
 ## 2026-10-31：MOTION-03 与成长方案
 
 实际检查：双端 build 与共享验证通过，Fabric 12 项 GameTest 通过（build/motion-peers-validation.log），两端正式 JAR 均排除联机测试入口。Minecraft 主机和观察者已正常退出。

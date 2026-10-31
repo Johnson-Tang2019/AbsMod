@@ -12,6 +12,161 @@ import net.minecraft.world.level.GameType;
 
 public final class SpiritGameTests {
     @GameTest
+    public void repairPreservesSoulAndRefusesSacrificingAnotherBlade(GameTestHelper helper) {
+        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
+        sword.setDamageValue(1000);
+        var record=BladeSoulService.initialize(BladeSoulStore.forInitialization(player.level().getServer()),sword,player.getUUID());
+        var anvil=new net.minecraft.world.inventory.AnvilMenu(1,player.getInventory());
+        anvil.getSlot(0).set(sword.copy());anvil.getSlot(1).set(new ItemStack(Items.DIAMOND));
+        var repaired=anvil.getSlot(2).getItem();
+        helper.assertTrue(!repaired.isEmpty() && repaired.getDamageValue()==610
+            && repaired.get(BladeSoulComponents.REFERENCE).soulId().equals(record.soulId()),"Diamond repair lost identity or quarter repair");
+        anvil.getSlot(1).set(sword.copy());
+        helper.assertTrue(anvil.getSlot(2).getItem().isEmpty(),"Anvil sacrificed second blade");
+        var grindstone=new net.minecraft.world.inventory.GrindstoneMenu(2,player.getInventory());
+        grindstone.getSlot(0).set(sword.copy());grindstone.getSlot(1).set(sword.copy());
+        helper.assertTrue(grindstone.getSlot(2).getItem().isEmpty(),"Grindstone sacrificed second blade");
+        helper.succeed();
+    }
+    @GameTest
+    public void darkCraftUpgradeAndSpiritKeepTheirRoute(GameTestHelper helper) {
+        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var original=new ItemStack(Items.NETHERITE_SWORD);original.setDamageValue(501);
+        var ingredients=new java.util.ArrayList<ItemStack>();ingredients.add(original);
+        for(int i=0;i<4;i++)ingredients.add(new ItemStack(Items.CRYING_OBSIDIAN));
+        ingredients.add(new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.withDefaultNamespace("purple_dye"))));
+        var input=net.minecraft.world.item.crafting.CraftingInput.of(3,2,ingredients);
+        var recipe=com.abyssredemption.absmod.item.MeowBladeRecipe.DARK;
+        helper.assertTrue(recipe.matches(input,helper.getLevel()),"Dark recipe missing");
+        var sword=recipe.assemble(input);
+        var store=BladeSoulStore.forInitialization(player.level().getServer());var record=BladeSoulService.initialize(store,sword,player.getUUID());
+        helper.assertTrue(record.route()==com.abyssredemption.absmod.item.BladeRoute.DARK,"Dark soul used normal route");
+        BladeSoulService.setTestAffection(store,sword,100);
+        for(int target=2;target<=8;target++) {
+            var menu=new ResonanceMenu(target,player.getInventory());menu.getSlot(0).set(sword);
+            int slot=1;for(var cost:ResonanceMenu.costs(record.route(),target))menu.getSlot(slot++).set(new ItemStack(cost.item(),cost.count()));
+            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);sword=menu.getSlot(0).getItem();
+            helper.assertTrue(store.find(record.soulId()).orElseThrow().stage()==target && sword.getDamageValue()==501,"Dark migration changed durability or failed");
+        }
+        var stage=((com.abyssredemption.absmod.item.MeowBladeItem)sword.getItem()).stage();
+        helper.assertTrue(stage.maxComboStacks()==0 && stage.attackDamage()==50,"Dark route inherited normal combos");
+        var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));player.setPos(pos.getX(),pos.getY(),pos.getZ());
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sword);
+        var spirit=SpiritTransformationService.manifest(player);
+        helper.assertTrue(player.getMainHandItem().is(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","spectral_dark_meow_blade_stage_8"))),"Dark projection missing");
+        helper.assertTrue(SpiritTransformationService.recallForAttack(player) && ItemStack.matches(sword,player.getMainHandItem()),"Dark recall lost sword");
+        helper.succeed();
+    }
+    @GameTest
+    public void everyNormalUpgradePreservesEnchantmentsAndLocksFinalTrial(GameTestHelper helper) {
+        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var stranger=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
+        var enchantment=helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.UNBREAKING);
+        sword.enchant(enchantment,3);
+        var store=BladeSoulStore.forInitialization(player.level().getServer());
+        var before=BladeSoulService.initialize(store,sword,player.getUUID());
+        for(int target=2;target<=8;target++) {
+            var menu=new ResonanceMenu(target,player.getInventory());menu.getSlot(0).set(sword);
+            int slot=1;for(var cost:ResonanceMenu.costs(target))menu.getSlot(slot++).set(new ItemStack(cost.item(),cost.count()));
+            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,stranger);
+            helper.assertTrue(menu.getSlot(0).getItem()==sword,"Stranger upgraded owned sword");
+            BladeSoulService.setTestAffection(store,sword,0);
+            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+            helper.assertTrue(menu.getSlot(0).getItem()==sword && !menu.getSlot(1).getItem().isEmpty(),"Affection refusal changed escrow");
+            BladeSoulService.setTestAffection(store,sword,300);
+            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+            sword=menu.getSlot(0).getItem();
+            helper.assertTrue(store.find(before.soulId()).orElseThrow().stage()==target
+                && sword.getEnchantments().getLevel(enchantment)==3,"Upgrade lost identity/enchantment");
+            helper.assertTrue(!menu.getSlot(10).mayPickup(player) && menu.quickMoveStack(player,10).isEmpty(),"Preview could be extracted");
+        }
+        var finalMenu=new ResonanceMenu(9,player.getInventory());finalMenu.getSlot(0).set(sword);
+        finalMenu.getSlot(1).set(new ItemStack(Items.AMETHYST_BLOCK,16));
+        finalMenu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        helper.assertTrue(finalMenu.getSlot(0).getItem()==sword && finalMenu.getSlot(1).getItem().getCount()==16
+            && store.find(before.soulId()).orElseThrow().stage()==8,"Unqualified final upgrade succeeded");
+        helper.succeed();
+    }
+    @GameTest
+    public void affectionRewardsAreCappedPerDay(GameTestHelper helper) {
+        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));player.setPos(pos.getX(),pos.getY(),pos.getZ());
+        var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sword);
+        var store=BladeSoulStore.forInitialization(player.level().getServer());
+        var initial=BladeSoulService.initialize(store,sword,player.getUUID());
+        var spirit=SpiritTransformationService.manifest(player);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);
+        BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
+        BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.COD,2));
+        BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
+        BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
+        helper.assertTrue(player.getMainHandItem().getCount()==1,"Daily duplicate gift consumed fish");
+        for(int i=0;i<3000;i++)BladeAffection.follow(player,spirit,true);
+        helper.assertTrue(store.find(initial.soulId()).orElseThrow().affection().orElseThrow()==7D,"Daily talk, gift or following cap failed");
+        spirit.discard();helper.succeed();
+    }
+    @GameTest
+    public void resonancePreservesIdentityAndRejectsReplay(GameTestHelper helper) {
+        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
+        sword.setDamageValue(780);
+        sword.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal("Keepsake"));
+        var store=BladeSoulStore.forInitialization(player.level().getServer());
+        var before=BladeSoulService.initialize(store,sword,player.getUUID());
+        BladeSoulService.setTestAffection(store,sword,300);
+        var menu=new ResonanceMenu(7,player.getInventory());
+        menu.slots.get(0).set(sword);
+        menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        helper.assertTrue(menu.slots.get(0).getItem()==sword,"Missing materials changed sword");
+        menu.slots.get(1).set(new ItemStack(Items.AMETHYST_SHARD,16));
+        menu.slots.get(2).set(new ItemStack(Items.COPPER_INGOT,16));
+        menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        var result=menu.slots.get(0).getItem();
+        helper.assertTrue(result.is(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade_stage_2")))
+            && result.get(BladeSoulComponents.REFERENCE).soulId().equals(before.soulId())
+            && result.getHoverName().getString().equals("Keepsake") && result.getDamageValue()==900,"Upgrade lost data or repaired damage");
+        helper.assertTrue(menu.slots.get(1).getItem().getCount()==8 && menu.slots.get(2).getItem().getCount()==8,"Incorrect material debit");
+        menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        helper.assertTrue(menu.slots.get(0).getItem()==result && store.find(before.soulId()).orElseThrow().stage()==2,"Duplicate confirmation upgraded twice");
+        // Return-to-inventory networking is covered by the real-client fixture.
+        helper.succeed();
+    }
+    @GameTest
+    public void growthLedgerPersistsDailyBudgets(GameTestHelper helper) {
+        var store=new BladeGrowthStore();var id=java.util.UUID.randomUUID();
+        store.put(new BladeGrowthStore.Day(id,100,5990,3,9,3,true,true,java.util.List.of(java.util.UUID.randomUUID())));
+        var ops=helper.getLevel().registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE);
+        var decoded=BladeGrowthStore.CODEC.parse(ops,BladeGrowthStore.CODEC.encodeStart(ops,store).getOrThrow()).getOrThrow();
+        helper.assertTrue(decoded.day(id,100).equals(store.day(id,100)),"Reload lost growth budget");
+        helper.assertTrue(decoded.day(id,99).talked(),"Clock rollback reset daily budget");
+        helper.assertTrue(!decoded.day(id,101).talked() && decoded.day(id,101).walking()==0,"Next day did not reset budget");
+        helper.succeed();
+    }
+    @GameTest
+    public void craftingKeepsDataAndBrokenBladeSurvives(GameTestHelper helper) {
+        var sword=new ItemStack(Items.DIAMOND_SWORD);sword.setDamageValue(500);
+        sword.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal("Original"));
+        var items=new java.util.ArrayList<ItemStack>();items.add(sword);
+        for(int i=0;i<4;i++)items.add(new ItemStack(Items.AMETHYST_SHARD));
+        items.add(new ItemStack(Items.COD));items.add(new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.withDefaultNamespace("pink_dye"))));
+        items.add(ItemStack.EMPTY);items.add(ItemStack.EMPTY);
+        var input=net.minecraft.world.item.crafting.CraftingInput.of(3,3,items);
+        var recipe=com.abyssredemption.absmod.item.MeowBladeRecipe.INSTANCE;
+        helper.assertTrue(recipe.matches(input,helper.getLevel()),"Initial recipe did not match");
+        var result=recipe.assemble(input);
+        helper.assertTrue(result.getDamageValue()==500 && result.getHoverName().getString().equals("Original"),"Crafting lost original data");
+        result.hurtAndBreak(99999,helper.getLevel(),(ServerPlayer)null,item->{});
+        helper.assertTrue(!result.isEmpty() && result.isBroken(),"Broken blade disappeared");
+        var repairInput=net.minecraft.world.item.crafting.CraftingInput.of(2,1,java.util.List.of(result,result.copy()));
+        helper.assertTrue(!net.minecraft.world.item.crafting.RepairItemRecipe.INSTANCE.matches(repairInput,helper.getLevel()),"Craft repair consumed a soul blade");
+        helper.succeed();
+    }
+    @GameTest
     public void invulnerableSpiritRecallsBeforeAttack(GameTestHelper helper) {
         var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
         var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));

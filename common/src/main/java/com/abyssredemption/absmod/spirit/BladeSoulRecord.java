@@ -45,7 +45,7 @@ public record BladeSoulRecord(UUID soulId, Optional<UUID> ownerId, BladeRoute ro
         return retained.sourceSlot() >= 0 && retained.sourceSlot() < 36 && sword.getCount() == 1
                 && reference != null && reference.soulId().equals(soulId)
                 && sword.getItem() instanceof com.abyssredemption.absmod.item.MeowBladeItem blade
-                && route == com.abyssredemption.absmod.item.BladeRoute.NORMAL && blade.stage().number() == stage;
+                && route == blade.stage().route() && blade.stage().number() == stage;
     }
 
     public BladeSoulRecord withTestAffection(double value) {

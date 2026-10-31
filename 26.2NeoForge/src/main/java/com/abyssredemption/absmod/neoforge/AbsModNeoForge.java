@@ -38,7 +38,10 @@ public final class AbsModNeoForge {
         COMPONENTS.register("blade_soul", () -> com.abyssredemption.absmod.spirit.BladeSoulComponents.REFERENCE);
     }
 
+    private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPES = net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER,AbsMod.MOD_ID);
+    static { RECIPES.register("meow_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER); RECIPES.register("dark_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER); }
     public AbsModNeoForge(IEventBus modEventBus) {
+        RECIPES.register(modEventBus);
         new NeoForgeCombatProbe(modEventBus);
         COMPONENTS.register(modEventBus);
         ENTITIES.register(modEventBus);
@@ -58,6 +61,8 @@ public final class AbsModNeoForge {
     private static void addCreativeItems(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {
             ModItems.MEOW_BLADES.forEach(item -> event.accept(item));
+            ModItems.DARK_BLADES.forEach(item -> event.accept(item));
+            event.accept(ModItems.RESONANCE_HEART);
         }
         if (event.getTabKey().equals(CreativeModeTabs.FOOD_AND_DRINKS)) {
             ModItems.MILKSHAKES.forEach(item -> event.accept(item));

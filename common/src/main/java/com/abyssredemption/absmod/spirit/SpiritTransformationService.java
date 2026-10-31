@@ -54,6 +54,7 @@ public final class SpiritTransformationService {
             if (!level.addFreshEntity(spirit)) { throw failure("spawn_failed"); }
             store.replace(pending, pending.transition("spirit", carrier));
             inventory.setChanged();
+            BladeAdvancements.award(player,"manifest");
             return spirit;
         } catch (RuntimeException exception) {
             spirit.discard();

@@ -43,13 +43,13 @@
       "stage": 1,
       "item_id": "absmod:meow_blade",
       "base_total_damage": 7,
-      "base_attack_speed": 1.8,
+      "base_attack_speed": 1.6,
       "max_combo_stacks": 5,
       "derived": {
         "max_combo_total_damage": 8.05,
-        "max_combo_attack_speed": 1.89,
-        "ideal_base_dps": 12.6,
-        "ideal_max_combo_dps": 15.2145
+        "max_combo_attack_speed": 1.68,
+        "ideal_base_dps": 11.2,
+        "ideal_max_combo_dps": 13.524
       }
     },
     {

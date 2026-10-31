@@ -7,6 +7,9 @@ if (providers.gradleProperty('spiritVisualTest').isPresent()) {
 if (providers.gradleProperty('motionVisualTest').isPresent()) {
     sourceSets.main.java.srcDir 'src/motiontest/java'
 }
+if (providers.gradleProperty('progressionVisualTest').isPresent()) {
+    sourceSets.main.java.srcDir 'src/progressiontest/java'
+}
 
 neoForge {
     version = rootProject.neo_version

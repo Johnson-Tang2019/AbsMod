@@ -21,11 +21,13 @@ public final class AbsModFabricClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 com.abyssredemption.absmod.entity.SpiritEntityType.get(),
                 com.abyssredemption.absmod.client.spirit.BladeSpiritRenderer::new);
+        net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper.registerKeyMapping(com.abyssredemption.absmod.client.BladeKeys.HEAVY);
         var probe = new com.abyssredemption.absmod.client.BladeCombatClient();
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 com.abyssredemption.absmod.network.CombatProbePayload.TYPE,
                 (payload, context) -> probe.setEnabled(context.client(), payload.enabled()));
         ClientTickEvents.END_CLIENT_TICK.register(client -> probe.tick(client,
+                payload -> net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(payload),
                 payload -> net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(payload)));
         MeowSlashEffects effects = new MeowSlashEffects();
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-31",
+  "baseline": "75f74c3",
+  "tasks": [
+    "PROG-01",
+    "PROG-02",
+    "DARK-01",
+    "ADV-01"
+  ],
+  "build": {
+    "fabric": "PASS",
+    "neoforge": "PASS",
+    "fabric_gametests": 20,
+    "log": "build/progression-final-validation.log"
+  },
+  "neoforge_client": {
+    "launched": true,
+    "normal_upgrade_and_return": "PASS",
+    "dark_upgrade": "PASS",
+    "heavy_single_damage": 90,
+    "target_health_before": 200,
+    "target_health_after": 110,
+    "heavy_replay_and_cooldown_rejection": "PASS",
+    "advancement_awards_and_screen": "PASS",
+    "log": "build/progression-client.log",
+    "input": "Automated real client packets; not physical keyboard acceptance"
+  },
+  "new_multiplayer_progression_acceptance": "NOT_TESTED",
+  "fabric_graphical_client": "NOT_TESTED",
+  "survival_balance": "NOT_VALIDATED",
+  "stage_nine_boss": "NOT_IMPLEMENTED",
+  "release_visual_harness_absent": true,
+  "original_nine_sword_pngs_unchanged": true
+}

@@ -18,7 +18,9 @@ public final class ModCreativeTab {
         return builder.title(Component.translatable("itemGroup.absmod"))
                 .icon(() -> blades.apply(MeowBladeStage.STAGE_1).getDefaultInstance())
                 .displayItems((parameters, output) -> {
+                    output.accept(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"resonance_heart")));
                     for (var stage : MeowBladeStage.values()) { output.accept(blades.apply(stage)); }
+                    for(var stage:DarkBladeStage.values())output.accept(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.fromNamespaceAndPath("absmod",stage.itemId())));
                     for (var variant : MilkshakeVariant.values()) { output.accept(milkshakes.apply(variant)); }
                 }).build();
     }

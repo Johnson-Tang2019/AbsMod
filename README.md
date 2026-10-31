@@ -1,6 +1,13 @@
 # Ab's Mod
 
-A short pose transition now smooths consecutive blade actions. Two real NeoForge clients were connected locally and 54 observer screenshots were captured; see [validation](docs/MOTION_MULTIPLAYER_VALIDATION.md). The [growth and recipe design](docs/MEOW_BLADE_PROGRESSION_PROPOSAL.md) is a proposal, not implemented gameplay.
+Crafting and progression are now playable prototypes on both loaders. Craft a normal blade from a diamond sword, four separate amethyst shards, raw cod and pink dye; craft a dark blade from a netherite sword, four separate crying obsidian and purple dye. Craft a **Resonance Heart** from four amethyst shards, a gold ingot and pink dye, then right-click it to upgrade the same blade. Normal stages 2–8 and all eight dark stages are available; normal stage 9 remains locked until the soul-bound boss trial exists.
+
+The vanilla Advancements screen guides both routes, affection and resonance. Earn daily-capped affection through talking, raw-cod gifts, active following and combat. Dark heavy strike defaults to **G** (rebindable): 0.6s windup, 8s cooldown, 1.8× stage base damage, sharing the existing attack budget. Broken blades are retained for repair. Numerical values remain prototype candidates.
+
+Two new AI-generated textures are included: Resonance Heart and the shared dark-blade prototype sprite. The original nine sword textures are unchanged. See [implementation and validation limits](docs/IMPLEMENTATION_PROGRESSION.md), [asset provenance](art/progression/ASSETS.md), and [actual advancement UI](art/progression/advancements.png).
+
+
+A short pose transition now smooths consecutive blade actions. Two real NeoForge clients were connected locally and 54 observer screenshots were captured; see [validation](docs/MOTION_MULTIPLAYER_VALIDATION.md). The [growth and recipe design](docs/MEOW_BLADE_PROGRESSION_PROPOSAL.md) remains the numerical prototype reference; the latest implementation is described above.
 
 Custom first-person rendering now yields when its motion preset is unavailable. Late local animation confirmations are ignored while a screen is open or mining is active; remote players remain independent.
 
