@@ -1,5 +1,13 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-01：第一人称位置、倾斜与遮挡（MOTION-04）
+
+CONFIRMED：用户明确优先第一人称刀的位置、倾斜和遮挡。静止握柄移向外侧下方并稍远离镜头，加入18度透视偏转、降低刀尖并减小静止尺寸；挥刀保留原始采样，收招随权重平滑回到新握持，左手镜像。无新增伤害或第三人称动作修改。
+
+实际启动NeoForge进入新世界，检查一阶右手、九阶左手静止、关闭刀光挥刀、开启刀光及资源重载样本；截图 art/animation/first-person-grip/，日志 build/first-person-grip-client.log（BUILD SUCCESSFUL）。双加载器build通过（build/first-person-grip-build.log）。仅FOV65/1280×900的本地自动驱动视觉样本；未重复多人测试，非用户美术验收。侧刃瞬间过薄及其他FOV仍待打磨。
+
+改动：BladeGrip.java、MotionVisualTest.java、本文/STATUS/CURRENT_TASK、双语README和截图。猫遗传/任务保持上一批状态；1.21.1客户端API移植与FTB实际运行仍未完成，不安装未通过验证的移植包。
+
 ## 2026-11-01：猫遗传、中文手册和任务引导（CAT-01 / GUIDE-01）
 
 本地基线 main/29a11c8，保留未提交的原始模型参考。实现 D/d 稀释双亲遗传、父母UUID/代数持久化、黑色dd蓝灰外观、观察与配对概率。书+生鳕鱼合成16页中文手册，配套四项原版进度；FTB导出25个稳定ID任务，普通/暗黑/猫分线，不把未实现九阶Boss列为可完成任务。

@@ -1,5 +1,13 @@
 # Ab's Mod 美术与生图执行指南
 
+## 2026-11-01：第一人称位置、倾斜与遮挡（MOTION-04）
+
+CONFIRMED：用户明确优先第一人称刀的位置、倾斜和遮挡。静止握柄移向外侧下方并稍远离镜头，加入18度透视偏转、降低刀尖并减小静止尺寸；挥刀保留原始采样，收招随权重平滑回到新握持，左手镜像。无新增伤害或第三人称动作修改。
+
+实际启动NeoForge进入新世界，检查一阶右手、九阶左手静止、关闭刀光挥刀、开启刀光及资源重载样本；截图 art/animation/first-person-grip/，日志 build/first-person-grip-client.log（BUILD SUCCESSFUL）。双加载器build通过（build/first-person-grip-build.log）。仅FOV65/1280×900的本地自动驱动视觉样本；未重复多人测试，非用户美术验收。侧刃瞬间过薄及其他FOV仍待打磨。
+
+改动：BladeGrip.java、MotionVisualTest.java、本文/STATUS/CURRENT_TASK、双语README和截图。猫遗传/任务保持上一批状态；1.21.1客户端API移植与FTB实际运行仍未完成，不安装未通过验证的移植包。
+
 ## 2026-11-01：持刀姿态首轮修正
 
 用户否定当前持刀效果。第一人称静止握持缩小/下移，恢复装备升降；第三人称只映射手臂旋转、保持肩部固定点。已启动NeoForge检查静止及挥刀截图，见art/animation/grip-revision/。仍有侧视刀身较薄、完整动作美术认可待办，不宣称用户验收通过。原九阶图与伤害不变。

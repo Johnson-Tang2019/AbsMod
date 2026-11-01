@@ -1,0 +1,9 @@
+{
+  "visual_approval": "PENDING",
+  "sha256": "D4E852D5D9A77B304EE1BDFE1AA81184B25050B5A5B326C480821BD7DC8061C0",
+  "target": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\mods\\absmod-neoforge-0.1.0+26.2.jar",
+  "port_1211": "IN_PROGRESS_NOT_INSTALLED",
+  "client_log": "build/first-person-grip-client.log",
+  "backup": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\absmod-backups\\20261101-142023",
+  "build_log": "build/first-person-grip-build.log"
+}

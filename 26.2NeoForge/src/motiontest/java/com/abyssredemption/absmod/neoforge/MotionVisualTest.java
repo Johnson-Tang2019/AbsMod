@@ -49,6 +49,7 @@ public final class MotionVisualTest {
             });
             BladeMotionPlayer.hideEffects=true;
         }
+        if(tick==45) { mc.options.mainHand().set(net.minecraft.world.entity.HumanoidArm.RIGHT);mc.player.setMainArm(net.minecraft.world.entity.HumanoidArm.RIGHT);mc.options.setCameraType(CameraType.FIRST_PERSON); }
         if(tick==55)Screenshot.grab(mc.gameDirectory,"motion-rest-right.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
         if(tick==60)mc.options.setCameraType(CameraType.FIRST_PERSON);
         if(tick==160)mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
@@ -65,6 +66,7 @@ public final class MotionVisualTest {
             Screenshot.grab(mc.gameDirectory,name,mc.gameRenderer.mainRenderTarget(),1,message->{});
         }
         if(tick==410) { BladeMotionPlayer.hideEffects=true;mc.options.mainHand().set(net.minecraft.world.entity.HumanoidArm.LEFT);mc.player.setMainArm(net.minecraft.world.entity.HumanoidArm.LEFT); }
+        if(tick==412)Screenshot.grab(mc.gameDirectory,"motion-rest-left.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
         if(tick==450)mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
         if(tick==500)mc.reloadResourcePacks();
         if(tick==560) { mc.options.mainHand().set(net.minecraft.world.entity.HumanoidArm.RIGHT);mc.player.setMainArm(net.minecraft.world.entity.HumanoidArm.RIGHT);mc.options.setCameraType(CameraType.FIRST_PERSON); }

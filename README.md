@@ -1,6 +1,6 @@
 # Ab's Mod
 
-First-person resting grip is smaller/lower and respects equip transitions. Third-person arms retain shoulder pivots instead of importing MMD translations. This is an initial visual revision, not final animation approval.
+First-person resting grip sits farther down and outward, with a perspective tilt and smaller idle scale; recovery blends back smoothly and equip transitions remain intact. Third-person arms retain shoulder pivots instead of importing MMD translations. This is an initial visual revision, not final animation approval.
 
 Craft a **Cat Field Guide** from a book and raw cod. Use it in the air to read the 16-page gameplay guide; use it on a cat to inspect D/d dilution genes and parentage. Sneak-use selects the first cat, then inspect another nearby cat for the offspring dilution probability. Each parent contributes one allele. Black dd cats use the vanilla blue-gray appearance; other dilution patterns retain their original textures with an explicit notice. This is a limited Mendelian model, not a complete breed simulator. [Specification](docs/CAT_GENETICS.md).
 
