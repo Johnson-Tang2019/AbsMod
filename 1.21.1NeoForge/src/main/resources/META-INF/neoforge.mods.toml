@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="absmod"
+version="${version}"
+displayName="Ab's Mod"
+authors="AbyssRedemption"
+description='''Ab's Mod for Minecraft 1.21.1.'''
+
+[[dependencies.absmod]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.265,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.absmod]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+
+[[mixins]]
+config="absmod.mixins.json"

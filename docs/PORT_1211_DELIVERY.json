@@ -1,0 +1,46 @@
+{
+  "ftb_quests": 25,
+  "build_log": "build/port-release-final.log",
+  "regression_build": "build/port-26.2-regression-build.log",
+  "persisted_completed": 10,
+  "original_mods_directory_empty": true,
+  "pcl_launcher_start": "NOT_RUN",
+  "minecraft": "1.21.1",
+  "files": [
+    {
+      "sha256": "014414ad4e789a3b61355c9b9ccff39dabc00c348c1935ba7ccbd378b4842b06",
+      "path": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\mods\\absmod-neoforge-0.1.0+1.21.1.jar"
+    },
+    {
+      "sha256": "1295BFB3E23149904DD12DA025319A9764FB2806DFD6F2F816753A61144CAE46",
+      "path": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\mods\\architectury-neoforge-13.0.11.jar"
+    },
+    {
+      "sha256": "CA64BD1B5F335406900F74EEAFACEA5A3580A3933D61DE6B6600A64EB12A9A95",
+      "path": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\mods\\ftb-library-neoforge-2101.1.39.jar"
+    },
+    {
+      "sha256": "6B42457D680108D0AF5B8DEB21E3FE7B92138209F0683C62441DC360D4FC01D5",
+      "path": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\mods\\ftb-quests-neoforge-2101.1.37.jar"
+    },
+    {
+      "sha256": "E6BCD670493624E6906DF872A9C6AF4A33FE6405CAC57A32C59CD4CD5838C655",
+      "path": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\mods\\ftb-teams-neoforge-2101.1.11.jar"
+    },
+    {
+      "sha256": "D1B9775F4013FAFA08A8DE98EAEDA8881D647C1B31DBE2E743BD7D15D04B76F2",
+      "path": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\config\\ftbquests\\quests\\chapters\\absmod_progression.snbt"
+    },
+    {
+      "sha256": "86267C75A91B416618B0FFFF3950E723A6A2EC1F2FE8FED5F65BD522D1B79F22",
+      "path": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\config\\ftbquests\\quests\\lang\\zh_cn.snbt"
+    }
+  ],
+  "date": "2026-11-01",
+  "neoforge": "21.1.265",
+  "multiplayer": "NOT_TESTED",
+  "client_log": "build/port-final-client.log",
+  "instance": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao",
+  "dedicated_log": "build/port-dedicated-server-retry.log",
+  "backup": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\absmod-backups\\20261101-port-final"
+}

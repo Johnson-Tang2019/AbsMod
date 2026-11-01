@@ -1,5 +1,7 @@
 # Ab's Mod
 
+Minecraft 1.21.1 NeoForge is available as an independent Java 21 target: `./gradlew.bat -p 1.21.1NeoForge build` (build host JDK 25). The optional FTB pack contains 25 Chinese quests; client detection and dedicated-server persistence were tested. See [port instructions and limits](docs/PORT_1211.md). Minecraft 26.2 Fabric/NeoForge remains supported.
+
 First-person resting grip sits farther down and outward, with a perspective tilt and smaller idle scale; recovery blends back smoothly and equip transitions remain intact. Third-person arms retain shoulder pivots instead of importing MMD translations. This is an initial visual revision, not final animation approval.
 
 Craft a **Cat Field Guide** from a book and raw cod. Use it in the air to read the 16-page gameplay guide; use it on a cat to inspect D/d dilution genes and parentage. Sneak-use selects the first cat, then inspect another nearby cat for the offspring dilution probability. Each parent contributes one allele. Black dd cats use the vanilla blue-gray appearance; other dilution patterns retain their original textures with an explicit notice. This is a limited Mendelian model, not a complete breed simulator. [Specification](docs/CAT_GENETICS.md).

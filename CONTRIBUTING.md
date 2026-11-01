@@ -42,3 +42,7 @@ Inspect staged files before pushing and push only the intended branch.
 The mod metadata currently declares `All Rights Reserved`; an open-source license
 has not been selected. Do not change that declaration or add third-party assets
 without confirming their licensing and attribution requirements.
+
+## Minecraft 1.21.1 port
+
+The independent `1.21.1NeoForge` project compiles `common/src/minecraft1211/java` against NeoForge 21.1.265. Keep gameplay fixes synchronized with the 26.2 sources. Also run `./gradlew.bat -p 1.21.1NeoForge build` when changing port or shared resources. Runtime mods and optional fixture instructions are documented in docs/PORT_1211.md; never package fixture classes or third-party runtime jars.

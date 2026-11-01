@@ -47,6 +47,14 @@ def generate():
     destination.parent.mkdir(parents=True, exist_ok=True)
     # JSON's quoted keys and primitive lists are valid SNBT; avoid version-specific item-stack syntax.
     destination.write_text(json.dumps(chapter, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    # Modern FTB Quests stores localized text separately; keep inline fallback for older packs.
+    translations = {"chapter." + chapter["id"] + ".title": chapter["title"]}
+    for quest in quests:
+        translations["quest." + quest["id"] + ".title"] = quest["title"]
+        translations["quest." + quest["id"] + ".quest_desc"] = quest["description"]
+    lang = destination.parent.parent / "lang"
+    lang.mkdir(exist_ok=True)
+    (lang / "zh_cn.snbt").write_text(json.dumps(translations, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     ids = [q["id"] for q in quests] + [t["id"] for q in quests for t in q["tasks"]] + [chapter["id"]]
     assert len(ids) == len(set(ids)), "Duplicate task identity"
     assert all(q["tasks"][0]["advancement"].split("/")[-1] in names for q in quests)

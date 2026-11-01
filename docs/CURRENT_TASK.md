@@ -1,5 +1,19 @@
 # 下一批开发任务单
 
+## 2026-11-01：1.21.1 NeoForge 与 FTB 任务适配（PORT-01 / GUIDE-02）
+
+CONFIRMED：继续适配1.21.1 NeoForge和FTB，验证后安装并提交推送。以本地3c07088及未提交移植代码为基线，原始模型参考目录保留。
+
+SOURCE_PRESENT：独立1.21.1NeoForge（NeoForge21.1.265、Java21字节码）及common/src/minecraft1211版本适配源；保留ModDevGradle、九阶原图/ID、暗黑八阶、奶昔、成长/重击、剑灵切换与猫遗传。1.21.1使用旧版模型绘制API、单独客户端入口/第一三人称Mixin、透明虚化模型；Bedrock几何、逐面UV和196骨骼保留。17张虚化模型引用原图，未重画原始资产。
+
+VALIDATION：独立build与26.2双端回归build通过；Java21 class版本、JSON、17个虚化模型和发布包排除测试类检查通过。实际启动1.21.1客户端进入世界，普通/暗黑升级、保留耐久比例与原剑身份、重击12tick前摇/单次90主目标伤害/重复及冷却拒绝、16页中文手册、剑灵显示/召回、第一人称与刀光、资源重载完成。模型fallback=false、bones=196。FTB25任务加载、中文界面、自动完成真实进度已验证；独立服务器重新载入同一测试世界，恢复10项任务完成记录，并断言猫繁殖/NBT家谱、断刃保留、显现/无敌/攻击召回、已加载合成配方。
+
+记录：build/port-final-client.log、build/port-dedicated-server-retry.log、build/port-release-build.log、build/port-26.2-regression-build.log；截图art/compatibility/1.21.1/。修复实测发现的TieredItem覆盖阶段耐久、ServerPlayer仅允许原版书ID开页、猫繁殖Mixin描述符和进度背景资源路径。FTB开发模式实体图标缺失已补共鸣之心图标描述；未作为新角色原画。
+
+安装：D:/Program Files/PCL2/.minecraft/versions/1.21.1-NeoForge_21.1.265_miao，原mods为空。已安装本模组、FTB Quests2101.1.37/Library2101.1.39/Teams2101.1.11/Architectury13.0.11，合并本章节和中文语言表，逐包SHA256一致。未覆盖存档或任务进度；详见PORT_1211_DELIVERY.json。
+
+边界：这是客户端自动驱动＋独立服务器实际运行验证，尚未做1.21.1双玩家联机、全姿态/全奶昔效果/长期生存平衡或PCL按钮启动。1.21.1 Fabric未在本批范围；禁止跨版本混装JAR或倒退26.2存档。正式数值仍为PROPOSED原型。原模型再分发授权状态沿用现有NOTICE，不擅自改许可证。
+
 ## 2026-11-01：第一人称位置、倾斜与遮挡（MOTION-04）
 
 CONFIRMED：用户明确优先第一人称刀的位置、倾斜和遮挡。静止握柄移向外侧下方并稍远离镜头，加入18度透视偏转、降低刀尖并减小静止尺寸；挥刀保留原始采样，收招随权重平滑回到新握持，左手镜像。无新增伤害或第三人称动作修改。

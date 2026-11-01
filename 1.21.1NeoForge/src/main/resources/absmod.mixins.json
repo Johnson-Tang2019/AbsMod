@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.abyssredemption.absmod.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerAttackMixin",
+    "LivingDamageMixin",
+    "ServerAttackPacketMixin",
+    "BladeDurabilityMixin",
+    "BladeCraftRepairMixin",
+    "BladeCombineMenuMixin",
+    "BladeStunMixin",
+    "CatGeneticsMixin"
+  ],
+  "client": [
+    "client.MinecraftAttackMixin",
+    "client.BladeMotionReloadMixin",
+    "client.BladeAttackIndicatorMixin",
+    "client.BladeFirstPersonMixin",
+    "client.BladePlayerPoseMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "file": "architectury-neoforge-13.0.11.jar",
+    "url": "https://maven.architectury.dev/dev/architectury/architectury-neoforge/13.0.11/architectury-neoforge-13.0.11.jar",
+    "sha256": "1295bfb3e23149904dd12da025319a9764fb2806dfd6f2f816753a61144cae46"
+  },
+  {
+    "file": "ftb-library-neoforge-2101.1.39.jar",
+    "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-library-neoforge/2101.1.39/ftb-library-neoforge-2101.1.39.jar",
+    "sha256": "ca64bd1b5f335406900f74eeafacea5a3580a3933d61de6b6600a64eb12a9a95"
+  },
+  {
+    "file": "ftb-quests-neoforge-2101.1.37.jar",
+    "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-quests-neoforge/2101.1.37/ftb-quests-neoforge-2101.1.37.jar",
+    "sha256": "6b42457d680108d0af5b8deb21e3fe7b92138209f0683c62441dc360d4fc01d5"
+  },
+  {
+    "file": "ftb-teams-neoforge-2101.1.11.jar",
+    "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-teams-neoforge/2101.1.11/ftb-teams-neoforge-2101.1.11.jar",
+    "sha256": "e6bcd670493624e6906df872a9c6af4a33fe6405cac57a32c59cd4cd5838c655"
+  }
+]

@@ -1,0 +1,4 @@
+{
+  "parent": "absmod:item/meow_blade_stage_4",
+  "render_type": "minecraft:translucent"
+}

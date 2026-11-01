@@ -1,0 +1,68 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.146'
+}
+group = 'com.abyssredemption.absmod'
+version = '0.1.0+1.21.1'
+base.archivesName = 'absmod-neoforge'
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+neoForge {
+    version = '21.1.265'
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+    }
+    mods { absmod { sourceSet sourceSets.main } }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+
+sourceSets.main.java.srcDir "../common/src/minecraft1211/java"
+tasks.withType(JavaCompile).configureEach { options.compilerArgs.addAll(["-Xmaxerrs", "300"]) }
+
+// Compile with the host JDK to avoid Java 21 worker argument-file quoting on apostrophe paths.
+// The emitted bytecode/API level remains Java 21; game runs use the Java 21 toolchain above.
+tasks.withType(JavaCompile).configureEach {
+    javaCompiler = javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(25) }
+    options.release = 21
+}
+
+processResources {
+    from('../common/src/main/resources') {
+        exclude 'absmod.mixins.json', 'assets/absmod/items/**'
+    }
+    from('../client-bedrock/src/main/resources')
+    inputs.property 'version', project.version
+    filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }
+    doLast {
+        def rootAdvancement = new File(destinationDir, 'data/absmod/advancement/progression/root.json')
+        if(rootAdvancement.exists()) {
+            def advancement = new groovy.json.JsonSlurper().parse(rootAdvancement)
+            advancement.display.background = 'minecraft:textures/gui/advancements/backgrounds/stone.png'
+            rootAdvancement.setText(groovy.json.JsonOutput.toJson(advancement), 'UTF-8')
+        }
+        fileTree(destinationDir).matching { include 'data/absmod/recipe/*.json' }.each { recipe ->
+            def json = new groovy.json.JsonSlurper().parse(recipe)
+            def ingredient = { value -> value instanceof String ? (value.startsWith('#') ? [tag:value.substring(1)] : [item:value]) : value }
+            if(json.ingredients) json.ingredients = json.ingredients.collect(ingredient)
+            if(json.key) json.key = json.key.collectEntries { key,value -> [(key):ingredient(value)] }
+            recipe.setText(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(json)), 'UTF-8')
+        }
+    }
+}
+['Client', 'Server'].each { runName ->
+tasks.named('prepare' + runName + 'Run') {
+    doLast {
+        [runName.toLowerCase() + 'RunProgramArgs.txt',runName.toLowerCase() + 'RunVmArgs.txt'].each { name ->
+            def argsFile = layout.buildDirectory.file("moddev/${name}").get().asFile
+            argsFile.setText(argsFile.readLines('UTF-8').collect { line ->
+                line.contains("'") && !line.startsWith('"') ? '"' + line + '"' : line
+            }.join(System.lineSeparator()) + System.lineSeparator(), 'UTF-8')
+        }
+    }
+}
+}
+
+if (providers.gradleProperty("portVisualTest").isPresent()) { sourceSets.main.java.srcDir "src/visualtest/java"; dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") } }

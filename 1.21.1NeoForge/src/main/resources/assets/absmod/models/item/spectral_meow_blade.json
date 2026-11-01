@@ -1,0 +1,4 @@
+{
+  "parent": "absmod:item/meow_blade",
+  "render_type": "minecraft:translucent"
+}
