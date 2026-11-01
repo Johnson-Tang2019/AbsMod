@@ -27,6 +27,8 @@ public abstract class BladeFirstPersonMixin {
         if(player.isUsingItem() || client.gui.screen()!=null || client.gameMode==null || client.gameMode.isDestroying()) { return; }
         if(pose==null && !com.abyssredemption.absmod.client.BladeCombatClient.isAvailable()) { return; }
         stack.pushPose();
+        // Preserve the equip transition instead of popping the blade into its resting grip.
+        stack.translate(0,-.6F*equip,0);
         BladeGrip.firstPerson(stack,pose,player.getMainArm());
         renderItem(player,item,ItemDisplayContext.NONE,stack,collector,light);
         stack.popPose();

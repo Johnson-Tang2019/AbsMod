@@ -110,6 +110,38 @@ public final class ProgressionVisualTest {
         });
         if(tick==395)mc.gui.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(mc.getConnection().getAdvancements()));
         if(tick==420)Screenshot.grab(mc.gameDirectory,"progression-advancements.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
-        if(tick==440)mc.stop();
+        if(tick==440) {
+            mc.gui.setScreen(null);
+            server.execute(()->{
+                var p=server.getPlayerList().getPlayers().getFirst();
+                var guide=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","field_guide")));
+                p.setItemInHand(InteractionHand.MAIN_HAND,guide);guide.getItem().use(p.level(),p,InteractionHand.MAIN_HAND);
+            });
+        }
+        if(tick==460 && !(mc.gui.screen() instanceof net.minecraft.client.gui.screens.inventory.BookViewScreen))throw new IllegalStateException("Field guide screen did not open");
+        if(tick>=465 && tick<=615 && (tick-465)%10==0 && mc.gui.screen() instanceof net.minecraft.client.gui.screens.inventory.BookViewScreen book) {
+            book.setPage((tick-465)/10);
+        }
+        if(tick>=468 && tick<=618 && (tick-468)%10==0)
+            Screenshot.grab(mc.gameDirectory,"field-guide-page-"+((tick-468)/10+1)+".png",mc.gameRenderer.mainRenderTarget(),1,message->{});
+        if(tick==630) {
+            mc.gui.setScreen(null);
+            server.execute(()->{
+                var p=server.getPlayerList().getPlayers().getFirst();target.discard();
+                var a=net.minecraft.world.entity.EntityTypes.CAT.create(p.level(),net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                var b=net.minecraft.world.entity.EntityTypes.CAT.create(p.level(),net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                var empty=java.util.Optional.<java.util.UUID>empty();
+                ((com.abyssredemption.absmod.cat.CatGenetics)a).absmod$setGenome(new com.abyssredemption.absmod.cat.CatGenome(1,"minecraft:all_black",empty,empty,0));
+                ((com.abyssredemption.absmod.cat.CatGenetics)b).absmod$setGenome(new com.abyssredemption.absmod.cat.CatGenome(3,"minecraft:all_black",empty,empty,0));
+                p.teleportTo(p.level(),0,100,-2,java.util.Set.of(),0,18,true);
+                a.setPos(-1,100,2);b.setPos(1,100,2);a.setNoAi(true);b.setNoAi(true);p.level().addFreshEntity(a);p.level().addFreshEntity(b);
+                com.abyssredemption.absmod.item.FieldGuideItem.observe(p,a,InteractionHand.MAIN_HAND);
+                p.setShiftKeyDown(true);com.abyssredemption.absmod.item.FieldGuideItem.observe(p,a,InteractionHand.MAIN_HAND);p.setShiftKeyDown(false);
+                com.abyssredemption.absmod.item.FieldGuideItem.observe(p,b,InteractionHand.MAIN_HAND);
+                com.mojang.logging.LogUtils.getLogger().info("CAT_GUIDE_VISUAL guide opened; dense/carrier and dilute variants spawned; 50 percent prediction requested");
+            });
+        }
+        if(tick==655)Screenshot.grab(mc.gameDirectory,"cat-guide-observation.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
+        if(tick==680)mc.stop();
     }
 }

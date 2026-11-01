@@ -22,7 +22,8 @@
           {
             "items": [
               "minecraft:amethyst_shard",
-              "minecraft:crying_obsidian"
+              "minecraft:crying_obsidian",
+              "absmod:field_guide"
             ]
           }
         ]

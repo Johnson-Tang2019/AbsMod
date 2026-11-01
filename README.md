@@ -1,5 +1,11 @@
 # Ab's Mod
 
+First-person resting grip is smaller/lower and respects equip transitions. Third-person arms retain shoulder pivots instead of importing MMD translations. This is an initial visual revision, not final animation approval.
+
+Craft a **Cat Field Guide** from a book and raw cod. Use it in the air to read the 16-page gameplay guide; use it on a cat to inspect D/d dilution genes and parentage. Sneak-use selects the first cat, then inspect another nearby cat for the offspring dilution probability. Each parent contributes one allele. Black dd cats use the vanilla blue-gray appearance; other dilution patterns retain their original textures with an explicit notice. This is a limited Mendelian model, not a complete breed simulator. [Specification](docs/CAT_GENETICS.md).
+
+The [FTB quest export](quest-packs/ftb-1.21.1/README.md) has stable IDs and follows the shipped advancements. On 26.2, use vanilla advancements and the guide. The 1.21.1 NeoForge port and actual FTB runtime acceptance are still pending.
+
 Crafting and progression are now playable prototypes on both loaders. Craft a normal blade from a diamond sword, four separate amethyst shards, raw cod and pink dye; craft a dark blade from a netherite sword, four separate crying obsidian and purple dye. Craft a **Resonance Heart** from four amethyst shards, a gold ingot and pink dye, then right-click it to upgrade the same blade. Normal stages 2–8 and all eight dark stages are available; normal stage 9 remains locked until the soul-bound boss trial exists.
 
 The vanilla Advancements screen guides both routes, affection and resonance. Earn daily-capped affection through talking, raw-cod gifts, active following and combat. Dark heavy strike defaults to **G** (rebindable): 0.6s windup, 8s cooldown, 1.8× stage base damage, sharing the existing attack budget. Broken blades are retained for repair. Numerical values remain prototype candidates.

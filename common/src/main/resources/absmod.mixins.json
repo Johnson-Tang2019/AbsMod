@@ -10,7 +10,8 @@
     "BladeDurabilityMixin",
     "BladeCraftRepairMixin",
     "BladeCombineMenuMixin",
-    "BladeStunMixin"
+    "BladeStunMixin",
+    "CatGeneticsMixin"
   ],
   "client": [
     "client.MinecraftAttackMixin",

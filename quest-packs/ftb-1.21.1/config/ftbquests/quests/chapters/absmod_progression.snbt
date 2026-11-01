@@ -1,0 +1,558 @@
+{
+  "id": "1C4E810187B7DDC2",
+  "filename": "absmod_progression",
+  "title": "喵刀与猫咪生活",
+  "order_index": 0,
+  "group": "",
+  "default_quest_shape": "square",
+  "quests": [
+    {
+      "id": "6B3C47D1AA6174D9",
+      "title": "朝夕相伴",
+      "description": [
+        "交流、赠送生鳕鱼、活跃同行或战斗获得好感，每日奖励有上限。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 6.0,
+      "y": 0.0,
+      "tasks": [
+        {
+          "id": "4E0134A185A782CF",
+          "type": "advancement",
+          "advancement": "absmod:progression/bond",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "C0A7C3C1C2EE40FF"
+      ]
+    },
+    {
+      "id": "B4E3BF58AE347BCB",
+      "title": "隐性色彩",
+      "description": [
+        "预测配对概率，繁育并观察dd稀释幼猫。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 6.0,
+      "y": 6.0,
+      "tasks": [
+        {
+          "id": "3BE1AA988BAF98EF",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_dilute",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
+      ]
+    },
+    {
+      "id": "5E13E7815F3499D9",
+      "title": "猫咪家谱",
+      "description": [
+        "驯服两只成年猫并喂鱼繁殖，用手册观察幼猫。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 4.0,
+      "y": 6.0,
+      "tasks": [
+        {
+          "id": "195206B9D05417B7",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_family",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "8F0848705704F039"
+      ]
+    },
+    {
+      "id": "8F0848705704F039",
+      "title": "认识新朋友",
+      "description": [
+        "用观察手册查看一只猫的稀释基因。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 2.0,
+      "y": 6.0,
+      "tasks": [
+        {
+          "id": "D657694900D27005",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_observe",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "AEE6DAB584A476BC"
+      ]
+    },
+    {
+      "id": "2C65ACFCEBE608D6",
+      "title": "蓄势一击",
+      "description": [
+        "命中一次暗黑重击。默认G键（可改键），前摇0.6秒、冷却8秒。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 4.0,
+      "y": 4.0,
+      "tasks": [
+        {
+          "id": "94B20AAEFF16DB6E",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_heavy",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "9956B7BEEE9F4513"
+      ]
+    },
+    {
+      "id": "9956B7BEEE9F4513",
+      "title": "暗夜之契",
+      "description": [
+        "无序合成：下界合金剑 + 分四格的哭泣黑曜石 + 紫色染料。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 2.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "9D22E4C87B750999",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_1",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "D093C5A19DFEFCB0"
+      ]
+    },
+    {
+      "id": "92F5B44B112375CB",
+      "title": "暗黑共鸣 · 2阶",
+      "description": [
+        "在共鸣界面升阶：好感5；黑曜石8。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 4.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "7885EC564485EB16",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_2",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "9956B7BEEE9F4513"
+      ]
+    },
+    {
+      "id": "72BA6A5724618C9A",
+      "title": "暗黑共鸣 · 3阶",
+      "description": [
+        "在共鸣界面升阶：好感12；金锭8、烈焰棒2。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 6.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "E3AE269B92922869",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_3",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "92F5B44B112375CB"
+      ]
+    },
+    {
+      "id": "C5EBBF761C694ECB",
+      "title": "暗黑共鸣 · 4阶",
+      "description": [
+        "在共鸣界面升阶：好感22；哭泣黑曜石8。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 8.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "71780E907107A105",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_4",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "72BA6A5724618C9A"
+      ]
+    },
+    {
+      "id": "FCE9CA0A38DBECC9",
+      "title": "暗黑共鸣 · 5阶",
+      "description": [
+        "在共鸣界面升阶：好感35；恶魂之泪2。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 10.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "27B13D286F336282",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_5",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "C5EBBF761C694ECB"
+      ]
+    },
+    {
+      "id": "6C9936400AD69C67",
+      "title": "暗黑共鸣 · 6阶",
+      "description": [
+        "在共鸣界面升阶：好感50；下界合金碎片2。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 12.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "4096770B86FAFAE0",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_6",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "FCE9CA0A38DBECC9"
+      ]
+    },
+    {
+      "id": "970DE9D7C0DEAA94",
+      "title": "暗黑共鸣 · 7阶",
+      "description": [
+        "在共鸣界面升阶：好感70；烈焰棒8、末影珍珠8。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 14.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "4B2707F1E2CC9593",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_7",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "6C9936400AD69C67"
+      ]
+    },
+    {
+      "id": "BDA26732C36EF7CD",
+      "title": "暗黑共鸣 · 8阶",
+      "description": [
+        "在共鸣界面升阶：好感100；下界合金锭1。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 16.0,
+      "y": 2.0,
+      "tasks": [
+        {
+          "id": "E089F43B4E8960B6",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_stage_8",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "970DE9D7C0DEAA94"
+      ]
+    },
+    {
+      "id": "AEE6DAB584A476BC",
+      "title": "观察手册",
+      "description": [
+        "书+生鳕鱼合成；对空气右键阅读，对猫右键观察。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 0.0,
+      "y": 6.0,
+      "tasks": [
+        {
+          "id": "A1B6C1008BBDB981",
+          "type": "advancement",
+          "advancement": "absmod:progression/field_guide",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "D093C5A19DFEFCB0"
+      ]
+    },
+    {
+      "id": "C0A7C3C1C2EE40FF",
+      "title": "初见剑灵",
+      "description": [
+        "潜行右键持剑显现；潜行右键剑灵召回。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 4.0,
+      "y": 0.0,
+      "tasks": [
+        {
+          "id": "DC79A8E3E88C0288",
+          "type": "advancement",
+          "advancement": "absmod:progression/manifest",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "94107493DB5542A5"
+      ]
+    },
+    {
+      "id": "10D294E7E7DE7BAA",
+      "title": "初次喵鸣",
+      "description": [
+        "无序合成：钻石剑 + 分四格的紫水晶碎片 + 生鳕鱼 + 粉红色染料。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 2.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "0E96AB6DB45E42E5",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_1",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "D093C5A19DFEFCB0"
+      ]
+    },
+    {
+      "id": "3FA472D83CF0C5FF",
+      "title": "普通共鸣 · 2阶",
+      "description": [
+        "先召回原剑，再在共鸣界面升阶：好感10；紫水晶碎片8、铜锭8。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 4.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "C86FAD6523FD3837",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_2",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "10D294E7E7DE7BAA"
+      ]
+    },
+    {
+      "id": "BAAF35B040478285",
+      "title": "普通共鸣 · 3阶",
+      "description": [
+        "先召回原剑，再在共鸣界面升阶：好感25；钻石2、青金石16。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 6.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "026C32A3E68F1BA1",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_3",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3FA472D83CF0C5FF"
+      ]
+    },
+    {
+      "id": "12780AC709DDADD0",
+      "title": "普通共鸣 · 4阶",
+      "description": [
+        "先召回原剑，再在共鸣界面升阶：好感45；紫水晶块4、末影珍珠4。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 8.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "700F285A7C3B5BD1",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_4",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "BAAF35B040478285"
+      ]
+    },
+    {
+      "id": "6FBE68BD3C4AB5FB",
+      "title": "普通共鸣 · 5阶",
+      "description": [
+        "先召回原剑，再在共鸣界面升阶：好感70；钻石4、烈焰棒4。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 10.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "601F8444BA2FB630",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_5",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "12780AC709DDADD0"
+      ]
+    },
+    {
+      "id": "58C6F838B8646DCB",
+      "title": "普通共鸣 · 6阶",
+      "description": [
+        "先召回原剑，再在共鸣界面升阶：好感100；恶魂之泪2、幻翼膜4、紫水晶块8。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 12.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "57D6E710F1BB1CF1",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_6",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "6FBE68BD3C4AB5FB"
+      ]
+    },
+    {
+      "id": "4BF138F905D4A819",
+      "title": "普通共鸣 · 7阶",
+      "description": [
+        "先召回原剑，再在共鸣界面升阶：好感140；紫颂果16、潜影壳2、钻石4。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 14.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "E1D3E35D8673378D",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_7",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "58C6F838B8646DCB"
+      ]
+    },
+    {
+      "id": "0A372975825F2B68",
+      "title": "普通共鸣 · 8阶",
+      "description": [
+        "先召回原剑，再在共鸣界面升阶：好感190；下界之星1、海洋之心1。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "九阶尚未开放：同魂心魔试炼未实现。不要继续寻找不存在的升阶配方。"
+      ],
+      "x": 16.0,
+      "y": -2.0,
+      "tasks": [
+        {
+          "id": "E8576B1CFB3DE86A",
+          "type": "advancement",
+          "advancement": "absmod:progression/normal_stage_8",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "4BF138F905D4A819"
+      ]
+    },
+    {
+      "id": "94107493DB5542A5",
+      "title": "共鸣之心",
+      "description": [
+        "紫水晶碎片×4 + 金锭 + 粉红色染料，无序合成；右键打开共鸣。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 2.0,
+      "y": 0.0,
+      "tasks": [
+        {
+          "id": "453BD589CDFA8EEA",
+          "type": "advancement",
+          "advancement": "absmod:progression/resonance",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "D093C5A19DFEFCB0"
+      ]
+    },
+    {
+      "id": "D093C5A19DFEFCB0",
+      "title": "与剑结缘",
+      "description": [
+        "获得紫水晶碎片或哭泣的黑曜石，开始喵刀成长之旅。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+      ],
+      "x": 0.0,
+      "y": 0.0,
+      "tasks": [
+        {
+          "id": "1A6D19B2AFB5DF0F",
+          "type": "advancement",
+          "advancement": "absmod:progression/root",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:field_guide"
+    },
+    "title": {
+      "translate": "advancement.absmod.field_guide.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.field_guide.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:field_guide"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

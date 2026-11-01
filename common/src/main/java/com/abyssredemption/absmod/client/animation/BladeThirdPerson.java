@@ -24,9 +24,8 @@ public final class BladeThirdPerson {
         part.xRot=part.xRot*(1-weight)-angles.x*weight;
         part.yRot=part.yRot*(1-weight)+angles.y*weight*mirror;
         part.zRot=part.zRot*(1-weight)-angles.z*weight*mirror;
-        part.x+=transform.position().x*2*weight*mirror;
-        part.y-=transform.position().y*2*weight;
-        part.z+=transform.position().z*2*weight;
+        // MMD shoulder translations are not portable to Minecraft's rigid one-piece arms.
+        // Keep the anatomical shoulder pivot; only the torso carries it through space.
     }
     private static void rotate(ModelPart part,BladeMotionPreset.Transform transform,float weight,float mirror,boolean body) {
         var angles=transform.rotation().getEulerAnglesZYX(new Vector3f());

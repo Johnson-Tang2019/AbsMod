@@ -25,6 +25,8 @@ public final class AbsModFabric implements ModInitializer {
         FabricCombatProbe.register();
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"meow_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER);
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"dark_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER);
+        var guideKey=ResourceKey.create(Registries.ITEM,Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"field_guide"));
+        Registry.register(BuiltInRegistries.ITEM,guideKey,new com.abyssredemption.absmod.item.FieldGuideItem(new Item.Properties().setId(guideKey)));
         var resonanceKey=ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"resonance_heart"));
         var resonance=Registry.register(BuiltInRegistries.ITEM,resonanceKey,new com.abyssredemption.absmod.item.ResonanceHeartItem(new Item.Properties().setId(resonanceKey)));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(entries->entries.accept(resonance));

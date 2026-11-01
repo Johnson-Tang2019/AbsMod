@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:book",
+    "minecraft:cod"
+  ],
+  "result": {
+    "id": "absmod:field_guide",
+    "count": 1
+  }
+}

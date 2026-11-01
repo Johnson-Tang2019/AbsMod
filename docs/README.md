@@ -1,5 +1,7 @@
 # Ab's Mod 文档入口
 
+最新猫咪玩法：[猫遗传与观察手册](CAT_GENETICS.md)。FTB导出及1.21.1移植验证状态看STATUS顶部。
+
 最新玩法：[合成、成长、暗黑重击与原版进度实施记录](IMPLEMENTATION_PROGRESSION.md)。
 
 当前客户端模型路线及本批验证以 [Bedrock 适配记录](IMPLEMENTATION_BEDROCK_RENDERER.md) 为准；旧预览和旧格式说明保留为历史。

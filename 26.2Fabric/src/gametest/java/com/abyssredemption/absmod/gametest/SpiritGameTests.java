@@ -12,6 +12,33 @@ import net.minecraft.world.level.GameType;
 
 public final class SpiritGameTests {
     @GameTest
+    public void catGenomeUsesBothParentsAndPersists(GameTestHelper helper) {
+        var first=helper.spawn(net.minecraft.world.entity.EntityTypes.CAT,1,1,1);
+        var second=helper.spawn(net.minecraft.world.entity.EntityTypes.CAT,3,1,1);
+        var dense=new com.abyssredemption.absmod.cat.CatGenome(0,"minecraft:all_black",java.util.Optional.empty(),java.util.Optional.empty(),0);
+        var dilute=new com.abyssredemption.absmod.cat.CatGenome(3,"minecraft:all_black",java.util.Optional.empty(),java.util.Optional.empty(),0);
+        ((com.abyssredemption.absmod.cat.CatGenetics)first).absmod$setGenome(dense);
+        ((com.abyssredemption.absmod.cat.CatGenetics)second).absmod$setGenome(dilute);
+        helper.assertTrue(dense.diluteChancePercent(dilute)==0,"DD x dd prediction wrong");
+        var child=first.getBreedOffspring(helper.getLevel(),second);
+        var inherited=((com.abyssredemption.absmod.cat.CatGenetics)child).absmod$getGenome();
+        helper.assertTrue(inherited.notation().equals("Dd") && inherited.firstParent().orElseThrow().equals(first.getUUID())
+            && inherited.secondParent().orElseThrow().equals(second.getUUID()),"Offspring did not inherit both parents");
+        helper.assertTrue(inherited.diluteChancePercent(inherited)==25,"Carrier prediction wrong");
+        var encoded=com.abyssredemption.absmod.cat.CatGenome.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,inherited).getOrThrow();
+        helper.assertTrue(com.abyssredemption.absmod.cat.CatGenome.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE,encoded).getOrThrow().equals(inherited),"Genome persistence lost lineage");
+        var output=net.minecraft.world.level.storage.TagValueOutput.createWithContext(net.minecraft.util.ProblemReporter.DISCARDING,helper.getLevel().registryAccess());
+        child.saveWithoutId(output);
+        var restored=net.minecraft.world.entity.EntityTypes.CAT.create(helper.getLevel(),net.minecraft.world.entity.EntitySpawnReason.LOAD);
+        restored.load(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING,helper.getLevel().registryAccess(),output.buildResult()));
+        helper.assertTrue(((com.abyssredemption.absmod.cat.CatGenetics)restored).absmod$getGenome().equals(inherited),"Entity save/load lost cat genome or parents");
+        int diluteCount=0;var random=net.minecraft.util.RandomSource.create(42);
+        for(int i=0;i<10000;i++)if(inherited.breed(inherited,first.getUUID(),second.getUUID(),random).dilute())diluteCount++;
+        helper.assertTrue(diluteCount>2300 && diluteCount<2700,"Carrier inheritance distribution wrong: "+diluteCount);
+        helper.assertTrue(second.getVariant().unwrapKey().orElseThrow().identifier().toString().equals("minecraft:british_shorthair"),"Black dilution not visible");
+        helper.succeed();
+    }
+    @GameTest
     public void repairPreservesSoulAndRefusesSacrificingAnotherBlade(GameTestHelper helper) {
         var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));

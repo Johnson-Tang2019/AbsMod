@@ -49,6 +49,7 @@ public final class MotionVisualTest {
             });
             BladeMotionPlayer.hideEffects=true;
         }
+        if(tick==55)Screenshot.grab(mc.gameDirectory,"motion-rest-right.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
         if(tick==60)mc.options.setCameraType(CameraType.FIRST_PERSON);
         if(tick==160)mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
         if(tick==260) { BladeMotionPlayer.hideEffects=false;mc.options.setCameraType(CameraType.FIRST_PERSON); }

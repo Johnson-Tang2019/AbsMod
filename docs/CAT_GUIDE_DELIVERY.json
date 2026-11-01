@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-01",
+  "target": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\mods\\absmod-neoforge-0.1.0+26.2.jar",
+  "sha256": "ba117582eb76c4fd761b76ecadfbf555131b3e39ab3ec8be229029d5de0d5e5f",
+  "backup": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\absmod-backups\\20261101-140907",
+  "shared_resources_equal": true,
+  "test_harness_excluded": true,
+  "build_log": "build/cat-guide-release-validation.log",
+  "client_log": "build/cat-guide-chinese-client.log",
+  "motion_log": "build/motion-grip-client.log",
+  "ftb_runtime": "NOT_TESTED",
+  "port_1211": "IN_PROGRESS_NOT_INSTALLED"
+}

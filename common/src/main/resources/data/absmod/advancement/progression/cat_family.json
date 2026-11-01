@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/cat_observe",
+  "display": {
+    "icon": {
+      "id": "minecraft:salmon"
+    },
+    "title": {
+      "translate": "advancement.absmod.cat_family.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cat_family.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

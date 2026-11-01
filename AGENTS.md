@@ -24,3 +24,14 @@
 - After a task, record the changed files, task IDs, checks actually executed, remaining work, and whether Minecraft was launched. Never mark gameplay verified because a formula or geometry test passed.
 - Keep existing English identifiers/comments and synchronized English/Chinese READMEs. Do not change licensing automatically.
 - Do not commit or push unless authorized for the current task.
+
+## Confirmed delivery workflow (2026-11-01)
+
+- After each completed feature, update the FTB quest pack with prerequisites, concrete steps, controls, materials and remaining limitations. Keep quest IDs stable.
+- For 26.2, retain the FTB export and use vanilla advancements plus the in-game guide until a compatible official FTB Quests build is verified. Do not install an incompatible dependency or silently substitute another quest mod.
+- After verification, back up the existing Ab's Mod JAR and install the NeoForge build into `D:/Program Files/PCL2/.minecraft/versions/26.2-NeoForge_26.2.0.87_miao/mods`; preserve unrelated mods and saves. Verify copied hashes.
+- The user has authorized automatic commits and pushes after completed features. Report failed pushes honestly.
+- After the current cat genetics and guidance work, implement a separate Minecraft 1.21.1 NeoForge target and validate its FTB quest integration. Do not replace or downgrade the 26.2 target.
+- Install the validated 1.21.1 NeoForge artifact and its tested FTB chapters into `D:/Program Files/PCL2/.minecraft/versions/1.21.1-NeoForge_21.1.265_miao`; preserve existing quest progress and unrelated files.
+
+- The 26.2 instance was found renamed with `_miao` on 2026-11-01; verified existing Ab's Mod JAR and version metadata. Use Simplified Chinese in local gameplay/visual acceptance, retaining English translation resources.

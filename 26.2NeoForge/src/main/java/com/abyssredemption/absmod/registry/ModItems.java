@@ -29,5 +29,6 @@ public final class ModItems {
                     .toList();
 
     public static final DeferredItem<com.abyssredemption.absmod.item.ResonanceHeartItem> RESONANCE_HEART = ITEMS.registerItem("resonance_heart",com.abyssredemption.absmod.item.ResonanceHeartItem::new);
+    public static final DeferredItem<com.abyssredemption.absmod.item.FieldGuideItem> FIELD_GUIDE=ITEMS.registerItem("field_guide",com.abyssredemption.absmod.item.FieldGuideItem::new);
     private ModItems() {}
 }
