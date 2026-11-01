@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/cat_family",
+  "display": {
+    "icon": {
+      "id": "minecraft:brown_wool"
+    },
+    "title": {
+      "translate": "advancement.absmod.cat_chocolate.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cat_chocolate.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

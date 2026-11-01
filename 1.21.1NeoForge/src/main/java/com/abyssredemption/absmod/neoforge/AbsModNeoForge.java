@@ -12,6 +12,12 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @Mod(AbsMod.MOD_ID)
 public final class AbsModNeoForge {
+    private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.entity.animal.CatVariant> CAT_COATS =
+        net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.CAT_VARIANT, AbsMod.MOD_ID);
+    static {
+        for(String name:new String[]{"chocolate","lilac","seal_point","blue_point","chocolate_point","lilac_point"})
+            CAT_COATS.register(name,()->new net.minecraft.world.entity.animal.CatVariant(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("absmod","textures/entity/cat/"+name+".png")));
+    }
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.entity.EntityType<?>> ENTITIES =
             net.neoforged.neoforge.registries.DeferredRegister.create(
                     net.minecraft.core.registries.Registries.ENTITY_TYPE, AbsMod.MOD_ID);
@@ -41,6 +47,7 @@ public final class AbsModNeoForge {
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPES = net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER,AbsMod.MOD_ID);
     static { RECIPES.register("meow_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER); RECIPES.register("dark_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER); }
     public AbsModNeoForge(IEventBus modEventBus) {
+        CAT_COATS.register(modEventBus);
         RECIPES.register(modEventBus);
         new NeoForgeCombatProbe(modEventBus);
         COMPONENTS.register(modEventBus);

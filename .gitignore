@@ -20,3 +20,6 @@ hs_err_pid*
 
 # Local third-party visual references; excluded from distribution.
 /references/slashblade/
+
+# Local vanilla UV references used for cat asset alignment.
+/art/cats/reference-*.png

@@ -46,3 +46,5 @@ tasks.named('prepareClientRun') {
         }
     }
 }
+
+if (providers.gradleProperty("catVisualTest").isPresent()) { sourceSets.main.java.srcDir "src/cattest/java" }

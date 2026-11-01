@@ -31,7 +31,7 @@ tasks.withType(JavaCompile).configureEach {
 
 processResources {
     from('../common/src/main/resources') {
-        exclude 'absmod.mixins.json', 'assets/absmod/items/**'
+        exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**'
     }
     from('../client-bedrock/src/main/resources')
     inputs.property 'version', project.version
@@ -66,3 +66,5 @@ tasks.named('prepare' + runName + 'Run') {
 }
 
 if (providers.gradleProperty("portVisualTest").isPresent()) { sourceSets.main.java.srcDir "src/visualtest/java"; dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") } }
+
+if (providers.gradleProperty("catVisualTest").isPresent()) { sourceSets.main.java.srcDir "src/cattest/java"; dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") } }

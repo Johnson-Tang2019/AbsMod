@@ -18,6 +18,7 @@ def generate():
     names = {p.stem for p in source.glob("*.json")} - {"normal_stage_9"}
     positions = {"root": (0, 0), "resonance": (2, 0), "manifest": (4, 0), "bond": (6, 0),
                  "field_guide": (0, 6), "cat_observe": (2, 6),
+                 "cat_chocolate": (6, 8), "cat_lilac": (8, 8), "cat_point": (6, 10), "cat_lilac_point": (10, 10),
                  "cat_family": (4, 6), "cat_dilute": (6, 6), "dark_heavy": (4, 4)}
     for stage in range(1, 9):
         positions["normal_stage_" + str(stage)] = (stage * 2, -2)
@@ -38,6 +39,16 @@ def generate():
         }
         if parent in names:
             quest["dependencies"] = [stable_id(parent)]
+        breeding_tips = {
+            "cat_chocolate": "用手册寻找Bb携带者。两只Bb每只幼猫有25%概率为bb；选纯黑、蓝灰或暹罗来源，并观察有谱系后代。",
+            "cat_lilac": "目标bb dd。两只Dd Bb的后代为bb dd的基因概率是6.25%；同基因纯合双亲可稳定遗传。重点色后代也能满足此基因目标。",
+            "cat_point": "寻找Ccs携带者或暹罗来源cscs。Ccs×Ccs为25%，cscs×cscs为100%；末端颜色还取决于B/b和D/d。",
+            "cat_lilac_point": "目标dd bb cscs。两只Dd Bb Ccs为1/64（约1.56%），不是保底。先完成淡紫与重点色，再规划组合；毛色收集不阻挡喵刀主线。",
+        }
+        if name in breeding_tips:
+            quest["description"].append(breeding_tips[name])
+        if name == "cat_lilac_point":
+            quest["dependencies"].append(stable_id("cat_lilac"))
         if name == "normal_stage_8":
             quest["description"].append("九阶尚未开放：同魂心魔试炼未实现。不要继续寻找不存在的升阶配方。")
         quests.append(quest)

@@ -29,6 +29,29 @@
       ]
     },
     {
+      "id": "8B907F18604F3767",
+      "title": "巧克力的秘密",
+      "description": [
+        "观察有谱系且表达 bb 的纯黑、蓝灰或暹罗来源后代。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "用手册寻找Bb携带者。两只Bb每只幼猫有25%概率为bb；选纯黑、蓝灰或暹罗来源，并观察有谱系后代。"
+      ],
+      "x": 6.0,
+      "y": 8.0,
+      "tasks": [
+        {
+          "id": "B5D24AD479EFC565",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_chocolate",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
+      ]
+    },
+    {
       "id": "B4E3BF58AE347BCB",
       "title": "隐性色彩",
       "description": [
@@ -73,6 +96,53 @@
       ]
     },
     {
+      "id": "9D4B5A29C0F24A55",
+      "title": "温柔的淡紫",
+      "description": [
+        "观察有谱系且表达 bb dd 的纯黑、蓝灰或暹罗来源后代。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "目标bb dd。两只Dd Bb的后代为bb dd的基因概率是6.25%；同基因纯合双亲可稳定遗传。重点色后代也能满足此基因目标。"
+      ],
+      "x": 8.0,
+      "y": 8.0,
+      "tasks": [
+        {
+          "id": "33FE6FB05A29F339",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_lilac",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "8B907F18604F3767"
+      ]
+    },
+    {
+      "id": "6EF7AAC7E947FCF4",
+      "title": "三重隐性",
+      "description": [
+        "观察有谱系且表达 dd bb cscs 的纯黑、蓝灰或暹罗来源后代。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "目标dd bb cscs。两只Dd Bb Ccs为1/64（约1.56%），不是保底。先完成淡紫与重点色，再规划组合；毛色收集不阻挡喵刀主线。"
+      ],
+      "x": 10.0,
+      "y": 10.0,
+      "tasks": [
+        {
+          "id": "1939020C3AD53193",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_lilac_point",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "B86ABD768F5DA804",
+        "9D4B5A29C0F24A55"
+      ]
+    },
+    {
       "id": "8F0848705704F039",
       "title": "认识新朋友",
       "description": [
@@ -92,6 +162,29 @@
       "rewards": [],
       "dependencies": [
         "AEE6DAB584A476BC"
+      ]
+    },
+    {
+      "id": "B86ABD768F5DA804",
+      "title": "深浅之间",
+      "description": [
+        "观察有谱系且表达 cscs 的纯黑、蓝灰或暹罗来源后代。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "寻找Ccs携带者或暹罗来源cscs。Ccs×Ccs为25%，cscs×cscs为100%；末端颜色还取决于B/b和D/d。"
+      ],
+      "x": 6.0,
+      "y": 10.0,
+      "tasks": [
+        {
+          "id": "65790C83F3321853",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_point",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
       ]
     },
     {

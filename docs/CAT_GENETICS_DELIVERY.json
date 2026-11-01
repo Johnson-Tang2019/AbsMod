@@ -1,0 +1,70 @@
+{
+  "task_ids": [
+    "CAT-02",
+    "GUIDE-03"
+  ],
+  "baseline": "322197b",
+  "date": "2026-11-01",
+  "builds": [
+    {
+      "module": "26.2Fabric",
+      "artifact": "26.2Fabric\\build\\libs\\absmod-fabric-0.1.0+26.2.jar",
+      "sha256": "d774d2ab2afe5aee705687ba0311677811640e8fb540edcbafcf7933bb21f9df"
+    },
+    {
+      "module": "26.2NeoForge",
+      "artifact": "26.2NeoForge\\build\\libs\\absmod-neoforge-0.1.0+26.2.jar",
+      "sha256": "26c58a6ad9a1073ef80319658f8fddb1c8a522bd78d965658b640a19d12b9914"
+    },
+    {
+      "module": "1.21.1NeoForge",
+      "artifact": "1.21.1NeoForge\\build\\libs\\absmod-neoforge-0.1.0+1.21.1.jar",
+      "sha256": "d70d692377eff6eac76908eedeb3a56759a532389cb0b8eccc1d9ba62243cdda"
+    }
+  ],
+  "installations": [
+    {
+      "backup": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\absmod-backups\\20261101-171427",
+      "jar": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\mods\\absmod-neoforge-0.1.0+26.2.jar",
+      "instance": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao",
+      "sha256": "26C58A6AD9A1073EF80319658F8FDDB1C8A522BD78D965658B640A19D12B9914"
+    },
+    {
+      "backup": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\absmod-backups\\20261101-171427",
+      "quests": 29,
+      "jar": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\mods\\absmod-neoforge-0.1.0+1.21.1.jar",
+      "instance": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao",
+      "sha256": "D70D692377EFF6EAC76908EEDEB3A56759A532389CB0B8ECCC1D9BA62243CDDA"
+    }
+  ],
+  "checks": {
+    "fabric_game_tests": 22,
+    "client_versions": [
+      "26.2 NeoForge",
+      "1.21.1 NeoForge"
+    ],
+    "coats": 6,
+    "png_textures": 12,
+    "new_advancements": 4,
+    "ftb_quests": 29,
+    "ftb_completed_then_restored": 9,
+    "guide_pages": 20,
+    "fixture_classes_excluded": true,
+    "texture_hashes_match_across_artifacts": true
+  },
+  "not_verified": [
+    "PCL launch button",
+    "Fabric graphical client",
+    "multiplayer cat breeding",
+    "long-term survival balance",
+    "all vanilla pattern coats"
+  ],
+  "logs": [
+    "build/cat-gametests.log",
+    "build/cat-client-final-26.log",
+    "build/cat-client-final-1211.log",
+    "build/cat-server-1211.log",
+    "build/cat-release-26.log",
+    "build/cat-release-1211.log"
+  ]
+}

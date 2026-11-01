@@ -1,5 +1,7 @@
 # Ab's Mod
 
+Cat genetics now includes independent D/d dilution, B/b chocolate and C/cs colorpoint loci. Six illustrated coats cover black, blue-gray and Siamese origins: chocolate, lilac, seal point, blue point, chocolate point and lilac point. Other patterns retain their artwork. The bilingual guide has 20 pages; four new advancements bring the optional 1.21.1 FTB pack to 29 stable-ID quests. Old cats retain saved appearances. Builds, 22 Fabric GameTests, both NeoForge clients and 1.21.1 server persistence passed; multiplayer breeding and long-term balance remain unverified. See docs/CAT_GENETICS.md and docs/CAT_GENETICS_DELIVERY.json.
+
 Minecraft 1.21.1 NeoForge is available as an independent Java 21 target: `./gradlew.bat -p 1.21.1NeoForge build` (build host JDK 25). The optional FTB pack contains 25 Chinese quests; client detection and dedicated-server persistence were tested. See [port instructions and limits](docs/PORT_1211.md). Minecraft 26.2 Fabric/NeoForge remains supported.
 
 First-person resting grip sits farther down and outward, with a perspective tilt and smaller idle scale; recovery blends back smoothly and equip transitions remain intact. Third-person arms retain shoulder pivots instead of importing MMD translations. This is an initial visual revision, not final animation approval.

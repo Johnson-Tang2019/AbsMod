@@ -39,6 +39,40 @@ public final class SpiritGameTests {
         helper.succeed();
     }
     @GameTest
+    public void threeCatLociAndLegacyMigration(GameTestHelper helper) {
+        var empty=java.util.Optional.<java.util.UUID>empty();
+        var carrier=new com.abyssredemption.absmod.cat.CatGenome(1,"minecraft:all_black",empty,empty,0,1,1);
+        helper.assertTrue(carrier.lilacPointChancePercent(carrier)==1.5625,"Triple probability wrong");
+        int d=0,b=0,c=0,triple=0;var random=net.minecraft.util.RandomSource.create(91827);
+        for(int i=0;i<64000;i++) {
+            var child=carrier.breed(carrier,java.util.UUID.randomUUID(),java.util.UUID.randomUUID(),random);
+            if(child.dilute())d++;if(child.brown())b++;if(child.pointed())c++;
+            if(child.dilute() && child.brown() && child.pointed())triple++;
+        }
+        helper.assertTrue(d>15400 && d<16600 && b>15400 && b<16600 && c>15400 && c<16600 && triple>880 && triple<1120,"Independent inheritance distribution failed");
+        var json=com.abyssredemption.absmod.cat.CatGenome.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,carrier).getOrThrow().getAsJsonObject();
+        json.remove("chocolate");json.remove("point");
+        var legacy=com.abyssredemption.absmod.cat.CatGenome.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE,json).getOrThrow();
+        helper.assertTrue(legacy.dilution()==1 && legacy.chocolate()==1 && legacy.point()==1,"Legacy hidden carrier migration failed");
+        String[] coats={"chocolate","lilac","seal_point","blue_point","chocolate_point","lilac_point"};
+        int[][] loci={{0,3,0},{3,3,0},{0,0,3},{3,0,3},{0,3,3},{3,3,3}};
+        for(int i=0;i<6;i++) {
+            var a=helper.spawn(net.minecraft.world.entity.EntityTypes.CAT,1,1,1);
+            var z=helper.spawn(net.minecraft.world.entity.EntityTypes.CAT,2,1,1);
+            var pure=new com.abyssredemption.absmod.cat.CatGenome(loci[i][0],"minecraft:all_black",empty,empty,0,loci[i][1],loci[i][2]);
+            ((com.abyssredemption.absmod.cat.CatGenetics)a).absmod$setGenome(pure);
+            ((com.abyssredemption.absmod.cat.CatGenetics)z).absmod$setGenome(pure);
+            var child=a.getBreedOffspring(helper.getLevel(),z);
+            helper.assertTrue(child.getVariant().unwrapKey().orElseThrow().identifier().toString().equals("absmod:"+coats[i]),"Missing coat "+coats[i]);
+            var output=net.minecraft.world.level.storage.TagValueOutput.createWithContext(net.minecraft.util.ProblemReporter.DISCARDING,helper.getLevel().registryAccess());child.saveWithoutId(output);
+            var restored=net.minecraft.world.entity.EntityTypes.CAT.create(helper.getLevel(),net.minecraft.world.entity.EntitySpawnReason.LOAD);
+            restored.load(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING,helper.getLevel().registryAccess(),output.buildResult()));
+            helper.assertTrue(((com.abyssredemption.absmod.cat.CatGenetics)restored).absmod$getGenome().equals(((com.abyssredemption.absmod.cat.CatGenetics)child).absmod$getGenome()) && restored.getVariant().equals(child.getVariant()),"Coat persistence failed");
+            a.discard();z.discard();
+        }
+        helper.succeed();
+    }
+    @GameTest
     public void repairPreservesSoulAndRefusesSacrificingAnotherBlade(GameTestHelper helper) {
         var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));

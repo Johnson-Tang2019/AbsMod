@@ -16,7 +16,7 @@ public final class FieldGuideItem extends WrittenBookItem {
     public FieldGuideItem(Properties properties) {super(properties.stacksTo(1));}
     @Override public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level,net.minecraft.world.entity.player.Player player,InteractionHand hand) {
         var pages=new ArrayList<Filterable<Component>>();
-        for(int i=1;i<=16;i++)pages.add(Filterable.passThrough(Component.translatable("guide.absmod.page."+i)));
+        for(int i=1;i<=20;i++)pages.add(Filterable.passThrough(Component.translatable("guide.absmod.page."+i)));
         player.getItemInHand(hand).set(DataComponents.WRITTEN_BOOK_CONTENT,new WrittenBookContent(Filterable.passThrough("猫咪观察手册"),"Ab's Mod",0,pages,true));
         // Synchronize generated pages before the client receives the open-book packet.
         if(player instanceof ServerPlayer serverPlayer) {
@@ -37,17 +37,26 @@ public final class FieldGuideItem extends WrittenBookItem {
             if(!selected.isEmpty()) {
                 try {
                     var entity=player.serverLevel().getEntity(UUID.fromString(selected));
-                    if(entity instanceof Cat first && first!=cat && player.distanceToSqr(first)<=256)
-                        message(player,Component.translatable("cat.absmod.prediction",((CatGenetics)first).absmod$getGenome().diluteChancePercent(genome)));
+                    if(entity instanceof Cat first && first!=cat && player.distanceToSqr(first)<=256) {
+                        var firstGenome=((CatGenetics)first).absmod$getGenome();
+                        message(player,Component.translatable("cat.absmod.prediction",firstGenome.diluteChancePercent(genome)));
+                        message(player,Component.translatable("cat.absmod.prediction_extended",firstGenome.chocolateChancePercent(genome),firstGenome.pointChancePercent(genome),String.format(java.util.Locale.ROOT,"%.2f",firstGenome.lilacPointChancePercent(genome))));
+                    }
                     else message(player,Component.translatable("cat.absmod.select_nearby"));
                 } catch(IllegalArgumentException ignored) { message(player,Component.translatable("cat.absmod.select_nearby")); }
             }
-            message(player,Component.translatable("cat.absmod.observation",genome.notation(),genome.generation(),Component.translatable("cat.absmod.pattern."+genome.pattern().replace(':','.'))));
-            if(genome.dilute() && !genome.pattern().equals("minecraft:all_black"))message(player,Component.translatable("cat.absmod.appearance_pending"));
+            message(player,Component.translatable("cat.absmod.observation",genome.fullNotation(),genome.generation(),Component.translatable("cat.absmod.pattern."+genome.pattern().replace(':','.'))));
+            if((genome.dilute() || genome.brown() || genome.pointed()) && !genome.supportedCoat())message(player,Component.translatable("cat.absmod.appearance_pending"));
             if(genome.firstParent().isPresent())message(player,Component.translatable("cat.absmod.parents",genome.firstParent().get().toString(),genome.secondParent().map(UUID::toString).orElse("?")));
         }
         com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_observe");
         if(genome.generation()>0) {
+            if(genome.supportedCoat()) {
+                if(genome.brown())com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_chocolate");
+                if(genome.brown() && genome.dilute())com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_lilac");
+                if(genome.pointed())com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_point");
+                if(genome.brown() && genome.dilute() && genome.pointed())com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_lilac_point");
+            }
             com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_family");
             if(genome.dilute())com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_dilute");
         }

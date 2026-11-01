@@ -17,16 +17,14 @@ public abstract class CatGeneticsMixin implements CatGenetics {
         if(absmod$genome==null) {
             var cat=(Cat)(Object)this;
             String pattern=cat.getVariant().unwrapKey().orElseThrow().location().toString();
-            boolean blue=pattern.equals("minecraft:british_shorthair");
-            int genes=blue?3:Math.floorMod(cat.getUUID().hashCode(),3);
-            absmod$genome=new CatGenome(genes,blue?"minecraft:all_black":pattern,java.util.Optional.empty(),java.util.Optional.empty(),0);
+            absmod$genome=CatGenome.founder(pattern,cat.getUUID());
         }
         return absmod$genome;
     }
     @Override public void absmod$setGenome(CatGenome genome) {
         absmod$genome=genome;
         var cat=(Cat)(Object)this;
-        String appearance=genome.dilute() && genome.pattern().equals("minecraft:all_black")?"minecraft:british_shorthair":genome.pattern();
+        String appearance=genome.appearance();
         cat.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.CAT_VARIANT)
             .get(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.CAT_VARIANT,net.minecraft.resources.ResourceLocation.parse(appearance))).ifPresent(this::setVariant);
     }
