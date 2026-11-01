@@ -17,6 +17,7 @@ def generate():
     quests = []
     names = {p.stem for p in source.glob("*.json")} - {"normal_stage_9"}
     positions = {"root": (0, 0), "resonance": (2, 0), "manifest": (4, 0), "bond": (6, 0),
+                 "cat_palette": (8, 12), "cat_patterns": (10, 12), "cat_odd_eyes": (10, 14), "cat_pink": (12, 14),
                  "field_guide": (0, 6), "cat_observe": (2, 6),
                  "cat_chocolate": (6, 8), "cat_lilac": (8, 8), "cat_point": (6, 10), "cat_lilac_point": (10, 10),
                  "cat_family": (4, 6), "cat_dilute": (6, 6), "dark_heavy": (4, 4)}
@@ -40,7 +41,11 @@ def generate():
         if parent in names:
             quest["dependencies"] = [stable_id(parent)]
         breeding_tips = {
-            "cat_chocolate": "用手册寻找Bb携带者。两只Bb每只幼猫有25%概率为bb；选纯黑、蓝灰或暹罗来源，并观察有谱系后代。",
+            "cat_palette": "2048普通组合+256粉色组合。按底色、花纹、白斑、眼色和重点色收集；旧猫不变，繁育新后代即可。",
+            "cat_patterns": "特征各从一位亲本继承，另有1/32机会随机变化。用手册查看和规划配对；这是游戏近似。",
+            "cat_odd_eyes": "异瞳可遗传，也可由眼色特征的随机变化获得。不影响健康，不新增性别限制。",
+            "cat_pink": "普通双亲1/16384，一粉1/1024，两粉1/128；每只幼猫独立抽取，无保底。浅奶粉色幻想变异，染料无效，存档重载不重抽。可选收藏，不阻挡主线。",
+            "cat_chocolate": "用手册寻找Bb携带者。两只Bb每只幼猫有25%概率为bb；选择黑/巧克力色系（肉桂、橘红及粉色不满足巧克力外观目标），并观察有谱系后代。",
             "cat_lilac": "目标bb dd。两只Dd Bb的后代为bb dd的基因概率是6.25%；同基因纯合双亲可稳定遗传。重点色后代也能满足此基因目标。",
             "cat_point": "寻找Ccs携带者或暹罗来源cscs。Ccs×Ccs为25%，cscs×cscs为100%；末端颜色还取决于B/b和D/d。",
             "cat_lilac_point": "目标dd bb cscs。两只Dd Bb Ccs为1/64（约1.56%），不是保底。先完成淡紫与重点色，再规划组合；毛色收集不阻挡喵刀主线。",

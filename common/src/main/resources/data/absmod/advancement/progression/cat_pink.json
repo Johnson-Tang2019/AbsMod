@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/cat_palette",
+  "display": {
+    "icon": {
+      "id": "minecraft:pink_dye"
+    },
+    "title": {
+      "translate": "advancement.absmod.cat_pink.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cat_pink.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

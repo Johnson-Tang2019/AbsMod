@@ -63,7 +63,7 @@ public final class SpiritGameTests {
             ((com.abyssredemption.absmod.cat.CatGenetics)a).absmod$setGenome(pure);
             ((com.abyssredemption.absmod.cat.CatGenetics)z).absmod$setGenome(pure);
             var child=a.getBreedOffspring(helper.getLevel(),z);
-            helper.assertTrue(child.getVariant().unwrapKey().orElseThrow().identifier().toString().equals("absmod:"+coats[i]),"Missing coat "+coats[i]);
+            helper.assertTrue(child.getVariant().unwrapKey().orElseThrow().identifier().toString().equals(((com.abyssredemption.absmod.cat.CatGenetics)child).absmod$getGenome().appearance()),"Missing coat "+coats[i]);
             var output=net.minecraft.world.level.storage.TagValueOutput.createWithContext(net.minecraft.util.ProblemReporter.DISCARDING,helper.getLevel().registryAccess());child.saveWithoutId(output);
             var restored=net.minecraft.world.entity.EntityTypes.CAT.create(helper.getLevel(),net.minecraft.world.entity.EntitySpawnReason.LOAD);
             restored.load(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING,helper.getLevel().registryAccess(),output.buildResult()));
@@ -71,6 +71,27 @@ public final class SpiritGameTests {
             a.discard();z.discard();
         }
         helper.succeed();
+    }
+    @GameTest
+    public void cosmeticCoatsAndRarePinkPersist(GameTestHelper helper) {
+        var pink=new com.abyssredemption.absmod.cat.CatCoat(0,7,3,3,true);
+        var plain=new com.abyssredemption.absmod.cat.CatCoat(0,0,0,0,false);
+        helper.assertTrue(com.abyssredemption.absmod.cat.CatCoat.pinkDenominator(false,false)==16384
+            && com.abyssredemption.absmod.cat.CatCoat.pinkDenominator(true,false)==1024
+            && com.abyssredemption.absmod.cat.CatCoat.pinkDenominator(true,true)==128,"Pink probability tiers changed");
+        var random=net.minecraft.util.RandomSource.create(917);int count=0;
+        for(int i=0;i<262144;i++)if(plain.breed(plain,random).pink())count++;
+        helper.assertTrue(count>=4 && count<=32,"Ordinary pink birth distribution: "+count);
+        var empty=java.util.Optional.<java.util.UUID>empty();
+        var genome=new com.abyssredemption.absmod.cat.CatGenome(3,"minecraft:all_black",empty,empty,1,3,3,java.util.Optional.of(pink));
+        var encoded=com.abyssredemption.absmod.cat.CatGenome.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,genome).getOrThrow();
+        helper.assertTrue(com.abyssredemption.absmod.cat.CatGenome.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE,encoded).getOrThrow().equals(genome),"Pink coat persistence");
+        var ids=new java.util.HashSet<String>();
+        for(int c=0;c<9;c++)for(int m=0;m<8;m++)for(int w=0;w<4;w++)for(int e=0;e<4;e++)for(int point=0;point<2;point++) {
+            var id=com.abyssredemption.absmod.cat.CatCoat.variant(c,m,w,e,point==1);ids.add(id);
+            helper.assertTrue(helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.CAT_VARIANT).get(Identifier.fromNamespaceAndPath("absmod",id)).isPresent(),"Unregistered coat "+id);
+        }
+        helper.assertTrue(ids.size()==2304,"Coat ID collision");helper.succeed();
     }
     @GameTest
     public void repairPreservesSoulAndRefusesSacrificingAnotherBlade(GameTestHelper helper) {

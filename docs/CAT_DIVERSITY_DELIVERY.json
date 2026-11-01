@@ -1,0 +1,53 @@
+{
+  "baseline": "c2224e0",
+  "task_ids": [
+    "CAT-03",
+    "GUIDE-04"
+  ],
+  "date": "2026-11-01",
+  "normal_combinations": 2048,
+  "pink_combinations": 256,
+  "adult_texture_unique_hashes": 2304,
+  "baby_texture_unique_hashes": 2232,
+  "pink_birth_denominators": {
+    "ordinary_parents": 16384,
+    "one_pink": 1024,
+    "two_pink": 128
+  },
+  "numbers_status": "PROPOSED prototype",
+  "game_tests_passed": 23,
+  "client_sample_pairs_per_version": 8,
+  "pink_visual_fixtures": "forced, not natural live births",
+  "guide_pages": 24,
+  "ftb_quests": 33,
+  "ftb_saved_completed_restored": 13,
+  "installations": [
+    {
+      "sha256": "CB2ED0BF702BC07704371E4E17E74F1FEA1527AAEB32C6C41F88F004CA079AF4",
+      "instance": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao",
+      "backup": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\absmod-backups\\20261101-174032",
+      "jar": "D:\\Program Files\\PCL2\\.minecraft\\versions\\26.2-NeoForge_26.2.0.87_miao\\mods\\absmod-neoforge-0.1.0+26.2.jar"
+    },
+    {
+      "sha256": "65EECC0B8EDE156038D8543565FC633805A7CF7251DB0716B9D92CD40613D0AA",
+      "quests": 33,
+      "instance": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao",
+      "backup": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\absmod-backups\\20261101-174032",
+      "jar": "D:\\Program Files\\PCL2\\.minecraft\\versions\\1.21.1-NeoForge_21.1.265_miao\\mods\\absmod-neoforge-0.1.0+1.21.1.jar"
+    }
+  ],
+  "not_verified": [
+    "every coat visually",
+    "multiplayer cat breeding",
+    "PCL launch flow",
+    "long-term balance or performance"
+  ],
+  "logs": [
+    "build/cat-diversity-tests.log",
+    "build/cat-diversity-client-26.log",
+    "build/cat-diversity-client-1211.log",
+    "build/cat-diversity-server.log",
+    "build/cat-diversity-release-26.log",
+    "build/cat-diversity-release-1211.log"
+  ]
+}

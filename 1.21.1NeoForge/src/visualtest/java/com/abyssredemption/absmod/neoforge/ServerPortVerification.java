@@ -26,7 +26,7 @@ public final class ServerPortVerification {
             ((CatGenetics)a).absmod$setGenome(new CatGenome(3,"minecraft:all_black",empty,empty,0,3,3));
             ((CatGenetics)b).absmod$setGenome(new CatGenome(3,"minecraft:all_black",empty,empty,0,3,3));
             var child=a.getBreedOffspring(level,b);var genome=((CatGenetics)child).absmod$getGenome();
-            check(genome.dilute() && genome.brown() && genome.pointed() && child.getVariant().unwrapKey().orElseThrow().location().toString().equals("absmod:lilac_point") && genome.generation()==1 && genome.firstParent().get().equals(a.getUUID()),"Cat inheritance failed");
+            check(genome.dilute() && genome.brown() && genome.pointed() && child.getVariant().unwrapKey().orElseThrow().location().toString().equals(genome.appearance()) && genome.generation()==1 && genome.firstParent().get().equals(a.getUUID()),"Cat inheritance failed");
             var saved=new CompoundTag();child.saveWithoutId(saved);var restored=EntityType.CAT.create(level);restored.load(saved);
             check(((CatGenetics)restored).absmod$getGenome().equals(genome) && restored.getVariant().equals(child.getVariant()),"Cat NBT lineage failed");
             for(var stage:MeowBladeStage.values()) {
@@ -51,9 +51,9 @@ public final class ServerPortVerification {
             check(recipe.value().assemble(grid,server.registryAccess()).getItem() instanceof MeowBladeItem,"Loaded crafting recipe failed");
             var file=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;
             var chapter=file.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-            check(chapter!=null && chapter.getQuests().size()==29,"FTB chapter failed on dedicated server");
+            check(chapter!=null && chapter.getQuests().size()==33,"FTB chapter failed on dedicated server");
             long completed=file.getAllTeamData().stream().mapToLong(data->chapter.getQuests().stream().filter(data::isCompleted).count()).sum();
-            check(completed>=9,"FTB saved progress not restored: "+completed);
+            check(completed>=13,"FTB saved progress not restored: "+completed);
             com.mojang.logging.LogUtils.getLogger().info("PORT_SERVER_PASS genetics, NBT, durability, transformation, invincibility, attack recall, loaded recipe; FTB persisted completed={}",completed);
         } catch(Throwable error) {
             com.mojang.logging.LogUtils.getLogger().error("PORT_SERVER_FAILED",error);

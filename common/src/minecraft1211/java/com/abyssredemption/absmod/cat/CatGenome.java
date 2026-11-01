@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /** Independent D/d, B/b and C/cs loci. Pattern inheritance remains a game approximation. */
-public record CatGenome(int dilution,String pattern,Optional<UUID> firstParent,Optional<UUID> secondParent,int generation,int chocolate,int point) {
+public record CatGenome(int dilution,String pattern,Optional<UUID> firstParent,Optional<UUID> secondParent,int generation,int chocolate,int point,Optional<CatCoat> coat) {
     public static final Codec<CatGenome> CODEC=RecordCodecBuilder.create(i->i.group(
         Codec.intRange(0,3).fieldOf("dilution").forGetter(CatGenome::dilution),
         net.minecraft.resources.ResourceLocation.CODEC.xmap(Object::toString,net.minecraft.resources.ResourceLocation::parse).fieldOf("pattern").forGetter(CatGenome::pattern),
@@ -16,7 +16,11 @@ public record CatGenome(int dilution,String pattern,Optional<UUID> firstParent,O
         UUIDUtil.CODEC.optionalFieldOf("second_parent").forGetter(CatGenome::secondParent),
         Codec.intRange(0,1000000).fieldOf("generation").forGetter(CatGenome::generation),
         Codec.intRange(0,3).optionalFieldOf("chocolate",1).forGetter(CatGenome::chocolate),
-        Codec.intRange(-1,3).optionalFieldOf("point",-1).forGetter(CatGenome::point)).apply(i,CatGenome::new));
+        Codec.intRange(-1,3).optionalFieldOf("point",-1).forGetter(CatGenome::point),
+        CatCoat.CODEC.optionalFieldOf("coat").forGetter(CatGenome::coat)).apply(i,CatGenome::new));
+    public CatGenome(int dilution,String pattern,Optional<UUID> firstParent,Optional<UUID> secondParent,int generation,int chocolate,int point) {
+        this(dilution,pattern,firstParent,secondParent,generation,chocolate,point,Optional.empty());
+    }
     public CatGenome(int dilution,String pattern,Optional<UUID> firstParent,Optional<UUID> secondParent,int generation) {
         this(dilution,pattern,firstParent,secondParent,generation,1,-1);
     }
@@ -27,6 +31,16 @@ public record CatGenome(int dilution,String pattern,Optional<UUID> firstParent,O
             throw new IllegalArgumentException("Invalid cat genome");
     }
     public static CatGenome founder(String pattern,UUID id) {
+        if(pattern.startsWith("absmod:coat/")) {
+            String[] parts=pattern.substring(12).split("_");
+            int color=java.util.Arrays.asList(CatCoat.COLORS).indexOf(parts[0]);
+            if(color>=0 && parts.length>=4) {
+                var traits=new CatCoat(color>=6 && color<8?2:color>=4 && color<6?1:0,
+                    java.util.Arrays.asList(CatCoat.MARKINGS).indexOf(parts[1]),java.util.Arrays.asList(CatCoat.WHITES).indexOf(parts[2]),
+                    java.util.Arrays.asList(CatCoat.EYES).indexOf(parts[3]),color==8);
+                return new CatGenome(color<8 && color%2==1?3:0,"minecraft:all_black",Optional.empty(),Optional.empty(),0,color==2 || color==3?3:0,parts.length==5?3:0,Optional.of(traits));
+            }
+        }
         int hash=id.hashCode();
         if(java.util.Set.of("absmod:chocolate","absmod:lilac","absmod:seal_point","absmod:blue_point","absmod:chocolate_point","absmod:lilac_point").contains(pattern)) {
             String coat=pattern.substring(7);
@@ -52,8 +66,11 @@ public record CatGenome(int dilution,String pattern,Optional<UUID> firstParent,O
     private static int chance(int a,int b){return Integer.bitCount(a)*Integer.bitCount(b)*25;}
     private static int gamete(int value,RandomSource random){return value>>(random.nextBoolean()?1:0)&1;}
     private static int inherit(int self,int other,RandomSource random){return gamete(self,random)|(gamete(other,random)<<1);}
-    public boolean supportedCoat(){return pattern.equals("minecraft:all_black") || pattern.equals("minecraft:british_shorthair") || pattern.equals("minecraft:siamese");}
+    public boolean supportedCoat(){return coat.isPresent() || pattern.equals("minecraft:all_black") || pattern.equals("minecraft:british_shorthair") || pattern.equals("minecraft:siamese");}
+    public boolean pink(){return coat.map(CatCoat::pink).orElse(false);}
+    public int pinkDenominator(CatGenome other){return CatCoat.pinkDenominator(pink(),other.pink());}
     public String appearance() {
+        if(coat.isPresent())return "absmod:"+coat.get().variant(this);
         if(!supportedCoat())return pattern;
         String color=brown()?(dilute()?"lilac":"chocolate"):(dilute()?"blue":"seal");
         if(pointed())return "absmod:"+color+"_point";
@@ -63,6 +80,7 @@ public record CatGenome(int dilution,String pattern,Optional<UUID> firstParent,O
     public CatGenome breed(CatGenome partner,UUID self,UUID other,RandomSource random) {
         return new CatGenome(inherit(dilution,partner.dilution,random),random.nextBoolean()?pattern:partner.pattern,
             Optional.of(self),Optional.of(other),Math.min(1000000,Math.max(generation,partner.generation)+1),
-            inherit(chocolate,partner.chocolate,random),inherit(point,partner.point,random));
+            inherit(chocolate,partner.chocolate,random),inherit(point,partner.point,random),
+            Optional.of(coat.orElseGet(()->CatCoat.founder(pattern,self)).breed(partner.coat.orElseGet(()->CatCoat.founder(partner.pattern,other)),random)));
     }
 }

@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/cat_palette",
+  "display": {
+    "icon": {
+      "id": "minecraft:ender_eye"
+    },
+    "title": {
+      "translate": "advancement.absmod.cat_odd_eyes.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cat_odd_eyes.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

@@ -18,6 +18,12 @@ public final class AbsModNeoForge {
         for(String name:new String[]{"chocolate","lilac","seal_point","blue_point","chocolate_point","lilac_point"})
             CAT_COATS.register(name,()->new net.minecraft.world.entity.animal.CatVariant(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("absmod","textures/entity/cat/"+name+".png")));
     }
+    static {
+        for(int c=0;c<9;c++)for(int m=0;m<8;m++)for(int w=0;w<4;w++)for(int e=0;e<4;e++)for(int p=0;p<2;p++) {
+            String name=com.abyssredemption.absmod.cat.CatCoat.variant(c,m,w,e,p==1);
+            CAT_COATS.register(name,()->new net.minecraft.world.entity.animal.CatVariant(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("absmod","textures/entity/cat/"+name+".png")));
+        }
+    }
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.entity.EntityType<?>> ENTITIES =
             net.neoforged.neoforge.registries.DeferredRegister.create(
                     net.minecraft.core.registries.Registries.ENTITY_TYPE, AbsMod.MOD_ID);
