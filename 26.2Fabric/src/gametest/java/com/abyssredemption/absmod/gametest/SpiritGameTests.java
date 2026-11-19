@@ -233,6 +233,12 @@ public final class SpiritGameTests {
         var store=BladeSoulStore.forInitialization(player.level().getServer());
         var initial=BladeSoulService.initialize(store,sword,player.getUUID());
         var spirit=SpiritTransformationService.manifest(player);
+        var manifested = store.find(initial.soulId()).orElseThrow();
+        var unused = BladeAffection.dailyStatus(player, manifested).orElseThrow();
+        helper.assertTrue(!unused.talked() && !unused.gifted() && unused.follow() == 0 && unused.combat() == 0,
+                "A new spirit did not start with empty interaction status");
+        helper.assertTrue(BladeAffection.dailyStatus(mockSurvival(helper), manifested).isEmpty(),
+                "Another player could read the daily interaction ledger");
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);
         BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
         BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
@@ -241,7 +247,12 @@ public final class SpiritGameTests {
         BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
         helper.assertTrue(player.getMainHandItem().getCount()==1,"Daily duplicate gift consumed fish");
         for(int i=0;i<3000;i++)BladeAffection.follow(player,spirit,true);
-        helper.assertTrue(store.find(initial.soulId()).orElseThrow().affection().orElseThrow()==7D,"Daily talk, gift or following cap failed");
+        var settled = store.find(initial.soulId()).orElseThrow();
+        var used = BladeAffection.dailyStatus(player, settled).orElseThrow();
+        helper.assertTrue(settled.affection().orElseThrow() == 7D && used.talked() && used.gifted()
+                && used.follow() == BladeAffection.DAILY_FOLLOW_LIMIT && used.combat() == 0,
+                "Daily interaction display did not match actual rewards");
+        helper.assertTrue(store.find(initial.soulId()).orElseThrow().equals(settled), "Reading status changed the soul");
         spirit.discard();helper.succeed();
     }
     @GameTest
@@ -279,6 +290,7 @@ public final class SpiritGameTests {
         helper.assertTrue(decoded.day(id,100).equals(store.day(id,100)),"Reload lost growth budget");
         helper.assertTrue(decoded.day(id,99).talked(),"Clock rollback reset daily budget");
         helper.assertTrue(!decoded.day(id,101).talked() && decoded.day(id,101).walking()==0,"Next day did not reset budget");
+        helper.assertTrue(decoded.day(id,100).talked(),"Reading a new day erased the previous day's ledger");
         helper.succeed();
     }
     @GameTest

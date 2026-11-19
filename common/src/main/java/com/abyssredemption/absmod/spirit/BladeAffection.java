@@ -10,15 +10,34 @@ import java.util.*;
 
 /** Growth rewards are separate from short-lived combo stacks and damage amounts. */
 public final class BladeAffection {
+    public static final int MAX_AFFECTION = 300;
+    public static final int DAILY_FOLLOW_LIMIT = 4;
+    public static final int DAILY_COMBAT_LIMIT = 4;
+
     private BladeAffection(){}
     private static void award(ServerPlayer owner,UUID soul,int amount) {
         var store=BladeSoulStore.find(owner.level().getServer()).orElseThrow(()->new IllegalStateException("missing_store"));
         var record=store.find(soul).orElseThrow(()->new IllegalStateException("missing_record"));
         if(record.ownerId().filter(owner.getUUID()::equals).isEmpty())throw new IllegalStateException("not_owner");
-        store.replace(record,record.withTestAffection(Math.clamp(record.affection().orElse(0D)+amount,0,300)));
+        store.replace(record,record.withTestAffection(Math.clamp(record.affection().orElse(0D)+amount,0,MAX_AFFECTION)));
         BladeAdvancements.award(owner,"bond");
     }
     private static long day(ServerPlayer player){return player.level().getServer().overworld().getOverworldClockTime()/24000;}
+
+    /** Status uses the same calendar and rollback rule as reward settlement, including for a new soul. */
+    public static Optional<BladeGrowthStore.Day> dailyStatus(ServerPlayer owner, BladeSoulRecord record) {
+        if (record.ownerId().filter(owner.getUUID()::equals).isEmpty()) {
+            return Optional.empty();
+        }
+        try {
+            long today = day(owner);
+            return Optional.of(BladeGrowthStore.find(owner.level().getServer()).map(store -> store.day(record.soulId(), today))
+                    .orElseGet(() -> BladeGrowthStore.Day.empty(record.soulId(), today)));
+        } catch (IllegalStateException error) {
+            reportUnavailable(error);
+            return Optional.empty();
+        }
+    }
     public static void follow(ServerPlayer owner,BladeSpiritEntity spirit,boolean moved) {
         try { followUnchecked(owner,spirit,moved); }
         catch(IllegalStateException error) { reportUnavailable(error); }
@@ -26,7 +45,7 @@ public final class BladeAffection {
     private static void followUnchecked(ServerPlayer owner,BladeSpiritEntity spirit,boolean moved) {
         if(!moved || spirit.distanceToSqr(owner)>256 || !spirit.active())return;
         var store=BladeGrowthStore.get(owner.level().getServer());var d=store.day(spirit.soulId(),day(owner));
-        if(d.follow()>=4)return;
+        if(d.follow()>=DAILY_FOLLOW_LIMIT)return;
         int walking=d.walking()+10;int earned=walking>=6000?1:0;
         if(earned>0)award(owner,spirit.soulId(),earned);
         store.put(new BladeGrowthStore.Day(d.soul(),d.day(),walking%6000,d.follow()+earned,d.hits(),d.combat(),d.talked(),d.gifted(),d.targets()));
@@ -64,7 +83,7 @@ public final class BladeAffection {
         if(record.ownerId().filter(owner.getUUID()::equals).isEmpty())return;
         var store=BladeGrowthStore.get(owner.level().getServer());var d=store.day(ref.soulId(),day(owner));
         // Conservative anti-farm policy: each hostile entity contributes only once per soul/day.
-        if(d.combat()>=4 || d.targets().contains(target.getUUID()))return;
+        if(d.combat()>=DAILY_COMBAT_LIMIT || d.targets().contains(target.getUUID()))return;
         var targets=new ArrayList<>(d.targets());targets.add(target.getUUID());
         int hits=d.hits()+1,earned=hits>=10?1:0;
         if(earned>0)award(owner,ref.soulId(),earned);

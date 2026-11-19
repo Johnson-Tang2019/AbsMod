@@ -3,8 +3,12 @@ package com.abyssredemption.absmod.cat;
 import com.abyssredemption.absmod.cat.CatJournalMenu.Control;
 import com.abyssredemption.absmod.cat.CatJournalMenu.Row;
 import com.abyssredemption.absmod.cat.CatLifeStore.Observation;
+import com.abyssredemption.absmod.item.BladeRoute;
 import com.abyssredemption.absmod.spirit.BladeAdvancements;
+import com.abyssredemption.absmod.spirit.BladeAffection;
 import com.abyssredemption.absmod.spirit.BladeSoulRecord;
+import com.abyssredemption.absmod.spirit.ResonanceMenu;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -127,7 +131,7 @@ final class CatJournalViews {
                 var spirit = spirits.get(index - cats.size());
                 var name = label("spirit_kind", spirit.carrier().orElseThrow().sword().getHoverName());
                 rows.add(new Row(name, label(CatLife.nearbySpirit(player, spirit) == null ? "away" : "nearby"),
-                        () -> partnerSpirit(player, spirit, page)));
+                        () -> partnerSpirit(player, spirit.soulId(), page)));
             }
         }
         CatJournalMenu.show(player, label("partners"), label(count == 0 ? "empty_partners" : "page", page + 1, last + 1, count),
@@ -167,18 +171,59 @@ final class CatJournalViews {
                 })));
     }
 
-    private static void partnerSpirit(ServerPlayer player, BladeSoulRecord spirit, int page) {
+    private static void partnerSpirit(ServerPlayer player, UUID id, int page) {
+        var spirit = CatLife.spirit(player, id).orElse(null);
+        if (spirit == null) {
+            partners(player, page);
+            return;
+        }
         var carrier = spirit.carrier().orElseThrow();
         var nearby = CatLife.nearbySpirit(player, spirit);
+        var day = BladeAffection.dailyStatus(player, spirit).orElse(null);
+        double affection = spirit.affection().orElse(0D);
+        var stage = label(spirit.route() == BladeRoute.NORMAL ? "spirit_normal" : "spirit_dark", spirit.stage());
+        var bond = label(affection >= BladeAffection.MAX_AFFECTION ? "spirit_bond_cap" : "spirit_bond", decimal(affection));
+        var status = label(!spirit.form().equals("spirit") ? "spirit_pending" : nearby == null ? "away" : "nearby");
+        var unknown = label("spirit_activity_unknown");
+        var sword = carrier.sword();
         var rows = List.of(
-                new Row(label("spirit_kind", carrier.sword().getHoverName()), label(nearby == null ? "away" : "nearby"), null),
-                new Row(label("last_seen"), carrier.lastLocation().map(CatLife::position).orElse(label("unrecorded")), null));
+                new Row(label("spirit_kind", sword.getHoverName()), label("spirit_overview", stage, bond,
+                        Math.max(0, sword.getMaxDamage() - sword.getDamageValue()), sword.getMaxDamage()), null),
+                new Row(label("spirit_progress"), nextAffection(spirit, affection), null),
+                new Row(label("spirit_interactions"), day == null ? unknown : label("spirit_claims",
+                        label(day.talked() ? "spirit_recorded" : "spirit_unrecorded"),
+                        label(day.gifted() ? "spirit_recorded" : "spirit_unrecorded")), null),
+                new Row(label("spirit_daily_rewards"), day == null ? unknown : label("spirit_daily_counts",
+                        day.follow(), BladeAffection.DAILY_FOLLOW_LIMIT, day.combat(), BladeAffection.DAILY_COMBAT_LIMIT), null),
+                new Row(label("last_seen"), label("spirit_where", status,
+                        carrier.lastLocation().map(CatLife::position).orElse(label("unrecorded"))), null));
         CatJournalMenu.show(player, label("partners"), label("partner_details"), rows, List.of(
                 new Control(label("back"), () -> partners(player, page)),
                 new Control(label("recall"), nearby == null ? null : () -> {
                     CatLife.recall(player, spirit);
                     partners(player, page);
-                })));
+                }),
+                new Control(label("spirit_refresh"), () -> partnerSpirit(player, id, page))));
+    }
+
+    private static Component nextAffection(BladeSoulRecord spirit, double affection) {
+        int next = spirit.stage() + 1;
+        if (!spirit.route().accepts(next)) {
+            return label("spirit_max_stage");
+        }
+        if (next == 9) {
+            return label("spirit_trial_locked");
+        }
+        int required = ResonanceMenu.affection(spirit.route(), next);
+        if (affection >= required) {
+            return label("spirit_requirement_met", next, required);
+        }
+        var shortage = BigDecimal.valueOf(required).subtract(BigDecimal.valueOf(affection));
+        return label("spirit_requirement_short", next, required, shortage.stripTrailingZeros().toPlainString());
+    }
+
+    private static String decimal(double value) {
+        return BigDecimal.valueOf(value).stripTrailingZeros().toPlainString();
     }
 
     private static Component appearance(Observation row) {

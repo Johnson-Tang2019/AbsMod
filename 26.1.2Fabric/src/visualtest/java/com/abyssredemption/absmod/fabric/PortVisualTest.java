@@ -11,6 +11,10 @@ import com.abyssredemption.absmod.spirit.BladeSoulComponents;
 import com.abyssredemption.absmod.spirit.BladeSoulService;
 import com.abyssredemption.absmod.spirit.BladeSoulStore;
 import com.abyssredemption.absmod.spirit.ResonanceMenu;
+import com.abyssredemption.absmod.spirit.SpiritTransformationService;
+import com.abyssredemption.absmod.entity.BladeSpiritEntity;
+import java.util.Arrays;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import dev.ftb.mods.ftbquests.client.ClientQuestFile;
 import dev.ftb.mods.ftbquests.quest.ServerQuestFile;
 import net.fabricmc.api.ClientModInitializer;
@@ -43,9 +47,13 @@ public final class PortVisualTest implements ClientModInitializer {
     private static final long RESONANCE_QUEST_ID = 0x14107493db5542a5L;
     private static final long STAGE_TWO_QUEST_ID = 0x3fa472d83cf0c5ffL;
     private static final long CAT_COLLECTION_QUEST_ID = 0x0c40fe16bd0d9954L;
+    private static final long BOND_QUEST_ID = 0x6b3c47d1aa6174d9L;
+    private BladeSpiritEntity spirit;
+    private volatile long activityRevision;
     private boolean started;
     private volatile boolean verified;
     private volatile boolean verifiedCat;
+    private volatile boolean verifiedSpirit;
     private int ticks;
 
     @Override
@@ -191,9 +199,122 @@ public final class PortVisualTest implements ClientModInitializer {
                 if (!verifiedCat) {
                     throw new IllegalStateException("FTB collection verification failed");
                 }
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    player.closeContainer();
+                    var sword = stack("meow_blade");
+                    sword.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, Component.literal("Lumen"));
+                    sword.setDamageValue(61);
+                    player.getInventory().setSelectedSlot(0);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, sword);
+                    BladeSoulService.initialize(BladeSoulStore.forInitialization(server), sword, player.getUUID());
+                    spirit = SpiritTransformationService.manifest(player);
+                    player.getInventory().setItem(1, stack("bond_bell"));
+                    player.getInventory().setSelectedSlot(1);
+                    player.getMainHandItem().getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
+                });
+            }
+            case 415 -> {
+                if (!(client.screen instanceof CatJournalScreen screen)) {
+                    throw new IllegalStateException("Bell companion list did not open");
+                }
+                var chosen = screen.children().stream().filter(Button.class::isInstance).map(Button.class::cast)
+                        .filter(button -> button.getMessage().getString().contains("Lumen")).findFirst().orElseThrow();
+                screenshot(client, "port2612-spirit-list.png");
+                press(screen, chosen);
+            }
+            case 450 -> {
+                checkSpiritDetails(client, "0", "10", "spirit_unrecorded");
+                screenshot(client, "port2612-spirit-before.png");
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    player.getInventory().setSelectedSlot(3);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                    spirit.interact(player, InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.COD, 2));
+                    spirit.interact(player, InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+                    spirit.interact(player, InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+                    if (player.getMainHandItem().getCount() != 1) {
+                        throw new IllegalStateException("Daily gift was charged twice");
+                    }
+                    player.getInventory().setSelectedSlot(1);
+                    activityRevision = BladeSoulStore.find(server).orElseThrow().find(spirit.soulId()).orElseThrow().revision();
+                });
+            }
+            case 475 -> {
+                if (!(client.screen instanceof CatJournalScreen screen)) {
+                    throw new IllegalStateException("Spirit activity screen closed before refresh");
+                }
+                var refresh = screen.children().stream().filter(Button.class::isInstance).map(Button.class::cast)
+                        .filter(button -> button.getMessage().getContents() instanceof TranslatableContents text
+                                && text.getKey().equals("cats.absmod.spirit_refresh")).findFirst().orElseThrow();
+                press(screen, refresh);
+            }
+            case 515 -> {
+                checkSpiritDetails(client, "3", "7", "spirit_recorded");
+                screenshot(client, "port2612-spirit-after.png");
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    var record = BladeSoulStore.find(server).orElseThrow().find(spirit.soulId()).orElseThrow();
+                    var quests = ServerQuestFile.getInstance();
+                    if (record.revision() != activityRevision || !quests.getTeamData(player).orElseThrow()
+                            .isCompleted(quests.getQuest(BOND_QUEST_ID))) {
+                        throw new IllegalStateException("Refreshing status modified the soul or the FTB bond quest did not complete");
+                    }
+                    verifiedSpirit = true;
+                    LOGGER.info("SPIRIT_ACTIVITY_2612_PASS");
+                });
+            }
+            case 540 -> {
+                if (!verifiedSpirit) {
+                    throw new IllegalStateException("Spirit activity verification failed");
+                }
                 client.stop();
             }
             default -> {}
+        }
+    }
+
+    private static void checkSpiritDetails(Minecraft client, String affection, String shortage, String interaction) {
+        if (!(client.screen instanceof CatJournalScreen screen)) {
+            throw new IllegalStateException("Spirit detail screen did not open");
+        }
+        var rows = screen.getTitle().getSiblings().get(2).getSiblings();
+        var overview = rowDetails(rows.get(0), "spirit_overview");
+        var progress = rowDetails(rows.get(1), "spirit_requirement_short");
+        var claims = rowDetails(rows.get(2), "spirit_claims");
+        var budget = rowDetails(rows.get(3), "spirit_daily_counts");
+        if (!Arrays.toString(progress).equals("[2, 10, " + shortage + "]")) {
+            throw new IllegalStateException("Wrong next-stage requirement: " + Arrays.toString(progress));
+        }
+        if (!containsTranslation(overview[0], "spirit_normal", "1")
+                || !containsTranslation(overview[1], "spirit_bond", affection)
+                || !overview[2].toString().equals("1500") || !overview[3].toString().equals("1561")
+                || !containsTranslation(claims[0], interaction, null) || !containsTranslation(claims[1], interaction, null)
+                || !Arrays.toString(budget).equals("[0, 4, 0, 4]")) {
+            throw new IllegalStateException("Unexpected spirit daily status: " + screen.getTitle().getString());
+        }
+    }
+
+    private static Object[] rowDetails(Component row, String key) {
+        var text = (TranslatableContents) row.getSiblings().get(2).getContents();
+        if (!text.getKey().equals("cats.absmod." + key)) {
+            throw new IllegalStateException("Wrong status row: " + text.getKey());
+        }
+        return text.getArgs();
+    }
+
+    private static boolean containsTranslation(Object value, String key, String argument) {
+        return value instanceof Component label && label.getContents() instanceof TranslatableContents text
+                && text.getKey().equals("cats.absmod." + key)
+                && (argument == null || text.getArgs()[0].toString().equals(argument));
+    }
+
+    private static void press(CatJournalScreen screen, Button button) {
+        var click = new MouseButtonEvent(button.getX() + button.getWidth() / 2,
+                button.getY() + button.getHeight() / 2, new MouseButtonInfo(0, 0));
+        if (!button.active || !screen.mouseClicked(click, false)) {
+            throw new IllegalStateException("Spirit detail button did not accept the click");
         }
     }
 

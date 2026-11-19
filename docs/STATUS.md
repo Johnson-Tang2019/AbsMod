@@ -1,6 +1,16 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
 
+## 2026-11-19 · 26.1.2 剑灵关系与当日互动
+
+基线 `main/1ee67cc`。PLAN-UI-01、PLAN-GUIDE-01 与 PLAN-PORT-01。结缘铃伙伴详情显示当前路线和阶段、好感、原剑耐久、下一阶好感门槛和差值、当日交流与生鳕鱼赠礼、活跃同行与战斗额度。刷新重新读取服务端的原账本和灵魂记录。日历按主世界时钟结算，时间倒退沿用当前账本。手册新增第 29 页，26.1.2 的 FTB 好感任务补操作指引。
+
+源码：`CatJournalViews`、`CatLife`、`BladeAffection`、`BladeGrowthStore`、`FieldGuideItem`、双语资源和 FTB 导出。次阶好感直接读取共鸣门槛，普通八阶显示试炼提示，暗黑八阶显示路线封顶。奖励与现有数值沿用当前规则。
+
+实机：26.1.2 Fabric 在隔离客户端打开已显现剑灵详情，验证原剑耐久 1500/1561。完成一次交流与一次赠礼后刷新，好感由 0 到 3，二阶差值由 10 到 7，两个当日记录更新。重复赠礼保留剩余鳕鱼，单独刷新未改写灵魂记录，FTB 好感任务完成。证据见 `build/spirit-activity-2612-final.log`。NeoForge 运行时与多玩家详情查看不在本轮实机验收范围。
+
+验证与交付：26.1.2 发布构建和 24 项 Fabric GameTest 通过，含账本查询权限、重复赠礼和时间倒退。共享代码通过 26.2 双加载器构建及 1.21.1 资源回归构建。本机仅更新 26.1.2 Fabric 0.19.2 的 JAR 和 FTB 好感任务中文说明。原文件备份于 `absmod-backups/20261119-210410`，SHA-256 见 `build/spirit-activity-2612-delivery.json`。构建日志见 `build/spirit-activity-2612-release.log` 和 `build/spirit-activity-build-*.log`。
+
 ## 2026-11-19 · 猫咪收藏、家谱与安置
 
 基线：\`main/b8f6fe4\`。任务：PLAN-CAT-01、PLAN-HOME-01／02、PLAN-GUIDE-01、PLAN-PORT-01。观察手册新增独立收藏界面。可按毛色、花纹、眼色组合筛选或只看自家猫，逐个打开已观察的亲本与后代。绒月猫窝、结缘铃、休息与呼唤寻路、伙伴详情及现有召回服务已接入。猫窝和铃的材料与交互为首版原型，详见 [猫咪玩法](CAT_GENETICS.md)。

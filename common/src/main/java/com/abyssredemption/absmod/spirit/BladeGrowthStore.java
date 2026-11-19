@@ -12,6 +12,10 @@ import java.util.*;
 /** Persistent per-soul daily budgets; relogging never resets earned rewards. */
 public final class BladeGrowthStore extends SavedData {
     public record Day(UUID soul,long day,int walking,int follow,int hits,int combat,boolean talked,boolean gifted,List<UUID> targets) {
+        static Day empty(UUID soul, long day) {
+            return new Day(soul, day, 0, 0, 0, 0, false, false, List.of());
+        }
+
         static final Codec<Day> CODEC=RecordCodecBuilder.create(i->i.group(
             UUIDUtil.CODEC.fieldOf("soul").forGetter(Day::soul),Codec.LONG.fieldOf("day").forGetter(Day::day),
             Codec.INT.fieldOf("walking").forGetter(Day::walking),Codec.INT.fieldOf("follow").forGetter(Day::follow),
@@ -42,20 +46,26 @@ public final class BladeGrowthStore extends SavedData {
         }
     };
     private static final SavedDataType<BladeGrowthStore> TYPE=new SavedDataType<>(Identifier.fromNamespaceAndPath("absmod","blade_growth"),BladeGrowthStore::new,CODEC,net.minecraft.util.datafix.DataFixTypes.SAVED_DATA_COMMAND_STORAGE);
-    public static BladeGrowthStore get(MinecraftServer server) {
+    static Optional<BladeGrowthStore> find(MinecraftServer server) {
         if(!server.isSameThread())throw new IllegalStateException("server_thread");
         var store=server.getDataStorage().get(TYPE);
-        if(store==null) {
-            if(!java.nio.file.Files.notExists(TYPE.id().withSuffix(".dat").resolveAgainst(
-                    server.getWorldPath(net.minecraft.world.level.storage.LevelResource.DATA))))
-                throw new IllegalStateException("growth_store_unreadable");
-            store=new BladeGrowthStore();server.getDataStorage().set(TYPE,store);
+        if (store == null && !java.nio.file.Files.notExists(TYPE.id().withSuffix(".dat").resolveAgainst(
+                server.getWorldPath(net.minecraft.world.level.storage.LevelResource.DATA)))) {
+            throw new IllegalStateException("growth_store_unreadable");
         }
-        return store;
+        return Optional.ofNullable(store);
+    }
+
+    public static BladeGrowthStore get(MinecraftServer server) {
+        return find(server).orElseGet(() -> {
+            var store = new BladeGrowthStore();
+            server.getDataStorage().set(TYPE, store);
+            return store;
+        });
     }
     public Day day(UUID soul,long now) {
         var previous=days.get(soul);
-        return previous==null || now>previous.day?new Day(soul,now,0,0,0,0,false,false,List.of()):previous;
+        return previous == null || now > previous.day() ? Day.empty(soul, now) : previous;
     }
     public void put(Day day){days.put(day.soul,day);setDirty();}
 }

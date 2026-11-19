@@ -148,11 +148,24 @@ public final class CatLife {
     static List<BladeSoulRecord> spirits(ServerPlayer player) {
         try {
             return BladeSoulStore.find(player.level().getServer()).stream().flatMap(store -> store.records().stream())
-                    .filter(record -> record.ownerId().filter(player.getUUID()::equals).isPresent() && record.carrier().isPresent())
+                    .filter(record -> isOwnedSpirit(player, record))
                     .sorted(java.util.Comparator.comparing(BladeSoulRecord::soulId)).toList();
         } catch (IllegalStateException unavailable) {
             return List.of();
         }
+    }
+
+    static java.util.Optional<BladeSoulRecord> spirit(ServerPlayer player, UUID id) {
+        try {
+            return BladeSoulStore.find(player.level().getServer()).flatMap(store -> store.find(id))
+                    .filter(record -> isOwnedSpirit(player, record));
+        } catch (IllegalStateException unavailable) {
+            return java.util.Optional.empty();
+        }
+    }
+
+    private static boolean isOwnedSpirit(ServerPlayer player, BladeSoulRecord record) {
+        return record.carrier().isPresent() && record.ownerId().filter(player.getUUID()::equals).isPresent();
     }
 
     static BladeSpiritEntity nearbySpirit(ServerPlayer player, BladeSoulRecord record) {

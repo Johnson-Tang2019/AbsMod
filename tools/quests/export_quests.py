@@ -119,9 +119,16 @@ def generate():
         data["tasks"] = [dict(task, id=modern_id(task["id"]), type="ftbquests:" + task["type"]) for task in quest["tasks"]]
         modern_chapter["quests"].append(data)
     write_json(modern / "chapters/absmod_progression.json5", modern_chapter)
+    bond_tip = "查看剑灵关系：先显现自家剑灵，持结缘铃对空气右键，再点击剑灵。面板显示好感、下阶门槛和今日记录。空手右键交流，手持生鳕鱼右键赠礼。完成后重开详情，或点击「刷新」。"
+    modern_translations = {}
+    for quest in quests:
+        prefix = f"quest.{modern_id(quest['id'])}"
+        modern_translations[prefix + ".title"] = quest["title"]
+        modern_translations[prefix + ".quest_desc"] = (
+            quest["description"] + [bond_tip] if quest["id"] == stable_id("bond") else quest["description"]
+        )
     write_json(modern / "lang/zh_cn/chapters/absmod_progression.json5",
-               {f"quest.{modern_id(quest['id'])}.{key}": value
-                for quest in quests for key, value in [("title", quest["title"]), ("quest_desc", quest["description"])]})
+               modern_translations)
     write_json(modern / "lang/zh_cn/absmod_chapter.json5",
                {f"chapter.{modern_chapter['id']}.title": chapter["title"]})
     ids = [q["id"] for q in quests] + [t["id"] for q in quests for t in q["tasks"]] + [chapter["id"]]
