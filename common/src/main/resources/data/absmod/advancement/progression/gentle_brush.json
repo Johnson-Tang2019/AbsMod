@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/field_guide",
+  "display": {
+    "icon": {
+      "id": "absmod:gentle_brush"
+    },
+    "title": {
+      "translate": "advancement.absmod.gentle_brush.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.gentle_brush.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

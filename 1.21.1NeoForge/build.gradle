@@ -32,6 +32,7 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
     from('../common/src/main/resources') {
         exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**'
+        exclude 'assets/absmod/models/item/gentle_brush.json', 'data/absmod/**/gentle_brush.json'
     }
     from('../client-bedrock/src/main/resources')
     inputs.property 'version', project.version

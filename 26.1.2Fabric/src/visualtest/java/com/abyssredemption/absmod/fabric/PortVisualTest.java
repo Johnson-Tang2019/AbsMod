@@ -2,6 +2,8 @@ package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.client.ResonanceScreen;
 import com.abyssredemption.absmod.client.CatJournalScreen;
+import com.abyssredemption.absmod.cat.CatGenetics;
+import net.minecraft.world.entity.animal.feline.Cat;
 import com.abyssredemption.absmod.item.FieldGuideItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
@@ -48,7 +50,11 @@ public final class PortVisualTest implements ClientModInitializer {
     private static final long STAGE_TWO_QUEST_ID = 0x3fa472d83cf0c5ffL;
     private static final long CAT_COLLECTION_QUEST_ID = 0x0c40fe16bd0d9954L;
     private static final long BOND_QUEST_ID = 0x6b3c47d1aa6174d9L;
-    private BladeSpiritEntity spirit;
+    private static final long BRUSH_QUEST_ID = 0x4a47756ba2b0d3f5L;
+    private volatile BladeSpiritEntity spirit;
+    private Cat observedCat;
+    private volatile boolean verifiedBrush;
+    private int spiritMenuWait;
     private volatile long activityRevision;
     private boolean started;
     private volatile boolean verified;
@@ -131,12 +137,12 @@ public final class PortVisualTest implements ClientModInitializer {
                 }
                 var file = ServerQuestFile.getInstance();
                 var chapter = file.getChapterOrThrow(CHAPTER_ID);
-                if (chapter.getQuests().size() != 37 || !file.getTeamData(player).orElseThrow()
+                if (chapter.getQuests().size() != 38 || !file.getTeamData(player).orElseThrow()
                         .isCompleted(file.getQuest(STAGE_TWO_QUEST_ID))) {
                     throw new IllegalStateException("FTB chapter or stage-two advancement task did not load and complete");
                 }
                 verified = true;
-                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 37 FTB quests and stage two completed");
+                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 38 FTB quests and stage two completed");
             });
             case 165 -> {
                 if (!verified) {
@@ -169,6 +175,7 @@ public final class PortVisualTest implements ClientModInitializer {
                 var cat = EntityType.CAT.create(player.level(), EntitySpawnReason.COMMAND);
                 cat.tame(player);
                 cat.setCustomName(Component.literal("Mochi"));
+                observedCat = cat;
                 cat.setPos(player.position().add(1, 0, 0));
                 player.level().addFreshEntity(cat);
                 player.setItemInHand(InteractionHand.MAIN_HAND, stack("field_guide"));
@@ -215,8 +222,13 @@ public final class PortVisualTest implements ClientModInitializer {
                 });
             }
             case 415 -> {
-                if (!(client.screen instanceof CatJournalScreen screen)) {
-                    throw new IllegalStateException("Bell companion list did not open");
+                if (!(client.screen instanceof CatJournalScreen screen) || !screen.getTitle().getString().contains("Lumen")) {
+                    if (++spiritMenuWait >= 160) {
+                        throw new IllegalStateException("Bell companion list did not open");
+                    }
+                    // Manifestation checkpoints the player and regions before it opens the bell menu.
+                    ticks--;
+                    return;
                 }
                 var chosen = screen.children().stream().filter(Button.class::isInstance).map(Button.class::cast)
                         .filter(button -> button.getMessage().getString().contains("Lumen")).findFirst().orElseThrow();
@@ -229,6 +241,12 @@ public final class PortVisualTest implements ClientModInitializer {
                 server.execute(() -> {
                     var player = server.getPlayerList().getPlayers().getFirst();
                     player.getInventory().setSelectedSlot(3);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, stack("gentle_brush"));
+                    spirit.interact(player, InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+                    spirit.interact(player, InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+                    if (!spirit.isGrooming()) {
+                        throw new IllegalStateException("Own spirit did not start responding to the brush");
+                    }
                     player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
                     spirit.interact(player, InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
                     player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.COD, 2));
@@ -240,6 +258,11 @@ public final class PortVisualTest implements ClientModInitializer {
                     player.getInventory().setSelectedSlot(1);
                     activityRevision = BladeSoulStore.find(server).orElseThrow().find(spirit.soulId()).orElseThrow().revision();
                 });
+            }
+            case 467 -> {
+                if (!clientSpirit(client).isGrooming()) {
+                    throw new IllegalStateException("Spirit grooming was not synchronized to the client");
+                }
             }
             case 475 -> {
                 if (!(client.screen instanceof CatJournalScreen screen)) {
@@ -266,13 +289,78 @@ public final class PortVisualTest implements ClientModInitializer {
                 });
             }
             case 540 -> {
-                if (!verifiedSpirit) {
-                    throw new IllegalStateException("Spirit activity verification failed");
+                if (!verifiedSpirit || clientSpirit(client).isGrooming()) {
+                    throw new IllegalStateException("Spirit activity verification or normal pose reset failed");
+                }
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    player.closeContainer();
+                    player.getInventory().setSelectedSlot(3);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, stack("gentle_brush"));
+                    spirit.setPos(player.position().add(0, 0, 2.4));
+                    spirit.setYRot(180);
+                    spirit.setYBodyRot(180);
+                    spirit.setYHeadRot(180);
+                    spirit.getNavigation().stop();
+                    spirit.interact(player, InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+                    var record = BladeSoulStore.find(server).orElseThrow().find(spirit.soulId()).orElseThrow();
+                    if (!spirit.isGrooming() || record.affection().orElseThrow() != 3.0) {
+                        throw new IllegalStateException("Daily limit blocked a repeat pose or awarded extra affection");
+                    }
+                });
+            }
+            case 551 -> {
+                client.player.getInventory().setSelectedSlot(3);
+                client.player.setYRot(0);
+                client.player.setXRot(8);
+                client.getToastManager().clear();
+            }
+            case 558 -> {
+                if (!clientSpirit(client).isGrooming() || clientSpirit(client).groomingProgress(0) <= 0) {
+                    throw new IllegalStateException("Repeat grooming pose was not visible");
+                }
+                screenshot(client, "port2612-gentle-brush.png");
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    player.teleportTo(player.level(), player.getX() + 7, player.getY(), player.getZ(),
+                            java.util.Set.of(), 0, 0, true);
+                });
+            }
+            case 564 -> {
+                if (clientSpirit(client).isGrooming()) {
+                    throw new IllegalStateException("Leaving reach did not cancel the synchronized pose");
+                }
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    observedCat.setPos(player.position().add(0.5, 0, 1));
+                    observedCat.setOrderedToSit(true);
+                    var genetics = (CatGenetics) observedCat;
+                    var before = genetics.absmod$getGenome();
+                    observedCat.mobInteract(player, InteractionHand.MAIN_HAND);
+                    var quests = ServerQuestFile.getInstance();
+                    if (!genetics.absmod$getGenome().equals(before) || !observedCat.isOrderedToSit()
+                            || !quests.getTeamData(player).orElseThrow().isCompleted(quests.getQuest(BRUSH_QUEST_ID))) {
+                        throw new IllegalStateException("Brush altered cat state or failed to complete the FTB quest");
+                    }
+                    verifiedBrush = true;
+                    LOGGER.info("GENTLE_BRUSH_2612_PASS");
+                });
+            }
+            case 595 -> {
+                if (!verifiedBrush) {
+                    throw new IllegalStateException("Brush verification did not finish successfully");
                 }
                 client.stop();
             }
             default -> {}
         }
+    }
+
+    private BladeSpiritEntity clientSpirit(Minecraft client) {
+        if (client.level.getEntity(spirit.getId()) instanceof BladeSpiritEntity shown) {
+            return shown;
+        }
+        throw new IllegalStateException("Could not find the client-side spirit");
     }
 
     private static void checkSpiritDetails(Minecraft client, String affection, String shortage, String interaction) {

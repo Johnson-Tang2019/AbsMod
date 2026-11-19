@@ -22,7 +22,7 @@ public final class FieldGuideItem extends WrittenBookItem {
             return net.minecraft.world.InteractionResult.SUCCESS;
         }
         var pages=new ArrayList<Filterable<Component>>();
-        for(int i=1;i<=29;i++)pages.add(Filterable.passThrough(Component.translatable("guide.absmod.page."+i)));
+        for(int i=1;i<=30;i++)pages.add(Filterable.passThrough(Component.translatable("guide.absmod.page."+i)));
         player.getItemInHand(hand).set(DataComponents.WRITTEN_BOOK_CONTENT,new WrittenBookContent(Filterable.passThrough("猫咪观察手册"),"Ab's Mod",0,pages,true));
         // Synchronize generated pages before the client receives the open-book packet.
         if(player instanceof ServerPlayer serverPlayer)serverPlayer.containerMenu.broadcastChanges();

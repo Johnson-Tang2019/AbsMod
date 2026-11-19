@@ -380,5 +380,11 @@
   "advancement.absmod.cat_nest.title": "A Moonfelt Home",
   "advancement.absmod.cat_nest.description": "Assign one of your tamed cats to a Moonfelt Cat Nest with a Bond Bell.",
   "advancement.absmod.cat_bell.title": "Hear the Bell",
-  "advancement.absmod.cat_bell.description": "Call one of your nearby, reachable cats with a Bond Bell."
+  "advancement.absmod.cat_bell.description": "Call one of your nearby, reachable cats with a Bond Bell.",
+  "guide.absmod.page.30": "Gentle Brush\n\nLay pink and white wool side by side. Put string and a stick below the white wool. Use the brush on your cat or active spirit. Brushing a spirit uses today’s talk reward.",
+  "item.absmod.gentle_brush": "Gentle Brush",
+  "brush.absmod.unavailable": "Move closer to your tamed cat or manifested spirit.",
+  "resonance.absmod.affection_at_cap": "Affection is at the maximum.",
+  "advancement.absmod.gentle_brush.title": "A Little Grooming",
+  "advancement.absmod.gentle_brush.description": "Use the Gentle Brush on your own tamed cat or manifested spirit."
 }

@@ -93,11 +93,15 @@ public final class AbsModFabric implements ModInitializer {
         var bellKey = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "bond_bell"));
         var bell = Registry.register(BuiltInRegistries.ITEM, bellKey,
                 new com.abyssredemption.absmod.item.BondBellItem(new Item.Properties().setId(bellKey)));
+        var brushKey = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "gentle_brush"));
+        var brush = Registry.register(BuiltInRegistries.ITEM, brushKey,
+                new com.abyssredemption.absmod.item.GentleBrushItem(new Item.Properties().setId(brushKey)));
         Registry.register(BuiltInRegistries.MENU, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "cat_journal"),
                 com.abyssredemption.absmod.cat.CatJournalMenu.TYPE);
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
             entries.accept(nestItem);
             entries.accept(bell);
+            entries.accept(brush);
             entries.accept(guide);
         });
     }

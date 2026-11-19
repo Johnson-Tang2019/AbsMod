@@ -74,6 +74,7 @@ public final class AbsModNeoForge {
         if (event.getTabKey().equals(CreativeModeTabs.TOOLS_AND_UTILITIES)) {
             event.accept(ModItems.FIELD_GUIDE);
             event.accept(ModItems.BOND_BELL);
+            event.accept(ModItems.GENTLE_BRUSH);
             event.accept(ModItems.CAT_NEST);
         }
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {

@@ -449,6 +449,23 @@
       ]
     },
     {
+      "id": "4A47756BA2B0D3F5",
+      "x": 0.0,
+      "y": 8.0,
+      "rewards": [],
+      "dependencies": [
+        "2EE6DAB584A476BC"
+      ],
+      "tasks": [
+        {
+          "id": "542A62A3D0E6E409",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/gentle_brush",
+          "criterion": ""
+        }
+      ]
+    },
+    {
       "id": "40A7C3C1C2EE40FF",
       "x": 4.0,
       "y": 0.0,

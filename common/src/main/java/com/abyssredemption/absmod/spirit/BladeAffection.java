@@ -15,12 +15,15 @@ public final class BladeAffection {
     public static final int DAILY_COMBAT_LIMIT = 4;
 
     private BladeAffection(){}
-    private static void award(ServerPlayer owner,UUID soul,int amount) {
+    private static double award(ServerPlayer owner,UUID soul,int amount) {
         var store=BladeSoulStore.find(owner.level().getServer()).orElseThrow(()->new IllegalStateException("missing_store"));
         var record=store.find(soul).orElseThrow(()->new IllegalStateException("missing_record"));
         if(record.ownerId().filter(owner.getUUID()::equals).isEmpty())throw new IllegalStateException("not_owner");
-        store.replace(record,record.withTestAffection(Math.clamp(record.affection().orElse(0D)+amount,0,MAX_AFFECTION)));
+        double before = record.affection().orElse(0D);
+        double after = Math.clamp(before + amount, 0, MAX_AFFECTION);
+        store.replace(record, record.withTestAffection(after));
         BladeAdvancements.award(owner,"bond");
+        return after - before;
     }
     private static long day(ServerPlayer player){return player.level().getServer().overworld().getOverworldClockTime()/24000;}
 
@@ -65,10 +68,16 @@ public final class BladeAffection {
         if(gift?d.gifted():d.talked()) {
             if(owner.connection!=null)owner.sendSystemMessage(net.minecraft.network.chat.Component.translatable("resonance.absmod.daily_limit"),true);return InteractionResult.SUCCESS;
         }
-        award(owner,spirit.soulId(),gift?2:1);
+        double earned = award(owner,spirit.soulId(),gift?2:1);
         if(gift && !owner.hasInfiniteMaterials())owner.getItemInHand(hand).shrink(1);
         store.put(new BladeGrowthStore.Day(d.soul(),d.day(),d.walking(),d.follow(),d.hits(),d.combat(),d.talked()||!gift,d.gifted()||gift,d.targets()));
-        if(owner.connection!=null)owner.sendSystemMessage(net.minecraft.network.chat.Component.translatable("resonance.absmod.affection_gained",gift?2:1),true);
+        if (owner.connection != null) {
+            var message = earned > 0
+                    ? net.minecraft.network.chat.Component.translatable("resonance.absmod.affection_gained",
+                            java.math.BigDecimal.valueOf(earned).stripTrailingZeros().toPlainString())
+                    : net.minecraft.network.chat.Component.translatable("resonance.absmod.affection_at_cap");
+            owner.sendSystemMessage(message, true);
+        }
         return InteractionResult.SUCCESS;
     }
     public static void hit(ServerPlayer owner,Entity target) {

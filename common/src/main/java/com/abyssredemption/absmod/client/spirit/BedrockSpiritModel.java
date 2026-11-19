@@ -47,5 +47,14 @@ public final class BedrockSpiritModel extends EntityModel<LivingEntityRenderStat
         bones.get("right_arm").xRot += step;
         bones.get("tail").yRot += (float)Math.sin(state.ageInTicks*0.075F)*0.25F;
         if (bones.containsKey("tail_tip")) { bones.get("tail_tip").zRot += (float)Math.sin(state.ageInTicks*0.075F-0.7F)*0.15F; }
+        if (state instanceof BladeSpiritRenderState spirit && spirit.groomingProgress > 0) {
+            float ease = (float) Math.sin(Math.PI * spirit.groomingProgress);
+            float twitch = ease * (float) Math.sin(spirit.groomingProgress * Math.PI * 5);
+            bones.get("head").xRot += ease * 0.32F;
+            bones.get("head").zRot += ease * 0.13F;
+            bones.get("left_ear").zRot += twitch * 0.23F;
+            bones.get("right_ear").zRot -= twitch * 0.18F;
+            bones.get("tail").yRot += twitch * 0.38F;
+        }
     }
 }

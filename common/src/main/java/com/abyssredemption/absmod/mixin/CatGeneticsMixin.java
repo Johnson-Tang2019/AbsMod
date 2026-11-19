@@ -1,7 +1,9 @@
 package com.abyssredemption.absmod.mixin;
 
 import com.abyssredemption.absmod.cat.*;
+import com.abyssredemption.absmod.item.GentleBrushItem;
 import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.animal.feline.CatSoundVariant;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.storage.*;
@@ -12,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 @Mixin(Cat.class)
 public abstract class CatGeneticsMixin implements CatGenetics, CatHomeGoal.Carrier {
     @Unique private CatHomeGoal absmod$restGoal;
+    @Unique private int absmod$brushReady;
 
     @Override public CatHomeGoal absmod$homeGoal() { return absmod$restGoal; }
 
@@ -23,6 +26,7 @@ public abstract class CatGeneticsMixin implements CatGenetics, CatHomeGoal.Carri
     }
 
     @Shadow private void setVariant(net.minecraft.core.Holder<net.minecraft.world.entity.animal.feline.CatVariant> variant){throw new AssertionError();}
+    @Shadow private CatSoundVariant.CatSoundSet getSoundSet() { throw new AssertionError(); }
     @Unique private CatGenome absmod$genome;
     @Override public CatGenome absmod$getGenome() {
         if(absmod$genome==null) {
@@ -56,6 +60,23 @@ public abstract class CatGeneticsMixin implements CatGenetics, CatHomeGoal.Carri
     }
     @Inject(method="mobInteract",at=@At("HEAD"),cancellable=true)
     private void observe(net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,CallbackInfoReturnable<net.minecraft.world.InteractionResult> callback) {
+        if (hand == net.minecraft.world.InteractionHand.MAIN_HAND
+                && player.getItemInHand(hand).getItem() instanceof GentleBrushItem) {
+            var cat = (Cat) (Object) this;
+            if (player instanceof net.minecraft.server.level.ServerPlayer owner) {
+                if (!GentleBrushItem.canGroom(owner, cat) || !cat.isOwnedBy(owner)) {
+                    GentleBrushItem.notifyUnavailable(owner);
+                    callback.setReturnValue(net.minecraft.world.InteractionResult.FAIL);
+                    return;
+                }
+                if (cat.tickCount >= absmod$brushReady) {
+                    absmod$brushReady = cat.tickCount + GentleBrushItem.RESPONSE_TICKS;
+                    GentleBrushItem.respondCat(owner, cat, getSoundSet().purrSound().value());
+                }
+            }
+            callback.setReturnValue(net.minecraft.world.InteractionResult.SUCCESS);
+            return;
+        }
         if (player.getItemInHand(hand).getItem() instanceof com.abyssredemption.absmod.item.BondBellItem) {
             if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
                 CatLife.select(serverPlayer, (Cat) (Object) this);

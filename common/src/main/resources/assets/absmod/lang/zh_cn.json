@@ -380,5 +380,11 @@
   "advancement.absmod.cat_nest.title": "绒月小窝",
   "advancement.absmod.cat_nest.description": "用结缘铃为自己的驯服猫绑定一张绒月猫窝。",
   "advancement.absmod.cat_bell.title": "听见铃声",
-  "advancement.absmod.cat_bell.description": "使用结缘铃呼唤一只附近且可达的自家猫。"
+  "advancement.absmod.cat_bell.description": "使用结缘铃呼唤一只附近且可达的自家猫。",
+  "guide.absmod.page.30": "樱绒梳\n\n粉红和白色羊毛各一格，线和木棍放在白羊毛下方。主手拿梳子右键自家猫或剑灵。梳理剑灵计入当天的交流，每天只加一次好感。",
+  "item.absmod.gentle_brush": "樱绒梳",
+  "brush.absmod.unavailable": "请靠近自己的驯服猫或已显现的剑灵。",
+  "resonance.absmod.affection_at_cap": "好感已达上限。",
+  "advancement.absmod.gentle_brush.title": "梳梳毛，理理发",
+  "advancement.absmod.gentle_brush.description": "用樱绒梳照顾一只自己的驯服猫或已显现的剑灵。"
 }

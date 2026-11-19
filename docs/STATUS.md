@@ -1,6 +1,16 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
 
+## 2026-11-19 · 26.1.2 樱绒梳
+
+基线 `main/5678e2f`。PLAN-LIFE-01、PLAN-GUIDE-01 与 PLAN-PORT-01。新增可反复使用的樱绒梳、候选配方、原创猫爪模型和简中／英文说明。自己驯服的猫会转头并使用它自己的呼噜音色，剑灵低头、耳尾摆动并在超过 4 格时复位。剑灵梳理复用每日普通交流额度，已记录后仍可触发动作。详见 [猫咪玩法](CAT_GENETICS.md)。
+
+主要改动：`GentleBrushItem`、`BladeSpiritEntity` 与客户端渲染状态、Bedrock 模型姿态、`CatGeneticsMixin`、`BladeAffection` 和注册。观察手册新增第 30 页，26.1.2 FTB 增加「梳梳毛，理理发」，共 38 项，原 37 项的编号、依赖和完成条件与原导出一致。
+
+验证：在 26.1.2 Fabric 的隔离客户端为剑灵梳理，核对当日记录、动作同步、正常结束和移出范围后的复位。达到日上限后再次梳理有动作且好感不叠加。实测猫咪交互、遗传与坐姿指令、FTB 新任务完成和梳子材质。证据见 `build/gentle-brush-2612-client-final.log`。他人及超出距离的请求在服务端 GameTest 中被拒绝。多人客户端尚待实测。
+
+构建与安装：26.1.2 发布构建和全部 24 项服务端 GameTest 通过。26.2 双加载器与 1.21.1 兼容构建通过。26.1.2 本机实例的 JAR、章节和中文说明已更新并校验 SHA-256。旧文件备份于 `absmod-backups/20261119-215620`，见 `build/gentle-brush-2612-delivery.json`。构建日志见 `build/gentle-brush-2612-release-final.log`、`build/gentle-brush-build-26-final.log` 和 `build/gentle-brush-build-1211.log`。
+
 ## 2026-11-19 · 26.1.2 剑灵关系与当日互动
 
 基线 `main/1ee67cc`。PLAN-UI-01、PLAN-GUIDE-01 与 PLAN-PORT-01。结缘铃伙伴详情显示当前路线和阶段、好感、原剑耐久、下一阶好感门槛和差值、当日交流与生鳕鱼赠礼、活跃同行与战斗额度。刷新重新读取服务端的原账本和灵魂记录。日历按主世界时钟结算，时间倒退沿用当前账本。手册新增第 29 页，26.1.2 的 FTB 好感任务补操作指引。

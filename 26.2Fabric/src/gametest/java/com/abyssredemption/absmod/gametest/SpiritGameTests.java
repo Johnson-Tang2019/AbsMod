@@ -237,8 +237,23 @@ public final class SpiritGameTests {
         var unused = BladeAffection.dailyStatus(player, manifested).orElseThrow();
         helper.assertTrue(!unused.talked() && !unused.gifted() && unused.follow() == 0 && unused.combat() == 0,
                 "A new spirit did not start with empty interaction status");
-        helper.assertTrue(BladeAffection.dailyStatus(mockSurvival(helper), manifested).isEmpty(),
+        var stranger = mockSurvival(helper);
+        helper.assertTrue(BladeAffection.dailyStatus(stranger, manifested).isEmpty(),
                 "Another player could read the daily interaction ledger");
+        var brush = new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod", "gentle_brush")));
+        stranger.setPos(player.position());
+        stranger.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, brush.copy());
+        spirit.interact(stranger, net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+        helper.assertTrue(!spirit.isGrooming(), "A non-owner could start grooming");
+
+        player.setPos(pos.getX() + 8, pos.getY(), pos.getZ());
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, brush);
+        spirit.interact(player, net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+        helper.assertTrue(!spirit.isGrooming(), "A far-away player could start grooming");
+        player.setPos(pos.getX(), pos.getY(), pos.getZ());
+        spirit.interact(player, net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+        spirit.interact(player, net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
+        helper.assertTrue(spirit.isGrooming() && brush.getCount() == 1, "The owner did not get a reusable brush response");
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);
         BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);
         BladeAffection.interact(player,spirit,net.minecraft.world.InteractionHand.MAIN_HAND);

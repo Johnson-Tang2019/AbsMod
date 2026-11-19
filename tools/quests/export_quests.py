@@ -5,13 +5,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCES = ROOT / "common/src/main/resources"
-CAT_LIFE_QUESTS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"}
+MODERN_ONLY_QUESTS = {"gentle_brush"}
+POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | MODERN_ONLY_QUESTS
 
 
 def stable_id(name):
     digest = hashlib.sha256(("absmod/quests/v1/" + name).encode()).hexdigest()[:16].upper()
     # Both runtimes need positive IDs for new entries. Keep shipped legacy IDs for progress.
-    return modern_id(digest) if name.split("/", 1)[0] in CAT_LIFE_QUESTS else digest
+    return modern_id(digest) if name.split("/", 1)[0] in POSITIVE_QUEST_IDS else digest
 
 
 def modern_id(legacy_id):
@@ -29,7 +30,8 @@ def generate():
                  "field_guide": (0, 6), "cat_observe": (2, 6),
                  "cat_chocolate": (6, 8), "cat_lilac": (8, 8), "cat_point": (6, 10), "cat_lilac_point": (10, 10),
                  "cat_family": (4, 6), "cat_dilute": (6, 6), "dark_heavy": (4, 4),
-                 "cat_collection": (2, 8), "cat_pedigree": (4, 10), "cat_nest": (2, 10), "cat_bell": (2, 12)}
+                 "cat_collection": (2, 8), "cat_pedigree": (4, 10), "cat_nest": (2, 10), "cat_bell": (2, 12),
+                 "gentle_brush": (0, 8)}
     for stage in range(1, 9):
         positions["normal_stage_" + str(stage)] = (stage * 2, -2)
         positions["dark_stage_" + str(stage)] = (stage * 2, 2)
@@ -96,15 +98,22 @@ def generate():
             ])
         if name == "normal_stage_8":
             quest["description"].append("九阶尚未开放：同魂心魔试炼未实现。不要继续寻找不存在的升阶配方。")
+        if name == "gentle_brush":
+            quest["description"].extend([
+                "工作台合成：粉红色羊毛、白色羊毛并排。白色羊毛下面两格依次放线、木棍。",
+                "拿在主手，靠近并右键自家的驯服猫或已显现的剑灵。猫会转头和发出呼噜声，剑灵会低头回应。",
+                "剑灵梳理与当天的普通交流共用一次好感奖励。当天已记录后仍可梳理。"
+            ])
         quests.append(quest)
     chapter = {"id": stable_id("chapter"), "filename": "absmod_progression", "title": "喵刀与猫咪生活",
                "order_index": 0, "group": "", "default_quest_shape": "square", "quests": quests}
     translations = {"chapter." + chapter["id"] + ".title": chapter["title"]}
-    for quest in quests:
+    legacy_quests = [quest for quest in quests if quest["tasks"][0]["advancement"].rsplit("/", 1)[-1] not in MODERN_ONLY_QUESTS]
+    for quest in legacy_quests:
         translations["quest." + quest["id"] + ".title"] = quest["title"]
         translations["quest." + quest["id"] + ".quest_desc"] = quest["description"]
     legacy = ROOT / "quest-packs/ftb-1.21.1/config/ftbquests/quests"
-    write_json(legacy / "chapters/absmod_progression.snbt", chapter)
+    write_json(legacy / "chapters/absmod_progression.snbt", dict(chapter, quests=legacy_quests))
     write_json(legacy / "lang/zh_cn.snbt", translations)
 
     modern = ROOT / "quest-packs/ftb-26.1.2/config/ftbquests/quests"

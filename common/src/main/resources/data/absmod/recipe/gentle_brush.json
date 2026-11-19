@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PW",
+    " S",
+    " T"
+  ],
+  "key": {
+    "P": "minecraft:pink_wool",
+    "W": "minecraft:white_wool",
+    "S": "minecraft:string",
+    "T": "minecraft:stick"
+  },
+  "result": {
+    "id": "absmod:gentle_brush",
+    "count": 1
+  }
+}

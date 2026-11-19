@@ -16,6 +16,12 @@ public final class BladeSpiritRenderer extends MobRenderer<BladeSpiritEntity, Li
         super(context, loaded.model(), 0.35F);
         texture = loaded.texture();
     }
-    @Override public LivingEntityRenderState createRenderState() { return new LivingEntityRenderState(); }
+    @Override public LivingEntityRenderState createRenderState() { return new BladeSpiritRenderState(); }
+
+    @Override public void extractRenderState(BladeSpiritEntity spirit, LivingEntityRenderState state, float partialTick) {
+        super.extractRenderState(spirit, state, partialTick);
+        ((BladeSpiritRenderState) state).groomingProgress = spirit.groomingProgress(partialTick);
+    }
+
     @Override public Identifier getTextureLocation(LivingEntityRenderState state) { return texture; }
 }
