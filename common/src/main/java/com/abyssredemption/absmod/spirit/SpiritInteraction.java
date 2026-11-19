@@ -39,6 +39,17 @@ public final class SpiritInteraction {
         return InteractionResult.SUCCESS;
     }
 
+    public static InteractionResult locate(Player player, InteractionHand hand) {
+        if (hand != InteractionHand.MAIN_HAND) { return InteractionResult.PASS; }
+        if (player instanceof ServerPlayer serverPlayer) {
+            try {
+                var status = SpiritTransformationService.locate(serverPlayer);
+                if (serverPlayer.connection != null) { serverPlayer.sendSystemMessage(status, false); }
+            } catch (IllegalStateException exception) { report(serverPlayer, exception); }
+        }
+        return InteractionResult.SUCCESS;
+    }
+
     private static void notify(ServerPlayer player, String key) {
         if (player.connection != null) { player.sendSystemMessage(Component.translatable(key), true); }
     }

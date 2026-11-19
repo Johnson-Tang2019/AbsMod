@@ -67,7 +67,7 @@
   "item.absmod.spectral_meow_blade_stage_7": "虚化喵刀 · 7",
   "item.absmod.spectral_meow_blade_stage_8": "虚化喵刀 · 8",
   "item.absmod.spectral_meow_blade_stage_9": "虚化喵刀 · 9",
-  "item.absmod.spectral_blade.hint": "剑灵的虚化占位，不提供剑属性。潜行右键自己的剑灵召回。",
+  "item.absmod.spectral_blade.hint": "主手对空气右键查看剑灵位置；潜行右键自己的剑灵召回。",
   "item.absmod.resonance_heart": "共鸣之心",
   "container.absmod.resonance": "共鸣",
   "resonance.absmod.inputs": "第一格放原剑，第一排其余格放材料",
@@ -160,7 +160,7 @@
   "guide.absmod.page.7": "暗黑二至四阶\n\n二阶：好感5；黑曜石8。\n三阶：好感12；金锭8、烈焰棒2。\n四阶：好感22；哭泣黑曜石8。",
   "guide.absmod.page.8": "暗黑五至八阶\n\n五阶：好感35；恶魂之泪2。\n六阶：好感50；下界合金碎片2。\n七阶：好感70；烈焰棒8、末影珍珠8。\n八阶：好感100；下界合金锭1。暗黑八阶封顶。",
   "guide.absmod.page.9": "战斗\n\n按住攻击持续挥刀。普通喵刀有效命中叠连击，暗黑不叠。暗黑重击默认G键（可改键），前摇0.6秒、冷却8秒。换剑或打开界面会中断准备。",
-  "guide.absmod.page.10": "剑灵\n\n潜行右键持剑显现，原槽留下虚化剑。潜行右键自己的剑灵召回；手持虚化剑攻击也会自动召回。升阶前先召回。当前剑灵无敌。",
+  "guide.absmod.page.10": "剑灵与找回\n\n潜行右键喵刀显现。主手持虚化剑对空气右键查看坐标。走散或换维度后，按最后记录返回原处。\n\n靠近剑灵后潜行右键召回。虚化剑攻击也能召回同维度已加载的剑灵。",
   "guide.absmod.page.11": "好感\n\n每游戏日：交流+1；赠送生鳕鱼+2；活跃同行每5分钟+1（最多4）；每命中10个不同敌对目标+1（最多4）。升阶只检查好感，不扣除。单纯挂机不算活跃同行。",
   "guide.absmod.page.12": "修复与保管\n\n喵刀耐久归零后保留，但不能攻击。铁砧修复：普通用钻石，暗黑用下界合金。经验修补有效。禁止合并两把喵刀，以免抹掉身份。关闭共鸣界面会返还输入物品。",
   "guide.absmod.page.13": "猫咪收集\n\n在村庄寻找猫，用生鱼驯服。拿手册右键猫，查看稀释基因与代数。旧猫不会因安装模组突然变色；已记录基因会随存档保存。",
@@ -244,5 +244,10 @@
   "advancement.absmod.cat_odd_eyes.title": "一双异色星辰",
   "advancement.absmod.cat_odd_eyes.description": "观察有谱系的异瞳后代。",
   "advancement.absmod.cat_pink.title": "万里挑一的奶粉色",
-  "advancement.absmod.cat_pink.description": "观察粉色后代：普通双亲概率1/16384；这是幻想变异，非必做主线。"
+  "advancement.absmod.cat_pink.description": "观察粉色后代：普通双亲概率1/16384；这是幻想变异，非必做主线。",
+  "message.absmod.spirit.located": "剑灵已加载：%1$s，坐标 %2$s %3$s %4$s。靠近后潜行右键召回。",
+  "message.absmod.spirit.last_location": "剑灵暂不在本维度的已加载区域。最后记录：%1$s，坐标 %2$s %3$s %4$s。返回附近加载区块后再召回。",
+  "message.absmod.spirit.location_unknown": "这只剑灵暂无位置记录。返回上次显现或分开的地方，让原剑灵重新加载。",
+  "message.absmod.spirit.error.recovery_pending": "剑灵交接状态待核对，原剑仍由档案保管。请联系管理员。",
+  "message.absmod.spirit.error.store_unreadable": "剑灵档案暂时无法读取。请联系管理员。"
 }

@@ -54,6 +54,12 @@ def generate():
             quest["description"].append(breeding_tips[name])
         if name == "cat_lilac_point":
             quest["dependencies"].append(stable_id("cat_lilac"))
+        if name == "manifest":
+            quest["description"].extend([
+                "前置：取得喵刀。主手持刀潜行右键显现，原槽留下虚化剑。找回剑灵无需额外材料。",
+                "走散或穿过传送门后，主手持虚化剑对空气右键查看最后记录的维度和坐标。返回附近加载区块，靠近剑灵后潜行右键召回。",
+                "同维度已加载的剑灵也可通过虚化剑攻击召回。区块未加载时，原剑继续由同一灵魂档案保管；回到原区域后再试。"
+            ])
         if name == "normal_stage_8":
             quest["description"].append("九阶尚未开放：同魂心魔试炼未实现。不要继续寻找不存在的升阶配方。")
         quests.append(quest)

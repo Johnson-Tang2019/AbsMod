@@ -1,6 +1,14 @@
 package com.abyssredemption.absmod.entity;
 
+import com.abyssredemption.absmod.spirit.BladeAffection;
+import com.abyssredemption.absmod.spirit.SpiritTransformationService;
 import java.util.UUID;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -8,14 +16,20 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-/** Manual spirit prototype. Final health, death and automatic recall rules remain unconfigured. */
+/** The loaded companion of one authoritative blade soul. */
 public final class BladeSpiritEntity extends PathfinderMob {
     private UUID ownerId;
     private UUID soulId;
-    private net.minecraft.world.phys.Vec3 lastGrowthPosition;
+    private static final int FOLLOW_INTERVAL = 10;
+    private static final int CATCH_UP_DISTANCE = 24;
+    private Vec3 lastGrowthPosition;
+    private GlobalPos lastRecordedLocation;
 
     public BladeSpiritEntity(EntityType<? extends BladeSpiritEntity> type, Level level) {
         super(type, level);
@@ -52,24 +66,101 @@ public final class BladeSpiritEntity extends PathfinderMob {
 
     @Override protected void registerGoals() { goalSelector.addGoal(0, new FloatGoal(this)); }
 
-    @Override public void tick() {
+    @Override
+    public void tick() {
         super.tick();
-        if (!level().isClientSide() && tickCount % 10 == 0) {
-            var owner = ownerId == null ? null : level().getPlayerByUUID(ownerId);
-            if (owner == null || !owner.isAlive() || owner.isSpectator() || !active()) {
-                getNavigation().stop();
-            } else {
-                if(owner instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
-                    boolean moved=lastGrowthPosition!=null && owner.position().distanceToSqr(lastGrowthPosition)>.01;
-                    com.abyssredemption.absmod.spirit.BladeAffection.follow(serverPlayer,this,moved);
-                    lastGrowthPosition=owner.position();
+        if (!(level() instanceof ServerLevel level) || isRemoved()) { return; }
+        rememberLocation(level);
+        if (tickCount % FOLLOW_INTERVAL != 0 || isNoAi()) { return; }
+
+        var owner = ownerId == null ? null : level.getPlayerByUUID(ownerId);
+        if (!(owner instanceof ServerPlayer player) || !player.isAlive()
+                || player.isSpectator() || isPassenger() || !active()) {
+            lastGrowthPosition = null;
+            getNavigation().stop();
+            return;
+        }
+
+        boolean moved = lastGrowthPosition != null && player.position().distanceToSqr(lastGrowthPosition) > .01;
+        BladeAffection.follow(player, this, moved);
+        lastGrowthPosition = player.position();
+        getLookControl().setLookAt(player, 30, 30);
+        double distance = distanceToSqr(player);
+        if (distance < 4) {
+            getNavigation().stop();
+        } else if (distance >= CATCH_UP_DISTANCE * CATCH_UP_DISTANCE && tryCatchUp(level, player.blockPosition())) {
+            rememberLocation(level);
+        } else if (distance > 9) {
+            getNavigation().moveTo(player, 1.0);
+        }
+    }
+
+    private void rememberLocation(ServerLevel level) {
+        if (soulId == null) { return; }
+        BlockPos position = blockPosition();
+        if (lastRecordedLocation != null && lastRecordedLocation.dimension().equals(level.dimension())
+                && chunkCoordinate(position.getX()) == chunkCoordinate(lastRecordedLocation.pos().getX())
+                && chunkCoordinate(position.getZ()) == chunkCoordinate(lastRecordedLocation.pos().getZ())) {
+            return;
+        }
+        // Retry unresolved records at a limited rate, including records being repaired by an operator.
+        if (lastRecordedLocation == null && tickCount != 1 && tickCount % FOLLOW_INTERVAL != 0) { return; }
+        GlobalPos observed = GlobalPos.of(level.dimension(), position);
+        try {
+            if (SpiritTransformationService.rememberLocation(level, this, observed)) {
+                lastRecordedLocation = observed;
+            }
+        } catch (IllegalStateException exception) {
+            // Keep the existing fail-closed behavior when the store cannot be read.
+        }
+    }
+
+    private static int chunkCoordinate(int blockCoordinate) {
+        return SectionPos.blockToSectionCoord(blockCoordinate);
+    }
+
+    private boolean tryCatchUp(ServerLevel level, BlockPos target) {
+        for (int dy : new int[]{0, -1, 1}) {
+            for (int dx = -3; dx <= 3; dx++) {
+                for (int dz = -3; dz <= 3; dz++) {
+                    int distance = Math.max(Math.abs(dx), Math.abs(dz));
+                    if (distance < 2) { continue; }
+                    BlockPos feet = target.offset(dx, dy, dz);
+                    if (!canStandAt(level, feet)) { continue; }
+                    getNavigation().stop();
+                    snapTo(feet.getX() + .5, feet.getY(), feet.getZ() + .5);
+                    setDeltaMovement(Vec3.ZERO);
+                    resetFallDistance();
+                    return true;
                 }
-                getLookControl().setLookAt(owner, 30, 30);
-                double distance = distanceToSqr(owner);
-                if (distance > 9 && distance < 24 * 24) { getNavigation().moveTo(owner, 1.0); }
-                else if (distance < 4 || distance >= 24 * 24) { getNavigation().stop(); }
             }
         }
+        return false;
+    }
+
+    private boolean canStandAt(ServerLevel level, BlockPos feet) {
+        BlockPos floor = feet.below();
+        BlockPos head = feet.above();
+        if (level.isOutsideBuildHeight(floor) || level.isOutsideBuildHeight(head)
+                || !level.isPositionEntityTicking(feet)) {
+            return false;
+        }
+
+        // Path type and collision checks also inspect adjacent blocks at chunk edges.
+        for (int dx : new int[]{-1, 1}) {
+            for (int dz : new int[]{-1, 1}) {
+                if (level.getChunkSource().getChunkNow(chunkCoordinate(feet.getX() + dx),
+                        chunkCoordinate(feet.getZ() + dz)) == null) { return false; }
+            }
+        }
+        if (!level.isEmptyBlock(feet) || !level.isEmptyBlock(head)
+                || !level.getBlockState(floor).isFaceSturdy(level, floor, Direction.UP)
+                || WalkNodeEvaluator.getPathTypeStatic(this, feet) != PathType.WALKABLE) {
+            return false;
+        }
+        var bounds = getBoundingBox().move(feet.getX() + .5 - getX(),
+                feet.getY() - getY(), feet.getZ() + .5 - getZ());
+        return level.getWorldBorder().isWithinBounds(bounds) && level.noCollision(this, bounds);
     }
 
     public boolean active() {

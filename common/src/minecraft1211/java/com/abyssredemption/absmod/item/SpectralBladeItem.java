@@ -1,6 +1,11 @@
 package com.abyssredemption.absmod.item;
 
 import com.abyssredemption.absmod.spirit.BladeSoulComponents;
+import com.abyssredemption.absmod.spirit.SpiritInteraction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import java.util.UUID;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -8,6 +13,11 @@ import net.minecraft.world.item.ItemStack;
 /** An inert link to a manifested spirit, never a second usable sword. */
 public final class SpectralBladeItem extends Item {
     public SpectralBladeItem(Properties properties) { super(properties.stacksTo(1)); }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        return new InteractionResultHolder<>(SpiritInteraction.locate(player, hand), player.getItemInHand(hand));
+    }
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context,

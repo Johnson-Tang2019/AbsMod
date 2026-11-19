@@ -1,16 +1,8 @@
 # Ab's Mod
 
-Cats now support 2048 ordinary coat combinations and 256 rare blush-pink combinations (color, pattern, white marking, eyes and colorpoint). Pink is an axolotl-inspired pale fantasy mutation: prototype birth odds are 1/16384 with no pink parent, 1/1024 with one, and 1/128 with two. Old cats keep their saved appearance. The guide has 24 pages and the optional 1.21.1 FTB pack has 33 quests. Three builds, 23 GameTests, sampled visuals in both NeoForge clients and dedicated-server persistence passed; not every combination or multiplayer breeding has been visually tested. See docs/CAT_DIVERSITY_DELIVERY.json.
+Supports Minecraft 26.2 on Fabric and NeoForge, with a separate NeoForge target for 1.21.1. The guide and vanilla advancements work on 26.2. The 1.21.1 pack has 33 optional FTB quests. [1.21.1 setup](docs/PORT_1211.md) · [FTB quests](quest-packs/ftb-1.21.1/README.md)
 
-Cat genetics now includes independent D/d dilution, B/b chocolate and C/cs colorpoint loci. Six illustrated coats cover black, blue-gray and Siamese origins: chocolate, lilac, seal point, blue point, chocolate point and lilac point. Other patterns retain their artwork. The bilingual guide has 20 pages; four new advancements bring the optional 1.21.1 FTB pack to 29 stable-ID quests. Old cats retain saved appearances. Builds, 22 Fabric GameTests, both NeoForge clients and 1.21.1 server persistence passed; multiplayer breeding and long-term balance remain unverified. See docs/CAT_GENETICS.md and docs/CAT_GENETICS_DELIVERY.json.
-
-Minecraft 1.21.1 NeoForge is available as an independent Java 21 target: `./gradlew.bat -p 1.21.1NeoForge build` (build host JDK 25). The optional FTB pack contains 25 Chinese quests; client detection and dedicated-server persistence were tested. See [port instructions and limits](docs/PORT_1211.md). Minecraft 26.2 Fabric/NeoForge remains supported.
-
-First-person resting grip sits farther down and outward, with a perspective tilt and smaller idle scale; recovery blends back smoothly and equip transitions remain intact. Third-person arms retain shoulder pivots instead of importing MMD translations. This is an initial visual revision, not final animation approval.
-
-Craft a **Cat Field Guide** from a book and raw cod. Use it in the air to read the 16-page gameplay guide; use it on a cat to inspect D/d dilution genes and parentage. Sneak-use selects the first cat, then inspect another nearby cat for the offspring dilution probability. Each parent contributes one allele. Black dd cats use the vanilla blue-gray appearance; other dilution patterns retain their original textures with an explicit notice. This is a limited Mendelian model, not a complete breed simulator. [Specification](docs/CAT_GENETICS.md).
-
-The [FTB quest export](quest-packs/ftb-1.21.1/README.md) has stable IDs and follows the shipped advancements. On 26.2, use vanilla advancements and the guide. The 1.21.1 NeoForge port and actual FTB runtime acceptance are still pending.
+Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the 24-page guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
 
 Crafting and progression are now playable prototypes on both loaders. Craft a normal blade from a diamond sword, four separate amethyst shards, raw cod and pink dye; craft a dark blade from a netherite sword, four separate crying obsidian and purple dye. Craft a **Resonance Heart** from four amethyst shards, a gold ingot and pink dye, then right-click it to upgrade the same blade. Normal stages 2–8 and all eight dark stages are available; normal stage 9 remains locked until the soul-bound boss trial exists.
 
@@ -29,6 +21,8 @@ Blade spirits are immune to damage. Attacking with the spectral blade automatica
 
 Sneak-use a main-hand Meow Blade to manifest its spirit; its slot retains a translucent, inert spectral blade. Sneak-use your own spirit while holding that link (or with an empty selected slot) to restore the original sword, including its identity, damage and components. No operator commands are needed. Other held items are never overwritten. Crash recovery remains unfinished.
 
+At long range, a loaded spirit tries to catch up at a safe, loaded spot near its owner. If separated, use the spectral blade in your main hand to see the dimension and coordinates. Return to the area, then approach and sneak-use the original spirit to recall it. This covers same-dimension catch-up and manual recovery by returning to the area. [Recovery behavior and verification](docs/IMPLEMENTATION_SPIRIT_RECOVERY.md)
+
 The default blade spirit now uses the user-supplied **Nurse Wine Fox** model and original texture (196 bones), rendered through the existing Bedrock adapter. Both loader builds pass; NeoForge in-world views and resource reload were checked with no fallback. Basic spirit animation is bound; the original Gecko/Molang animation pack is not supported. See [integration evidence](docs/IMPLEMENTATION_NURSE_WINE_FOX.md), [game screenshots](art/blade_spirit/preview.html), and [asset provenance](art/blade_spirit/nurse-wine-fox/NOTICE.md).
 
 English | [简体中文](README.zh-CN.md)
@@ -45,8 +39,7 @@ Base package: `com.abyssredemption.absmod`. Mod ID: `absmod`.
 | `26.2Fabric` | Fabric entry point, registration and metadata |
 
 The root project builds separate JARs for both loaders without an Architectury runtime dependency.
-Only Minecraft Java 26.2 is currently implemented. Add separate subprojects for other game versions
-and select compatible shared code and resources; do not assume binary compatibility across versions.
+Build the separate Java 21 target with `./gradlew.bat -p 1.21.1NeoForge build`.
 
 ## Build and run
 
@@ -77,11 +70,11 @@ Install the JAR matching your loader, excluding `-sources` JARs. Fabric requires
 - Stage 1 retains `absmod:meow_blade`. Stages 2–9 use `absmod:meow_blade_stage_2` through `absmod:meow_blade_stage_9`.
 - Independent damage values are defined in `common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java`.
   They represent totals for a player with vanilla base attributes. The PROPOSED PvE profile now supplies
-  stage damage **7/8/9/10/12/14/16/18/22** and total speed **1.8/2/2.2/2.5/2.8/3.2/3.6/4/5**.
-  These are prototype values, not final balance. Combo bonuses and full-strength rapid hits are not implemented.
-- Durability, enchantability and repair material follow the diamond sword. All stages belong to `minecraft:swords`.
+  stage damage **7/8/9/10/12/14/16/18/22** and total speed **1.6/2/2.2/2.5/2.8/3.2/3.6/4/5**.
+  Successful hits build a normal blade combo that increases damage and attack speed. These values are balance prototypes.
+- Normal blades have stage-specific durability, use diamonds for repairs and belong to `minecraft:swords`.
 - Obtain items from the Combat tab or use `/give @s absmod:meow_blade` or `/give @s absmod:meow_blade_stage_9`.
-- Progression, stage switching and crafting recipes are not implemented.
+- In survival, use the Resonance Heart to reach stage 8. Stage 9 awaits the soul-bound trial.
 
 Each stage has its own client item definition, model JSON and supplied texture.
 The supplied `meowsword1.png` through `meowsword9.png` map to stages 1–9 respectively.
@@ -212,6 +205,10 @@ The sword configuration was checked against vanilla Minecraft 26.2. In-game test
 - [Fabric 26.2 example](https://github.com/FabricMC/fabric-example-mod/tree/26.2)
 
 Dependency versions are pinned in the root `gradle.properties` and `build.gradle`.
+
+## Development history
+
+The following entries record early prototypes and checks. See the sections above and [current status](docs/STATUS.md) for current behavior.
 
 ## Blade Soul persistence prototype
 

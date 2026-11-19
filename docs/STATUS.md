@@ -1,5 +1,29 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-19 当前状态
+
+| 模块 | 已接入 | 下一步 |
+| --- | --- | --- |
+| 版本与引导 | 26.2 Fabric／NeoForge，1.21.1 NeoForge。24 页手册，1.21.1 可选 33 项 FTB 任务 | 按各版本验证受影响场景 |
+| 剑灵 | 无敌、潜行显现、攻击与手动召回。已接入同维度安全追赶和最后位置查询 | 跨维度自动行为、重登自动对账、中断交接 |
+| 普通／暗黑 | 普通一阶总攻速 1.6，连击属性已接入，普通生存可至八阶。暗黑八阶封顶并有独立重击 | 仍待心魔与同魂资格，普通八升九锁定。分路线动作及特效待做 |
+| 猫咪 | 2048 个普通组合和 256 个粉色组合，遗传、家谱数据、观察与预测已接入 | 收藏管理、猫窝、结缘铃 |
+
+本批 PLAN-SPIRIT-01、PLAN-SPIRIT-02 部分、PLAN-DOC-01、PLAN-GUIDE-01、PLAN-PORT-01。基线 `main/b6bf86b`，两处未跟踪美术原件保留。修改双版本 BladeSpiritEntity、SpiritCarrier、SpiritTransformationService、SpiritInteraction、SpectralBladeItem，及双语翻译、手册、原有 FTB 显现任务说明、双语 README 和独立测试夹具。
+
+当前实现与实际游戏日志见 [安全跟随与失联找回](IMPLEMENTATION_SPIRIT_RECOVERY.md)。已启动两个 NeoForge 客户端，并验证安全追赶、区块卸载／重载、原剑完整交还与重复拒绝。Fabric GameTest 23 项通过。自动跨维度、重登对账、强制关服、真实双玩家尚未验收。以下按日期保留历史记录，其中早期未实现列表反映当时状态。
+
+发布构建：`build/spirit-recovery-build-26.log` 和 `build/spirit-recovery-build-1211.log` 通过，含旧载体字段缺省和坐标写盘重读检查。发布 JAR 包含双语定位文案，排除测试夹具。核对 33 项 FTB 任务的章节、任务 ID 和依赖，没有变化。
+
+两个 PCL 实例均已更新，旧 JAR 及 1.21.1 同名任务和语言文件备份于各实例下 `absmod-backups/20261119-125724`。复制后的 JAR SHA-256 为：
+
+- `26.2-NeoForge_26.2.0.87_miao` · `1e27410c208651d76e0e110c3ec6ca17540ba317ec85c9310a398afee21261b2`
+- `1.21.1-NeoForge_21.1.265_miao` · `aa5cad52998e9244eddb68cb3b96748c3aaaf3864d70a9827f89dc1574bd8c65`
+
+游戏实测使用开发客户端的独立新世界。更新安装时只替换本模组 JAR、既有 FTB 章节与其语言键。
+
+## 历史实现与验收记录
+
 ## 2026-11-01：组合毛色与浅奶粉色（CAT-03 / GUIDE-04）
 
 CONFIRMED：用户要求类似热带鱼的丰富组合、极罕见粉色，获取方式由开发者决定；追加指定粉色参考原版粉色美西螈，改为浅奶粉色。基线main/c2224e0，原始模型未提交目录保留。

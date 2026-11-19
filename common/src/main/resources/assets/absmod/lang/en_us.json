@@ -67,7 +67,7 @@
   "item.absmod.spectral_meow_blade_stage_7": "Spectral Meow Blade · 7",
   "item.absmod.spectral_meow_blade_stage_8": "Spectral Meow Blade · 8",
   "item.absmod.spectral_meow_blade_stage_9": "Spectral Meow Blade · 9",
-  "item.absmod.spectral_blade.hint": "Inert spirit link; grants no sword attributes. Sneak-use your spirit to recall.",
+  "item.absmod.spectral_blade.hint": "Use in the air with your main hand to locate the spirit. Sneak-use your own spirit to recall.",
   "item.absmod.resonance_heart": "Resonance Heart",
   "container.absmod.resonance": "Resonance",
   "resonance.absmod.inputs": "Sword in the first slot; materials in the rest of the top row",
@@ -160,7 +160,7 @@
   "guide.absmod.page.7": "Dark 2-4\n\n2: affection 5; 8 obsidian.\n3: affection 12; 8 gold ingots, 2 blaze rods.\n4: affection 22; 8 crying obsidian.",
   "guide.absmod.page.8": "Dark 5-8\n\n5: affection 35; 2 ghast tears.\n6: affection 50; 2 netherite scraps.\n7: affection 70; 8 blaze rods, 8 pearls.\n8: affection 100; netherite ingot. This is the final dark stage.",
   "guide.absmod.page.9": "Combat\n\nHold attack to slash. Normal blades build combos on valid hits. Dark blades do not. Dark heavy strike: default G, rebindable; 0.6s windup, 8s cooldown. Switching weapons or opening a menu cancels preparation.",
-  "guide.absmod.page.10": "Your spirit\n\nSneak-use your held blade to manifest. A spectral link remains. Sneak-use your own spirit to recall. Attack with the link to auto-recall. Recall before upgrading. Spirits are invulnerable.",
+  "guide.absmod.page.10": "Spirit and recovery\n\nSneak-use a Meow Blade to manifest. Use the spectral link in the air for coordinates. If separated, return to the last known area.\n\nApproach and sneak-use the spirit to recall. Attacking with the link also recalls a loaded spirit in your dimension.",
   "guide.absmod.page.11": "Affection\n\nEach game day: talk +1; raw-cod gift +2; active following +1 per 5 min (max 4); 10 distinct hostile hits +1 (max 4). Upgrade gates do not spend affection. Sitting online alone is not active following.",
   "guide.absmod.page.12": "Repair\n\nA broken blade remains but cannot attack. Use an anvil: diamond for normal, netherite for dark. Mending works. Combining two soul blades is blocked to protect identities. Close resonance to recover your inputs.",
   "guide.absmod.page.13": "Cat collecting\n\nFind village cats and tame with raw fish. Use this guide on a cat to read its dilution genes and generation. Your existing cats keep their looks. Genes stay saved across reloads.",
@@ -244,5 +244,10 @@
   "advancement.absmod.cat_odd_eyes.title": "Two different stars",
   "advancement.absmod.cat_odd_eyes.description": "Observe an odd-eyed offspring.",
   "advancement.absmod.cat_pink.title": "A rare blush",
-  "advancement.absmod.cat_pink.description": "Observe a pink offspring: ordinary parents have a1/16384 chance. Optional fantasy mutation."
+  "advancement.absmod.cat_pink.description": "Observe a pink offspring: ordinary parents have a1/16384 chance. Optional fantasy mutation.",
+  "message.absmod.spirit.located": "Spirit loaded in %1$s at %2$s %3$s %4$s. Approach and sneak-use the spirit to recall.",
+  "message.absmod.spirit.last_location": "Spirit unavailable in this dimension's loaded area. Last seen in %1$s at %2$s %3$s %4$s. Return to the area and recall once it loads.",
+  "message.absmod.spirit.location_unknown": "No location is recorded yet. Return to where you manifested or last saw the spirit so it can load.",
+  "message.absmod.spirit.error.recovery_pending": "Spirit transfer needs review. The original blade remains in the soul record. Contact an administrator.",
+  "message.absmod.spirit.error.store_unreadable": "The soul record could not be read. Contact an administrator."
 }

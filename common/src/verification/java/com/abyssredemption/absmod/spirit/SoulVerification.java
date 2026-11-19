@@ -108,6 +108,11 @@ public final class SoulVerification {
         check(BladeSoulStore.CODEC.parse(JsonOps.INSTANCE, malformed).resultOrPartial(error -> {}).isEmpty(), "Invalid stage partially decoded");
 
         var carrier = new SpiritCarrier(UUID.randomUUID(), UUID.randomUUID(), other, 0);
+        var oldCarrier = SpiritCarrier.CODEC.encodeStart(ops, carrier).getOrThrow();
+        check(SpiritCarrier.CODEC.parse(ops, oldCarrier).getOrThrow().lastLocation().isEmpty(),
+                "Legacy record without a location failed to decode");
+        carrier = carrier.withLocation(net.minecraft.core.GlobalPos.of(net.minecraft.world.level.Level.NETHER,
+                new net.minecraft.core.BlockPos(-31, 64, 48)));
         var manifested = otherRecord.transition("spirit", carrier);
         store.replace(otherRecord, manifested);
         check(!updated.transition("spirit", carrier).valid(), "Mismatched retained identity accepted");
@@ -126,7 +131,9 @@ public final class SoulVerification {
             check(BladeSoulService.requireRecord(loaded, restoredItem).equals(updated), "Reloaded item/archive disagree");
             var loadedSpirit = loaded.find(otherRecord.soulId()).orElseThrow();
             check(loadedSpirit.form().equals("spirit") && loadedSpirit.carrier().orElseThrow().entityId().equals(carrier.entityId())
-                    && ItemStack.matches(loadedSpirit.carrier().orElseThrow().sword(), other), "SavedData lost spirit carrier or sword components");
+                    && loadedSpirit.carrier().orElseThrow().lastLocation().equals(carrier.lastLocation())
+                    && ItemStack.matches(loadedSpirit.carrier().orElseThrow().sword(), other),
+                    "SavedData lost the carrier location or sword components");
         }
         System.out.println("PASS: soul identity, read-only queries, missing records, revision checks, item/network codecs, migration plans and SavedData file reload");
     }
