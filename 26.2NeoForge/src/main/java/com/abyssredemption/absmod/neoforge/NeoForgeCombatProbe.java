@@ -2,6 +2,7 @@ package com.abyssredemption.absmod.neoforge;
 
 import com.abyssredemption.absmod.combat.BladeCombatServer;
 import com.abyssredemption.absmod.spirit.SpiritCompanionTravel;
+import com.abyssredemption.absmod.spirit.ResonanceEscrow;
 import com.abyssredemption.absmod.command.CombatProbeCommands;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
 import com.abyssredemption.absmod.network.BladeCombatStatusPayload;
@@ -47,7 +48,10 @@ public final class NeoForgeCombatProbe {
     }
     private void stopped(ServerStoppedEvent event) { spirits.clear(); probe.clear(); }
     private void connected(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) { PacketDistributor.sendToPlayer(player, new CombatProbePayload(true)); }
+        if (event.getEntity() instanceof ServerPlayer player) {
+            ResonanceEscrow.onLogin(player);
+            PacketDistributor.sendToPlayer(player, new CombatProbePayload(true));
+        }
     }
     private void disconnect(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) { probe.disconnect(player); }

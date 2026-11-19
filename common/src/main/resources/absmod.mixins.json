@@ -6,6 +6,7 @@
   "mixins": [
     "PlayerAttackMixin",
     "PlayerListSaveInvoker",
+    "ResonancePlayerStorageMixin",
     "LivingDamageMixin",
     "ServerAttackPacketMixin",
     "BladeDurabilityMixin",

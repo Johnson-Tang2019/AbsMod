@@ -57,6 +57,8 @@
 - 实机日志为 `build/spirit-recovery-26-final.log` 与 `build/spirit-recovery-1211-final.log`，含 `SPIRIT_RECOVERY_PASS`。1.21.1 当前 FTB 集成加载了本批同 ID 的 33 项任务和中文版。原版进度沿用显现入口，操作同步到第 10 页和既有 FTB 显现任务。
 - 发布 JAR 检查、安装文件的哈希和备份见状态总览对应记录。
 
+共鸣升阶的原剑、材料与进度有独立的重登核对流程，见 [成长实现](IMPLEMENTATION_PROGRESSION.md#plan-spirit-03--共鸣中断恢复)。
+
 ## 上一批当时的待办
 
 PLAN-SPIRIT-02 的自动跨维度与重登流程仍待实现和验证。PLAN-SPIRIT-03 需明确中断交接时的对账与幂等恢复，再测试重启和残留载体。实体或托管档案缺失时仅报告状态。玩家死亡、强制关服、跨多文件回滚和双玩家网络场景尚未验收。普通八升九仍等待同魂心魔试炼。

@@ -1,5 +1,18 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+
+## 2026-11-19 · 共鸣升阶中断恢复
+
+基线 `main/d8485ab`。对应 PLAN-SPIRIT-03、PLAN-DOC-01、PLAN-GUIDE-01 和 PLAN-PORT-01。两个共享源码分支的 `ResonanceEscrow`、`ResonancePlayerStorageMixin`、`ResonanceMenu` 和 `SpiritTransferJournal` 将原剑、材料、光标和待结算状态与背包一起保存。共鸣之心入口与两加载器的登录事件会核对中断。背包满时留在工坊，腾空后重开取回。同步双语 README、手册第 12 页和两版现有 FTB 共鸣任务。两版各 33 个任务的 ID 和条件保持一致。
+
+实际客户端：26.2 与 1.21.1 NeoForge 分别在各自的隔离世界启动四次，依次测试确认前、原剑和结算凭据落盘后、灵魂升阶档案落盘后强制退出。普通与暗黑二阶恢复时核对原剑数量、余料、原版进度、名称、附魔、耐久损耗、主人、好感和版本。满背包保留光标物品，重复核对只返还一次。26.1.2 Fabric 在单独世界实际点击共鸣按钮，核对原剑身份、重复确认和 FTB 普通二阶完成。日志 `build/resonance-crash-*.log` 与 `build/resonance-recovery-2612-client.log`。
+
+构建：26.2 NeoForge／Fabric、26.1.2 Fabric 与 1.21.1 NeoForge；两版 Fabric 各通过 23 项服务端 GameTest。见 `build/resonance-recovery-final-*.log`。测试夹具只在指定开发参数下启用。
+
+本机安装：26.2 NeoForge、1.21.1 NeoForge 与 26.1.2 Fabric 均已替换 JAR 并校验 SHA-256。1.21.1 和 26.1.2 同步各自 FTB 任务与中文说明，26.2 继续用原版进度和手册。各实例旧文件保存在 `absmod-backups/20261119-190946`，逐文件记录见 `build/resonance-recovery-delivery.json`。
+
+尚待实测：双玩家同时操作、玩家死亡途中恢复、整机断电或管理员回滚不同时点存档。共鸣进阶规则和数值继续沿用现行规格。下一项是猫咪收藏与安置，26.3 仍暂停。
+
 ## 2026-11-19 · 战斗反馈与共鸣缺项
 
 基线 `main/42c8ae1`。本批推进 PLAN-COMBAT-02、PLAN-UI-01 的共鸣部分及配套 PLAN-DOC-01／PLAN-GUIDE-01／PLAN-PORT-01。用 [当前任务表](CURRENT_TASK.md) 记录所有路线的实现、验收和待定项。星喵工艺已定位作者发布页与项目仓库，作为现有路线完成后的参考。

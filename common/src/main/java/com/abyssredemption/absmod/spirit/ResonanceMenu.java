@@ -21,14 +21,15 @@ public final class ResonanceMenu extends AbstractContainerMenu {
     public static final int CONFIRM_BUTTON = 0;
     public static final int WIDTH = 216;
     public static final int HEIGHT = 226;
-    private static final int INPUT_SLOTS = 9;
+    private static final int INPUT_SLOTS = ResonanceEscrow.INPUT_SLOTS;
     private static final int PREVIEW_SLOT = 10;
     private static final int FIRST_COST_SLOT = 12;
     private static final int MAX_COST_SLOTS = 3;
 
     private final DataSlot affectionTenths = DataSlot.standalone();
     private final DataSlot completed = DataSlot.standalone();
-    private final SimpleContainer contents=new SimpleContainer(27);
+    private final SimpleContainer contents;
+    private final ResonanceEscrow escrow;
     private final Player viewer;
     private static final int[] AFFECTION={0,0,10,25,45,70,100,140,190,250};
     public record Cost(Item item,int count){}
@@ -63,6 +64,11 @@ public final class ResonanceMenu extends AbstractContainerMenu {
     public ResonanceMenu(int id,Inventory inventory) {
         super(TYPE, id);
         viewer = inventory.player;
+        escrow = viewer instanceof ServerPlayer player ? ResonanceEscrow.of(player) : null;
+        contents = escrow == null ? new SimpleContainer(ResonanceEscrow.MENU_SLOTS) : escrow;
+        if (escrow != null && !escrow.locked()) {
+            setCarried(escrow.takeCursor());
+        }
         addDataSlot(affectionTenths);
         addDataSlot(completed);
         for (int i = 0; i < contents.getContainerSize(); i++) {
@@ -171,7 +177,7 @@ public final class ResonanceMenu extends AbstractContainerMenu {
     }
 
     @Override public boolean clickMenuButton(Player player, int button) {
-        if (button != CONFIRM_BUTTON || !(player instanceof ServerPlayer serverPlayer) || isComplete()) {
+        if (button != CONFIRM_BUTTON || player != viewer || !(player instanceof ServerPlayer serverPlayer) || isComplete()) {
             return false;
         }
         upgrade(serverPlayer);
@@ -181,13 +187,19 @@ public final class ResonanceMenu extends AbstractContainerMenu {
     }
 
     @Override public void clicked(int slot, int button, ContainerInput input, Player player) {
-        if (slot >= INPUT_SLOTS && slot < contents.getContainerSize()) {
+        if ((escrow != null && escrow.locked()) || input == ContainerInput.THROW
+                || (slot == -999 && input == ContainerInput.PICKUP)
+                || (slot >= INPUT_SLOTS && slot < contents.getContainerSize())) {
             return;
         }
         super.clicked(slot, button, input, player);
     }
 
     private void upgrade(ServerPlayer player) {
+        if (escrow.locked()) {
+            ResonanceEscrow.notify(player, "recovery_blocked");
+            return;
+        }
         try {
             var sword=contents.getItem(0);
             if(sword.getCount()!=1 || !(sword.getItem() instanceof MeowBladeItem blade))throw new IllegalStateException("not_blade");
@@ -196,8 +208,17 @@ public final class ResonanceMenu extends AbstractContainerMenu {
                 throw new IllegalStateException(blade.stage().route() == BladeRoute.NORMAL && target == 9
                         ? "boss_locked" : "max_stage");
             }
-            var store=BladeSoulStore.forInitialization(player.level().getServer());
-            var before=BladeSoulService.initialize(store,sword,player.getUUID());
+            var server = player.level().getServer();
+            var store = BladeSoulStore.forInitialization(server);
+            BladeSoulRecord before;
+            if (sword.has(BladeSoulComponents.REFERENCE)) {
+                before = BladeSoulService.requireRecord(store, sword);
+            } else {
+                sword = sword.copy();
+                before = BladeSoulService.initialize(store, sword, player.getUUID());
+                SpiritTransferJournal.write(server, before);
+                contents.setItem(0, sword);
+            }
             if(!before.ownerId().filter(player.getUUID()::equals).isPresent())throw new IllegalStateException("not_owner");
             if(before.affection().orElse(0D)<affection(blade.stage().route(),target))throw new IllegalStateException("affection");
             var costs = costs(blade.stage().route(), target);
@@ -205,25 +226,30 @@ public final class ResonanceMenu extends AbstractContainerMenu {
                 throw new IllegalStateException("materials");
             }
             var next=(MeowBladeItem)BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod",BladeStage.of(blade.stage().route(),target).itemId()));
-            var result=BladeComponentTransfer.transfer(sword,next);
-            store.replace(before,before.withStage(target));
-            for(var cost:costs) {
-                int remaining=cost.count;
-                for(int i=1;i<9 && remaining>0;i++)if(contents.getItem(i).is(cost.item)) {
-                    int used=Math.min(remaining,contents.getItem(i).getCount());contents.getItem(i).shrink(used);remaining-=used;
+            var output = new ArrayList<>(escrow.copyInputs());
+            output.set(0, BladeComponentTransfer.transfer(sword, next));
+            for (var cost : costs) {
+                int remaining = cost.count();
+                for (int slot = 1; slot < INPUT_SLOTS && remaining > 0; slot++) {
+                    var stack = output.get(slot);
+                    if (stack.is(cost.item())) {
+                        int used = Math.min(remaining, stack.getCount());
+                        stack.shrink(used);
+                        remaining -= used;
+                    }
                 }
             }
-            contents.setItem(0, result);
+            escrow.prepare(player, before, List.copyOf(output));
+            escrow.settle(player);
             completed.set(1);
-            BladeAdvancements.award(player,blade.stage().route().getSerializedName()+"_stage_"+target);
-            if(player.connection!=null)player.sendSystemMessage(Component.translatable("resonance.absmod.success"),false);
+            ResonanceEscrow.notify(player, "success");
         } catch(IllegalStateException error) {
-            if(player.connection!=null)player.sendSystemMessage(Component.translatable("resonance.absmod."+error.getMessage()),false);
+            ResonanceEscrow.notify(player, escrow.locked() ? "recovery_blocked" : error.getMessage());
         }
     }
     @Override public boolean stillValid(Player player){return player.isAlive();}
     @Override public ItemStack quickMoveStack(Player player,int slot) {
-        if(slot<0 || slot>=slots.size() || slot>=9 && slot<27)return ItemStack.EMPTY;
+        if((escrow != null && escrow.locked()) || slot<0 || slot>=slots.size() || slot>=9 && slot<27)return ItemStack.EMPTY;
         var source=slots.get(slot);if(!source.hasItem())return ItemStack.EMPTY;
         var stack=source.getItem();var copy=stack.copy();
         boolean moved=slot<9?moveItemStackTo(stack,27,slots.size(),true):
@@ -232,9 +258,13 @@ public final class ResonanceMenu extends AbstractContainerMenu {
         source.setChanged();return copy;
     }
     @Override public void removed(Player player) {
+        if (escrow != null) {
+            escrow.retainCursor(getCarried());
+            setCarried(ItemStack.EMPTY);
+        }
         super.removed(player);
-        var inputs=new SimpleContainer(9);
-        for(int i=0;i<9;i++)inputs.setItem(i,contents.removeItemNoUpdate(i));
-        clearContainer(player,inputs);
+        if (escrow != null && escrow.returnItems(player.getInventory())) {
+            ResonanceEscrow.notify((ServerPlayer) player, "recovery_retained");
+        }
     }
 }

@@ -74,10 +74,18 @@ final class SpiritTransferJournal {
 
     /** Game tests use disconnected mock players and have no player save to verify. */
     static void checkpointPlayer(ServerPlayer player, boolean saveCarriers) {
+        checkpointPlayer(player, saveCarriers, false);
+    }
+
+    static void checkpointResonance(ServerPlayer player) {
+        checkpointPlayer(player, false, true);
+    }
+
+    private static void checkpointPlayer(ServerPlayer player, boolean saveCarriers, boolean verifyResonance) {
         if (player.connection == null) { return; }
         MinecraftServer server = player.level().getServer();
         try {
-            var inventory = inventoryTag(player);
+            var snapshot = playerTag(player);
             if (saveCarriers) {
                 server.saveEverything(true, true, true);
             } else {
@@ -85,9 +93,7 @@ final class SpiritTransferJournal {
             }
             Path playerFile = server.getWorldPath(LevelResource.PLAYER_DATA_DIR).resolve(player.getUUID() + ".dat");
             var stored = NbtIo.readCompressed(playerFile, NbtAccounter.unlimitedHeap());
-            if (!java.util.Objects.equals(inventory, stored.get("Inventory"))) {
-                throw new IOException("Saved inventory did not match the handoff");
-            }
+            verifyCheckpoint(snapshot, stored, verifyResonance);
 
         } catch (IOException | RuntimeException exception) {
             throw storageFailure("checkpoint player " + player.getUUID(), exception);
@@ -122,11 +128,21 @@ final class SpiritTransferJournal {
         }
     }
 
-    private static net.minecraft.nbt.Tag inventoryTag(ServerPlayer player) {
+    private static void verifyCheckpoint(CompoundTag expected, CompoundTag stored, boolean verifyResonance) throws IOException {
+        if (!java.util.Objects.equals(expected.get("Inventory"), stored.get("Inventory"))) {
+            throw new IOException("Saved inventory did not match the handoff");
+        }
+        if (verifyResonance && (expected.get(ResonanceEscrow.KEY) == null
+                || !java.util.Objects.equals(expected.get(ResonanceEscrow.KEY), stored.get(ResonanceEscrow.KEY)))) {
+            throw new IOException("Saved resonance escrow did not match the pending settlement");
+        }
+    }
+
+    private static CompoundTag playerTag(ServerPlayer player) {
         var output = net.minecraft.world.level.storage.TagValueOutput.createWithContext(
                 net.minecraft.util.ProblemReporter.DISCARDING, player.registryAccess());
         player.saveWithoutId(output);
-        return output.buildResult().get("Inventory");
+        return output.buildResult();
     }
 
     private static IllegalStateException storageFailure(String action, Exception exception) {

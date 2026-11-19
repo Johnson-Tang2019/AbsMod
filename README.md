@@ -8,7 +8,7 @@ Crafting and progression are now playable prototypes on both loaders. Craft a no
 
 The vanilla Advancements screen guides both routes, affection and resonance. Earn daily-capped affection through talking, raw-cod gifts, active following and combat. Dark heavy strike defaults to **G** (rebindable): 0.6s windup, 8s cooldown, 1.8× stage base damage, sharing the existing attack budget. Broken blades are retained for repair. Numerical values remain prototype candidates.
 
-Use a Resonance Heart to open the pink workshop. Place the blade on the left and add materials on the right. Check the next-stage preview and affection requirement, then select **Resonate**. Take the upgraded blade and reopen the menu for another stage. Dark regular attacks draw a compact violet arc. A dark heavy strike plays a steep downstroke. On a hit, a violet ring and action-bar message mark the result.
+Use a Resonance Heart to open the pink workshop. Place the blade on the left and add materials on the right. Check the next-stage preview and affection requirement, then select **Resonate**. Take the upgraded blade and reopen the menu for another stage. After a disconnect, rejoin to recover any interrupted resonance. If your inventory was full, make room and reopen the Heart for the remaining items. Dark regular attacks draw a compact violet arc. A dark heavy strike plays a steep downstroke. On a hit, a violet ring and action-bar message mark the result.
 
 Hover over the required materials to see how many you have inserted and how many are missing. The combat status line above the hotbar shows ordinary combo stacks and their decay, or dark heavy strike preparation and cooldown. Set **Toggle Meow Blade combat status** in Controls to hide or show it during the session.
 

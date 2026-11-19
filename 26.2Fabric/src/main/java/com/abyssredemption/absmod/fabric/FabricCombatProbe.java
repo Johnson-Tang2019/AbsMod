@@ -2,6 +2,7 @@ package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.combat.BladeCombatServer;
 import com.abyssredemption.absmod.spirit.SpiritCompanionTravel;
+import com.abyssredemption.absmod.spirit.ResonanceEscrow;
 import com.abyssredemption.absmod.command.CombatProbeCommands;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
 import com.abyssredemption.absmod.network.BladeCombatStatusPayload;
@@ -32,8 +33,10 @@ public final class FabricCombatProbe {
         PayloadTypeRegistry.clientboundPlay().register(com.abyssredemption.absmod.network.BladeSwingPayload.TYPE,
                 com.abyssredemption.absmod.network.BladeSwingPayload.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(BladeCombatStatusPayload.TYPE, BladeCombatStatusPayload.CODEC);
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
-                ServerPlayNetworking.send(handler.player, new CombatProbePayload(true)));
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            ResonanceEscrow.onLogin(handler.player);
+            ServerPlayNetworking.send(handler.player, new CombatProbePayload(true));
+        });
         PayloadTypeRegistry.serverboundPlay().register(AttackIntentPayload.TYPE, AttackIntentPayload.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(CombatProbePayload.TYPE, CombatProbePayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(AttackIntentPayload.TYPE, (payload, context) -> probe.receive(context.player(), payload));
