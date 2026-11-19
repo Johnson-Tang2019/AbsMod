@@ -34,7 +34,8 @@ public final class CommandVerification {
             throw new AssertionError("Parsing must not grant milkshakes");
         });
         CommandSourceStack operator = source(PermissionSet.ALL_PERMISSIONS);
-        CombatProbeCommands.register(dispatcher, new com.abyssredemption.absmod.combat.BladeCombatServer(),
+        CombatProbeCommands.register(dispatcher, new com.abyssredemption.absmod.combat.BladeCombatServer(
+                        (player, swing) -> {}, (player, status) -> {}),
                 (target, payload) -> { throw new AssertionError("Parsing must not send packets"); });
         CommandSourceStack player = source(PermissionSet.NO_PERMISSIONS);
         for (String command : new String[] {"absmod", "absmod help", "absmod stages",

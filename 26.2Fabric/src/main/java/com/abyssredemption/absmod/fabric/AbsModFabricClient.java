@@ -13,10 +13,14 @@ public final class AbsModFabricClient implements ClientModInitializer {
                 com.abyssredemption.absmod.entity.SpiritEntityType.get(),
                 com.abyssredemption.absmod.client.spirit.BladeSpiritRenderer::new);
         net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper.registerKeyMapping(com.abyssredemption.absmod.client.BladeKeys.HEAVY);
+        net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper.registerKeyMapping(com.abyssredemption.absmod.client.BladeKeys.COMBAT_HUD);
         var probe = new com.abyssredemption.absmod.client.BladeCombatClient();
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
                 com.abyssredemption.absmod.network.CombatProbePayload.TYPE,
                 (payload, context) -> probe.setEnabled(context.client(), payload.enabled()));
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(
+                com.abyssredemption.absmod.network.BladeCombatStatusPayload.TYPE,
+                (payload, context) -> probe.acceptStatus(context.client(), payload));
         ClientTickEvents.END_CLIENT_TICK.register(client -> probe.tick(client,
                 payload -> net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(payload),
                 payload -> net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(payload)));

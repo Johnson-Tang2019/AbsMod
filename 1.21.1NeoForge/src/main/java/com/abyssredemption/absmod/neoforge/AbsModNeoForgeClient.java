@@ -20,9 +20,13 @@ public final class AbsModNeoForgeClient {
                         com.abyssredemption.absmod.client.ResonanceScreen::new));
         bus.addListener((RegisterColorHandlersEvent.Item e)->e.register((stack,index)->0x66FFD7EF,
             com.abyssredemption.absmod.registry.ModItems.SPECTRAL_BLADES.stream().map(java.util.function.Supplier::get).toArray(net.minecraft.world.item.Item[]::new)));
-        bus.addListener((RegisterKeyMappingsEvent e)->e.register(BladeKeys.HEAVY));
+        bus.addListener((RegisterKeyMappingsEvent event) -> {
+            event.register(BladeKeys.HEAVY);
+            event.register(BladeKeys.COMBAT_HUD);
+        });
         bus.addListener((EntityRenderersEvent.RegisterRenderers e)->e.registerEntityRenderer(com.abyssredemption.absmod.entity.SpiritEntityType.get(),com.abyssredemption.absmod.client.spirit.BladeSpiritRenderer::new));
         ClientPayloadBridge.probe=p->combat.setEnabled(Minecraft.getInstance(),p.enabled());
+        ClientPayloadBridge.status = p -> combat.acceptStatus(Minecraft.getInstance(), p);
         ClientPayloadBridge.swing=p->effects.confirm(Minecraft.getInstance(),p);
         NeoForge.EVENT_BUS.addListener(this::tick);
         NeoForge.EVENT_BUS.addListener(this::render);

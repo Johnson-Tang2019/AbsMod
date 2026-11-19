@@ -10,6 +10,8 @@ The vanilla Advancements screen guides both routes, affection and resonance. Ear
 
 Use a Resonance Heart to open the pink workshop. Place the blade on the left and add materials on the right. Check the next-stage preview and affection requirement, then select **Resonate**. Take the upgraded blade and reopen the menu for another stage. Dark regular attacks draw a compact violet arc. A dark heavy strike plays a steep downstroke. On a hit, a violet ring and action-bar message mark the result.
 
+Hover over the required materials to see how many you have inserted and how many are missing. The combat status line above the hotbar shows ordinary combo stacks and their decay, or dark heavy strike preparation and cooldown. Set **Toggle Meow Blade combat status** in Controls to hide or show it during the session.
+
 Two new AI-generated textures are included: Resonance Heart and the shared dark-blade prototype sprite. The original nine sword textures are unchanged. See [implementation and validation limits](docs/IMPLEMENTATION_PROGRESSION.md), [asset provenance](art/progression/ASSETS.md), and [actual advancement UI](art/progression/advancements.png).
 
 

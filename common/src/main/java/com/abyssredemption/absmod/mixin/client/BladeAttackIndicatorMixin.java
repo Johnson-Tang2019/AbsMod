@@ -8,10 +8,20 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Hud;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.DeltaTracker;
+import com.abyssredemption.absmod.client.BladeCombatHud;
 
 /** Hide vanilla charge indicators only while the server-managed blade pipeline is available. */
 @Mixin(Hud.class)
 public abstract class BladeAttackIndicatorMixin {
+    @Inject(method = "extractItemHotbar", at = @At("TAIL"))
+    private void absmod$bladeStatus(GuiGraphicsExtractor graphics, DeltaTracker tracker, CallbackInfo callback) {
+        BladeCombatHud.draw(graphics);
+    }
+
     @ModifyExpressionValue(method = {"extractCrosshair", "extractItemHotbar"},
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/OptionInstance;get()Ljava/lang/Object;"))
     private Object absmod$hideChargeIndicator(Object original) {

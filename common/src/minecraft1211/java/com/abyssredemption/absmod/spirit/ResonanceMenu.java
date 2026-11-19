@@ -11,6 +11,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.*;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemLore;
 import java.util.*;
 
 /** Server-owned input escrow with read-only preview slots and one commit per opening. */
@@ -105,17 +106,22 @@ public final class ResonanceMenu extends AbstractContainerMenu {
 
     public boolean hasMaterials(List<Cost> costs) {
         for (var cost : costs) {
-            int total = 0;
-            for (int slot = 1; slot < INPUT_SLOTS; slot++) {
-                if (contents.getItem(slot).is(cost.item())) {
-                    total += contents.getItem(slot).getCount();
-                }
-            }
-            if (total < cost.count()) {
+            if (materialCount(cost.item()) < cost.count()) {
                 return false;
             }
         }
         return true;
+    }
+
+    private int materialCount(Item material) {
+        int count = 0;
+        for (int slot = 1; slot < INPUT_SLOTS; slot++) {
+            var stack = contents.getItem(slot);
+            if (stack.is(material)) {
+                count += stack.getCount();
+            }
+        }
+        return count;
     }
 
     private static ItemStack label(Item item,String key,Object... args) {
@@ -151,8 +157,8 @@ public final class ResonanceMenu extends AbstractContainerMenu {
         int target = blade.stage().number() + 1;
         var route = blade.stage().route();
         if (target >= 9) {
-            contents.setItem(PREVIEW_SLOT, label(Items.BARRIER, route == BladeRoute.DARK
-                    ? "resonance.absmod.max_stage" : "resonance.absmod.boss_locked"));
+            contents.setItem(PREVIEW_SLOT, label(Items.BARRIER, route == BladeRoute.NORMAL && target == 9
+                    ? "resonance.absmod.boss_locked" : "resonance.absmod.max_stage"));
             return;
         }
         var stage = BladeStage.of(route, target);
@@ -161,7 +167,13 @@ public final class ResonanceMenu extends AbstractContainerMenu {
                 stage.attackDamage(), stage.baseAttackSpeed(), affection(route, target)));
         int slot = FIRST_COST_SLOT;
         for (var cost : costs(route, target)) {
-            contents.setItem(slot++, new ItemStack(cost.item(), cost.count()));
+            int inserted = materialCount(cost.item());
+            int missing = Math.max(0, cost.count() - inserted);
+            var preview = new ItemStack(cost.item(), cost.count());
+            preview.set(DataComponents.LORE, new ItemLore(List.of(
+                    Component.translatable("screen.absmod.resonance.material_progress", inserted, cost.count()),
+                    Component.translatable("screen.absmod.resonance.material_missing", missing))));
+            contents.setItem(slot++, preview);
         }
     }
 
@@ -187,7 +199,10 @@ public final class ResonanceMenu extends AbstractContainerMenu {
             var sword=contents.getItem(0);
             if(sword.getCount()!=1 || !(sword.getItem() instanceof MeowBladeItem blade))throw new IllegalStateException("not_blade");
             int target=blade.stage().number()+1;
-            if(target>=9)throw new IllegalStateException(blade.stage().route()==BladeRoute.DARK?"max_stage":"boss_locked");
+            if (target >= 9) {
+                throw new IllegalStateException(blade.stage().route() == BladeRoute.NORMAL && target == 9
+                        ? "boss_locked" : "max_stage");
+            }
             var store=BladeSoulStore.forInitialization(player.level().getServer());
             var before=BladeSoulService.initialize(store,sword,player.getUUID());
             if(!before.ownerId().filter(player.getUUID()::equals).isPresent())throw new IllegalStateException("not_owner");

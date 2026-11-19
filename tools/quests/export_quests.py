@@ -68,14 +68,16 @@ def generate():
         if name == "resonance":
             quest["description"].extend([
                 "主手持共鸣之心右键。粉色界面左上放召回后的原剑，右侧投入材料。",
-                "核对预览、所需材料和好感度，点击「确认共鸣」，再取回原剑。每次只能升一阶，下次需重新打开。"
+                "悬停所需材料查看缺量。核对好感差值后点击「确认共鸣」，再取回原剑。每次只能升一阶，下次需重新打开。"
             ])
         if name.startswith(("normal_stage_", "dark_stage_")) and name[-1] != "1":
             quest["description"].append("用共鸣之心打开粉色界面。原剑放左，材料放右。达到好感门槛后确认，再取回升级后的原剑。")
+        if name == "normal_stage_1":
+            quest["description"].append("主手持普通喵刀，按住攻击。有效主命中才叠连击；状态条显示当前层数、满层与衰减。")
         if name == "dark_heavy":
             quest["description"].extend([
                 "前置：取得暗黑喵刀并装备在主手，无需消耗材料。对准可攻击的生物，按下默认 G 键，前摇期间保持瞄准。",
-                "暗黑普攻是短紫弧，重击是下劈。看到紫色光环即为命中，光环只作提示。换剑或打开界面会中断前摇。"
+                "暗黑普攻是短紫弧。重击状态条显示就绪、前摇和冷却；命中有紫色光环。换剑或打开界面会中断前摇。"
             ])
         if name == "normal_stage_8":
             quest["description"].append("九阶尚未开放：同魂心魔试炼未实现。不要继续寻找不存在的升阶配方。")

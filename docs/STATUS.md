@@ -1,5 +1,21 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-19 · 战斗反馈与共鸣缺项
+
+基线 `main/42c8ae1`。本批推进 PLAN-COMBAT-02、PLAN-UI-01 的共鸣部分及配套 PLAN-DOC-01／PLAN-GUIDE-01／PLAN-PORT-01。用 [当前任务表](CURRENT_TASK.md) 记录所有路线的实现、验收和待定项。星喵工艺已定位作者发布页与项目仓库，作为现有路线完成后的参考。
+
+战斗：两个 API 分支增加 `BladeCombatStatusPayload` 和 `BladeCombatHud`，只同步本玩家的实际连击、重击准备与冷却。客户端按手持刀和槽位显示并提供独立显隐键。NeoForge 通道版本为 5。Fabric 26.1.2 使用对应 HUD 注入点。原攻击节奏、数值、阈值及动作包保持原有行为。
+
+共鸣：`ResonanceMenu` 的预览材料提示分别显示投入和缺量，`ResonanceScreen` 显示好感差值和当前升阶限制。手册第 3、9 页、双语 README 和两版 FTB 落实操作说明，两版各 33 个任务的 ID、依赖与触发条件已逐项核对。
+
+客户端验证：26.2、1.21.1 NeoForge 在隔离测试世界确认暗黑就绪、前摇、冷却和普通有效主命中后显示 1 层。重击仍一次结算 90 点伤害。共鸣测试确认 8/10 好感及 4 铜锭缺量，再补足材料验证升级、重复确认和关闭返还。26.1.2 Fabric 实测共鸣、FTB 普通二阶进度和暗黑状态同步。证据见 `build/combat-hud-{26,1211,2612}-client-final.log` 及 [连击与冷却截图](../art/animation/combat-status/)。
+
+发布构建：26.2 两加载器、1.21.1 NeoForge 和 26.1.2 Fabric 通过。两版 Fabric 各通过 23 项服务端 GameTest，26.2 的独立验证也通过状态包编解码和连击衰减边界。日志为 `build/combat-hud-release-26.log` 的 GameTest 段，以及 `build/combat-hud-release-{26-final,1211,2612}.log`。
+
+已安装三个本机实例，并逐文件核对 SHA-256。两个有 FTB 的实例同步本模组任务和翻译。各实例备份位于 `absmod-backups/20261119-180225`，完整校验记录见 `build/combat-hud-delivery.json`。实机测试使用独立开发世界。
+
+仍需完成：共鸣强制中断对账、多人联机压力、伙伴每日互动状态、猫咪收藏和安置、暗黑关键阶原画、同魂心魔试炼及九阶生存入口。显隐键和细分中断提示另有实机交互验收。26.3 暂停。
+
 ## 2026-11-19 · 粉色共鸣、战斗辨识度与 26.1.2
 
 本批沿用本地 `main/1e89ffa`。CONFIRMED：共鸣改为粉色模组界面，现有功能移植 26.1.2，游玩线路同步 FTB。选择本机已有的 26.1.2 Fabric 实例。26.3 开发暂停。
@@ -31,7 +47,7 @@ PLAN-SPIRIT-02、PLAN-SPIRIT-03（剑灵交接）、PLAN-GUIDE-01、PLAN-PORT-01
 - `26.2-NeoForge_26.2.0.87_miao` · `f71f4fe2ce264e599603634fc57cdbccb8033197a989a1b15eddaa9e31711988`
 - `1.21.1-NeoForge_21.1.265_miao` · `6fe26c75a7b3393f115167b3041a858692f4cb737014e72ce96198f90809cbf6`
 
-## 2026-11-19 当前状态
+## 2026-11-19 · 剑灵安全追赶阶段记录
 
 | 模块 | 已接入 | 下一步 |
 | --- | --- | --- |

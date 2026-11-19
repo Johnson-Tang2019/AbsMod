@@ -1,5 +1,6 @@
 package com.abyssredemption.absmod.neoforge;
 
+import com.abyssredemption.absmod.client.BladeCombatClient;
 import com.abyssredemption.absmod.client.animation.BladeMotionPlayer;
 import com.abyssredemption.absmod.client.animation.HeavyBladeMotion;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
@@ -49,9 +50,27 @@ public final class ProgressionVisualTest {
             var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
             sword.setDamageValue(780);
             var store=BladeSoulStore.forInitialization(server);BladeSoulService.initialize(store,sword,p.getUUID());
-            BladeSoulService.setTestAffection(store,sword,25);
+            BladeSoulService.setTestAffection(store,sword,8);
             menu.getSlot(0).set(sword);menu.getSlot(1).set(new ItemStack(Items.AMETHYST_SHARD,16));
-            menu.getSlot(2).set(new ItemStack(Items.COPPER_INGOT,16));menu.broadcastChanges();
+            menu.getSlot(2).set(new ItemStack(Items.COPPER_INGOT,4));menu.broadcastChanges();
+        });
+        if (tick == 50) {
+            var menu = (ResonanceMenu) mc.player.containerMenu;
+            var lore = menu.getSlot(13).getItem().get(net.minecraft.core.component.DataComponents.LORE);
+            if (menu.currentAffection() != 8 || lore == null || lore.lines().size() != 2
+                    || !(lore.lines().get(1).getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents missing)
+                    || !missing.getKey().equals("screen.absmod.resonance.material_missing")
+                    || !Integer.valueOf(4).equals(missing.getArgs()[0])) {
+                throw new IllegalStateException("Resonance preview did not sync the exact material shortage");
+            }
+            Screenshot.grab(mc.gameDirectory,"resonance-shortage.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
+        }
+        if (tick == 58) server.execute(() -> {
+            var player = server.getPlayerList().getPlayers().getFirst();
+            var menu = (ResonanceMenu) player.containerMenu;
+            BladeSoulService.setTestAffection(BladeSoulStore.forInitialization(server), menu.getSlot(0).getItem(), 25);
+            menu.getSlot(2).set(new ItemStack(Items.COPPER_INGOT,16));
+            menu.broadcastChanges();
         });
         if(tick==80 || tick==130)Screenshot.grab(mc.gameDirectory,"progression-"+tick+".png",mc.gameRenderer.mainRenderTarget(),1,message->{});
         if (tick == 95 && !(mc.gui.screen() instanceof com.abyssredemption.absmod.client.ResonanceScreen)) {
@@ -98,20 +117,39 @@ public final class ProgressionVisualTest {
             target.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
             target.setHealth(200);level.addFreshEntity(target);
         });
+        if (tick == 305) {
+            var status = BladeCombatClient.visibleStatus(mc);
+            if (!status.dark() || status.windupTicks() != 0 || status.cooldownSeconds() != 0) {
+                throw new IllegalStateException("Dark blade ready HUD did not sync");
+            }
+        }
         if(tick==320 || tick==350) {
             var packet=new com.abyssredemption.absmod.network.HeavyIntentPayload(tick,true,mc.player.getInventory().getSelectedSlot(),mc.level.dimension().identifier());
             net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(packet);
             net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(packet);
         }
+        if (tick == 325) {
+            if (BladeCombatClient.visibleStatus(mc).windupTicks() <= 0) {
+                throw new IllegalStateException("Dark windup HUD did not sync");
+            }
+            Screenshot.grab(mc.gameDirectory,"combat-hud-windup.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
+        }
+        if (tick == 373) {
+            var status = BladeCombatClient.visibleStatus(mc);
+            if (status.windupTicks() != 0 || status.cooldownSeconds() <= 0) {
+                throw new IllegalStateException("Heavy cooldown HUD did not sync");
+            }
+            Screenshot.grab(mc.gameDirectory,"combat-hud-cooldown.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
+        }
         if(tick==326)server.execute(()->{if(target.getHealth()!=200)throw new IllegalStateException("Heavy struck before windup");});
-        if (tick >= 331 && tick <= 345) {
+        if (tick >= 328 && tick <= 371) {
             var pose = BladeMotionPlayer.pose(mc.player, 0);
             if (pose != null && pose.effectRoll() == HeavyBladeMotion.EFFECT_ROLL) {
                 heavyPoseSeen = true;
             }
         }
         if(tick>=330 && tick<=344 && tick%2==0)Screenshot.grab(mc.gameDirectory,"progression-heavy-"+tick+".png",mc.gameRenderer.mainRenderTarget(),1,message->{});
-        if (tick == 349 && !heavyPoseSeen) {
+        if (tick == 372 && !heavyPoseSeen) {
             throw new IllegalStateException("No heavy downstroke pose from the real server confirmation");
         }
         if(tick==375)server.execute(()->{
@@ -123,13 +161,22 @@ public final class ProgressionVisualTest {
             }
             com.mojang.logging.LogUtils.getLogger().info("PROGRESSION_DARK passed dark upgrade, 12-tick windup, one 90-damage primary hit, duplicate/cooldown rejection and real advancement grants");
         });
+        if (tick == 377) server.execute(() -> {
+            var p = server.getPlayerList().getPlayers().getFirst();
+            p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade"))));
+        });
         if (tick == 380 || tick == 384) {
             net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(
                     new AttackIntentPayload(100, tick, tick == 380, mc.player.getInventory().getSelectedSlot(),
                             mc.level.dimension().identifier()));
         }
-        if (tick >= 382 && tick <= 390 && tick % 2 == 0) {
-            Screenshot.grab(mc.gameDirectory,"combat-dark-"+tick+".png",mc.gameRenderer.mainRenderTarget(),1,message->{});
+        if (tick == 390) {
+            var status = BladeCombatClient.visibleStatus(mc);
+            if (status.dark() || status.comboStacks() != 1 || status.decaying()) {
+                throw new IllegalStateException("Normal combo HUD did not sync one primary hit");
+            }
+            Screenshot.grab(mc.gameDirectory,"combat-hud-combo.png",mc.gameRenderer.mainRenderTarget(),1,message->{});
+            com.mojang.logging.LogUtils.getLogger().info("COMBAT_HUD_PASS ready, windup, cooldown and real combo gain");
         }
         if(tick==395)mc.gui.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(mc.getConnection().getAdvancements()));
         if(tick==420)Screenshot.grab(mc.gameDirectory,"progression-advancements.png",mc.gameRenderer.mainRenderTarget(),1,message->{});

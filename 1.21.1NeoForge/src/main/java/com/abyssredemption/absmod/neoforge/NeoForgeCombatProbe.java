@@ -4,6 +4,7 @@ import com.abyssredemption.absmod.combat.BladeCombatServer;
 import com.abyssredemption.absmod.spirit.SpiritCompanionTravel;
 import com.abyssredemption.absmod.command.CombatProbeCommands;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
+import com.abyssredemption.absmod.network.BladeCombatStatusPayload;
 import com.abyssredemption.absmod.network.CombatProbePayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
@@ -17,7 +18,8 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class NeoForgeCombatProbe {
     private final SpiritCompanionTravel spirits = new SpiritCompanionTravel();
-    private final BladeCombatServer probe = new BladeCombatServer((player, payload) -> PacketDistributor.sendToPlayer(player, payload));
+    private final BladeCombatServer probe = new BladeCombatServer((player, payload) -> PacketDistributor.sendToPlayer(player, payload),
+            (player, payload) -> PacketDistributor.sendToPlayer(player, payload));
 
     public NeoForgeCombatProbe(IEventBus modBus) {
         modBus.addListener(this::payloads);
@@ -29,7 +31,8 @@ public final class NeoForgeCombatProbe {
     }
 
     private void payloads(RegisterPayloadHandlersEvent event) {
-        var registrar = event.registrar("4");
+        var registrar = event.registrar("5");
+        registrar.playToClient(BladeCombatStatusPayload.TYPE, BladeCombatStatusPayload.CODEC, (payload, context) -> com.abyssredemption.absmod.network.ClientPayloadBridge.status.accept(payload));
         registrar.playToServer(AttackIntentPayload.TYPE, AttackIntentPayload.CODEC,
                 (payload, context) -> probe.receive((ServerPlayer) context.player(), payload));
         registrar.playToServer(com.abyssredemption.absmod.network.HeavyIntentPayload.TYPE,com.abyssredemption.absmod.network.HeavyIntentPayload.CODEC,

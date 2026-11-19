@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.client.ResonanceScreen;
+import com.abyssredemption.absmod.client.BladeCombatClient;
 import com.abyssredemption.absmod.spirit.BladeSoulComponents;
 import com.abyssredemption.absmod.spirit.BladeSoulService;
 import com.abyssredemption.absmod.spirit.BladeSoulStore;
@@ -133,7 +134,22 @@ public final class PortVisualTest implements ClientModInitializer {
                 ClientQuestFile.openGui(quest, true);
             }
             case 190 -> screenshot(client, "port2612-ftb-resonance.png");
-            case 210 -> client.stop();
+            case 205 -> {
+                client.setScreen(null);
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    player.setItemInHand(InteractionHand.MAIN_HAND, stack("dark_meow_blade"));
+                });
+            }
+            case 230 -> {
+                var combat = BladeCombatClient.visibleStatus(client);
+                if (!combat.dark() || combat.stage() != 1 || combat.cooldownSeconds() != 0) {
+                    throw new IllegalStateException("26.1.2 Fabric combat HUD did not receive the dark blade status");
+                }
+                screenshot(client, "port2612-combat-hud.png");
+                LOGGER.info("PORT_2612_HUD_PASS");
+            }
+            case 248 -> client.stop();
             default -> {}
         }
     }

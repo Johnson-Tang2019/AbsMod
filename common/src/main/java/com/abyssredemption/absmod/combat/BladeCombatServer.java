@@ -1,7 +1,10 @@
 package com.abyssredemption.absmod.combat;
 
 import com.abyssredemption.absmod.item.MeowBladeItem;
+import com.abyssredemption.absmod.item.BladeRoute;
+import com.abyssredemption.absmod.network.BladeCombatStatusPayload;
 import com.abyssredemption.absmod.network.BladeSwingStyle;
+import net.minecraft.network.chat.Component;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
 import com.abyssredemption.absmod.spirit.BladeSoulComponents;
 import com.abyssredemption.absmod.spirit.BladeSoulReference;
@@ -24,17 +27,20 @@ public final class BladeCombatServer {
     private final java.util.function.BiPredicate<ServerPlayer, net.minecraft.world.phys.EntityHitResult> attackAllowed;
     private final java.util.function.BiConsumer<ServerPlayer, com.abyssredemption.absmod.network.BladeSwingPayload> send;
 
-    public BladeCombatServer(java.util.function.BiConsumer<ServerPlayer, com.abyssredemption.absmod.network.BladeSwingPayload> send) {
-        this(send, (player, hit) -> true);
+    private final java.util.function.BiConsumer<ServerPlayer, BladeCombatStatusPayload> sendStatus;
+
+    public BladeCombatServer(java.util.function.BiConsumer<ServerPlayer, com.abyssredemption.absmod.network.BladeSwingPayload> send,
+            java.util.function.BiConsumer<ServerPlayer, BladeCombatStatusPayload> sendStatus) {
+        this(send, sendStatus, (player, hit) -> true);
     }
 
     public BladeCombatServer(java.util.function.BiConsumer<ServerPlayer, com.abyssredemption.absmod.network.BladeSwingPayload> send,
+            java.util.function.BiConsumer<ServerPlayer, BladeCombatStatusPayload> sendStatus,
             java.util.function.BiPredicate<ServerPlayer, net.minecraft.world.phys.EntityHitResult> attackAllowed) {
         this.send = send;
+        this.sendStatus = sendStatus;
         this.attackAllowed = attackAllowed;
     }
-
-    public BladeCombatServer() { this((player, payload) -> {}); }
 
     public void enable(ServerPlayer player, boolean enabled) {
         State state = players.computeIfAbsent(player.getUUID(), id -> new State());
@@ -48,7 +54,10 @@ public final class BladeCombatServer {
         var state=players.computeIfAbsent(player.getUUID(),id->new State());
         if(payload.sequence()<=state.heavySequence)return;
         state.heavySequence=payload.sequence();
-        if(!payload.active()){state.heavyPending=false;return;}
+        if (!payload.active()) {
+            cancelHeavy(player, state, "interrupted");
+            return;
+        }
         if(state.heavyPending || tick<state.nextHeavy || !eligible(player)
             || payload.slot()!=player.getInventory().getSelectedSlot()
             || !payload.dimension().equals(player.level().dimension().identifier())
@@ -57,7 +66,7 @@ public final class BladeCombatServer {
         state.heavyPending=true;state.heavyAt=tick+12;state.nextHeavy=tick+160;
         state.heavyWeapon=player.getMainHandItem();state.heavySoul=state.heavyWeapon.get(BladeSoulComponents.REFERENCE);
         state.heavyLevel=player.level();state.heavySlot=payload.slot();
-        player.sendSystemMessage(net.minecraft.network.chat.Component.translatable("combat.absmod.heavy_windup"),true);
+
     }
 
     public void receive(ServerPlayer player, AttackIntentPayload payload) {
@@ -95,11 +104,17 @@ public final class BladeCombatServer {
         tick++;
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             State state = players.get(player.getUUID());
-            if (state == null) { continue; }
+            if (state == null) {
+                if (!(player.getMainHandItem().getItem() instanceof MeowBladeItem)) { continue; }
+                state = new State();
+                players.put(player.getUUID(), state);
+            }
             updateCombo(player, state);
             if(state.heavyPending && (!eligible(player) || state.heavyWeapon!=player.getMainHandItem()
                 || state.heavyLevel!=player.level() || state.heavySlot!=player.getInventory().getSelectedSlot()
-                || !Objects.equals(state.heavySoul,player.getMainHandItem().get(BladeSoulComponents.REFERENCE))))state.heavyPending=false;
+                || !Objects.equals(state.heavySoul,player.getMainHandItem().get(BladeSoulComponents.REFERENCE)))) {
+                cancelHeavy(player, state, "interrupted");
+            }
             boolean heavy=state.heavyPending && tick>=state.heavyAt;
             boolean active = state.session.active(tick) && eligible(player) && sameWeapon(player, state);
             if (!active) { state.session.stop(); state.weapon = null; }
@@ -115,7 +130,7 @@ public final class BladeCombatServer {
             net.minecraft.world.phys.HitResult hit = active ? BladeAttackExecutor.pick(player) : null;
             if (hit != null && hit.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) {
                 active = false;
-                state.heavyPending=false;
+                cancelHeavy(player, state, "blocked");
                 state.session.stop();
             }
             if (state.cadence.tick(tick, active, speed, player.getMainHandItem())) {
@@ -160,6 +175,33 @@ public final class BladeCombatServer {
                     if (viewer.level() == player.level() && viewer.distanceToSqr(player) <= 32 * 32) { send.accept(viewer, swing); }
                 }
             }
+            syncStatus(player, state);
+        }
+    }
+
+    private static void cancelHeavy(ServerPlayer player, State state, String reason) {
+        if (state.heavyPending) {
+            state.heavyPending = false;
+            player.sendSystemMessage(Component.translatable("combat.absmod.heavy_cancelled." + reason), true);
+        }
+    }
+
+    private void syncStatus(ServerPlayer player, State state) {
+        BladeCombatStatusPayload status = BladeCombatStatusPayload.EMPTY;
+        if (player.isAlive() && !player.isSpectator() && !player.isChangingDimension()
+                && player.getMainHandItem().getItem() instanceof MeowBladeItem blade) {
+            boolean dark = blade.stage().route() == BladeRoute.DARK;
+            int windup = state.heavyPending ? (int) Math.max(1, state.heavyAt - tick) : 0;
+            int cooldown = (int) ((Math.max(0, state.nextHeavy - tick) + 19) / 20);
+            status = new BladeCombatStatusPayload(player.getInventory().getSelectedSlot(), dark, blade.stage().number(),
+                    dark ? 0 : state.combo.stacks(), !dark && state.combo.decaying(tick),
+                    dark ? windup : 0, dark ? cooldown : 0);
+        }
+        // Force a refresh on a dimension change even when slot and blade stage match.
+        if (!status.equals(state.lastStatus) || state.lastStatusLevel != player.level()) {
+            state.lastStatus = status;
+            state.lastStatusLevel = player.level();
+            sendStatus.accept(player, status);
         }
     }
 
@@ -225,5 +267,7 @@ public final class BladeCombatServer {
         BladeSoulReference heavySoul;
         Object heavyLevel;
         int heavySlot;
+        Object lastStatusLevel;
+        BladeCombatStatusPayload lastStatus = BladeCombatStatusPayload.EMPTY;
     }
 }

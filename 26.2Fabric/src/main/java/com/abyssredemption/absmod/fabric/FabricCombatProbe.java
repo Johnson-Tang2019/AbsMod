@@ -4,6 +4,9 @@ import com.abyssredemption.absmod.combat.BladeCombatServer;
 import com.abyssredemption.absmod.spirit.SpiritCompanionTravel;
 import com.abyssredemption.absmod.command.CombatProbeCommands;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
+import com.abyssredemption.absmod.network.BladeCombatStatusPayload;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import com.abyssredemption.absmod.network.CombatProbePayload;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -15,17 +18,20 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 public final class FabricCombatProbe {
     private FabricCombatProbe() {}
 
+    private static void sendIfSupported(ServerPlayer player, CustomPacketPayload payload) {
+        if (ServerPlayNetworking.canSend(player, payload.type())) {
+            ServerPlayNetworking.send(player, payload);
+        }
+    }
+
     public static void register() {
-        var probe = new BladeCombatServer((player, payload) -> {
-            if (ServerPlayNetworking.canSend(player, payload.type())) {
-                ServerPlayNetworking.send(player, payload);
-            }
-        },
+        var probe = new BladeCombatServer(FabricCombatProbe::sendIfSupported, FabricCombatProbe::sendIfSupported,
                 (player, hit) -> net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.invoker()
                         .interact(player, player.level(), net.minecraft.world.InteractionHand.MAIN_HAND, hit.getEntity(), hit)
                         == net.minecraft.world.InteractionResult.PASS);
         PayloadTypeRegistry.clientboundPlay().register(com.abyssredemption.absmod.network.BladeSwingPayload.TYPE,
                 com.abyssredemption.absmod.network.BladeSwingPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(BladeCombatStatusPayload.TYPE, BladeCombatStatusPayload.CODEC);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
                 ServerPlayNetworking.send(handler.player, new CombatProbePayload(true)));
         PayloadTypeRegistry.serverboundPlay().register(AttackIntentPayload.TYPE, AttackIntentPayload.CODEC);

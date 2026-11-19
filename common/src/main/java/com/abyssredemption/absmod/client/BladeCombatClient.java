@@ -3,6 +3,7 @@ package com.abyssredemption.absmod.client;
 import com.abyssredemption.absmod.combat.AttackInputTracker;
 import com.abyssredemption.absmod.item.MeowBladeItem;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
+import com.abyssredemption.absmod.network.BladeCombatStatusPayload;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.HitResult;
@@ -11,6 +12,30 @@ import net.minecraft.world.phys.HitResult;
 public final class BladeCombatClient {
     public static BladeCombatClient instance;
     private boolean pendingClick;
+    private boolean hudVisible = true;
+    private BladeCombatStatusPayload status = BladeCombatStatusPayload.EMPTY;
+    private Object statusLevel;
+
+    public void acceptStatus(Minecraft minecraft, BladeCombatStatusPayload snapshot) {
+        status = snapshot;
+        statusLevel = minecraft.level;
+    }
+
+    public static BladeCombatStatusPayload visibleStatus(Minecraft minecraft) {
+        var player = minecraft.player;
+        var client = instance;
+        if (client == null || !client.enabled || !client.hudVisible || client.connection != minecraft.getConnection()
+                || client.statusLevel != minecraft.level || player == null || !player.isAlive()
+                || player.isSpectator() || player.isSleeping()
+                || ClientScreenAccess.current(minecraft) != null
+                || !(player.getMainHandItem().getItem() instanceof MeowBladeItem blade)) {
+            return BladeCombatStatusPayload.EMPTY;
+        }
+        var snapshot = client.status;
+        boolean dark = blade.stage().route() == com.abyssredemption.absmod.item.BladeRoute.DARK;
+        return snapshot.slot() == player.getInventory().getSelectedSlot() && snapshot.stage() == blade.stage().number()
+                && snapshot.dark() == dark ? snapshot : BladeCombatStatusPayload.EMPTY;
+    }
     private net.minecraft.world.item.ItemStack previousWeapon = net.minecraft.world.item.ItemStack.EMPTY;
     private int previousSlot = -1;
 
@@ -40,7 +65,11 @@ public final class BladeCombatClient {
     private long tick;
 
     public void setEnabled(Minecraft minecraft, boolean value) {
-        if (connection != minecraft.getConnection()) { tracker = new AttackInputTracker(); }
+        if (connection != minecraft.getConnection()) {
+            tracker = new AttackInputTracker();
+            status = BladeCombatStatusPayload.EMPTY;
+            statusLevel = null;
+        }
         connection = minecraft.getConnection();
         enabled = value;
         tracker.requireRelease();
@@ -53,10 +82,13 @@ public final class BladeCombatClient {
         if (connection != minecraft.getConnection()) {
             connection = minecraft.getConnection();
             enabled = false;
+            status = BladeCombatStatusPayload.EMPTY;
+            statusLevel = null;
             tracker = new AttackInputTracker();
             heavySequence=0;heavyRequested=false;
         }
         tick++;
+        while (BladeKeys.COMBAT_HUD.consumeClick()) { hudVisible = !hudVisible; }
         if (connection == null) { return; }
         if (level != minecraft.level) {
             level = minecraft.level;

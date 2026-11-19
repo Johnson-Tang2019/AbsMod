@@ -4,5 +4,6 @@ package com.abyssredemption.absmod.network;
 public final class ClientPayloadBridge {
     public static java.util.function.Consumer<CombatProbePayload> probe=payload->{};
     public static java.util.function.Consumer<BladeSwingPayload> swing=payload->{};
+    public static java.util.function.Consumer<BladeCombatStatusPayload> status = payload -> {};
     private ClientPayloadBridge() {}
 }

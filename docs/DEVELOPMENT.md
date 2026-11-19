@@ -1,5 +1,7 @@
 # Ab's Mod 开发规格（Source of Truth）
 
+当前已实现功能、适配版本和验证以 [STATUS](STATUS.md) 为准。开发顺序和各路线剩余工作见 [CURRENT_TASK](CURRENT_TASK.md)。本文件的代码基线章节记录 2026-09-12 的快照。
+
 > 文档修订：`2026-09-12.repository-progress.1`。本轮仅更新文档；未修改游戏代码，未运行 Gradle 或 Minecraft。
 
 > 最后更新：2026-09-12  

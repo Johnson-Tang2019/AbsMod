@@ -29,7 +29,10 @@ public final class AbsModNeoForgeClient {
                 event.register(com.abyssredemption.absmod.spirit.ResonanceMenu.TYPE,
                         com.abyssredemption.absmod.client.ResonanceScreen::new));
         modBus.addListener(this::payloads);
-        modBus.addListener((net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event)->event.register(com.abyssredemption.absmod.client.BladeKeys.HEAVY));
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event) -> {
+            event.register(com.abyssredemption.absmod.client.BladeKeys.HEAVY);
+            event.register(com.abyssredemption.absmod.client.BladeKeys.COMBAT_HUD);
+        });
         modBus.addListener(AbsModNeoForgeClient::renderers);
         NeoForge.EVENT_BUS.addListener(this::tick);
         NeoForge.EVENT_BUS.addListener(this::extract);
@@ -49,6 +52,8 @@ public final class AbsModNeoForgeClient {
     private void payloads(net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent event) {
         event.register(com.abyssredemption.absmod.network.BladeSwingPayload.TYPE,
                 (payload, context) -> effects.confirm(Minecraft.getInstance(), payload));
+        event.register(com.abyssredemption.absmod.network.BladeCombatStatusPayload.TYPE,
+                (payload, context) -> probe.acceptStatus(Minecraft.getInstance(), payload));
         event.register(com.abyssredemption.absmod.network.CombatProbePayload.TYPE,
                 (payload, context) -> probe.setEnabled(Minecraft.getInstance(), payload.enabled()));
     }

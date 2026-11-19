@@ -43,4 +43,8 @@ public final class BladeComboState {
     }
 
     public int stacks() { return stacks; }
+
+    public boolean decaying(long tick) {
+        return stacks > 0 && tick >= nextDecay - DECAY_TICKS;
+    }
 }

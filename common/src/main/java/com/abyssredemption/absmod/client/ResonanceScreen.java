@@ -45,26 +45,28 @@ public final class ResonanceScreen extends AbstractContainerScreen<ResonanceMenu
         confirmButton.active = problem() == null;
     }
 
-    private String problem() {
+    private Component problem() {
         if (menu.isComplete()) {
-            return "close_to_continue";
+            return label("close_to_continue");
         }
         if (!(menu.getSlot(0).getItem().getItem() instanceof MeowBladeItem blade)) {
-            return "insert_blade";
+            return label("insert_blade");
         }
         var stage = blade.stage();
         int next = stage.number() + 1;
         if (next >= 9) {
-            return "limit";
+            return label(stage.route() == com.abyssredemption.absmod.item.BladeRoute.NORMAL && next == 9 ? "limit" : "max_stage");
         }
         if (menu.currentAffection() < 0) {
-            return "check_identity";
+            return label("check_identity");
         }
-        if (menu.currentAffection() < ResonanceMenu.affection(stage.route(), next)) {
-            return "insufficient_bond";
+        int required = ResonanceMenu.affection(stage.route(), next);
+        if (menu.currentAffection() < required) {
+            double shortage = Math.round((required - menu.currentAffection()) * 10) / 10.0;
+            return label("insufficient_bond", shortage);
         }
         if (!menu.hasMaterials(ResonanceMenu.costs(stage.route(), next))) {
-            return "insufficient_items";
+            return label("insufficient_items");
         }
         return null;
     }
@@ -112,9 +114,9 @@ public final class ResonanceScreen extends AbstractContainerScreen<ResonanceMenu
                         ResonanceMenu.affection(stage.route(), next)), 121, 92, INK, false);
             }
         }
-        String problem = problem();
+        Component problem = problem();
         if (problem != null) {
-            graphics.text(font, label(problem), 16, 117, INK, false);
+            graphics.text(font, problem, 16, 117, INK, false);
         }
     }
 

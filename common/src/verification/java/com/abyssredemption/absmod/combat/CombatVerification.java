@@ -62,6 +62,7 @@ public final class CombatVerification {
         check(combo.stacks() == 0, "First attack must start at zero stacks");
         for (int action = 1; action <= 25; action++) { combo.recordHit(0, action, 20); }
         check(combo.stacks() == 20, "Stack cap failed");
+        check(!combo.decaying(59) && combo.decaying(60), "Combo HUD changed outside the grace boundary");
         combo.advance(64);
         check(combo.stacks() == 20, "Decayed before tick 65");
         combo.advance(65);
@@ -71,6 +72,7 @@ public final class CombatVerification {
         check(combo.stacks() == 18, "Duplicate result delayed decay");
         combo.recordHit(75, 26, 20);
         check(combo.stacks() == 18, "New hit failed to decay before stacking");
+        check(!combo.decaying(75), "A real hit must reset the displayed decay phase");
         combo.bind(blade, soul, world, 0);
         combo.advance(139);
         check(combo.stacks() == 18, "Release/same binding erased combo");
@@ -212,6 +214,10 @@ public final class CombatVerification {
                 check(swing.equals(com.abyssredemption.absmod.network.BladeSwingPayload.CODEC.decode(buffer)),
                         "Motion timing or style codec mismatch: " + style);
             }
+            var status = new com.abyssredemption.absmod.network.BladeCombatStatusPayload(7, true, 8, 0, false, 11, 8);
+            com.abyssredemption.absmod.network.BladeCombatStatusPayload.CODEC.encode(buffer, status);
+            check(status.equals(com.abyssredemption.absmod.network.BladeCombatStatusPayload.CODEC.decode(buffer)),
+                    "Blade HUD snapshot codec mismatch");
         } finally { buffer.release(); }
     }
 
