@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/field_guide",
+  "display": {
+    "icon": {
+      "id": "absmod:milkshake_tray"
+    },
+    "title": {
+      "translate": "advancement.absmod.milkshake_tray.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.milkshake_tray.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

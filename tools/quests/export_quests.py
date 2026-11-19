@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCES = ROOT / "common/src/main/resources"
-MODERN_ONLY_QUESTS = {"gentle_brush", "spirit_adornment", "spirit_board_game", "spirit_gomoku", "spirit_reversi"}
+MODERN_ONLY_QUESTS = {"gentle_brush", "milkshake_tray", "spirit_adornment", "spirit_board_game", "spirit_gomoku", "spirit_reversi"}
 POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | MODERN_ONLY_QUESTS
 
 
@@ -31,7 +31,7 @@ def generate():
                  "cat_chocolate": (6, 8), "cat_lilac": (8, 8), "cat_point": (6, 10), "cat_lilac_point": (10, 10),
                  "cat_family": (4, 6), "cat_dilute": (6, 6), "dark_heavy": (4, 4),
                  "cat_collection": (2, 8), "cat_pedigree": (4, 10), "cat_nest": (2, 10), "cat_bell": (2, 12),
-                 "gentle_brush": (0, 8), "spirit_adornment": (4, -4), "spirit_board_game": (6, -4),
+                 "gentle_brush": (0, 8), "milkshake_tray": (0, 10), "spirit_adornment": (4, -4), "spirit_board_game": (6, -4),
                  "spirit_gomoku": (8, -4), "spirit_reversi": (10, -4)}
     for stage in range(1, 9):
         positions["normal_stage_" + str(stage)] = (stage * 2, -2)
@@ -110,6 +110,12 @@ def generate():
                 "金粒、线和一份专用材料无序合成。樱花发夹用粉红色羊毛，月纹发夹用紫水晶碎片。其余十款材料见观察手册第 32–33 页。",
                 "把饰品带在背包里。先显现自己的剑灵，再持结缘铃对空气右键，进入附近剑灵的详情，点「剑灵饰品」。",
                 "可翻页换款或收起。饰品可重复使用，外观随同一把剑保存。"
+            ])
+        if name == "milkshake_tray":
+            quest["description"].extend([
+                "前置：完成观察手册任务。准备五块樱花木板、两块粉红色羊毛、一枚紫水晶碎片和任意一杯已有奶昔。",
+                "合成三行：樱花木板／空／樱花木板；粉红色羊毛／紫水晶碎片／粉红色羊毛；樱花木板×3。",
+                "放置茶盘，主手持奶昔右键任意空杯垫，再用空主手右键同一个杯垫取回，完成任务。访客可取用，打破会掉出剩余奶昔。",
             ])
         board_rules = {
             "spirit_board_game": "选择「剑灵井字棋」。你先落 X，剑灵落 O，先在一条线上连三枚获胜。",

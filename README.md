@@ -1,6 +1,6 @@
 # Ab's Mod
 
-Supports Minecraft 26.1.2 Fabric, 26.2 Fabric and NeoForge, and 1.21.1 NeoForge. The field guide and vanilla advancements are available on each target. The optional FTB packs contain 42 quests for 26.1.2 and 37 for 1.21.1. [26.1.2 setup](docs/PORT_2612.md) · [1.21.1 setup](docs/PORT_1211.md)
+Supports Minecraft 26.1.2 Fabric, 26.2 Fabric and NeoForge, and 1.21.1 NeoForge. The field guide and vanilla advancements are available on each target. The optional FTB packs contain 43 quests for 26.1.2 and 37 for 1.21.1. [26.1.2 setup](docs/PORT_2612.md) · [1.21.1 setup](docs/PORT_1211.md)
 
 Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
 
@@ -36,6 +36,8 @@ Base package: `com.abyssredemption.absmod`. Mod ID: `absmod`.
 Sneak-use the Field Guide in the air to open your cat collection and family trees. Observe cats with the guide and filter by coat, pattern, or eyes. Use a Bond Bell on your cat and then on a placed Moonfelt Cat Nest to assign a rest spot. Use the bell in the air for companion details, or sneak-use to call a nearby cat. Recipes and controls are on guide pages 25–28. In 26.1.2, select your manifested spirit from the Bell menu to see affection, durability, the next stage requirement and today’s activity. See page 29 for the controls. Page 30 explains the Gentle Brush, an optional reusable tool for your cat or manifested spirit. Brushing a spirit shares the existing daily talk reward. See [cat collection and home setup](docs/CAT_GENETICS.md).
 
 In 26.1.2, the spirit’s Bell menu offers 12 craftable accessories and three games against the spirit: tic-tac-toe, Gomoku, and Reversi. The accessory selection follows the same sword after recall. Any completed round counts toward that game’s FTB quest. Field guide pages 31–35 cover every recipe and the rules of each game.
+
+The Milkshake Tray displays up to four drinks for anyone to take. Right-click a coaster with a milkshake in your main hand to place one, then use an empty main hand to pick it up. Breaking the tray drops any drinks left on it. The recipe and controls are on pages 36–37 of the 26.1.2 field guide.
 
 ## Project layout
 

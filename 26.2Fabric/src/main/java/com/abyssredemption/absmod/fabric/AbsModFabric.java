@@ -1,6 +1,8 @@
 package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.AbsMod;
+import com.abyssredemption.absmod.block.MilkshakeTrayBlock;
+import com.abyssredemption.absmod.block.MilkshakeTrayBlockEntity;
 import com.abyssredemption.absmod.command.ModCommands;
 import com.abyssredemption.absmod.item.MeowBladeItem;
 import com.abyssredemption.absmod.item.MeowBladeStage;
@@ -11,13 +13,18 @@ import java.util.List;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.PushReaction;
 
 public final class AbsModFabric implements ModInitializer {
     @Override
@@ -90,6 +97,16 @@ public final class AbsModFabric implements ModInitializer {
         var itemKey = ResourceKey.create(Registries.ITEM, nestId);
         var nestItem = Registry.register(BuiltInRegistries.ITEM, itemKey,
                 new net.minecraft.world.item.BlockItem(nest, new Item.Properties().setId(itemKey).useBlockDescriptionPrefix()));
+        var trayId = MilkshakeTrayBlockEntity.ID;
+        var trayKey = ResourceKey.create(Registries.BLOCK, trayId);
+        var tray = Registry.register(BuiltInRegistries.BLOCK, trayKey, new MilkshakeTrayBlock(
+                BlockBehaviour.Properties.of().setId(trayKey).noOcclusion().dynamicShape().strength(0.5F)
+                        .sound(SoundType.CHERRY_WOOD).pushReaction(PushReaction.BLOCK)));
+        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, trayId,
+                FabricBlockEntityTypeBuilder.create(MilkshakeTrayBlockEntity::new, tray).build());
+        var trayItemKey = ResourceKey.create(Registries.ITEM, trayId);
+        var trayItem = Registry.register(BuiltInRegistries.ITEM, trayItemKey,
+                new BlockItem(tray, new Item.Properties().setId(trayItemKey).useBlockDescriptionPrefix()));
         var bellKey = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "bond_bell"));
         var bell = Registry.register(BuiltInRegistries.ITEM, bellKey,
                 new com.abyssredemption.absmod.item.BondBellItem(new Item.Properties().setId(bellKey)));
@@ -107,6 +124,7 @@ public final class AbsModFabric implements ModInitializer {
                 }).toList();
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
             entries.accept(nestItem);
+            entries.accept(trayItem);
             entries.accept(bell);
             entries.accept(brush);
             entries.accept(guide);

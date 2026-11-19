@@ -4,6 +4,8 @@ import com.abyssredemption.absmod.client.ResonanceScreen;
 import com.abyssredemption.absmod.client.CatJournalScreen;
 import com.abyssredemption.absmod.client.SpiritGameScreen;
 import com.abyssredemption.absmod.cat.CatGenetics;
+import com.abyssredemption.absmod.block.MilkshakeTrayBlockEntity;
+import com.abyssredemption.absmod.item.MilkshakeVariant;
 import net.minecraft.world.entity.animal.feline.Cat;
 import com.abyssredemption.absmod.item.FieldGuideItem;
 import net.minecraft.network.chat.Component;
@@ -34,12 +36,17 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.level.WorldDataConfiguration;
 import net.minecraft.world.level.levelgen.WorldOptions;
@@ -60,7 +67,10 @@ public final class PortVisualTest implements ClientModInitializer {
     private static final long BOARD_QUEST_ID = 0x03e3d6eff96763a4L;
     private static final long GOMOKU_QUEST_ID = 0x36ed45abd53f632eL;
     private static final long REVERSI_QUEST_ID = 0x77e539a2439bd876L;
+    private static final long TRAY_QUEST_ID = 0x0ccbf2b94eb71e5eL;
     private volatile BladeSpiritEntity spirit;
+    private volatile BlockPos trayPos;
+    private volatile boolean verifiedTray;
     private volatile boolean verifiedLeisure;
     private Cat observedCat;
     private volatile boolean verifiedBrush;
@@ -148,12 +158,12 @@ public final class PortVisualTest implements ClientModInitializer {
                 }
                 var file = ServerQuestFile.getInstance();
                 var chapter = file.getChapterOrThrow(CHAPTER_ID);
-                if (chapter.getQuests().size() != 42 || !file.getTeamData(player).orElseThrow()
+                if (chapter.getQuests().size() != 43 || !file.getTeamData(player).orElseThrow()
                         .isCompleted(file.getQuest(STAGE_TWO_QUEST_ID))) {
                     throw new IllegalStateException("FTB chapter or stage-two advancement task did not load and complete");
                 }
                 verified = true;
-                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 42 FTB quests and stage two completed");
+                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 43 FTB quests and stage two completed");
             });
             case 165 -> {
                 if (!verified) {
@@ -471,6 +481,65 @@ public final class PortVisualTest implements ClientModInitializer {
             case 1715 -> {
                 screenshot(client, "port2612-spirit-berry.png");
                 LOGGER.info("SPIRIT_COMPANIONS_2612_PASS");
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    var pos = player.blockPosition().offset(0, 1, 3);
+                    player.level().setBlockAndUpdate(pos.below(), Blocks.CHERRY_PLANKS.defaultBlockState());
+                    spirit.setPos(player.position().add(-2.5, 0, 2.3));
+                    player.getInventory().setItem(4, stack("milkshake_tray"));
+                    for (var variant : MilkshakeVariant.values()) {
+                        player.getInventory().setItem(5 + variant.ordinal(), stack(variant.itemId()));
+                    }
+                    trayPos = pos;
+                });
+            }
+            case 1740 -> trayClick(client, 4, trayPos.below(), 0.5, 1, 0.5);
+            case 1760 -> trayClick(client, 5, trayPos, 0.29, 0.15, 0.29);
+            case 1780 -> trayClick(client, 6, trayPos, 0.71, 0.15, 0.29);
+            case 1800 -> trayClick(client, 7, trayPos, 0.29, 0.15, 0.71);
+            case 1820 -> trayClick(client, 8, trayPos, 0.71, 0.15, 0.71);
+            case 1838 -> {
+                if (!(client.level.getBlockEntity(trayPos) instanceof MilkshakeTrayBlockEntity tray)) {
+                    throw new IllegalStateException("A client interaction did not place the tray");
+                }
+                for (var variant : MilkshakeVariant.values()) {
+                    if (!tray.cup(variant.ordinal()).is(stack(variant.itemId()).getItem())) {
+                        throw new IllegalStateException("A displayed place did not receive " + variant);
+                    }
+                }
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    player.level().setBlockAndUpdate(trayPos.offset(-1, 0, -2), Blocks.CHERRY_PLANKS.defaultBlockState());
+                    player.teleportTo(player.level(), trayPos.getX() - 0.8, trayPos.getY() + 1, trayPos.getZ() - 1.4,
+                            java.util.Set.of(), -34, 47, true);
+                });
+                client.options.hideGui = true;
+            }
+            case 1848 -> {
+                screenshot(client, "port2612-milkshake-tray-full.png");
+                client.options.hideGui = false;
+            }
+            case 1855 -> trayClick(client, 4, trayPos, 0.29, 0.15, 0.29);
+            case 1875 -> {
+                if (!(client.level.getBlockEntity(trayPos) instanceof MilkshakeTrayBlockEntity tray) || !tray.cup(0).isEmpty()) {
+                    throw new IllegalStateException("Withdrawing the bottle did not update the cup model");
+                }
+                screenshot(client, "port2612-milkshake-tray-shared.png");
+                server.execute(() -> {
+                    var player = server.getPlayerList().getPlayers().getFirst();
+                    var quests = ServerQuestFile.getInstance();
+                    if (!player.getInventory().contains(item -> item.is(stack("milkshake").getItem()))
+                            || !quests.getTeamData(player).orElseThrow().isCompleted(quests.getQuest(TRAY_QUEST_ID))) {
+                        throw new IllegalStateException("Receiving the cup did not return the item and complete the FTB quest");
+                    }
+                    verifiedTray = true;
+                });
+            }
+            case 1895 -> {
+                if (!verifiedTray) {
+                    throw new IllegalStateException("Tray verification did not complete");
+                }
+                LOGGER.info("MILKSHAKE_TRAY_2612_PASS");
                 client.stop();
             }
             default -> {}
@@ -485,6 +554,14 @@ public final class PortVisualTest implements ClientModInitializer {
                     break;
                 }
             }
+        }
+    }
+
+    private static void trayClick(Minecraft client, int slot, BlockPos pos, double x, double y, double z) {
+        client.player.getInventory().setSelectedSlot(slot);
+        var hit = new BlockHitResult(Vec3.atLowerCornerOf(pos).add(x, y, z), Direction.UP, pos, false);
+        if (!client.gameMode.useItemOn(client.player, InteractionHand.MAIN_HAND, hit).consumesAction()) {
+            throw new IllegalStateException("The client rejected the tray interaction for slot " + slot);
         }
     }
 

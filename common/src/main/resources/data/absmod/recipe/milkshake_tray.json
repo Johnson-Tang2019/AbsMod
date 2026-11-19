@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "P P",
+    "WAW",
+    "PPP"
+  ],
+  "key": {
+    "P": "minecraft:cherry_planks",
+    "W": "minecraft:pink_wool",
+    "A": "minecraft:amethyst_shard"
+  },
+  "result": {
+    "id": "absmod:milkshake_tray",
+    "count": 1
+  }
+}

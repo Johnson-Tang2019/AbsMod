@@ -433,5 +433,12 @@
   "item.absmod.crystal_clip": "晶棱发夹",
   "item.absmod.bell_clip": "叮当发夹",
   "item.absmod.cloud_clip": "棉云发夹",
-  "item.absmod.berry_clip": "莓果发夹"
+  "item.absmod.berry_clip": "莓果发夹",
+  "block.absmod.milkshake_tray": "奶昔茶盘",
+  "tray.absmod.occupied": "这个杯垫已有奶昔。",
+  "tray.absmod.empty": "这个杯垫上没有奶昔。",
+  "guide.absmod.page.36": "奶昔茶会\n\n工作台三行：\n樱花木板／空／樱花木板\n粉红羊毛／紫水晶碎片／粉红羊毛\n樱花木板×3",
+  "guide.absmod.page.37": "摆放与分享\n\n主手持任意奶昔，对准空杯垫右键。主手空着时，右键对应杯垫取回。访客也可使用茶盘。打破茶盘会掉出剩余奶昔。",
+  "advancement.absmod.milkshake_tray.title": "奶昔茶会",
+  "advancement.absmod.milkshake_tray.description": "从已放置的奶昔茶盘中取出一杯奶昔。"
 }

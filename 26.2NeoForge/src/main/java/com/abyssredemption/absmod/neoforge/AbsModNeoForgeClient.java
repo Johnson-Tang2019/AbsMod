@@ -45,6 +45,8 @@ public final class AbsModNeoForgeClient {
     }
 
     private static void renderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(com.abyssredemption.absmod.block.MilkshakeTrayBlockEntity.type(),
+                com.abyssredemption.absmod.client.MilkshakeTrayRenderer::new);
         event.registerEntityRenderer(com.abyssredemption.absmod.entity.SpiritEntityType.get(),
                 com.abyssredemption.absmod.client.spirit.BladeSpiritRenderer::new);
     }

@@ -40,6 +40,8 @@ public final class ModItems {
                     .toList();
     public static final DeferredItem<net.minecraft.world.item.BlockItem> CAT_NEST =
             ITEMS.registerItem("cat_nest", properties -> new net.minecraft.world.item.BlockItem(ModBlocks.CAT_NEST.get(), properties));
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> MILKSHAKE_TRAY =
+            ITEMS.registerItem("milkshake_tray", properties -> new net.minecraft.world.item.BlockItem(ModBlocks.MILKSHAKE_TRAY.get(), properties));
 
     public static final DeferredItem<com.abyssredemption.absmod.item.FieldGuideItem> FIELD_GUIDE=ITEMS.registerItem("field_guide",com.abyssredemption.absmod.item.FieldGuideItem::new);
     private ModItems() {}

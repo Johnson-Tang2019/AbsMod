@@ -483,6 +483,23 @@
       ]
     },
     {
+      "id": "0CCBF2B94EB71E5E",
+      "x": 0.0,
+      "y": 10.0,
+      "rewards": [],
+      "dependencies": [
+        "2EE6DAB584A476BC"
+      ],
+      "tasks": [
+        {
+          "id": "6E54C12A3A290C80",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/milkshake_tray",
+          "criterion": ""
+        }
+      ]
+    },
+    {
       "id": "10D294E7E7DE7BAA",
       "x": 2.0,
       "y": -2.0,

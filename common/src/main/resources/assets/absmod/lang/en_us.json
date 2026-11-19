@@ -433,5 +433,12 @@
   "item.absmod.crystal_clip": "Crystal Clip",
   "item.absmod.bell_clip": "Bell Clip",
   "item.absmod.cloud_clip": "Cloud Clip",
-  "item.absmod.berry_clip": "Berry Clip"
+  "item.absmod.berry_clip": "Berry Clip",
+  "block.absmod.milkshake_tray": "Milkshake Tray",
+  "tray.absmod.occupied": "This coaster already has a milkshake.",
+  "tray.absmod.empty": "This coaster is empty.",
+  "guide.absmod.page.36": "Milkshake Tea Party\n\nCraft a tray with five cherry planks, two pink wool and one amethyst shard. Planks form the corners and bottom. Pair the wool with the shard in the middle.",
+  "guide.absmod.page.37": "Serve a Milkshake\n\nRight-click a coaster with a milkshake in your main hand. Right-click that coaster with an empty main hand to take it. Other players can use the tray too. Break it to recover its contents.",
+  "advancement.absmod.milkshake_tray.title": "Milkshake Tea Party",
+  "advancement.absmod.milkshake_tray.description": "Take a milkshake from a placed Milkshake Tray."
 }

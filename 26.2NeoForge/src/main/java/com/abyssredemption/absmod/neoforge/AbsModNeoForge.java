@@ -59,6 +59,7 @@ public final class AbsModNeoForge {
         ENTITIES.register(modEventBus);
         modEventBus.addListener(AbsModNeoForge::attributes);
         com.abyssredemption.absmod.registry.ModBlocks.BLOCKS.register(modEventBus);
+        com.abyssredemption.absmod.registry.ModBlocks.BLOCK_ENTITIES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         TABS.register(modEventBus);
         modEventBus.addListener(AbsModNeoForge::addCreativeItems);
@@ -78,6 +79,7 @@ public final class AbsModNeoForge {
             event.accept(ModItems.GENTLE_BRUSH);
             ModItems.SPIRIT_ADORNMENTS.forEach(event::accept);
             event.accept(ModItems.CAT_NEST);
+            event.accept(ModItems.MILKSHAKE_TRAY);
         }
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {
             ModItems.MEOW_BLADES.forEach(item -> event.accept(item));

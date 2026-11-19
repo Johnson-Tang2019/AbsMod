@@ -1,5 +1,13 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-20 · 26.1.2 奶昔茶盘
+
+基线 `main/3484e55`。PLAN-LIFE-02、PLAN-GUIDE-01、PLAN-PORT-01。`MilkshakeTrayBlock` 和 `MilkshakeTrayBlockEntity` 处理四个独立杯垫、保存原瓶组件和打破掉落。`MilkshakeTrayRenderer` 只读取收到的方块实体状态，摆放现有的四种奶昔模型。首版公共取用。新增樱花木茶盘模型、方块和方块实体注册、配方、掉落以及「奶昔茶会」原版进度。观察手册第 36–37 页和双语 README 同步。FTB 增至 43 项，原 42 项章内定义逐项一致。见 [26.1.2 指南](PORT_2612.md)。
+
+实机：26.1.2 Fabric 中文客户端在隔离世界通过正常方块交互放置茶盘，分别放入四款奶昔，空手取回一杯，验证杯位同步、原版进度和 FTB 任务完成。退出后确认世界区块文件记录茶盘和三种剩余奶昔。见 `build/milkshake-tray-client-final.log` 和 `26.1.2Fabric/run/screenshots/port2612-milkshake-tray-{full,shared}.png`。双客户端同时取物与重新进世界读回尚未实测，剑灵分享动画仍为后续阶段。
+
+构建与交付：26.1.2 发布包和全部 29 项服务端 GameTest 通过。新测试覆盖配方、同杯垫重复操作、两位测试玩家转交、带名称奶昔的序列化以及打破掉落。26.2 双加载器和 1.21.1 兼容构建通过，各包的茶盘资源和版本边界已核对。26.1.2 Fabric 0.19.2 本机实例已更新 JAR 与两份 FTB 文件并逐件校验 SHA-256，旧文件备份在 `absmod-backups/20261120-003711`。见 `build/milkshake-tray-{2612-final,26-final,1211}.log` 和 `build/milkshake-tray-delivery.json`。
+
 ## 2026-11-19 · 26.1.2 十二款饰品与三种陪伴游戏
 
 基线 `main/3bbae87`。PLAN-UI-01、PLAN-GUIDE-01、PLAN-PORT-01。以车万女仆 1.5.3 本体的 12 项饰品绑定与 3 种棋局为数量基准。`SpiritAdornment` 增加十款独立的可合成头饰。`CatJournalViews` 为十二款饰品提供三页切换，并新增三棋种入口。`SpiritLineGame` 处理井字棋和五子棋，`SpiritReversi` 处理翻子、跳过和终局。`SpiritGameMenu` 同步棋盘和合法落点，`SpiritGameScreen` 支持三种布局与重开。来源口径和规则见 [剑灵规格](SPIRIT_SYSTEM.md)。

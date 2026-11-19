@@ -1,12 +1,16 @@
 package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.client.MeowSlashEffects;
+import com.abyssredemption.absmod.block.MilkshakeTrayBlockEntity;
+import com.abyssredemption.absmod.client.MilkshakeTrayRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 
 public final class AbsModFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        BlockEntityRendererRegistry.register(MilkshakeTrayBlockEntity.type(), MilkshakeTrayRenderer::new);
         net.minecraft.client.gui.screens.MenuScreens.register(com.abyssredemption.absmod.cat.CatJournalMenu.TYPE,
                 com.abyssredemption.absmod.client.CatJournalScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE,
