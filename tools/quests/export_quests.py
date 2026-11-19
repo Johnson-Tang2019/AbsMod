@@ -1,4 +1,4 @@
-"""Export stable FTB 1.21.1 advancement quests from the shipped advancement descriptions."""
+"""Export stable FTB advancement quests from the shipped advancement descriptions."""
 import hashlib
 import json
 from pathlib import Path
@@ -9,6 +9,11 @@ RESOURCES = ROOT / "common/src/main/resources"
 
 def stable_id(name):
     return hashlib.sha256(("absmod/quests/v1/" + name).encode()).hexdigest()[:16].upper()
+
+
+def modern_id(legacy_id):
+    # 26.1.2 FTB Quests treats nonpositive signed IDs as missing.
+    return f"{int(legacy_id, 16) & ((1 << 63) - 1):016X}"
 
 
 def generate():
@@ -60,27 +65,59 @@ def generate():
                 "穿过传送门后先在安全地面等待剑灵。若未能跟上，主手持虚化剑对空气右键查看最后位置，再返回附近。",
                 "靠近剑灵后潜行右键召回，持虚化剑攻击可召回同维度已加载的剑灵。重新登录会核对中断交接。若原槽被占，腾空后重登；手上仍有虚化剑时也可对空气右键重试。"
             ])
+        if name == "resonance":
+            quest["description"].extend([
+                "主手持共鸣之心右键。粉色界面左上放召回后的原剑，右侧投入材料。",
+                "核对预览、所需材料和好感度，点击「确认共鸣」，再取回原剑。每次只能升一阶，下次需重新打开。"
+            ])
+        if name.startswith(("normal_stage_", "dark_stage_")) and name[-1] != "1":
+            quest["description"].append("用共鸣之心打开粉色界面。原剑放左，材料放右。达到好感门槛后确认，再取回升级后的原剑。")
+        if name == "dark_heavy":
+            quest["description"].extend([
+                "前置：取得暗黑喵刀并装备在主手，无需消耗材料。对准可攻击的生物，按下默认 G 键，前摇期间保持瞄准。",
+                "暗黑普攻是短紫弧，重击是下劈。看到紫色光环即为命中，光环只作提示。换剑或打开界面会中断前摇。"
+            ])
         if name == "normal_stage_8":
             quest["description"].append("九阶尚未开放：同魂心魔试炼未实现。不要继续寻找不存在的升阶配方。")
         quests.append(quest)
     chapter = {"id": stable_id("chapter"), "filename": "absmod_progression", "title": "喵刀与猫咪生活",
                "order_index": 0, "group": "", "default_quest_shape": "square", "quests": quests}
-    destination = ROOT / "quest-packs/ftb-1.21.1/config/ftbquests/quests/chapters/absmod_progression.snbt"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    # JSON's quoted keys and primitive lists are valid SNBT; avoid version-specific item-stack syntax.
-    destination.write_text(json.dumps(chapter, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    # Modern FTB Quests stores localized text separately; keep inline fallback for older packs.
     translations = {"chapter." + chapter["id"] + ".title": chapter["title"]}
     for quest in quests:
         translations["quest." + quest["id"] + ".title"] = quest["title"]
         translations["quest." + quest["id"] + ".quest_desc"] = quest["description"]
-    lang = destination.parent.parent / "lang"
-    lang.mkdir(exist_ok=True)
-    (lang / "zh_cn.snbt").write_text(json.dumps(translations, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    legacy = ROOT / "quest-packs/ftb-1.21.1/config/ftbquests/quests"
+    write_json(legacy / "chapters/absmod_progression.snbt", chapter)
+    write_json(legacy / "lang/zh_cn.snbt", translations)
+
+    modern = ROOT / "quest-packs/ftb-26.1.2/config/ftbquests/quests"
+    modern_chapter = {key: value for key, value in chapter.items() if key not in {"title", "quests"}}
+    modern_chapter["id"] = modern_id(chapter["id"])
+    modern_chapter["quests"] = []
+    for quest in quests:
+        data = {key: value for key, value in quest.items() if key not in {"title", "description", "tasks"}}
+        data["id"] = modern_id(quest["id"])
+        if "dependencies" in data:
+            data["dependencies"] = [modern_id(parent) for parent in data["dependencies"]]
+        data["tasks"] = [dict(task, id=modern_id(task["id"]), type="ftbquests:" + task["type"]) for task in quest["tasks"]]
+        modern_chapter["quests"].append(data)
+    write_json(modern / "chapters/absmod_progression.json5", modern_chapter)
+    write_json(modern / "lang/zh_cn/chapters/absmod_progression.json5",
+               {f"quest.{modern_id(quest['id'])}.{key}": value
+                for quest in quests for key, value in [("title", quest["title"]), ("quest_desc", quest["description"])]})
+    write_json(modern / "lang/zh_cn/absmod_chapter.json5",
+               {f"chapter.{modern_chapter['id']}.title": chapter["title"]})
     ids = [q["id"] for q in quests] + [t["id"] for q in quests for t in q["tasks"]] + [chapter["id"]]
     assert len(ids) == len(set(ids)), "Duplicate task identity"
+    modern_ids = [modern_id(value) for value in ids]
+    assert len(modern_ids) == len(set(modern_ids)) and all(int(value, 16) > 1 for value in modern_ids)
     assert all(q["tasks"][0]["advancement"].split("/")[-1] in names for q in quests)
     print(f"Exported {len(quests)} quests; stable IDs and advancement references verified. Runtime not implied.")
+
+
+def write_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

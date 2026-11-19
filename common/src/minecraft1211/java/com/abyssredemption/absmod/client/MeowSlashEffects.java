@@ -1,6 +1,8 @@
 package com.abyssredemption.absmod.client;
 
+import com.abyssredemption.absmod.client.animation.HeavyBladeMotion;
 import com.abyssredemption.absmod.item.MeowBladeItem;
+import com.abyssredemption.absmod.network.BladeSwingStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,7 +38,7 @@ public final class MeowSlashEffects {
             return;
         }
         ticks++;
-        active.removeIf(effect -> ticks - effect.started() >= MeowSlashGeometry.LIFETIME);
+        active.removeIf(effect -> ticks - effect.started() >= MeowSlashGeometry.lifetime(effect.style()));
         var present = new HashSet<UUID>();
         for (var player : level.players()) {
             present.add(player.getUUID());
@@ -51,7 +53,7 @@ public final class MeowSlashEffects {
             if (!(player.getItemInHand(hand).getItem() instanceof MeowBladeItem blade)) {
                 continue;
             }
-            emit(client, player, blade, hand, tracker, null);
+            emit(client, player, blade, hand, tracker, null, BladeSwingStyle.regular(blade.stage().route()));
 
         }
         swings.keySet().retainAll(present);
@@ -72,12 +74,12 @@ public final class MeowSlashEffects {
         if (player == null || !(player.getMainHandItem().getItem() instanceof MeowBladeItem blade)) { return; }
         emit(client, player, blade, InteractionHand.MAIN_HAND,
                 swings.computeIfAbsent(player.getUUID(), key -> new SlashSwingTracker()),
-                com.abyssredemption.absmod.client.animation.BladeMotionPlayer.pose(player,0));
+                com.abyssredemption.absmod.client.animation.BladeMotionPlayer.pose(player,0), payload.style());
     }
 
     private void emit(Minecraft client, net.minecraft.world.entity.player.Player player, MeowBladeItem blade,
                       InteractionHand hand, SlashSwingTracker tracker,
-                      com.abyssredemption.absmod.client.animation.BladeMotionPreset.Pose pose) {
+                      com.abyssredemption.absmod.client.animation.BladeMotionPreset.Pose pose, BladeSwingStyle style) {
             // Advance even when culled so moving the camera does not restart the sequence.
             SlashMotion motion = tracker.takeMotion();
             if (client.getCameraEntity() == null
@@ -92,7 +94,8 @@ public final class MeowSlashEffects {
             double yaw = Math.toRadians(player.getYRot());
             Vec3 right = new Vec3(Math.cos(yaw), 0, Math.sin(yaw));
             Vec3 up = forward.cross(right).normalize();
-            double roll = pose==null?motion.rollRadians(direction):Math.toRadians(pose.effectRoll()*direction);
+            double roll = style.isHeavy() ? Math.toRadians(HeavyBladeMotion.EFFECT_ROLL * direction)
+                    : pose == null ? motion.rollRadians(direction) : Math.toRadians(pose.effectRoll() * direction);
             Vec3 tiltedRight = right.scale(Math.cos(roll)).add(up.scale(Math.sin(roll)));
             Vec3 tiltedUp = up.scale(Math.cos(roll)).subtract(right.scale(Math.sin(roll)));
             Vec3 origin = player.getEyePosition().add(0, -0.40, 0).add(forward.scale(0.12));
@@ -100,7 +103,7 @@ public final class MeowSlashEffects {
                 active.removeFirst();
             }
             active.add(new ActiveSlash(origin, tiltedRight, forward, tiltedUp,
-                    1.20F + blade.stage().number() * 0.025F, pose==null?motion.direction(direction):direction, ticks));
+                    1.20F + blade.stage().number() * 0.025F, !style.isHeavy() && pose == null ? motion.direction(direction) : direction, ticks, style));
     }
 
     public List<MeowSlashGeometry.Slash> extract(Vec3 camera, float partialTick) {
@@ -110,12 +113,12 @@ public final class MeowSlashEffects {
             if (effect.origin().distanceToSqr(camera) <= MAX_DISTANCE * MAX_DISTANCE) {
                 frame.add(new MeowSlashGeometry.Slash(effect.origin().subtract(camera), effect.right(),
                         effect.forward(), effect.up(), ticks - effect.started() + partialTick,
-                        effect.scale(), effect.direction()));
+                        effect.scale(), effect.direction(), effect.style()));
             }
         }
         return List.copyOf(frame);
     }
 
     private record ActiveSlash(Vec3 origin, Vec3 right, Vec3 forward, Vec3 up,
-                               float scale, int direction, int started) {}
+                               float scale, int direction, int started, BladeSwingStyle style) {}
 }

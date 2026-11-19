@@ -205,10 +205,13 @@ public final class CombatVerification {
             check(payload.equals(AttackIntentPayload.CODEC.decode(buffer)), "Intent codec mismatch");
             CombatProbePayload.CODEC.encode(buffer, new CombatProbePayload(true));
             check(CombatProbePayload.CODEC.decode(buffer).enabled(), "Control codec mismatch");
-            var swing = new com.abyssredemption.absmod.network.BladeSwingPayload(
-                    java.util.UUID.randomUUID(), java.util.UUID.randomUUID(), 7654, 987654321L, 20F / 6);
-            com.abyssredemption.absmod.network.BladeSwingPayload.CODEC.encode(buffer, swing);
-            check(swing.equals(com.abyssredemption.absmod.network.BladeSwingPayload.CODEC.decode(buffer)), "Motion timing codec mismatch");
+            for (var style : com.abyssredemption.absmod.network.BladeSwingStyle.values()) {
+                var swing = new com.abyssredemption.absmod.network.BladeSwingPayload(
+                        java.util.UUID.randomUUID(), java.util.UUID.randomUUID(), 7654, 987654321L, 20F / 6, style);
+                com.abyssredemption.absmod.network.BladeSwingPayload.CODEC.encode(buffer, swing);
+                check(swing.equals(com.abyssredemption.absmod.network.BladeSwingPayload.CODEC.decode(buffer)),
+                        "Motion timing or style codec mismatch: " + style);
+            }
         } finally { buffer.release(); }
     }
 

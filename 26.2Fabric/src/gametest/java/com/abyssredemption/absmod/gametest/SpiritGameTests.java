@@ -11,6 +11,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 
 public final class SpiritGameTests {
+    private static ServerPlayer mockSurvival(GameTestHelper helper) {
+        var player = (ServerPlayer) helper.makeMockServerPlayer(GameType.SURVIVAL);
+        if (player.connection != null) {
+            player.setGameMode(GameType.SURVIVAL);
+        }
+        return player;
+    }
+
     @GameTest
     public void catGenomeUsesBothParentsAndPersists(GameTestHelper helper) {
         var first=helper.spawn(net.minecraft.world.entity.EntityTypes.CAT,1,1,1);
@@ -95,7 +103,7 @@ public final class SpiritGameTests {
     }
     @GameTest
     public void repairPreservesSoulAndRefusesSacrificingAnotherBlade(GameTestHelper helper) {
-        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player=mockSurvival(helper);
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
         sword.setDamageValue(1000);
         var record=BladeSoulService.initialize(BladeSoulStore.forInitialization(player.level().getServer()),sword,player.getUUID());
@@ -113,7 +121,7 @@ public final class SpiritGameTests {
     }
     @GameTest
     public void darkCraftUpgradeAndSpiritKeepTheirRoute(GameTestHelper helper) {
-        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player=mockSurvival(helper);
         var original=new ItemStack(Items.NETHERITE_SWORD);original.setDamageValue(501);
         var ingredients=new java.util.ArrayList<ItemStack>();ingredients.add(original);
         for(int i=0;i<4;i++)ingredients.add(new ItemStack(Items.CRYING_OBSIDIAN));
@@ -128,7 +136,7 @@ public final class SpiritGameTests {
         for(int target=2;target<=8;target++) {
             var menu=new ResonanceMenu(target,player.getInventory());menu.getSlot(0).set(sword);
             int slot=1;for(var cost:ResonanceMenu.costs(record.route(),target))menu.getSlot(slot++).set(new ItemStack(cost.item(),cost.count()));
-            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);sword=menu.getSlot(0).getItem();
+            menu.clickMenuButton(player, ResonanceMenu.CONFIRM_BUTTON);sword=menu.getSlot(0).getItem();
             helper.assertTrue(store.find(record.soulId()).orElseThrow().stage()==target && sword.getDamageValue()==501,"Dark migration changed durability or failed");
         }
         var stage=((com.abyssredemption.absmod.item.MeowBladeItem)sword.getItem()).stage();
@@ -142,8 +150,8 @@ public final class SpiritGameTests {
     }
     @GameTest
     public void everyNormalUpgradePreservesEnchantmentsAndLocksFinalTrial(GameTestHelper helper) {
-        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
-        var stranger=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player=mockSurvival(helper);
+        var stranger=mockSurvival(helper);
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
         var enchantment=helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
                 .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.UNBREAKING);
@@ -153,13 +161,13 @@ public final class SpiritGameTests {
         for(int target=2;target<=8;target++) {
             var menu=new ResonanceMenu(target,player.getInventory());menu.getSlot(0).set(sword);
             int slot=1;for(var cost:ResonanceMenu.costs(target))menu.getSlot(slot++).set(new ItemStack(cost.item(),cost.count()));
-            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,stranger);
+            menu.clickMenuButton(stranger, ResonanceMenu.CONFIRM_BUTTON);
             helper.assertTrue(menu.getSlot(0).getItem()==sword,"Stranger upgraded owned sword");
             BladeSoulService.setTestAffection(store,sword,0);
-            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+            menu.clickMenuButton(player, ResonanceMenu.CONFIRM_BUTTON);
             helper.assertTrue(menu.getSlot(0).getItem()==sword && !menu.getSlot(1).getItem().isEmpty(),"Affection refusal changed escrow");
             BladeSoulService.setTestAffection(store,sword,300);
-            menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+            menu.clickMenuButton(player, ResonanceMenu.CONFIRM_BUTTON);
             sword=menu.getSlot(0).getItem();
             helper.assertTrue(store.find(before.soulId()).orElseThrow().stage()==target
                 && sword.getEnchantments().getLevel(enchantment)==3,"Upgrade lost identity/enchantment");
@@ -167,14 +175,14 @@ public final class SpiritGameTests {
         }
         var finalMenu=new ResonanceMenu(9,player.getInventory());finalMenu.getSlot(0).set(sword);
         finalMenu.getSlot(1).set(new ItemStack(Items.AMETHYST_BLOCK,16));
-        finalMenu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        finalMenu.clickMenuButton(player, ResonanceMenu.CONFIRM_BUTTON);
         helper.assertTrue(finalMenu.getSlot(0).getItem()==sword && finalMenu.getSlot(1).getItem().getCount()==16
             && store.find(before.soulId()).orElseThrow().stage()==8,"Unqualified final upgrade succeeded");
         helper.succeed();
     }
     @GameTest
     public void affectionRewardsAreCappedPerDay(GameTestHelper helper) {
-        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player=mockSurvival(helper);
         var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));player.setPos(pos.getX(),pos.getY(),pos.getZ());
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sword);
@@ -194,7 +202,7 @@ public final class SpiritGameTests {
     }
     @GameTest
     public void resonancePreservesIdentityAndRejectsReplay(GameTestHelper helper) {
-        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player=mockSurvival(helper);
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
         sword.setDamageValue(780);
         sword.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal("Keepsake"));
@@ -203,17 +211,17 @@ public final class SpiritGameTests {
         BladeSoulService.setTestAffection(store,sword,300);
         var menu=new ResonanceMenu(7,player.getInventory());
         menu.slots.get(0).set(sword);
-        menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        menu.clickMenuButton(player, ResonanceMenu.CONFIRM_BUTTON);
         helper.assertTrue(menu.slots.get(0).getItem()==sword,"Missing materials changed sword");
         menu.slots.get(1).set(new ItemStack(Items.AMETHYST_SHARD,16));
         menu.slots.get(2).set(new ItemStack(Items.COPPER_INGOT,16));
-        menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        menu.clickMenuButton(player, ResonanceMenu.CONFIRM_BUTTON);
         var result=menu.slots.get(0).getItem();
         helper.assertTrue(result.is(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade_stage_2")))
             && result.get(BladeSoulComponents.REFERENCE).soulId().equals(before.soulId())
             && result.getHoverName().getString().equals("Keepsake") && result.getDamageValue()==900,"Upgrade lost data or repaired damage");
         helper.assertTrue(menu.slots.get(1).getItem().getCount()==8 && menu.slots.get(2).getItem().getCount()==8,"Incorrect material debit");
-        menu.clicked(22,0,net.minecraft.world.inventory.ContainerInput.PICKUP,player);
+        menu.clickMenuButton(player, ResonanceMenu.CONFIRM_BUTTON);
         helper.assertTrue(menu.slots.get(0).getItem()==result && store.find(before.soulId()).orElseThrow().stage()==2,"Duplicate confirmation upgraded twice");
         // Return-to-inventory networking is covered by the real-client fixture.
         helper.succeed();
@@ -250,7 +258,7 @@ public final class SpiritGameTests {
     }
     @GameTest
     public void invulnerableSpiritRecallsBeforeAttack(GameTestHelper helper) {
-        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player=mockSurvival(helper);
         var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));
         player.setPos(pos.getX(),pos.getY(),pos.getZ());
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
@@ -262,7 +270,7 @@ public final class SpiritGameTests {
         helper.assertTrue(!spirit.hurtServer(helper.getLevel(),spirit.damageSources().generic(),1000)
                 && !spirit.hurtServer(helper.getLevel(),spirit.damageSources().fellOutOfWorld(),1000)
                 && spirit.getHealth()==health && spirit.active(),"Spirit accepted damage");
-        var stranger=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var stranger=mockSurvival(helper);
         stranger.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,player.getMainHandItem().copy());
         helper.assertTrue(!SpiritTransformationService.recallForAttack(stranger) && spirit.active(),"Stranger recalled a copied link");
         helper.assertTrue(SpiritTransformationService.recallForAttack(player) && spirit.isRemoved()
@@ -272,7 +280,7 @@ public final class SpiritGameTests {
     }
     @GameTest
     public void sneakUseSwitchesThroughSpectralLink(GameTestHelper helper) {
-        var player=(ServerPlayer)helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player=mockSurvival(helper);
         var pos=helper.absolutePos(new net.minecraft.core.BlockPos(1,2,1));
         player.setPos(pos.getX(),pos.getY(),pos.getZ());
         var sword=new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod","meow_blade")));
@@ -294,7 +302,7 @@ public final class SpiritGameTests {
     }
     @GameTest
     public void manifestationPreservesSwordAndRejectsRepeatedRecall(GameTestHelper helper) {
-        var player = (ServerPlayer) helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var player = mockSurvival(helper);
         var pos = helper.absolutePos(new net.minecraft.core.BlockPos(1, 2, 1));
         player.setPos(pos.getX(), pos.getY(), pos.getZ());
         var sword = new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod",
@@ -316,7 +324,7 @@ public final class SpiritGameTests {
         boolean refused = false;
         try { SpiritTransformationService.recall(player, spirit, 8); } catch (IllegalStateException exception) { refused = true; }
         helper.assertTrue(refused && spirit.active() && player.getInventory().getItem(8).is(Items.STONE), "Occupied slot changed state");
-        var stranger = (ServerPlayer) helper.makeMockServerPlayer(GameType.SURVIVAL);
+        var stranger = mockSurvival(helper);
         refused = false;
         try { SpiritTransformationService.recall(stranger, spirit, 7); } catch (IllegalStateException exception) { refused = true; }
         helper.assertTrue(refused && spirit.active() && stranger.getInventory().getItem(7).isEmpty(), "Another player recalled the spirit");

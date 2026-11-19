@@ -1,12 +1,14 @@
 # Ab's Mod
 
-Supports Minecraft 26.2 on Fabric and NeoForge, with a separate NeoForge target for 1.21.1. The guide and vanilla advancements work on 26.2. The 1.21.1 pack has 33 optional FTB quests. [1.21.1 setup](docs/PORT_1211.md) · [FTB quests](quest-packs/ftb-1.21.1/README.md)
+Supports Minecraft 26.1.2 Fabric, 26.2 Fabric and NeoForge, and 1.21.1 NeoForge. The field guide and vanilla advancements are available on each target. The 26.1.2 and 1.21.1 packs have 33 optional FTB quests each. [26.1.2 setup](docs/PORT_2612.md) · [1.21.1 setup](docs/PORT_1211.md)
 
 Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the 24-page guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
 
 Crafting and progression are now playable prototypes on both loaders. Craft a normal blade from a diamond sword, four separate amethyst shards, raw cod and pink dye; craft a dark blade from a netherite sword, four separate crying obsidian and purple dye. Craft a **Resonance Heart** from four amethyst shards, a gold ingot and pink dye, then right-click it to upgrade the same blade. Normal stages 2–8 and all eight dark stages are available; normal stage 9 remains locked until the soul-bound boss trial exists.
 
 The vanilla Advancements screen guides both routes, affection and resonance. Earn daily-capped affection through talking, raw-cod gifts, active following and combat. Dark heavy strike defaults to **G** (rebindable): 0.6s windup, 8s cooldown, 1.8× stage base damage, sharing the existing attack budget. Broken blades are retained for repair. Numerical values remain prototype candidates.
+
+Use a Resonance Heart to open the pink workshop. Place the blade on the left and add materials on the right. Check the next-stage preview and affection requirement, then select **Resonate**. Take the upgraded blade and reopen the menu for another stage. Dark regular attacks draw a compact violet arc. A dark heavy strike plays a steep downstroke. On a hit, a violet ring and action-bar message mark the result.
 
 Two new AI-generated textures are included: Resonance Heart and the shared dark-blade prototype sprite. The original nine sword textures are unchanged. See [implementation and validation limits](docs/IMPLEMENTATION_PROGRESSION.md), [asset provenance](art/progression/ASSETS.md), and [actual advancement UI](art/progression/advancements.png).
 

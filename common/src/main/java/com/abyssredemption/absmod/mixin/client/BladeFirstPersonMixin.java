@@ -1,5 +1,6 @@
 package com.abyssredemption.absmod.mixin.client;
 
+import com.abyssredemption.absmod.client.ClientScreenAccess;
 import com.abyssredemption.absmod.client.animation.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -24,7 +25,7 @@ public abstract class BladeFirstPersonMixin {
         if(!BladeMotionPlayer.isReady() || hand!=InteractionHand.MAIN_HAND || !(item.getItem() instanceof com.abyssredemption.absmod.item.MeowBladeItem)) { return; }
         var pose=BladeMotionPlayer.pose(player,partial);
         var client=net.minecraft.client.Minecraft.getInstance();
-        if(player.isUsingItem() || client.gui.screen()!=null || client.gameMode==null || client.gameMode.isDestroying()) { return; }
+        if(player.isUsingItem() || ClientScreenAccess.current(client)!=null || client.gameMode==null || client.gameMode.isDestroying()) { return; }
         if(pose==null && !com.abyssredemption.absmod.client.BladeCombatClient.isAvailable()) { return; }
         stack.pushPose();
         // Preserve the equip transition instead of popping the blade into its resting grip.

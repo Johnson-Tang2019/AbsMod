@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.combat;
 
 import com.abyssredemption.absmod.item.MeowBladeItem;
+import com.abyssredemption.absmod.network.BladeSwingStyle;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
 import com.abyssredemption.absmod.spirit.BladeSoulComponents;
 import com.abyssredemption.absmod.spirit.BladeSoulReference;
@@ -146,8 +147,15 @@ public final class BladeCombatServer {
                             player.getUUID(), tick, state.lastAttackId, state.session.epoch(), blade.stage().number(), speed, confirmedHit, stacksBefore, state.combo.stacks());
                 }
                 if(heavy)LogUtils.getLogger().info("AbsMod heavy attack player={} attackId={} hit={}",player.getUUID(),state.lastAttackId,confirmedHit);
+                BladeSwingStyle style = BladeSwingStyle.regular(blade.stage().route());
+                if (heavy) {
+                    style = confirmedHit && hit instanceof net.minecraft.world.phys.EntityHitResult
+                            ? BladeSwingStyle.HEAVY_IMPACT : BladeSwingStyle.HEAVY;
+                    player.sendSystemMessage(net.minecraft.network.chat.Component.translatable(
+                            style == BladeSwingStyle.HEAVY_IMPACT ? "combat.absmod.heavy_hit" : "combat.absmod.heavy_miss"), true);
+                }
                 var swing = new com.abyssredemption.absmod.network.BladeSwingPayload(player.getUUID(), state.lastAttackId,
-                        state.authorized,player.level().getGameTime(),(float)(20.0/speed));
+                        state.authorized, player.level().getGameTime(), (float) (20.0 / speed), style);
                 for (var viewer : server.getPlayerList().getPlayers()) {
                     if (viewer.level() == player.level() && viewer.distanceToSqr(player) <= 32 * 32) { send.accept(viewer, swing); }
                 }

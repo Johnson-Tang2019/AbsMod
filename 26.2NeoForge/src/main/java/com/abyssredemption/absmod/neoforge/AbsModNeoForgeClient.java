@@ -25,6 +25,9 @@ public final class AbsModNeoForgeClient {
     private final com.abyssredemption.absmod.client.BladeCombatClient probe = new com.abyssredemption.absmod.client.BladeCombatClient();
 
     public AbsModNeoForgeClient(net.neoforged.bus.api.IEventBus modBus) {
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) ->
+                event.register(com.abyssredemption.absmod.spirit.ResonanceMenu.TYPE,
+                        com.abyssredemption.absmod.client.ResonanceScreen::new));
         modBus.addListener(this::payloads);
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event)->event.register(com.abyssredemption.absmod.client.BladeKeys.HEAVY));
         modBus.addListener(AbsModNeoForgeClient::renderers);

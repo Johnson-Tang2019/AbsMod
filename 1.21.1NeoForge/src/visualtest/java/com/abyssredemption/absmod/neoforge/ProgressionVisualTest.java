@@ -1,5 +1,9 @@
 package com.abyssredemption.absmod.neoforge;
 
+import com.abyssredemption.absmod.client.animation.BladeMotionPlayer;
+import com.abyssredemption.absmod.client.animation.HeavyBladeMotion;
+import com.abyssredemption.absmod.network.AttackIntentPayload;
+import com.abyssredemption.absmod.network.BladeSwingStyle;
 import com.abyssredemption.absmod.spirit.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
@@ -7,7 +11,6 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.core.registries.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.*;
-import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.levelgen.WorldOptions;
@@ -22,6 +25,7 @@ import net.neoforged.neoforge.common.NeoForge;
 public final class ProgressionVisualTest {
     private boolean started;
     private int tick;
+    private boolean heavyPoseSeen;
     private com.abyssredemption.absmod.entity.BladeSpiritEntity spirit;
     private net.minecraft.world.entity.monster.Husk target;
     public ProgressionVisualTest(){NeoForge.EVENT_BUS.addListener(this::tick);}
@@ -52,8 +56,11 @@ public final class ProgressionVisualTest {
             menu.getSlot(2).set(new ItemStack(Items.COPPER_INGOT,16));menu.broadcastChanges();
         });
         if(tick==80 || tick==130)Screenshot.grab(mc.gameDirectory,"progression-"+tick+".png",mc.getMainRenderTarget(),message->{});
-        if(tick==100)mc.gameMode.handleInventoryMouseClick(mc.player.containerMenu.containerId,22,0,ClickType.PICKUP,mc.player);
-        if(tick==150)mc.gameMode.handleInventoryMouseClick(mc.player.containerMenu.containerId,22,0,ClickType.PICKUP,mc.player);
+        if (tick == 95 && !(mc.screen instanceof com.abyssredemption.absmod.client.ResonanceScreen)) {
+            throw new IllegalStateException("Custom resonance screen did not open");
+        }
+        if(tick==100)mc.gameMode.handleInventoryButtonClick(mc.player.containerMenu.containerId,ResonanceMenu.CONFIRM_BUTTON);
+        if(tick==150)mc.gameMode.handleInventoryButtonClick(mc.player.containerMenu.containerId,ResonanceMenu.CONFIRM_BUTTON);
         if(tick==170)server.execute(()->{
             var p=server.getPlayerList().getPlayers().getFirst();var menu=p.containerMenu;
             if(!menu.getSlot(0).getItem().is(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod","meow_blade_stage_2")))
@@ -76,7 +83,7 @@ public final class ProgressionVisualTest {
             p.containerMenu.getSlot(0).set(sword);p.containerMenu.getSlot(1).set(new ItemStack(Items.OBSIDIAN,8));
         });
         if(tick==230 || tick==270)Screenshot.grab(mc.gameDirectory,"progression-dark-"+tick+".png",mc.getMainRenderTarget(),message->{});
-        if(tick==240)mc.gameMode.handleInventoryMouseClick(mc.player.containerMenu.containerId,22,0,ClickType.PICKUP,mc.player);
+        if(tick==240)mc.gameMode.handleInventoryButtonClick(mc.player.containerMenu.containerId,ResonanceMenu.CONFIRM_BUTTON);
         if(tick==280)server.execute(()->{
             var p=server.getPlayerList().getPlayers().getFirst();
             if(!p.containerMenu.getSlot(0).getItem().is(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod","dark_meow_blade_stage_2"))))throw new IllegalStateException("Dark upgrade failed");
@@ -99,7 +106,16 @@ public final class ProgressionVisualTest {
             net.neoforged.neoforge.network.PacketDistributor.sendToServer(packet);
         }
         if(tick==326)server.execute(()->{if(target.getHealth()!=200)throw new IllegalStateException("Heavy struck before windup");});
+        if (tick >= 331 && tick <= 345) {
+            var pose = BladeMotionPlayer.pose(mc.player, 0);
+            if (pose != null && pose.effectRoll() == HeavyBladeMotion.EFFECT_ROLL) {
+                heavyPoseSeen = true;
+            }
+        }
         if(tick>=330 && tick<=344 && tick%2==0)Screenshot.grab(mc.gameDirectory,"progression-heavy-"+tick+".png",mc.getMainRenderTarget(),message->{});
+        if (tick == 349 && !heavyPoseSeen) {
+            throw new IllegalStateException("No heavy downstroke pose from the real server confirmation");
+        }
         if(tick==375)server.execute(()->{
             if(Math.abs(target.getHealth()-110)>0.01)throw new IllegalStateException("Heavy damage/replay/cooldown mismatch: "+target.getHealth());
             var p=server.getPlayerList().getPlayers().getFirst();
@@ -109,6 +125,14 @@ public final class ProgressionVisualTest {
             }
             com.mojang.logging.LogUtils.getLogger().info("PROGRESSION_DARK passed dark upgrade, 12-tick windup, one 90-damage primary hit, duplicate/cooldown rejection and real advancement grants");
         });
+        if (tick == 380 || tick == 384) {
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(
+                    new AttackIntentPayload(100, tick, tick == 380, mc.player.getInventory().selected,
+                            mc.level.dimension().location()));
+        }
+        if (tick >= 382 && tick <= 390 && tick % 2 == 0) {
+            Screenshot.grab(mc.gameDirectory,"combat-dark-"+tick+".png",mc.getMainRenderTarget(),message->{});
+        }
         if(tick==395)mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(mc.getConnection().getAdvancements()));
         if(tick==420)Screenshot.grab(mc.gameDirectory,"progression-advancements.png",mc.getMainRenderTarget(),message->{});
         if(tick==440) {
@@ -178,7 +202,7 @@ public final class ProgressionVisualTest {
         if(tick>=800 && tick<880 && tick%16==0) {
             final long sequence=tick;
             server.execute(()->{var p=server.getPlayerList().getPlayers().getFirst();net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(p,
-                new com.abyssredemption.absmod.network.BladeSwingPayload(p.getUUID(),java.util.UUID.randomUUID(),sequence,p.serverLevel().getGameTime(),4));});
+                new com.abyssredemption.absmod.network.BladeSwingPayload(p.getUUID(),java.util.UUID.randomUUID(),sequence,p.serverLevel().getGameTime(),4,BladeSwingStyle.NORMAL));});
         }
         if(tick>=802 && tick<880 && tick%2==0)Screenshot.grab(mc.gameDirectory,"port-motion-"+tick+".png",mc.getMainRenderTarget(),message->{});
         if(tick==900)mc.reloadResourcePacks();

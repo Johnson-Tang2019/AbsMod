@@ -1,5 +1,6 @@
 package com.abyssredemption.absmod.client;
 
+import com.abyssredemption.absmod.network.BladeSwingStyle;
 import net.minecraft.world.phys.Vec3;
 
 /** Original, texture-free curved ribbons. All inputs are immutable frame snapshots. */
@@ -12,7 +13,15 @@ public final class MeowSlashGeometry {
     private MeowSlashGeometry() {}
 
     public record Slash(Vec3 origin, Vec3 right, Vec3 forward, Vec3 up,
-                        float age, float scale, int direction) {}
+                        float age, float scale, int direction, BladeSwingStyle style) {}
+
+    public static int lifetime(BladeSwingStyle style) {
+        return switch (style) {
+            case NORMAL -> LIFETIME;
+            case DARK -> 10;
+            case HEAVY, HEAVY_IMPACT -> 15;
+        };
+    }
 
     @FunctionalInterface
     public interface VertexSink {
@@ -20,8 +29,12 @@ public final class MeowSlashGeometry {
     }
 
     public static void emit(Slash slash, Vec3 cameraRight, Vec3 cameraUp, VertexSink sink) {
-        float progress = Math.clamp(slash.age() / LIFETIME, 0.0F, 1.0F);
+        float progress = Math.clamp(slash.age() / lifetime(slash.style()), 0.0F, 1.0F);
         if (progress >= 1.0F || slash.age() < 0.0F) {
+            return;
+        }
+        if (slash.style() != BladeSwingStyle.NORMAL) {
+            emitDark(slash, progress, sink);
             return;
         }
         // Hold the luminous peak through the first half of the swing, then fade smoothly.
@@ -58,27 +71,67 @@ public final class MeowSlashGeometry {
         }
     }
 
+    private static void emitDark(Slash slash, float progress, VertexSink sink) {
+        float fade = 1 - progress * progress;
+        if (!slash.style().isHeavy()) {
+            ribbon(slash, progress, fade * 0.55F, 1.36, 0.42, 0.0, 0x4830DC, sink);
+            ribbon(slash, progress, fade * 0.90F, 1.53, 0.15, 0.0, 0x683DF7, sink);
+            ribbon(slash, progress, fade * 0.86F, 1.63, 0.075, 0.0, 0xB8ACFF, sink);
+            return;
+        }
+        ribbon(slash, progress, fade * 0.36F, 1.78, 0.69, 0.0, 0x7750EC, sink);
+        ribbon(slash, progress, fade * 0.80F, 2.02, 0.28, 0.0, 0x9F68FF, sink);
+        ribbon(slash, progress, fade, 2.17, 0.095, 0.0, 0xDBCCFF, sink);
+        if (slash.style() == BladeSwingStyle.HEAVY_IMPACT && progress < 0.60F) {
+            impactRing(slash, progress / 0.60F, sink);
+        }
+    }
+
+    private static void impactRing(Slash slash, float progress, VertexSink sink) {
+        Vec3 flatForward = new Vec3(slash.forward().x, 0, slash.forward().z).normalize();
+        Vec3 origin = slash.origin().add(flatForward.scale(1.7)).add(0, -1.02, 0);
+        double radius = 0.34 + 1.26 * progress;
+        double width = 0.13 * (1 - progress) + 0.035;
+        int edge = color(0xA366FF, 0);
+        int center = color(0xC1A8FF, 0.82F * (1 - progress));
+        for (int segment = 0; segment < 32; segment++) {
+            double first = segment * (Math.PI / 16);
+            double next = (segment + 1) * (Math.PI / 16);
+            for (int half = 0; half < 2; half++) {
+                double inner = radius + (half - 1) * width;
+                double outer = inner + width;
+                int innerColor = half == 0 ? edge : center;
+                int outerColor = half == 0 ? center : edge;
+                vertex(origin.add(Math.cos(first) * inner, 0, Math.sin(first) * inner), innerColor, sink);
+                vertex(origin.add(Math.cos(next) * inner, 0, Math.sin(next) * inner), innerColor, sink);
+                vertex(origin.add(Math.cos(next) * outer, 0, Math.sin(next) * outer), outerColor, sink);
+                vertex(origin.add(Math.cos(first) * outer, 0, Math.sin(first) * outer), outerColor, sink);
+            }
+        }
+    }
+
     private static void ribbon(Slash slash, float progress, float opacity, double radius,
                                double width, double wave, int rgb, VertexSink sink) {
+        double sweep = slash.style() == BladeSwingStyle.DARK ? 1.48 : 2.70;
         for (int segment = 0; segment < SEGMENTS; segment++) {
             double t0 = segment / (double) SEGMENTS;
             double t1 = (segment + 1.0) / SEGMENTS;
             for (int row = 0; row < WIDTH_STEPS; row++) {
                 double v0 = row / (double) WIDTH_STEPS;
                 double v1 = (row + 1.0) / WIDTH_STEPS;
-                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, t0, v0, sink);
-                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, t1, v0, sink);
-                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, t1, v1, sink);
-                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, t0, v1, sink);
+                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, sweep, t0, v0, sink);
+                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, sweep, t1, v0, sink);
+                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, sweep, t1, v1, sink);
+                ribbonVertex(slash, progress, opacity, radius, width, wave, rgb, sweep, t0, v1, sink);
             }
         }
     }
 
     private static void ribbonVertex(Slash slash, float progress, float opacity, double radius,
-                                     double width, double wave, int rgb, double t, double v,
+                                     double width, double wave, int rgb, double sweep, double t, double v,
                                      VertexSink sink) {
         double taper = Math.sin(Math.PI * t);
-        double angle = -1.35 + t * 2.70 + (progress - 0.25) * 0.85;
+        double angle = (t - 0.5) * sweep + (progress - 0.25) * 0.85;
         double ripple = wave == 0.0 ? 0.0 : Math.sin(t * 9.0 + wave + progress * 3.0);
         double r = radius + (v - 0.5) * width * taper + ripple * 0.055;
         double height = ripple * (0.12 + progress * 0.24) + (v - 0.5) * width * 0.38;

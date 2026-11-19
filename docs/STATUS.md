@@ -1,5 +1,19 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-19 · 粉色共鸣、战斗辨识度与 26.1.2
+
+本批沿用本地 `main/1e89ffa`。CONFIRMED：共鸣改为粉色模组界面，现有功能移植 26.1.2，游玩线路同步 FTB。选择本机已有的 26.1.2 Fabric 实例。26.3 开发暂停。
+
+源码已接入独立 `absmod:resonance` 菜单和屏幕，分别展示原剑、投入材料、预览、所需材料及好感。确认按钮使用标准容器按钮同步，服务端保留门槛校验、每次打开最多升一阶、只读预览及关闭返还。普通与暗黑阶段数值、九阶原图和剑灵交接行为沿用。PLAN-COMBAT-01 的暗黑普攻改为短紫弧，重击增加专属下劈、命中环和结果提示。详见 [成长实现](IMPLEMENTATION_PROGRESSION.md) 和 [战斗规范](CONTINUOUS_COMBAT.md)。
+
+26.1.2 复用现有 Fabric 玩法及资源，独立适配第一人称持物、活动界面访问、HUD 和世界渲染事件。两版 FTB 各 33 项，加入粉色界面操作和暗黑重击说明。1.21.1 沿用原 SNBT 和 ID，26.1.2 使用对应 JSON5、中文翻译和确定性正数 ID。[26.1.2 安装与依赖](PORT_2612.md)
+
+验证：四个目标构建通过。26.1.2 Fabric 和 26.2 Fabric 各通过 23 项实际 GameTest，涵盖战斗、升阶、剑灵及遗传。26.2／1.21.1 实际启动独立 NeoForge 测试世界，确认两个路线可升阶、重复确认不再扣除材料、退出返还；现有八阶暗黑重击一次造成 90 点主伤害。26.1.2 实际启动 Fabric 并点击粉色按钮，确认二阶、耐久、身份、材料与原剑返还，FTB Quests 26.1.2.10 加载 33 项和 67 条中文键，并自动完成普通二阶任务。1.21.1 FTB 加载 33 项，测试途中有 7 项完成。截图见 [共鸣前后](../art/progression/resonance-custom/) 和 [暗黑挥刀](../art/animation/combat-styles/)。
+
+对应日志：`build/resonance-release-{26,1211}.log`、`build/resonance-client-{26,1211}.log`、`build/port-2612-client-confirmed.log` 和 `build/port-2612-gametests-final.log`。测试使用开发实例和一次性世界。26.1.2 开发运行使用 Fabric Loader 0.19.5，本机 PCL 实例为 0.19.2。PCL 整包启动、多玩家共鸣压力及升阶事务的强制退出恢复另待验收。
+
+安装已更新 26.1.2 Fabric、26.2 NeoForge 和 1.21.1 NeoForge 三个本机实例，并验证已复制文件的 SHA-256。26.1.2 安装正式 FTB 依赖，同时备份旧 Fabric API。1.21.1 合并本模组的中文任务键。备份目录为各实例的 `absmod-backups/20261119-172636`，逐文件记录见 `build/resonance-delivery.json`。
+
 ## 2026-11-19 · 剑灵跨维度与中断交接
 
 PLAN-SPIRIT-02、PLAN-SPIRIT-03（剑灵交接）、PLAN-GUIDE-01、PLAN-PORT-01。基线 `main/0c2cecd`。现有未跟踪美术参考保留。换维度和重登后可在安全地面等待剑灵。客户端用虚化剑查询最后位置或重试自己尚未结束的交接。放入原交接槽前会先核对占用与原剑副本。实现方案、旧记录兼容及范围见 [剑灵恢复](IMPLEMENTATION_SPIRIT_RECOVERY.md)。

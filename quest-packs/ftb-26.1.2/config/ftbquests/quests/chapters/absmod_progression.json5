@@ -1,0 +1,568 @@
+{
+  "id": "1C4E810187B7DDC2",
+  "filename": "absmod_progression",
+  "order_index": 0,
+  "group": "",
+  "default_quest_shape": "square",
+  "quests": [
+    {
+      "id": "6B3C47D1AA6174D9",
+      "x": 6.0,
+      "y": 0.0,
+      "rewards": [],
+      "dependencies": [
+        "40A7C3C1C2EE40FF"
+      ],
+      "tasks": [
+        {
+          "id": "4E0134A185A782CF",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/bond",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "0B907F18604F3767",
+      "x": 6.0,
+      "y": 8.0,
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
+      ],
+      "tasks": [
+        {
+          "id": "35D24AD479EFC565",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_chocolate",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "34E3BF58AE347BCB",
+      "x": 6.0,
+      "y": 6.0,
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
+      ],
+      "tasks": [
+        {
+          "id": "3BE1AA988BAF98EF",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_dilute",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "5E13E7815F3499D9",
+      "x": 4.0,
+      "y": 6.0,
+      "rewards": [],
+      "dependencies": [
+        "0F0848705704F039"
+      ],
+      "tasks": [
+        {
+          "id": "195206B9D05417B7",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_family",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "1D4B5A29C0F24A55",
+      "x": 8.0,
+      "y": 8.0,
+      "rewards": [],
+      "dependencies": [
+        "0B907F18604F3767"
+      ],
+      "tasks": [
+        {
+          "id": "33FE6FB05A29F339",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_lilac",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "6EF7AAC7E947FCF4",
+      "x": 10.0,
+      "y": 10.0,
+      "rewards": [],
+      "dependencies": [
+        "386ABD768F5DA804",
+        "1D4B5A29C0F24A55"
+      ],
+      "tasks": [
+        {
+          "id": "1939020C3AD53193",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_lilac_point",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "0F0848705704F039",
+      "x": 2.0,
+      "y": 6.0,
+      "rewards": [],
+      "dependencies": [
+        "2EE6DAB584A476BC"
+      ],
+      "tasks": [
+        {
+          "id": "5657694900D27005",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_observe",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "633AE1D0131E8C4E",
+      "x": 10.0,
+      "y": 14.0,
+      "rewards": [],
+      "dependencies": [
+        "5E5A60C0C13015A4"
+      ],
+      "tasks": [
+        {
+          "id": "59E688D21F095DFB",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_odd_eyes",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "5E5A60C0C13015A4",
+      "x": 8.0,
+      "y": 12.0,
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
+      ],
+      "tasks": [
+        {
+          "id": "5AD0F44FC592B1D3",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_palette",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "187A1C164CF6064B",
+      "x": 10.0,
+      "y": 12.0,
+      "rewards": [],
+      "dependencies": [
+        "5E5A60C0C13015A4"
+      ],
+      "tasks": [
+        {
+          "id": "23B26704A24D68DC",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_patterns",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "0CEB75F537D7A006",
+      "x": 12.0,
+      "y": 14.0,
+      "rewards": [],
+      "dependencies": [
+        "5E5A60C0C13015A4"
+      ],
+      "tasks": [
+        {
+          "id": "37ABCE1DB29E3913",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_pink",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "386ABD768F5DA804",
+      "x": 6.0,
+      "y": 10.0,
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
+      ],
+      "tasks": [
+        {
+          "id": "65790C83F3321853",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_point",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "2C65ACFCEBE608D6",
+      "x": 4.0,
+      "y": 4.0,
+      "rewards": [],
+      "dependencies": [
+        "1956B7BEEE9F4513"
+      ],
+      "tasks": [
+        {
+          "id": "14B20AAEFF16DB6E",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_heavy",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "1956B7BEEE9F4513",
+      "x": 2.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "5093C5A19DFEFCB0"
+      ],
+      "tasks": [
+        {
+          "id": "1D22E4C87B750999",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_1",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "12F5B44B112375CB",
+      "x": 4.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "1956B7BEEE9F4513"
+      ],
+      "tasks": [
+        {
+          "id": "7885EC564485EB16",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_2",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "72BA6A5724618C9A",
+      "x": 6.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "12F5B44B112375CB"
+      ],
+      "tasks": [
+        {
+          "id": "63AE269B92922869",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_3",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "45EBBF761C694ECB",
+      "x": 8.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "72BA6A5724618C9A"
+      ],
+      "tasks": [
+        {
+          "id": "71780E907107A105",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_4",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "7CE9CA0A38DBECC9",
+      "x": 10.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "45EBBF761C694ECB"
+      ],
+      "tasks": [
+        {
+          "id": "27B13D286F336282",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_5",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "6C9936400AD69C67",
+      "x": 12.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "7CE9CA0A38DBECC9"
+      ],
+      "tasks": [
+        {
+          "id": "4096770B86FAFAE0",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_6",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "170DE9D7C0DEAA94",
+      "x": 14.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "6C9936400AD69C67"
+      ],
+      "tasks": [
+        {
+          "id": "4B2707F1E2CC9593",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_7",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "3DA26732C36EF7CD",
+      "x": 16.0,
+      "y": 2.0,
+      "rewards": [],
+      "dependencies": [
+        "170DE9D7C0DEAA94"
+      ],
+      "tasks": [
+        {
+          "id": "6089F43B4E8960B6",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/dark_stage_8",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "2EE6DAB584A476BC",
+      "x": 0.0,
+      "y": 6.0,
+      "rewards": [],
+      "dependencies": [
+        "5093C5A19DFEFCB0"
+      ],
+      "tasks": [
+        {
+          "id": "21B6C1008BBDB981",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/field_guide",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "40A7C3C1C2EE40FF",
+      "x": 4.0,
+      "y": 0.0,
+      "rewards": [],
+      "dependencies": [
+        "14107493DB5542A5"
+      ],
+      "tasks": [
+        {
+          "id": "5C79A8E3E88C0288",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/manifest",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "10D294E7E7DE7BAA",
+      "x": 2.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "5093C5A19DFEFCB0"
+      ],
+      "tasks": [
+        {
+          "id": "0E96AB6DB45E42E5",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_1",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "3FA472D83CF0C5FF",
+      "x": 4.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "10D294E7E7DE7BAA"
+      ],
+      "tasks": [
+        {
+          "id": "486FAD6523FD3837",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_2",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "3AAF35B040478285",
+      "x": 6.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "3FA472D83CF0C5FF"
+      ],
+      "tasks": [
+        {
+          "id": "026C32A3E68F1BA1",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_3",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "12780AC709DDADD0",
+      "x": 8.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "3AAF35B040478285"
+      ],
+      "tasks": [
+        {
+          "id": "700F285A7C3B5BD1",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_4",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "6FBE68BD3C4AB5FB",
+      "x": 10.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "12780AC709DDADD0"
+      ],
+      "tasks": [
+        {
+          "id": "601F8444BA2FB630",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_5",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "58C6F838B8646DCB",
+      "x": 12.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "6FBE68BD3C4AB5FB"
+      ],
+      "tasks": [
+        {
+          "id": "57D6E710F1BB1CF1",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_6",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "4BF138F905D4A819",
+      "x": 14.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "58C6F838B8646DCB"
+      ],
+      "tasks": [
+        {
+          "id": "61D3E35D8673378D",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_7",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "0A372975825F2B68",
+      "x": 16.0,
+      "y": -2.0,
+      "rewards": [],
+      "dependencies": [
+        "4BF138F905D4A819"
+      ],
+      "tasks": [
+        {
+          "id": "68576B1CFB3DE86A",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/normal_stage_8",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "14107493DB5542A5",
+      "x": 2.0,
+      "y": 0.0,
+      "rewards": [],
+      "dependencies": [
+        "5093C5A19DFEFCB0"
+      ],
+      "tasks": [
+        {
+          "id": "453BD589CDFA8EEA",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/resonance",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "5093C5A19DFEFCB0",
+      "x": 0.0,
+      "y": 0.0,
+      "rewards": [],
+      "tasks": [
+        {
+          "id": "1A6D19B2AFB5DF0F",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/root",
+          "criterion": ""
+        }
+      ]
+    }
+  ]
+}

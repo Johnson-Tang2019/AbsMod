@@ -23,6 +23,8 @@ public final class AbsModFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         FabricCombatProbe.register();
+        Registry.register(BuiltInRegistries.MENU, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "resonance"),
+                com.abyssredemption.absmod.spirit.ResonanceMenu.TYPE);
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"meow_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER);
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"dark_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER);
         var guideKey=ResourceKey.create(Registries.ITEM,Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"field_guide"));

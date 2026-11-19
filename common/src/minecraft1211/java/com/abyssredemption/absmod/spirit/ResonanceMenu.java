@@ -15,9 +15,20 @@ import java.util.*;
 
 /** Server-owned input escrow with read-only preview slots and one commit per opening. */
 public final class ResonanceMenu extends AbstractContainerMenu {
+    public static final MenuType<ResonanceMenu> TYPE = new MenuType<>(ResonanceMenu::new,
+            net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS);
+    public static final int CONFIRM_BUTTON = 0;
+    public static final int WIDTH = 216;
+    public static final int HEIGHT = 226;
+    private static final int INPUT_SLOTS = 9;
+    private static final int PREVIEW_SLOT = 10;
+    private static final int FIRST_COST_SLOT = 12;
+    private static final int MAX_COST_SLOTS = 3;
+
+    private final DataSlot affectionTenths = DataSlot.standalone();
+    private final DataSlot completed = DataSlot.standalone();
     private final SimpleContainer contents=new SimpleContainer(27);
     private final Player viewer;
-    private boolean committed;
     private static final int[] AFFECTION={0,0,10,25,45,70,100,140,190,250};
     public record Cost(Item item,int count){}
     public static List<Cost> costs(int target) {
@@ -49,57 +60,128 @@ public final class ResonanceMenu extends AbstractContainerMenu {
         return route==BladeRoute.NORMAL?AFFECTION[target]:new int[]{0,0,5,12,22,35,50,70,100}[target];
     }
     public ResonanceMenu(int id,Inventory inventory) {
-        super(MenuType.GENERIC_9x3,id);
-        viewer=inventory.player;
-        for(int i=0;i<27;i++) {
-            final int position=i;
-            addSlot(new Slot(contents,i,8+(i%9)*18,18+(i/9)*18) {
-                @Override public boolean mayPlace(ItemStack stack) {
-                    return position<9 && (position!=0 || stack.getItem() instanceof MeowBladeItem);
+        super(TYPE, id);
+        viewer = inventory.player;
+        addDataSlot(affectionTenths);
+        addDataSlot(completed);
+        for (int i = 0; i < contents.getContainerSize(); i++) {
+            final int position = i;
+            boolean material = i > 0 && i < INPUT_SLOTS;
+            boolean cost = i >= FIRST_COST_SLOT && i < FIRST_COST_SLOT + MAX_COST_SLOTS;
+            int x = material ? 53 + (i - 1) * 18 : cost ? 53 + (i - FIRST_COST_SLOT) * 18 : 16;
+            int y = i < INPUT_SLOTS ? 48 : 89;
+            addSlot(new Slot(contents, i, x, y) {
+                @Override public boolean isActive() {
+                    return position < INPUT_SLOTS || position == PREVIEW_SLOT || cost;
                 }
-                @Override public boolean mayPickup(Player player){return position<9;}
-                @Override public int getMaxStackSize(){return position==0?1:64;}
+                @Override public boolean mayPlace(ItemStack stack) {
+                    return position < INPUT_SLOTS && (position != 0 || stack.getItem() instanceof MeowBladeItem);
+                }
+                @Override public boolean mayPickup(Player player) {
+                    return position < INPUT_SLOTS;
+                }
+                @Override public int getMaxStackSize() {
+                    return position == 0 ? 1 : super.getMaxStackSize();
+                }
             });
         }
-        for(int row=0;row<3;row++)for(int column=0;column<9;column++)addSlot(new Slot(inventory,column+row*9+9,8+column*18,85+row*18));
-        for(int column=0;column<9;column++)addSlot(new Slot(inventory,column,8+column*18,143));
-        for(int i=9;i<27;i++)contents.setItem(i,label(Items.GLASS_PANE,"resonance.absmod.inputs"));
-        contents.setItem(22,label(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod","resonance_heart")),"resonance.absmod.confirm"));
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 9; column++) {
+                addSlot(new Slot(inventory, column + row * 9 + 9, 28 + column * 18, 146 + row * 18));
+            }
+        }
+        for (int column = 0; column < 9; column++) {
+            addSlot(new Slot(inventory, column, 28 + column * 18, 204));
+        }
     }
+
+    public double currentAffection() {
+        return affectionTenths.get() < 0 ? -1 : affectionTenths.get() / 10.0;
+    }
+
+    public boolean isComplete() {
+        return completed.get() != 0;
+    }
+
+    public boolean hasMaterials(List<Cost> costs) {
+        for (var cost : costs) {
+            int total = 0;
+            for (int slot = 1; slot < INPUT_SLOTS; slot++) {
+                if (contents.getItem(slot).is(cost.item())) {
+                    total += contents.getItem(slot).getCount();
+                }
+            }
+            if (total < cost.count()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static ItemStack label(Item item,String key,Object... args) {
         var stack=new ItemStack(item);stack.set(DataComponents.CUSTOM_NAME,Component.translatable(key,args));return stack;
     }
     @Override public void broadcastChanges() {
-        var sword=contents.getItem(0);
-        contents.setItem(18,ItemStack.EMPTY);
-        contents.setItem(22,label(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod","resonance_heart")),
-                committed?"resonance.absmod.reopen":"resonance.absmod.confirm"));
-        for(int i=10;i<18;i++)contents.setItem(i,ItemStack.EMPTY);
-        if(sword.getItem() instanceof MeowBladeItem blade) {
-            double affection=0;
-            if(viewer instanceof ServerPlayer player && sword.has(BladeSoulComponents.REFERENCE)) {
-                try {
-                    var store=BladeSoulStore.find(player.level().getServer());
-                    if(store.isPresent())affection=BladeSoulService.requireRecord(store.get(),sword).affection().orElse(0D);
-                } catch(IllegalStateException error) { affection=-1; }
-            }
-            contents.setItem(18,label(Items.PAPER,"resonance.absmod.current_affection",affection));
-            int target=blade.stage().number()+1;
-            if(target<9) {
-                var stage=BladeStage.of(blade.stage().route(),target);
-                contents.setItem(10,label(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod",stage.itemId())),"resonance.absmod.preview",target,stage.attackDamage(),stage.baseAttackSpeed(),affection(blade.stage().route(),target)));
-                int slot=12;for(var cost:costs(blade.stage().route(),target)){var icon=new ItemStack(cost.item,cost.count);contents.setItem(slot++,icon);}
-            } else contents.setItem(10,label(Items.BARRIER,blade.stage().route()==BladeRoute.DARK?"resonance.absmod.max_stage":"resonance.absmod.boss_locked"));
+        if (viewer instanceof ServerPlayer player) {
+            updatePreview(player);
         }
         super.broadcastChanges();
     }
-    @Override public void clicked(int slot,int button,ClickType type,Player player) {
-        if(slot>=9 && slot<27) {
-            if(slot==22 && type==ClickType.PICKUP && button==0 && player instanceof ServerPlayer serverPlayer && !committed)upgrade(serverPlayer);
-            broadcastChanges();broadcastFullState();return;
+
+    private void updatePreview(ServerPlayer player) {
+        affectionTenths.set(0);
+        contents.setItem(PREVIEW_SLOT, ItemStack.EMPTY);
+        for (int i = FIRST_COST_SLOT; i < FIRST_COST_SLOT + MAX_COST_SLOTS; i++) {
+            contents.setItem(i, ItemStack.EMPTY);
         }
-        super.clicked(slot,button,type,player);
+        var sword = contents.getItem(0);
+        if (!(sword.getItem() instanceof MeowBladeItem blade)) {
+            return;
+        }
+        if (sword.has(BladeSoulComponents.REFERENCE)) {
+            try {
+                var store = BladeSoulStore.find(player.level().getServer());
+                var record = store.map(saved -> BladeSoulService.requireRecord(saved, sword));
+                int value = record.map(saved -> (int) Math.floor(saved.affection().orElse(0D) * 10)).orElse(-1);
+                affectionTenths.set(Math.clamp(value, -1, Short.MAX_VALUE));
+            } catch (IllegalStateException error) {
+                affectionTenths.set(-1);
+            }
+        }
+        int target = blade.stage().number() + 1;
+        var route = blade.stage().route();
+        if (target >= 9) {
+            contents.setItem(PREVIEW_SLOT, label(Items.BARRIER, route == BladeRoute.DARK
+                    ? "resonance.absmod.max_stage" : "resonance.absmod.boss_locked"));
+            return;
+        }
+        var stage = BladeStage.of(route, target);
+        var next = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod", stage.itemId()));
+        contents.setItem(PREVIEW_SLOT, label(next, "resonance.absmod.preview", target,
+                stage.attackDamage(), stage.baseAttackSpeed(), affection(route, target)));
+        int slot = FIRST_COST_SLOT;
+        for (var cost : costs(route, target)) {
+            contents.setItem(slot++, new ItemStack(cost.item(), cost.count()));
+        }
     }
+
+    @Override public boolean clickMenuButton(Player player, int button) {
+        if (button != CONFIRM_BUTTON || !(player instanceof ServerPlayer serverPlayer) || isComplete()) {
+            return false;
+        }
+        upgrade(serverPlayer);
+        broadcastChanges();
+        broadcastFullState();
+        return true;
+    }
+
+    @Override public void clicked(int slot, int button, ClickType type, Player player) {
+        if (slot >= INPUT_SLOTS && slot < contents.getContainerSize()) {
+            return;
+        }
+        super.clicked(slot, button, type, player);
+    }
+
     private void upgrade(ServerPlayer player) {
         try {
             var sword=contents.getItem(0);
@@ -110,20 +192,21 @@ public final class ResonanceMenu extends AbstractContainerMenu {
             var before=BladeSoulService.initialize(store,sword,player.getUUID());
             if(!before.ownerId().filter(player.getUUID()::equals).isPresent())throw new IllegalStateException("not_owner");
             if(before.affection().orElse(0D)<affection(blade.stage().route(),target))throw new IllegalStateException("affection");
-            for(var cost:costs(blade.stage().route(),target)) {
-                int count=0;for(int i=1;i<9;i++)if(contents.getItem(i).is(cost.item))count+=contents.getItem(i).getCount();
-                if(count<cost.count)throw new IllegalStateException("materials");
+            var costs = costs(blade.stage().route(), target);
+            if (!hasMaterials(costs)) {
+                throw new IllegalStateException("materials");
             }
             var next=(MeowBladeItem)BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod",BladeStage.of(blade.stage().route(),target).itemId()));
             var result=BladeComponentTransfer.transfer(sword,next);
             store.replace(before,before.withStage(target));
-            for(var cost:costs(blade.stage().route(),target)) {
+            for(var cost:costs) {
                 int remaining=cost.count;
                 for(int i=1;i<9 && remaining>0;i++)if(contents.getItem(i).is(cost.item)) {
                     int used=Math.min(remaining,contents.getItem(i).getCount());contents.getItem(i).shrink(used);remaining-=used;
                 }
             }
-            contents.setItem(0,result);committed=true;
+            contents.setItem(0, result);
+            completed.set(1);
             BladeAdvancements.award(player,blade.stage().route().getSerializedName()+"_stage_"+target);
             if(player.connection!=null)player.sendSystemMessage(Component.translatable("resonance.absmod.success"),false);
         } catch(IllegalStateException error) {

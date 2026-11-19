@@ -65,7 +65,7 @@ public final class BladeCombatClient {
         var player = minecraft.player;
         if (minecraft.level != null) { dimension = minecraft.level.dimension().identifier(); }
         boolean eligible = enabled && player != null && minecraft.gameMode != null && minecraft.level != null
-                && !minecraft.isPaused() && minecraft.gui.screen() == null && minecraft.isWindowActive()
+                && !minecraft.isPaused() && ClientScreenAccess.current(minecraft) == null && minecraft.isWindowActive()
                 && player.isAlive() && !player.isSpectator() && !player.isSleeping() && !player.isHandsBusy()
                 && !player.isUsingItem() && !minecraft.options.keyUse.isDown() && !minecraft.gameMode.isDestroying()
                 && accepts(player.getMainHandItem())

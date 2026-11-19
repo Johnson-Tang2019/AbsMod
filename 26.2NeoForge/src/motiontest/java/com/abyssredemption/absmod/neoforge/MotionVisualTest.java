@@ -59,7 +59,7 @@ public final class MotionVisualTest {
         if(tick>=60 && tick<400 && tick%16==0) {
             long seq=++sequence;
             server.execute(()->{var p=server.getPlayerList().getPlayers().getFirst();
-                PacketDistributor.sendToPlayer(p,new BladeSwingPayload(p.getUUID(),java.util.UUID.randomUUID(),seq,p.level().getGameTime(),4));});
+                PacketDistributor.sendToPlayer(p,new BladeSwingPayload(p.getUUID(),java.util.UUID.randomUUID(),seq,p.level().getGameTime(),4,com.abyssredemption.absmod.network.BladeSwingStyle.NORMAL));});
         }
         if(tick>=65 && tick<=245 && tick%2==0 || tick>=345 && tick<=385 && tick%2==0) {
             String name="motion-"+(tick<160?"first":tick<260?"third":"stage9")+"-"+tick+".png";
@@ -73,7 +73,7 @@ public final class MotionVisualTest {
         if(tick>=416 && tick<490 && tick%4==0 || tick>=540 && tick<600 && tick%3==0) {
             long seq=++sequence;
             server.execute(()->{var p=server.getPlayerList().getPlayers().getFirst();
-                PacketDistributor.sendToPlayer(p,new BladeSwingPayload(p.getUUID(),java.util.UUID.randomUUID(),seq,p.level().getGameTime(),20F/6));});
+                PacketDistributor.sendToPlayer(p,new BladeSwingPayload(p.getUUID(),java.util.UUID.randomUUID(),seq,p.level().getGameTime(),20F/6,com.abyssredemption.absmod.network.BladeSwingStyle.NORMAL));});
         }
         if(tick==625)server.execute(()->server.getPlayerList().getPlayers().getFirst().setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD)));
         if(tick>=418 && tick<490 && tick%2==0 || tick>=542 && tick<620 && tick%2==0 || tick==635) {
@@ -86,7 +86,7 @@ public final class MotionVisualTest {
             mc.level.addEntity(remote);
         }
         if(tick>=654 && tick<716 && tick%8==0) {
-            BladeMotionPlayer.confirm(mc,new BladeSwingPayload(remote.getUUID(),java.util.UUID.randomUUID(),++sequence,mc.level.getGameTime(),4));
+            BladeMotionPlayer.confirm(mc,new BladeSwingPayload(remote.getUUID(),java.util.UUID.randomUUID(),++sequence,mc.level.getGameTime(),4,com.abyssredemption.absmod.network.BladeSwingStyle.NORMAL));
         }
         if(tick>=656 && tick<740 && tick%2==0)Screenshot.grab(mc.gameDirectory,"motion-observer-"+tick+".png",mc.gameRenderer.mainRenderTarget(),1,message->{});
         if(tick==750) { LogUtils.getLogger().info("MOTION_VISUAL sequences={} finished",sequence);mc.stop(); }

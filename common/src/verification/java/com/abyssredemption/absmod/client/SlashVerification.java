@@ -1,5 +1,6 @@
 package com.abyssredemption.absmod.client;
 
+import com.abyssredemption.absmod.network.BladeSwingStyle;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.world.phys.Vec3;
@@ -57,13 +58,30 @@ public final class SlashVerification {
         check(maxEarlyAlpha > maxLateAlpha && maxLateAlpha > 0, "The glow must fade over its lifetime");
         check(vertices(MeowSlashGeometry.LIFETIME, 1, Vec3.ZERO).isEmpty() && vertices(30, 1, Vec3.ZERO).isEmpty(),
                 "Expired effects must emit no geometry");
+        var dark = vertices(3, 1, Vec3.ZERO, BladeSwingStyle.DARK);
+        var heavy = vertices(3, 1, Vec3.ZERO, BladeSwingStyle.HEAVY);
+        var impact = vertices(3, 1, Vec3.ZERO, BladeSwingStyle.HEAVY_IMPACT);
+        check(!dark.isEmpty() && dark.size() < right.size(), "Dark slash must be lighter than the ordinary slash");
+        check(!dark.equals(heavy), "Heavy miss must differ from a regular dark slash");
+        check(impact.size() > heavy.size() && impact.subList(0, heavy.size()).equals(heavy),
+                "Only heavy hits must append the ring to the base effect");
+        check(vertices(10, 1, Vec3.ZERO, BladeSwingStyle.DARK).isEmpty(), "Dark slash must expire");
+        check(vertices(10, 1, Vec3.ZERO, BladeSwingStyle.HEAVY_IMPACT)
+                        .equals(vertices(10, 1, Vec3.ZERO, BladeSwingStyle.HEAVY)),
+                "The impact must fade before the heavy sweep");
+        check(vertices(15, 1, Vec3.ZERO, BladeSwingStyle.HEAVY_IMPACT).isEmpty(), "Heavy slash must expire");
+        System.out.println("PASS: dark, heavy and impact geometry");
         System.out.println("PASS: swing deduplication/restarts, slash geometry budget, handedness, translation and fading");
     }
 
     private static List<Vertex> vertices(float age, int direction, Vec3 origin) {
+        return vertices(age, direction, origin, BladeSwingStyle.NORMAL);
+    }
+
+    private static List<Vertex> vertices(float age, int direction, Vec3 origin, BladeSwingStyle style) {
         List<Vertex> result = new ArrayList<>();
         MeowSlashGeometry.emit(new MeowSlashGeometry.Slash(origin, new Vec3(1, 0, 0),
-                        new Vec3(0, 0, 1), new Vec3(0, 1, 0), age, 1, direction),
+                        new Vec3(0, 0, 1), new Vec3(0, 1, 0), age, 1, direction, style),
                 new Vec3(1, 0, 0), new Vec3(0, 1, 0),
                 (x, y, z, color) -> result.add(new Vertex(x, y, z, color)));
         return result;

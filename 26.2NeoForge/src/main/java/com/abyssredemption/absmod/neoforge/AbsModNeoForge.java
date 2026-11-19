@@ -1,6 +1,10 @@
 package com.abyssredemption.absmod.neoforge;
 
 import com.abyssredemption.absmod.AbsMod;
+import com.abyssredemption.absmod.spirit.ResonanceMenu;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import com.abyssredemption.absmod.command.ModCommands;
 import com.abyssredemption.absmod.registry.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -12,6 +16,11 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @Mod(AbsMod.MOD_ID)
 public final class AbsModNeoForge {
+    private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, AbsMod.MOD_ID);
+    static {
+        MENUS.register("resonance", () -> ResonanceMenu.TYPE);
+    }
+
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.entity.EntityType<?>> ENTITIES =
             net.neoforged.neoforge.registries.DeferredRegister.create(
                     net.minecraft.core.registries.Registries.ENTITY_TYPE, AbsMod.MOD_ID);
@@ -41,6 +50,7 @@ public final class AbsModNeoForge {
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPES = net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER,AbsMod.MOD_ID);
     static { RECIPES.register("meow_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER); RECIPES.register("dark_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER); }
     public AbsModNeoForge(IEventBus modEventBus) {
+        MENUS.register(modEventBus);
         RECIPES.register(modEventBus);
         new NeoForgeCombatProbe(modEventBus);
         COMPONENTS.register(modEventBus);

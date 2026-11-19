@@ -15,6 +15,9 @@ public final class AbsModNeoForgeClient {
     private final MeowSlashEffects effects=new MeowSlashEffects();
     private final BladeCombatClient combat=new BladeCombatClient();
     public AbsModNeoForgeClient(IEventBus bus) {
+        bus.addListener((net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) ->
+                event.register(com.abyssredemption.absmod.spirit.ResonanceMenu.TYPE,
+                        com.abyssredemption.absmod.client.ResonanceScreen::new));
         bus.addListener((RegisterColorHandlersEvent.Item e)->e.register((stack,index)->0x66FFD7EF,
             com.abyssredemption.absmod.registry.ModItems.SPECTRAL_BLADES.stream().map(java.util.function.Supplier::get).toArray(net.minecraft.world.item.Item[]::new)));
         bus.addListener((RegisterKeyMappingsEvent e)->e.register(BladeKeys.HEAVY));

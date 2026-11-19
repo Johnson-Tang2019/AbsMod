@@ -16,7 +16,11 @@ public final class FabricCombatProbe {
     private FabricCombatProbe() {}
 
     public static void register() {
-        var probe = new BladeCombatServer((player, payload) -> ServerPlayNetworking.send(player, payload),
+        var probe = new BladeCombatServer((player, payload) -> {
+            if (ServerPlayNetworking.canSend(player, payload.type())) {
+                ServerPlayNetworking.send(player, payload);
+            }
+        },
                 (player, hit) -> net.fabricmc.fabric.api.event.player.AttackEntityCallback.EVENT.invoker()
                         .interact(player, player.level(), net.minecraft.world.InteractionHand.MAIN_HAND, hit.getEntity(), hit)
                         == net.minecraft.world.InteractionResult.PASS);
