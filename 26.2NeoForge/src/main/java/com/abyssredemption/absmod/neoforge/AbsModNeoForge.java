@@ -20,6 +20,7 @@ public final class AbsModNeoForge {
     static {
         MENUS.register("resonance", () -> ResonanceMenu.TYPE);
         MENUS.register("cat_journal", () -> com.abyssredemption.absmod.cat.CatJournalMenu.TYPE);
+        MENUS.register("spirit_board_game", () -> com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE);
     }
 
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.entity.EntityType<?>> ENTITIES =
@@ -75,6 +76,8 @@ public final class AbsModNeoForge {
             event.accept(ModItems.FIELD_GUIDE);
             event.accept(ModItems.BOND_BELL);
             event.accept(ModItems.GENTLE_BRUSH);
+            event.accept(ModItems.BLOSSOM_CLIP);
+            event.accept(ModItems.MOON_CLIP);
             event.accept(ModItems.CAT_NEST);
         }
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {

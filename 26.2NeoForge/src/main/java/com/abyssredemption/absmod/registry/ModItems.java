@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.registry;
 
 import com.abyssredemption.absmod.AbsMod;
+import net.minecraft.world.item.Item;
 import com.abyssredemption.absmod.item.MeowBladeItem;
 import com.abyssredemption.absmod.item.MeowBladeStage;
 import com.abyssredemption.absmod.item.MilkshakeItem;
@@ -33,6 +34,8 @@ public final class ModItems {
             ITEMS.registerItem("bond_bell", com.abyssredemption.absmod.item.BondBellItem::new);
     public static final DeferredItem<com.abyssredemption.absmod.item.GentleBrushItem> GENTLE_BRUSH =
             ITEMS.registerItem("gentle_brush", com.abyssredemption.absmod.item.GentleBrushItem::new);
+    public static final DeferredItem<Item> BLOSSOM_CLIP = ITEMS.registerItem("blossom_clip", properties -> new Item(properties.stacksTo(1)));
+    public static final DeferredItem<Item> MOON_CLIP = ITEMS.registerItem("moon_clip", properties -> new Item(properties.stacksTo(1)));
     public static final DeferredItem<net.minecraft.world.item.BlockItem> CAT_NEST =
             ITEMS.registerItem("cat_nest", properties -> new net.minecraft.world.item.BlockItem(ModBlocks.CAT_NEST.get(), properties));
 

@@ -8,6 +8,9 @@ import com.abyssredemption.absmod.spirit.BladeAdvancements;
 import com.abyssredemption.absmod.spirit.BladeAffection;
 import com.abyssredemption.absmod.spirit.BladeSoulRecord;
 import com.abyssredemption.absmod.spirit.ResonanceMenu;
+import com.abyssredemption.absmod.spirit.SpiritAdornment;
+import com.abyssredemption.absmod.spirit.SpiritGameMenu;
+import com.abyssredemption.absmod.spirit.SpiritWardrobe;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -203,7 +206,48 @@ final class CatJournalViews {
                     CatLife.recall(player, spirit);
                     partners(player, page);
                 }),
-                new Control(label("spirit_refresh"), () -> partnerSpirit(player, id, page))));
+                new Control(label("spirit_refresh"), () -> partnerSpirit(player, id, page)),
+                new Control(leisure("wardrobe"), nearby == null ? null : () -> wardrobe(player, id, page)),
+                new Control(leisure("play"), nearby == null ? null : () -> {
+                    var found = CatLife.spirit(player, id).map(record -> CatLife.nearbySpirit(player, record)).orElse(null);
+                    if (found == null) {
+                        partnerSpirit(player, id, page);
+                    } else {
+                        SpiritGameMenu.open(player, found, () -> partnerSpirit(player, id, page));
+                    }
+                })));
+    }
+
+    private static void wardrobe(ServerPlayer player, UUID id, int page) {
+        var target = CatLife.spirit(player, id).map(record -> CatLife.nearbySpirit(player, record)).orElse(null);
+        if (target == null) {
+            partnerSpirit(player, id, page);
+            return;
+        }
+        try {
+            var equipped = SpiritWardrobe.read(player.level().getServer(), id);
+            var rows = java.util.Arrays.stream(SpiritAdornment.values()).map(style -> {
+                boolean available = SpiritWardrobe.canChoose(player, style);
+                var detail = leisure(style == equipped ? "equipped" : available ? "available" : "needs_item");
+                return new Row(style.displayName(), detail, available && style != equipped ? () -> {
+                    try {
+                        SpiritWardrobe.choose(player, target, style);
+                    } catch (IllegalStateException unavailable) {
+                        player.sendSystemMessage(leisure("wardrobe_unavailable"), true);
+                    }
+                    wardrobe(player, id, page);
+                } : null);
+            }).toList();
+            CatJournalMenu.show(player, leisure("wardrobe"), leisure("wardrobe_hint"), rows,
+                    List.of(new Control(label("back"), () -> partnerSpirit(player, id, page))));
+        } catch (IllegalStateException unavailable) {
+            player.sendSystemMessage(leisure("wardrobe_unavailable"), true);
+            partnerSpirit(player, id, page);
+        }
+    }
+
+    private static Component leisure(String key) {
+        return Component.translatable("leisure.absmod." + key);
     }
 
     private static Component nextAffection(BladeSoulRecord spirit, double affection) {

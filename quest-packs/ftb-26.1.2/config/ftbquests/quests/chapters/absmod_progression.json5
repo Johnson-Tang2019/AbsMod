@@ -648,6 +648,40 @@
           "criterion": ""
         }
       ]
+    },
+    {
+      "id": "4C1B8CF84280F105",
+      "x": 4.0,
+      "y": -4.0,
+      "rewards": [],
+      "dependencies": [
+        "40A7C3C1C2EE40FF"
+      ],
+      "tasks": [
+        {
+          "id": "5C94B4A1EB8197E2",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/spirit_adornment",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "03E3D6EFF96763A4",
+      "x": 6.0,
+      "y": -4.0,
+      "rewards": [],
+      "dependencies": [
+        "40A7C3C1C2EE40FF"
+      ],
+      "tasks": [
+        {
+          "id": "0495871BB19FC87B",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/spirit_board_game",
+          "criterion": ""
+        }
+      ]
     }
   ]
 }

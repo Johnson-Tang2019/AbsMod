@@ -1,0 +1,285 @@
+{
+  "gui_light": "front",
+  "textures": {
+    "petal": "minecraft:block/pink_wool",
+    "centre": "minecraft:block/gold_block",
+    "bar": "minecraft:block/pink_terracotta",
+    "particle": "minecraft:block/pink_wool"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        7,
+        7.65
+      ],
+      "to": [
+        14,
+        9,
+        8.4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bar"
+        },
+        "south": {
+          "texture": "#bar"
+        },
+        "east": {
+          "texture": "#bar"
+        },
+        "west": {
+          "texture": "#bar"
+        },
+        "up": {
+          "texture": "#bar"
+        },
+        "down": {
+          "texture": "#bar"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        6,
+        6.8
+      ],
+      "to": [
+        10,
+        10,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#petal"
+        },
+        "south": {
+          "texture": "#petal"
+        },
+        "east": {
+          "texture": "#petal"
+        },
+        "west": {
+          "texture": "#petal"
+        },
+        "up": {
+          "texture": "#petal"
+        },
+        "down": {
+          "texture": "#petal"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        10,
+        6.6
+      ],
+      "to": [
+        10,
+        13.15,
+        8.2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#petal"
+        },
+        "south": {
+          "texture": "#petal"
+        },
+        "east": {
+          "texture": "#petal"
+        },
+        "west": {
+          "texture": "#petal"
+        },
+        "up": {
+          "texture": "#petal"
+        },
+        "down": {
+          "texture": "#petal"
+        }
+      }
+    },
+    {
+      "from": [
+        9.8,
+        7,
+        6.6
+      ],
+      "to": [
+        13.1,
+        11,
+        8.2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#petal"
+        },
+        "south": {
+          "texture": "#petal"
+        },
+        "east": {
+          "texture": "#petal"
+        },
+        "west": {
+          "texture": "#petal"
+        },
+        "up": {
+          "texture": "#petal"
+        },
+        "down": {
+          "texture": "#petal"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        2.9,
+        6.6
+      ],
+      "to": [
+        11,
+        6.1,
+        8.2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#petal"
+        },
+        "south": {
+          "texture": "#petal"
+        },
+        "east": {
+          "texture": "#petal"
+        },
+        "west": {
+          "texture": "#petal"
+        },
+        "up": {
+          "texture": "#petal"
+        },
+        "down": {
+          "texture": "#petal"
+        }
+      }
+    },
+    {
+      "from": [
+        2.9,
+        5,
+        6.6
+      ],
+      "to": [
+        6.2,
+        9,
+        8.2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#petal"
+        },
+        "south": {
+          "texture": "#petal"
+        },
+        "east": {
+          "texture": "#petal"
+        },
+        "west": {
+          "texture": "#petal"
+        },
+        "up": {
+          "texture": "#petal"
+        },
+        "down": {
+          "texture": "#petal"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        7,
+        6.1
+      ],
+      "to": [
+        9,
+        9,
+        8.3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#centre"
+        },
+        "south": {
+          "texture": "#centre"
+        },
+        "east": {
+          "texture": "#centre"
+        },
+        "west": {
+          "texture": "#centre"
+        },
+        "up": {
+          "texture": "#centre"
+        },
+        "down": {
+          "texture": "#centre"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        8,
+        158,
+        18
+      ],
+      "scale": [
+        1.03,
+        1.03,
+        1.03
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        -10,
+        155,
+        20
+      ],
+      "translation": [
+        0,
+        2,
+        -1
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        15,
+        145,
+        0
+      ],
+      "scale": [
+        0.42,
+        0.42,
+        0.42
+      ]
+    },
+    "ground": {
+      "scale": [
+        0.38,
+        0.38,
+        0.38
+      ]
+    }
+  }
+}

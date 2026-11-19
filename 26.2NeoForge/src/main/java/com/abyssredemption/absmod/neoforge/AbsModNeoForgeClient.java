@@ -30,6 +30,8 @@ public final class AbsModNeoForgeClient {
                     com.abyssredemption.absmod.client.ResonanceScreen::new);
             event.register(com.abyssredemption.absmod.cat.CatJournalMenu.TYPE,
                     com.abyssredemption.absmod.client.CatJournalScreen::new);
+            event.register(com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE,
+                    com.abyssredemption.absmod.client.SpiritGameScreen::new);
         });
         modBus.addListener(this::payloads);
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event) -> {

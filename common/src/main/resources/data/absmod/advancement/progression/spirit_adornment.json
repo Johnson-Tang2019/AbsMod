@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/manifest",
+  "display": {
+    "icon": {
+      "id": "absmod:blossom_clip"
+    },
+    "title": {
+      "translate": "advancement.absmod.spirit_adornment.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.spirit_adornment.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

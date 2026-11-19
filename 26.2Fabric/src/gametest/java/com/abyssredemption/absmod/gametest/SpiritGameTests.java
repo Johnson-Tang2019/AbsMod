@@ -11,6 +11,32 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 
 public final class SpiritGameTests {
+    @GameTest
+    public void spiritTicTacToeRejectsRepeatedMoves(GameTestHelper helper) {
+        var game = new SpiritTicTacToe();
+        var random = net.minecraft.util.RandomSource.create(44);
+        helper.assertTrue(game.play(4, random) && !game.play(4, random) && !game.play(-1, random)
+                && !game.play(9, random), "Board allowed an invalid move");
+        int replies = 0;
+        for (int cell = 0; cell < 9; cell++) {
+            if (game.cell(cell) == SpiritTicTacToe.SPIRIT) {
+                replies++;
+            }
+        }
+        helper.assertTrue(replies == 1 && game.cell(4) == SpiritTicTacToe.PLAYER, "A move did not receive exactly one reply");
+        for (int turn = 0; turn < 4 && game.result() == 0; turn++) {
+            for (int cell = 0; cell < 9; cell++) {
+                if (game.play(cell, random)) {
+                    break;
+                }
+            }
+        }
+        helper.assertTrue(game.result() != 0 && !game.play(0, random), "A completed board accepted another move");
+        game.reset();
+        helper.assertTrue(game.result() == 0 && game.cell(4) == 0 && game.play(4, random), "Rematch retained the old board");
+        helper.succeed();
+    }
+
     private static ServerPlayer mockSurvival(GameTestHelper helper) {
         var player = (ServerPlayer) helper.makeMockServerPlayer(GameType.SURVIVAL);
         if (player.connection != null) {
@@ -242,6 +268,15 @@ public final class SpiritGameTests {
                 "Another player could read the daily interaction ledger");
         var brush = new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("absmod", "gentle_brush")));
         stranger.setPos(player.position());
+        helper.assertTrue(!SpiritWardrobe.choose(player, spirit, SpiritAdornment.BLOSSOM)
+                && !SpiritWardrobe.choose(stranger, spirit, SpiritAdornment.NONE),
+                "A player without the clip or ownership changed the accessory");
+        var clip = SpiritAdornment.BLOSSOM.stack();
+        player.getInventory().setItem(8, clip);
+        helper.assertTrue(SpiritWardrobe.choose(player, spirit, SpiritAdornment.BLOSSOM)
+                && SpiritWardrobe.read(player.level().getServer(), initial.soulId()) == SpiritAdornment.BLOSSOM
+                && clip.getCount() == 1 && SpiritWardrobe.choose(player, spirit, SpiritAdornment.NONE)
+                && spirit.adornment() == SpiritAdornment.NONE, "Accessory selection was not reversible or consumed the clip");
         stranger.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, brush.copy());
         spirit.interact(stranger, net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.phys.Vec3.ZERO);
         helper.assertTrue(!spirit.isGrooming(), "A non-owner could start grooming");

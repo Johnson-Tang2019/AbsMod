@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:gold_nugget",
+    "minecraft:amethyst_shard",
+    "minecraft:string"
+  ],
+  "result": {
+    "id": "absmod:moon_clip",
+    "count": 1
+  }
+}

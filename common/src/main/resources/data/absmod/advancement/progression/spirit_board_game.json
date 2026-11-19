@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/manifest",
+  "display": {
+    "icon": {
+      "id": "minecraft:paper"
+    },
+    "title": {
+      "translate": "advancement.absmod.spirit_board_game.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.spirit_board_game.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

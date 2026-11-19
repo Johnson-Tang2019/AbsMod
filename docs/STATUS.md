@@ -1,5 +1,13 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-19 · 26.1.2 剑灵饰品与井字棋
+
+基线 `main/61691d1`。PLAN-UI-01、PLAN-GUIDE-01 与 PLAN-PORT-01。结缘铃的剑灵详情新增饰品与棋局入口。`SpiritWardrobe` 按灵魂 UUID 保存可重复佩戴的樱花发夹和月牙发夹，`BladeSpiritEntity` 同步选择，Bedrock 头骨骼带动饰品渲染。`SpiritGameMenu` 管理每场独立的井字棋，`SpiritGameScreen` 显示棋盘、结果和重开按钮。注册、原创发夹模型、两款配方、原版进度与中英说明一并接入。见 [剑灵规格](SPIRIT_SYSTEM.md) 和 [26.1.2 指南](PORT_2612.md)。
+
+实机：启动 26.1.2 Fabric 中文客户端并进入隔离世界。通过结缘铃佩戴樱花、切换月牙，核对饰品数量、召回后重新显现的外观和世界存档中的饰品选择。实点棋盘完成一局并重开，确认两项 FTB 任务完成。手册第 31–32 页同步操作，FTB 从 38 项增至 40 项，原 38 项定义逐项比对一致。见 `build/spirit-leisure-2612-client.log` 和 `26.1.2Fabric/run/screenshots/port2612-spirit-{wardrobe,board,adornment}.png`。两款发夹在测试中由夹具提供，生存实作配方、退出重登与多玩家客户端尚未实测。
+
+构建与安装：26.1.2 发布包与 25 项服务端 GameTest 通过，含重复落子、结束后落子和饰品权限测试。26.2 双加载器、1.21.1 兼容构建通过，并核对发布包资源与相应版本边界。26.1.2 Fabric 0.19.2 本机实例已更新 JAR、FTB 章节和中文说明，三份均核对 SHA-256。旧版备份于该实例的 `absmod-backups/20261119-225023`。见 `build/spirit-leisure-2612-release.log`、`build/spirit-leisure-final-26.log`、`build/spirit-leisure-final-1211.log` 与 `build/spirit-leisure-2612-delivery.json`。
+
 
 ## 2026-11-19 · 26.1.2 樱绒梳
 

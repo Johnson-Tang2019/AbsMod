@@ -98,11 +98,20 @@ public final class AbsModFabric implements ModInitializer {
                 new com.abyssredemption.absmod.item.GentleBrushItem(new Item.Properties().setId(brushKey)));
         Registry.register(BuiltInRegistries.MENU, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "cat_journal"),
                 com.abyssredemption.absmod.cat.CatJournalMenu.TYPE);
+        Registry.register(BuiltInRegistries.MENU, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "spirit_board_game"),
+                com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE);
+        var adornments = Arrays.stream(com.abyssredemption.absmod.spirit.SpiritAdornment.values())
+                .filter(style -> style != com.abyssredemption.absmod.spirit.SpiritAdornment.NONE)
+                .map(style -> {
+                    var key = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, style.getSerializedName()));
+                    return Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties().setId(key).stacksTo(1)));
+                }).toList();
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
             entries.accept(nestItem);
             entries.accept(bell);
             entries.accept(brush);
             entries.accept(guide);
+            adornments.forEach(entries::accept);
         });
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:pink_wool",
+    "minecraft:gold_nugget",
+    "minecraft:string"
+  ],
+  "result": {
+    "id": "absmod:blossom_clip",
+    "count": 1
+  }
+}

@@ -4,6 +4,8 @@ import com.abyssredemption.absmod.item.GentleBrushItem;
 import com.abyssredemption.absmod.spirit.BladeAffection;
 import com.abyssredemption.absmod.spirit.BladeSoulStore;
 import com.abyssredemption.absmod.spirit.SpiritTransformationService;
+import com.abyssredemption.absmod.spirit.SpiritAdornment;
+import com.abyssredemption.absmod.spirit.SpiritWardrobe;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,6 +33,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 public final class BladeSpiritEntity extends PathfinderMob {
     private static final EntityDataAccessor<Boolean> GROOMING =
             SynchedEntityData.defineId(BladeSpiritEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> ADORNMENT =
+            SynchedEntityData.defineId(BladeSpiritEntity.class, EntityDataSerializers.INT);
     private UUID ownerId;
     private UUID soulId;
     private static final int FOLLOW_INTERVAL = 10;
@@ -58,6 +62,15 @@ public final class BladeSpiritEntity extends PathfinderMob {
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(GROOMING, false);
+        builder.define(ADORNMENT, SpiritAdornment.NONE.ordinal());
+    }
+
+    public SpiritAdornment adornment() {
+        return SpiritAdornment.fromNetwork(entityData.get(ADORNMENT));
+    }
+
+    public void setAdornment(SpiritAdornment style) {
+        entityData.set(ADORNMENT, style.ordinal());
     }
 
     public boolean startGrooming(ServerPlayer owner) {
@@ -117,6 +130,13 @@ public final class BladeSpiritEntity extends PathfinderMob {
         }
         if (!(level() instanceof ServerLevel level) || isRemoved()) { return; }
         if ((tickCount == 1 || tickCount % FOLLOW_INTERVAL == 0) && retireStaleCarrier(level)) { return; }
+        if (tickCount == 1 && soulId != null) {
+            try {
+                setAdornment(SpiritWardrobe.read(level.getServer(), soulId));
+            } catch (IllegalStateException unavailable) {
+                com.mojang.logging.LogUtils.getLogger().warn("Could not read adornment for {}", soulId, unavailable);
+            }
+        }
         if (isGrooming()) {
             var owner = ownerId == null ? null : level.getPlayerByUUID(ownerId);
             if (tickCount >= groomingEnd || !(owner instanceof ServerPlayer player)

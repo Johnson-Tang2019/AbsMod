@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCES = ROOT / "common/src/main/resources"
-MODERN_ONLY_QUESTS = {"gentle_brush"}
+MODERN_ONLY_QUESTS = {"gentle_brush", "spirit_adornment", "spirit_board_game"}
 POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | MODERN_ONLY_QUESTS
 
 
@@ -31,7 +31,7 @@ def generate():
                  "cat_chocolate": (6, 8), "cat_lilac": (8, 8), "cat_point": (6, 10), "cat_lilac_point": (10, 10),
                  "cat_family": (4, 6), "cat_dilute": (6, 6), "dark_heavy": (4, 4),
                  "cat_collection": (2, 8), "cat_pedigree": (4, 10), "cat_nest": (2, 10), "cat_bell": (2, 12),
-                 "gentle_brush": (0, 8)}
+                 "gentle_brush": (0, 8), "spirit_adornment": (4, -4), "spirit_board_game": (6, -4)}
     for stage in range(1, 9):
         positions["normal_stage_" + str(stage)] = (stage * 2, -2)
         positions["dark_stage_" + str(stage)] = (stage * 2, 2)
@@ -103,6 +103,17 @@ def generate():
                 "工作台合成：粉红色羊毛、白色羊毛并排。白色羊毛下面两格依次放线、木棍。",
                 "拿在主手，靠近并右键自家的驯服猫或已显现的剑灵。猫会转头和发出呼噜声，剑灵会低头回应。",
                 "剑灵梳理与当天的普通交流共用一次好感奖励。当天已记录后仍可梳理。"
+            ])
+        if name == "spirit_adornment":
+            quest["description"].extend([
+                "樱花发夹：粉红色羊毛、金粒、线。月纹发夹：金粒、紫水晶碎片、线。均无序合成。",
+                "把发夹带在背包里。先显现自己的剑灵，再持结缘铃对空气右键，进入附近剑灵的详情，点「剑灵饰品」选样式。",
+                "可随时换款或收起。发夹可重复使用，外观随同一把剑保存。"
+            ])
+        if name == "spirit_board_game":
+            quest["description"].extend([
+                "前置：自己的剑灵已显现且在附近。持结缘铃对空气右键，打开该剑灵的详情，点「玩井字棋」。",
+                "你先落 X，剑灵落 O，先在一条线上连三枚获胜。下完一局即可完成，获胜、落败或平局都算。"
             ])
         quests.append(quest)
     chapter = {"id": stable_id("chapter"), "filename": "absmod_progression", "title": "喵刀与猫咪生活",

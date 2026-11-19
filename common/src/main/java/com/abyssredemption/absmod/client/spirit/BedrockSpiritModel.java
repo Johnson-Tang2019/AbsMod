@@ -10,9 +10,11 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 public final class BedrockSpiritModel extends EntityModel<LivingEntityRenderState> {
     private final Map<String, ModelPart> bones;
     private final boolean nurseFox;
+    private final java.util.List<ModelPart> headAncestry;
     public BedrockSpiritModel(BedrockGeometry.Baked baked) {
         super(baked.root());
         nurseFox = baked.bones().containsKey("GuiRoot") && baked.bones().containsKey("NurseCap");
+        headAncestry = baked.ancestry(nurseFox ? "Head" : "head");
         bones = new java.util.LinkedHashMap<>(baked.bones());
         if (nurseFox) {
             String[][] aliases = {{"head","Head"},{"body","UpBody"},{"left_arm","LeftArm"},
@@ -27,6 +29,15 @@ public final class BedrockSpiritModel extends EntityModel<LivingEntityRenderStat
         for (String name : new String[]{"head","body","left_arm","right_arm","left_leg","right_leg","left_ear","right_ear","tail"}) {
             if (!bones.containsKey(name)) { throw new IllegalArgumentException("Required spirit bone missing: " + name); }
         }
+    }
+
+    void positionAdornment(com.mojang.blaze3d.vertex.PoseStack poses, LivingEntityRenderState state) {
+        setupAnim(state);
+        for (var part : headAncestry) {
+            part.translateAndRotate(poses);
+        }
+        poses.translate(-0.27F, nurseFox ? -0.31F : -0.35F, -0.27F);
+        poses.scale(0.34F, -0.34F, 0.34F);
     }
     @Override public void setupAnim(LivingEntityRenderState state) {
         super.setupAnim(state);

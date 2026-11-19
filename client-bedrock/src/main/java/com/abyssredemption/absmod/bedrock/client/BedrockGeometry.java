@@ -17,7 +17,21 @@ public final class BedrockGeometry {
     private static final int[][] ORDER = {{5,4,0,1},{2,3,7,6},{1,0,3,2},{4,5,6,7},{0,4,7,3},{5,1,2,6}};
     private BedrockGeometry() {}
 
-    public record Baked(ModelPart root, Map<String, ModelPart> bones, int width, int height) {}
+    public record Baked(ModelPart root, Map<String, ModelPart> bones, int width, int height, Map<String, String> parents) {
+        public Baked(ModelPart root, Map<String, ModelPart> bones, int width, int height) {
+            this(root, bones, width, height, Map.of());
+        }
+
+        public List<ModelPart> ancestry(String name) {
+            var chain = new ArrayList<ModelPart>();
+            for (String bone = name; bone != null; bone = parents.get(bone)) {
+                chain.add(bones.get(bone));
+            }
+            chain.add(root);
+            Collections.reverse(chain);
+            return List.copyOf(chain);
+        }
+    }
 
     public static Baked read(Reader reader) {
         JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
@@ -41,9 +55,16 @@ public final class BedrockGeometry {
         }
         Map<String, ModelPart> parts = new LinkedHashMap<>(), roots = new LinkedHashMap<>();
         for (String name : definitions.keySet()) { bake(name, definitions, parts, new HashSet<>(), width, height); }
-        definitions.forEach((name, bone) -> { if (!bone.has("parent")) { roots.put(name, parts.get(name)); } });
+        Map<String, String> parents = new LinkedHashMap<>();
+        definitions.forEach((name, bone) -> {
+            if (!bone.has("parent")) {
+                roots.put(name, parts.get(name));
+            } else {
+                parents.put(name, bone.get("parent").getAsString());
+            }
+        });
         if (roots.isEmpty()) { throw new IllegalArgumentException("No root bone"); }
-        return new Baked(new ModelPart(List.of(), roots), Map.copyOf(parts), width, height);
+        return new Baked(new ModelPart(List.of(), roots), Map.copyOf(parts), width, height, Map.copyOf(parents));
     }
 
     private static ModelPart bake(String name, Map<String, JsonObject> definitions, Map<String, ModelPart> parts,

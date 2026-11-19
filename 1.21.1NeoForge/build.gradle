@@ -33,6 +33,8 @@ processResources {
     from('../common/src/main/resources') {
         exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**'
         exclude 'assets/absmod/models/item/gentle_brush.json', 'data/absmod/**/gentle_brush.json'
+        exclude 'assets/absmod/models/item/blossom_clip.json', 'assets/absmod/models/item/moon_clip.json', 'data/absmod/**/blossom_clip.json', 'data/absmod/**/moon_clip.json',
+                'data/absmod/advancement/progression/spirit_adornment.json', 'data/absmod/advancement/progression/spirit_board_game.json'
     }
     from('../client-bedrock/src/main/resources')
     inputs.property 'version', project.version
