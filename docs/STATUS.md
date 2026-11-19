@@ -1,6 +1,18 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
 
+## 2026-11-19 · 猫咪收藏、家谱与安置
+
+基线：\`main/b8f6fe4\`。任务：PLAN-CAT-01、PLAN-HOME-01／02、PLAN-GUIDE-01、PLAN-PORT-01。观察手册新增独立收藏界面。可按毛色、花纹、眼色组合筛选或只看自家猫，逐个打开已观察的亲本与后代。绒月猫窝、结缘铃、休息与呼唤寻路、伙伴详情及现有召回服务已接入。猫窝和铃的材料与交互为首版原型，详见 [猫咪玩法](CAT_GENETICS.md)。
+
+源码与资源：两个 API 分支的 \`CatLifeStore\`、\`CatLife\`、\`CatHomeGoal\`、\`CatJournalMenu\` 和客户端界面，\`CatNestBlock\` 与 \`BondBellItem\`，各加载器注册、原创模型、配方、掉落、双语说明与进度。手册第 25–28 页和 1.21.1／26.1.2 FTB 同步增加四项目标。导出比对确认各 33 项既有任务 ID、触发条件与依赖一致，新编号为正；两版各 37 项。
+
+实机：26.2 与 1.21.1 NeoForge 在隔离存档打开收藏，点击黑色滤项，沿家谱查看已记录亲属与未知亲本。实测放置、选猫、绑定、走进窝后坐下、铃铛步行呼唤、剑灵召回同一把原剑，重开后核对收藏、家谱、铃铛选择和窝的关联，拆窝后原猫仍在。1.21.1 原版与 FTB 四个新增目标均完成。26.1.2 Fabric 实际点击收藏滤项，检查 FTB 新收藏任务完成。证据见 \`build/cat-life-client-*-final.log\` 与 \`build/cat-life-ftb-2612-final.log\`。
+
+构建：26.2 双加载器、26.1.2 Fabric、1.21.1 NeoForge。两版 Fabric 服务端各 24 项 GameTest，包括多猫分别绑定、拒绝旁人控制、重分配与拆除清理。证据见 \`build/cat-life-release-*.log\`。多人客户端、独立区块卸载顺序、长期生存平衡及个体头像待验收或实现。
+
+本机交付：26.2 NeoForge、1.21.1 NeoForge 与 26.1.2 Fabric 已更新并核对 SHA-256。两个 FTB 实例同步章节与中文说明。旧文件备份位于各实例的 `absmod-backups/20261119-201917`，逐文件记录见 `build/cat-life-delivery.json`。
+
 ## 2026-11-19 · 共鸣升阶中断恢复
 
 基线 `main/d8485ab`。对应 PLAN-SPIRIT-03、PLAN-DOC-01、PLAN-GUIDE-01 和 PLAN-PORT-01。两个共享源码分支的 `ResonanceEscrow`、`ResonancePlayerStorageMixin`、`ResonanceMenu` 和 `SpiritTransferJournal` 将原剑、材料、光标和待结算状态与背包一起保存。共鸣之心入口与两加载器的登录事件会核对中断。背包满时留在工坊，腾空后重开取回。同步双语 README、手册第 12 页和两版现有 FTB 共鸣任务。两版各 33 个任务的 ID 和条件保持一致。

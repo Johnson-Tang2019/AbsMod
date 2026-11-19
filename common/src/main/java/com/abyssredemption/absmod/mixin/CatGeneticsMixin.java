@@ -10,7 +10,18 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(Cat.class)
-public abstract class CatGeneticsMixin implements CatGenetics {
+public abstract class CatGeneticsMixin implements CatGenetics, CatHomeGoal.Carrier {
+    @Unique private CatHomeGoal absmod$restGoal;
+
+    @Override public CatHomeGoal absmod$homeGoal() { return absmod$restGoal; }
+
+    @Inject(method = "registerGoals", at = @At("TAIL"))
+    private void absmod$registerRestGoal(CallbackInfo callback) {
+        var cat = (Cat) (Object) this;
+        absmod$restGoal = new CatHomeGoal(cat);
+        ((MobGoalAccessor) (Object) cat).absmod$goals().addGoal(5, absmod$restGoal);
+    }
+
     @Shadow private void setVariant(net.minecraft.core.Holder<net.minecraft.world.entity.animal.feline.CatVariant> variant){throw new AssertionError();}
     @Unique private CatGenome absmod$genome;
     @Override public CatGenome absmod$getGenome() {
@@ -45,6 +56,13 @@ public abstract class CatGeneticsMixin implements CatGenetics {
     }
     @Inject(method="mobInteract",at=@At("HEAD"),cancellable=true)
     private void observe(net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,CallbackInfoReturnable<net.minecraft.world.InteractionResult> callback) {
+        if (player.getItemInHand(hand).getItem() instanceof com.abyssredemption.absmod.item.BondBellItem) {
+            if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+                CatLife.select(serverPlayer, (Cat) (Object) this);
+            }
+            callback.setReturnValue(net.minecraft.world.InteractionResult.SUCCESS);
+            return;
+        }
         if(player.getItemInHand(hand).getItem() instanceof com.abyssredemption.absmod.item.FieldGuideItem) {
             if(player instanceof net.minecraft.server.level.ServerPlayer serverPlayer)
                 com.abyssredemption.absmod.item.FieldGuideItem.observe(serverPlayer,(Cat)(Object)this,hand);

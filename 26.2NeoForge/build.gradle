@@ -54,6 +54,12 @@ if (providers.gradleProperty("spiritRecoveryTest").isPresent()) {
 }
 
 // Explicit fault injection in a disposable world. Never part of a release.
+if (providers.gradleProperty("catLifePhase").isPresent()) {
+    sourceSets.main.java.srcDir "src/catlifeverification/java"
+    neoForge.runs.client.systemProperty "absmod.catLifePhase", providers.gradleProperty("catLifePhase").get()
+    neoForge.runs.client.systemProperty "absmod.catLifeWorld", providers.gradleProperty("catLifeWorld").get()
+}
+
 if (providers.gradleProperty("resonanceRecoveryPhase").isPresent()) {
     sourceSets.main.java.srcDir "src/resonancetest/java"
     neoForge.runs.client.systemProperty "absmod.resonancePhase", providers.gradleProperty("resonanceRecoveryPhase").get()

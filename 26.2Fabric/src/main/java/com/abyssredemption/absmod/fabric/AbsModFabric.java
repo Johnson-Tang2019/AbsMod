@@ -28,7 +28,9 @@ public final class AbsModFabric implements ModInitializer {
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"meow_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER);
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"dark_blade_crafting"), com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER);
         var guideKey=ResourceKey.create(Registries.ITEM,Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"field_guide"));
-        Registry.register(BuiltInRegistries.ITEM,guideKey,new com.abyssredemption.absmod.item.FieldGuideItem(new Item.Properties().setId(guideKey)));
+        var guide = Registry.register(BuiltInRegistries.ITEM, guideKey,
+                new com.abyssredemption.absmod.item.FieldGuideItem(new Item.Properties().setId(guideKey)));
+        registerCatLife(guide);
         var resonanceKey=ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID,"resonance_heart"));
         var resonance=Registry.register(BuiltInRegistries.ITEM,resonanceKey,new com.abyssredemption.absmod.item.ResonanceHeartItem(new Item.Properties().setId(resonanceKey)));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(entries->entries.accept(resonance));
@@ -77,5 +79,26 @@ public final class AbsModFabric implements ModInitializer {
                 Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, variant.itemId()));
         return Registry.register(BuiltInRegistries.ITEM, key,
                 new MilkshakeItem(new Item.Properties().setId(key), variant));
+    }
+    private static void registerCatLife(Item guide) {
+        var nestId = Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "cat_nest");
+        var nestKey = ResourceKey.create(Registries.BLOCK, nestId);
+        var nest = Registry.register(BuiltInRegistries.BLOCK, nestKey, new com.abyssredemption.absmod.cat.CatNestBlock(
+                net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().setId(nestKey)
+                        .noCollision().strength(0.4F).sound(net.minecraft.world.level.block.SoundType.WOOL)
+                        .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK)));
+        var itemKey = ResourceKey.create(Registries.ITEM, nestId);
+        var nestItem = Registry.register(BuiltInRegistries.ITEM, itemKey,
+                new net.minecraft.world.item.BlockItem(nest, new Item.Properties().setId(itemKey).useBlockDescriptionPrefix()));
+        var bellKey = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "bond_bell"));
+        var bell = Registry.register(BuiltInRegistries.ITEM, bellKey,
+                new com.abyssredemption.absmod.item.BondBellItem(new Item.Properties().setId(bellKey)));
+        Registry.register(BuiltInRegistries.MENU, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "cat_journal"),
+                com.abyssredemption.absmod.cat.CatJournalMenu.TYPE);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
+            entries.accept(nestItem);
+            entries.accept(bell);
+            entries.accept(guide);
+        });
     }
 }

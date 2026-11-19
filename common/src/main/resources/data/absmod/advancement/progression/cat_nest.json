@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/cat_observe",
+  "display": {
+    "icon": {
+      "id": "absmod:cat_nest"
+    },
+    "title": {
+      "translate": "advancement.absmod.cat_nest.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cat_nest.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

@@ -19,6 +19,7 @@ public final class AbsModNeoForge {
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, AbsMod.MOD_ID);
     static {
         MENUS.register("resonance", () -> ResonanceMenu.TYPE);
+        MENUS.register("cat_journal", () -> com.abyssredemption.absmod.cat.CatJournalMenu.TYPE);
     }
 
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.entity.EntityType<?>> ENTITIES =
@@ -56,6 +57,7 @@ public final class AbsModNeoForge {
         COMPONENTS.register(modEventBus);
         ENTITIES.register(modEventBus);
         modEventBus.addListener(AbsModNeoForge::attributes);
+        com.abyssredemption.absmod.registry.ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         TABS.register(modEventBus);
         modEventBus.addListener(AbsModNeoForge::addCreativeItems);
@@ -69,6 +71,11 @@ public final class AbsModNeoForge {
     }
 
     private static void addCreativeItems(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey().equals(CreativeModeTabs.TOOLS_AND_UTILITIES)) {
+            event.accept(ModItems.FIELD_GUIDE);
+            event.accept(ModItems.BOND_BELL);
+            event.accept(ModItems.CAT_NEST);
+        }
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {
             ModItems.MEOW_BLADES.forEach(item -> event.accept(item));
             ModItems.DARK_BLADES.forEach(item -> event.accept(item));

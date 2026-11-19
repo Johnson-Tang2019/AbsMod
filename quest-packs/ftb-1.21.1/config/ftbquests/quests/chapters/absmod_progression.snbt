@@ -29,6 +29,31 @@
       ]
     },
     {
+      "id": "4F30DF8D1CCF70D3",
+      "title": "听见铃声",
+      "description": [
+        "使用结缘铃呼唤一只附近且可达的自家猫。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "材料：铜锭、粉红色染料、铜锭／铜锭、紫水晶碎片、铜锭／空格、线、空格。",
+        "用铃右键自家的驯服猫选中它。退几步，潜行对空气右键呼唤。只呼唤16格内已加载且有路可达的猫。",
+        "对空气右键查看伙伴和上次位置。在附近剑灵的详情中可召回原剑，原槽或虚化剑槽须可用。"
+      ],
+      "x": 2.0,
+      "y": 12.0,
+      "tasks": [
+        {
+          "id": "2FBE80D0009B8E00",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_bell",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "748803B75D9C83A3"
+      ]
+    },
+    {
       "id": "8B907F18604F3767",
       "title": "巧克力的秘密",
       "description": [
@@ -49,6 +74,29 @@
       "rewards": [],
       "dependencies": [
         "5E13E7815F3499D9"
+      ]
+    },
+    {
+      "id": "0C40FE16BD0D9954",
+      "title": "翻开万花猫谱",
+      "description": [
+        "观察至少一只猫后，在手册收藏里使用一次筛选。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "前置：观察一只猫。拿手册右键猫记录，再潜行用手册对空气右键。点击毛色、花纹或眼睛切换筛选，也可只看自家猫。"
+      ],
+      "x": 2.0,
+      "y": 8.0,
+      "tasks": [
+        {
+          "id": "7D70557A13A10692",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_collection",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "8F0848705704F039"
       ]
     },
     {
@@ -143,6 +191,30 @@
       ]
     },
     {
+      "id": "748803B75D9C83A3",
+      "title": "绒月小窝",
+      "description": [
+        "用结缘铃为自己的驯服猫绑定一张绒月猫窝。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "材料：线、空格、线／白色羊毛×3／任意木板×3，分三行合成。",
+        "先用结缘铃右键自家的驯服猫，再右键已放置的猫窝绑定。空手右键让猫回窝，潜行右键解除。猫应在16格内且道路可达。"
+      ],
+      "x": 2.0,
+      "y": 10.0,
+      "tasks": [
+        {
+          "id": "2879D891EF458AC9",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_nest",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "8F0848705704F039"
+      ]
+    },
+    {
       "id": "8F0848705704F039",
       "title": "认识新朋友",
       "description": [
@@ -231,6 +303,29 @@
       "rewards": [],
       "dependencies": [
         "5E5A60C0C13015A4"
+      ]
+    },
+    {
+      "id": "36EE8561675FBA69",
+      "title": "家谱上的小脚印",
+      "description": [
+        "从收藏打开一只有亲本记录的猫的家谱。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "前置：观察有谱系的幼猫。打开手册收藏并点击这只猫。观察过的亲本和后代可点击，未观察的亲本保留空位。"
+      ],
+      "x": 4.0,
+      "y": 10.0,
+      "tasks": [
+        {
+          "id": "19949EA175019FAD",
+          "type": "advancement",
+          "advancement": "absmod:progression/cat_pedigree",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
       ]
     },
     {

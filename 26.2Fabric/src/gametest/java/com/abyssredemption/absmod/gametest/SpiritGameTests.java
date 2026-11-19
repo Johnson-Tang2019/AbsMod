@@ -20,6 +20,50 @@ public final class SpiritGameTests {
     }
 
     @GameTest
+    public void catHomesRespectOwnersAndCleanup(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var first = helper.spawn(net.minecraft.world.entity.EntityTypes.CAT, 1, 2, 1);
+        var second = helper.spawn(net.minecraft.world.entity.EntityTypes.CAT, 3, 2, 1);
+        var owner = mockSurvival(helper);
+        var stranger = mockSurvival(helper);
+        owner.setPos(first.position());
+        stranger.setPos(first.position());
+        first.tame(owner);
+        second.tame(owner);
+        var firstPos = helper.absolutePos(new net.minecraft.core.BlockPos(1, 2, 3));
+        var secondPos = helper.absolutePos(new net.minecraft.core.BlockPos(3, 2, 3));
+        var nest = BuiltInRegistries.BLOCK.getValue(Identifier.fromNamespaceAndPath("absmod", "cat_nest"));
+        level.setBlock(firstPos, nest.defaultBlockState(), 3);
+        level.setBlock(secondPos, nest.defaultBlockState(), 3);
+        var firstSpot = net.minecraft.core.GlobalPos.of(level.dimension(), firstPos);
+        var secondSpot = net.minecraft.core.GlobalPos.of(level.dimension(), secondPos);
+        var store = com.abyssredemption.absmod.cat.CatLife.store(owner);
+        store.place(firstSpot, owner.getUUID());
+        store.place(secondSpot, owner.getUUID());
+        com.abyssredemption.absmod.cat.CatLife.select(owner, first);
+        com.abyssredemption.absmod.cat.CatLife.bind(owner, firstPos);
+        com.abyssredemption.absmod.cat.CatLife.select(owner, second);
+        com.abyssredemption.absmod.cat.CatLife.bind(owner, secondPos);
+        helper.assertTrue(store.home(first.getUUID()).spot().equals(firstSpot)
+                && store.home(second.getUUID()).spot().equals(secondSpot), "Two cats did not retain independent homes");
+
+        store.observe(stranger, first);
+        com.abyssredemption.absmod.cat.CatLife.select(stranger, first);
+        com.abyssredemption.absmod.cat.CatLife.useNest(stranger, firstPos, true);
+        helper.assertTrue(store.selected(stranger.getUUID()) == null && store.home(first.getUUID()) != null
+                && store.observation(stranger.getUUID(), first.getUUID()).lastSeen().isEmpty(),
+                "A second player accessed a private binding or coordinates");
+
+        com.abyssredemption.absmod.cat.CatLife.bind(owner, firstPos);
+        helper.assertTrue(store.home(first.getUUID()) == null && store.home(second.getUUID()).spot().equals(firstSpot)
+                && store.at(secondSpot).cat().isEmpty(), "Reassigning a cat left a duplicate home");
+        level.removeBlock(firstPos, false);
+        helper.assertTrue(store.home(second.getUUID()) == null && store.at(firstSpot) == null
+                && first.isAlive() && second.isAlive(), "Nest removal left a stale binding or removed a cat");
+        helper.succeed();
+    }
+
+    @GameTest
     public void catGenomeUsesBothParentsAndPersists(GameTestHelper helper) {
         var first=helper.spawn(net.minecraft.world.entity.EntityTypes.CAT,1,1,1);
         var second=helper.spawn(net.minecraft.world.entity.EntityTypes.CAT,3,1,1);

@@ -23,6 +23,23 @@
       ]
     },
     {
+      "id": "4F30DF8D1CCF70D3",
+      "x": 2.0,
+      "y": 12.0,
+      "rewards": [],
+      "dependencies": [
+        "748803B75D9C83A3"
+      ],
+      "tasks": [
+        {
+          "id": "2FBE80D0009B8E00",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_bell",
+          "criterion": ""
+        }
+      ]
+    },
+    {
       "id": "0B907F18604F3767",
       "x": 6.0,
       "y": 8.0,
@@ -35,6 +52,23 @@
           "id": "35D24AD479EFC565",
           "type": "ftbquests:advancement",
           "advancement": "absmod:progression/cat_chocolate",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "0C40FE16BD0D9954",
+      "x": 2.0,
+      "y": 8.0,
+      "rewards": [],
+      "dependencies": [
+        "0F0848705704F039"
+      ],
+      "tasks": [
+        {
+          "id": "7D70557A13A10692",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_collection",
           "criterion": ""
         }
       ]
@@ -109,6 +143,23 @@
       ]
     },
     {
+      "id": "748803B75D9C83A3",
+      "x": 2.0,
+      "y": 10.0,
+      "rewards": [],
+      "dependencies": [
+        "0F0848705704F039"
+      ],
+      "tasks": [
+        {
+          "id": "2879D891EF458AC9",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_nest",
+          "criterion": ""
+        }
+      ]
+    },
+    {
       "id": "0F0848705704F039",
       "x": 2.0,
       "y": 6.0,
@@ -172,6 +223,23 @@
           "id": "23B26704A24D68DC",
           "type": "ftbquests:advancement",
           "advancement": "absmod:progression/cat_patterns",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "36EE8561675FBA69",
+      "x": 4.0,
+      "y": 10.0,
+      "rewards": [],
+      "dependencies": [
+        "5E13E7815F3499D9"
+      ],
+      "tasks": [
+        {
+          "id": "19949EA175019FAD",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/cat_pedigree",
           "criterion": ""
         }
       ]

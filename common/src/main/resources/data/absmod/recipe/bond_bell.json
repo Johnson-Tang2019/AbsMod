@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CDC",
+    "CAC",
+    " S "
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "D": "minecraft:pink_dye",
+    "A": "minecraft:amethyst_shard",
+    "S": "minecraft:string"
+  },
+  "result": {
+    "id": "absmod:bond_bell",
+    "count": 1
+  }
+}

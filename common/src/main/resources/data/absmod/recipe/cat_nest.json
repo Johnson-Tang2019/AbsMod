@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "S S",
+    "WWW",
+    "PPP"
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "W": "minecraft:white_wool",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "absmod:cat_nest",
+    "count": 1
+  }
+}

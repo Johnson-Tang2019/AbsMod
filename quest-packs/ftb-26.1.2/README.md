@@ -1,6 +1,6 @@
 # Ab's Mod 26.1.2 Fabric 任务包
 
-将本目录的 `config/ftbquests/quests` 合并到 26.1.2 Fabric 实例。此任务包覆盖普通刀、暗黑刀、共鸣、剑灵、好感及猫繁育，共 33 项。按任务说明合成共鸣之心、用粉色界面升阶，并查看跨维度找回和重击提示。普通九阶的心魔试炼仍待开发。
+将本目录的 `config/ftbquests/quests` 合并到 26.1.2 Fabric 实例。此任务包覆盖普通刀、暗黑刀、共鸣、剑灵、好感及猫繁育，共 37 项。按任务说明合成共鸣之心、用粉色界面升阶，并查看跨维度找回和重击提示。猫咪路线另有收藏筛选、家谱、绒月猫窝与结缘铃四项目标。普通九阶的心魔试炼仍待开发。
 
 FTB 依赖为 [Quests 26.1.2.10](https://www.curseforge.com/minecraft/mc-mods/ftb-quests-fabric/files/9456216)、[Library 26.1.2.12](https://www.curseforge.com/minecraft/mc-mods/ftb-library-fabric/files/9456007) 和 [Teams 26.1.2.5](https://www.curseforge.com/minecraft/mc-mods/ftb-teams-fabric/files/9405341)。本地验证一并加载了 [Architectury 20.1.18](https://www.curseforge.com/minecraft/mc-mods/architectury-api/files/9651461)。
 

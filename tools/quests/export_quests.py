@@ -5,10 +5,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCES = ROOT / "common/src/main/resources"
+CAT_LIFE_QUESTS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"}
 
 
 def stable_id(name):
-    return hashlib.sha256(("absmod/quests/v1/" + name).encode()).hexdigest()[:16].upper()
+    digest = hashlib.sha256(("absmod/quests/v1/" + name).encode()).hexdigest()[:16].upper()
+    # Both runtimes need positive IDs for new entries. Keep shipped legacy IDs for progress.
+    return modern_id(digest) if name.split("/", 1)[0] in CAT_LIFE_QUESTS else digest
 
 
 def modern_id(legacy_id):
@@ -25,7 +28,8 @@ def generate():
                  "cat_palette": (8, 12), "cat_patterns": (10, 12), "cat_odd_eyes": (10, 14), "cat_pink": (12, 14),
                  "field_guide": (0, 6), "cat_observe": (2, 6),
                  "cat_chocolate": (6, 8), "cat_lilac": (8, 8), "cat_point": (6, 10), "cat_lilac_point": (10, 10),
-                 "cat_family": (4, 6), "cat_dilute": (6, 6), "dark_heavy": (4, 4)}
+                 "cat_family": (4, 6), "cat_dilute": (6, 6), "dark_heavy": (4, 4),
+                 "cat_collection": (2, 8), "cat_pedigree": (4, 10), "cat_nest": (2, 10), "cat_bell": (2, 12)}
     for stage in range(1, 9):
         positions["normal_stage_" + str(stage)] = (stage * 2, -2)
         positions["dark_stage_" + str(stage)] = (stage * 2, 2)
@@ -59,6 +63,16 @@ def generate():
             quest["description"].append(breeding_tips[name])
         if name == "cat_lilac_point":
             quest["dependencies"].append(stable_id("cat_lilac"))
+        home_tips = {
+            "cat_collection": ["前置：观察一只猫。拿手册右键猫记录，再潜行用手册对空气右键。点击毛色、花纹或眼睛切换筛选，也可只看自家猫。"],
+            "cat_pedigree": ["前置：观察有谱系的幼猫。打开手册收藏并点击这只猫。观察过的亲本和后代可点击，未观察的亲本保留空位。"],
+            "cat_nest": ["材料：线、空格、线／白色羊毛×3／任意木板×3，分三行合成。",
+                         "先用结缘铃右键自家的驯服猫，再右键已放置的猫窝绑定。空手右键让猫回窝，潜行右键解除。猫应在16格内且道路可达。"],
+            "cat_bell": ["材料：铜锭、粉红色染料、铜锭／铜锭、紫水晶碎片、铜锭／空格、线、空格。",
+                         "用铃右键自家的驯服猫选中它。退几步，潜行对空气右键呼唤。只呼唤16格内已加载且有路可达的猫。",
+                         "对空气右键查看伙伴和上次位置。在附近剑灵的详情中可召回原剑，原槽或虚化剑槽须可用。"]
+        }
+        quest["description"].extend(home_tips.get(name, ()))
         if name == "manifest":
             quest["description"].extend([
                 "前置：取得喵刀。主手持刀潜行右键显现，原槽留下虚化剑。找回剑灵无需额外材料。",

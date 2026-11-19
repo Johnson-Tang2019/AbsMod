@@ -1,8 +1,8 @@
 # Ab's Mod
 
-Supports Minecraft 26.1.2 Fabric, 26.2 Fabric and NeoForge, and 1.21.1 NeoForge. The field guide and vanilla advancements are available on each target. The 26.1.2 and 1.21.1 packs have 33 optional FTB quests each. [26.1.2 setup](docs/PORT_2612.md) · [1.21.1 setup](docs/PORT_1211.md)
+Supports Minecraft 26.1.2 Fabric, 26.2 Fabric and NeoForge, and 1.21.1 NeoForge. The field guide and vanilla advancements are available on each target. The 26.1.2 and 1.21.1 packs have 37 optional FTB quests each. [26.1.2 setup](docs/PORT_2612.md) · [1.21.1 setup](docs/PORT_1211.md)
 
-Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the 24-page guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
+Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the 28-page guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
 
 Crafting and progression are now playable prototypes on both loaders. Craft a normal blade from a diamond sword, four separate amethyst shards, raw cod and pink dye; craft a dark blade from a netherite sword, four separate crying obsidian and purple dye. Craft a **Resonance Heart** from four amethyst shards, a gold ingot and pink dye, then right-click it to upgrade the same blade. Normal stages 2–8 and all eight dark stages are available; normal stage 9 remains locked until the soul-bound boss trial exists.
 
@@ -32,6 +32,8 @@ The default blade spirit now uses the user-supplied **Nurse Wine Fox** model and
 English | [简体中文](README.zh-CN.md)
 
 Base package: `com.abyssredemption.absmod`. Mod ID: `absmod`.
+
+Sneak-use the Field Guide in the air to open your cat collection and family trees. Observe cats with the guide and filter by coat, pattern, or eyes. Use a Bond Bell on your cat and then on a placed Moonfelt Cat Nest to assign a rest spot. Use the bell in the air for companion details, or sneak-use to call a nearby cat. Recipes and controls are on guide pages 25–28. See [cat collection and home setup](docs/CAT_GENETICS.md).
 
 ## Project layout
 

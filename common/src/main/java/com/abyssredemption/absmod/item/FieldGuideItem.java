@@ -15,14 +15,21 @@ import java.util.*;
 public final class FieldGuideItem extends WrittenBookItem {
     public FieldGuideItem(Properties properties) {super(properties.stacksTo(1));}
     @Override public net.minecraft.world.InteractionResult use(net.minecraft.world.level.Level level,net.minecraft.world.entity.player.Player player,InteractionHand hand) {
+        if (player.isShiftKeyDown()) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                CatJournalMenu.openCollection(serverPlayer);
+            }
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        }
         var pages=new ArrayList<Filterable<Component>>();
-        for(int i=1;i<=24;i++)pages.add(Filterable.passThrough(Component.translatable("guide.absmod.page."+i)));
+        for(int i=1;i<=28;i++)pages.add(Filterable.passThrough(Component.translatable("guide.absmod.page."+i)));
         player.getItemInHand(hand).set(DataComponents.WRITTEN_BOOK_CONTENT,new WrittenBookContent(Filterable.passThrough("猫咪观察手册"),"Ab's Mod",0,pages,true));
         // Synchronize generated pages before the client receives the open-book packet.
         if(player instanceof ServerPlayer serverPlayer)serverPlayer.containerMenu.broadcastChanges();
         return super.use(level,player,hand);
     }
     public static void observe(ServerPlayer player,Cat cat,InteractionHand hand) {
+        CatLife.store(player).observe(player, cat);
         var genome=((CatGenetics)cat).absmod$getGenome();var stack=player.getItemInHand(hand);
         if(player.isShiftKeyDown()) {
             var tag=stack.getOrDefault(DataComponents.CUSTOM_DATA,CustomData.EMPTY).copyTag();tag.putString("selected_cat",cat.getUUID().toString());
@@ -49,7 +56,7 @@ public final class FieldGuideItem extends WrittenBookItem {
                 Component.translatable("cat.absmod.white."+CatCoat.WHITES[coat.white()]),
                 Component.translatable("cat.absmod.eyes."+CatCoat.EYES[coat.eyes()]))));
             if((genome.dilute() || genome.brown() || genome.pointed()) && !genome.supportedCoat())message(player,Component.translatable("cat.absmod.appearance_pending"));
-            if(genome.firstParent().isPresent())message(player,Component.translatable("cat.absmod.parents",genome.firstParent().get().toString(),genome.secondParent().map(UUID::toString).orElse("?")));
+            if(genome.firstParent().isPresent())message(player, Component.translatable("cats.absmod.family_hint"));
         }
         com.abyssredemption.absmod.spirit.BladeAdvancements.award(player,"cat_observe");
         if(genome.generation()>0) {

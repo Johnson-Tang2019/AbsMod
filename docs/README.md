@@ -2,7 +2,7 @@
 
 26.1.2 Fabric 和 FTB：[安装与验证](PORT_2612.md)。粉色共鸣工坊见[成长实现](IMPLEMENTATION_PROGRESSION.md)。
 
-最新猫咪玩法：[猫遗传与观察手册](CAT_GENETICS.md)。FTB导出及1.21.1移植验证状态看STATUS顶部。
+最新猫咪玩法：[收藏、家谱、猫窝、结缘铃与猫遗传](CAT_GENETICS.md)。FTB导出及1.21.1移植验证状态看STATUS顶部。
 
 剑灵失联找回：[安全跟随与区块重载](IMPLEMENTATION_SPIRIT_RECOVERY.md)。
 

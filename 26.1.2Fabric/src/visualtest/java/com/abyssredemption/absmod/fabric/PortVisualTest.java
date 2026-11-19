@@ -1,6 +1,11 @@
 package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.client.ResonanceScreen;
+import com.abyssredemption.absmod.client.CatJournalScreen;
+import com.abyssredemption.absmod.item.FieldGuideItem;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import com.abyssredemption.absmod.client.BladeCombatClient;
 import com.abyssredemption.absmod.spirit.BladeSoulComponents;
 import com.abyssredemption.absmod.spirit.BladeSoulService;
@@ -37,8 +42,10 @@ public final class PortVisualTest implements ClientModInitializer {
     private static final long CHAPTER_ID = 0x1c4e810187b7ddc2L;
     private static final long RESONANCE_QUEST_ID = 0x14107493db5542a5L;
     private static final long STAGE_TWO_QUEST_ID = 0x3fa472d83cf0c5ffL;
+    private static final long CAT_COLLECTION_QUEST_ID = 0x0c40fe16bd0d9954L;
     private boolean started;
     private volatile boolean verified;
+    private volatile boolean verifiedCat;
     private int ticks;
 
     @Override
@@ -116,12 +123,12 @@ public final class PortVisualTest implements ClientModInitializer {
                 }
                 var file = ServerQuestFile.getInstance();
                 var chapter = file.getChapterOrThrow(CHAPTER_ID);
-                if (chapter.getQuests().size() != 33 || !file.getTeamData(player).orElseThrow()
+                if (chapter.getQuests().size() != 37 || !file.getTeamData(player).orElseThrow()
                         .isCompleted(file.getQuest(STAGE_TWO_QUEST_ID))) {
                     throw new IllegalStateException("FTB chapter or stage-two advancement task did not load and complete");
                 }
                 verified = true;
-                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 33 FTB quests and stage two completed");
+                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 37 FTB quests and stage two completed");
             });
             case 165 -> {
                 if (!verified) {
@@ -149,7 +156,43 @@ public final class PortVisualTest implements ClientModInitializer {
                 screenshot(client, "port2612-combat-hud.png");
                 LOGGER.info("PORT_2612_HUD_PASS");
             }
-            case 248 -> client.stop();
+            case 248 -> server.execute(() -> {
+                var player = server.getPlayerList().getPlayers().getFirst();
+                var cat = EntityType.CAT.create(player.level(), EntitySpawnReason.COMMAND);
+                cat.tame(player);
+                cat.setCustomName(Component.literal("Mochi"));
+                cat.setPos(player.position().add(1, 0, 0));
+                player.level().addFreshEntity(cat);
+                player.setItemInHand(InteractionHand.MAIN_HAND, stack("field_guide"));
+                player.inventoryMenu.broadcastChanges();
+                FieldGuideItem.observe(player, cat, InteractionHand.MAIN_HAND);
+                player.setShiftKeyDown(true);
+                player.getMainHandItem().getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
+                player.setShiftKeyDown(false);
+            });
+            case 270 -> {
+                if (!(client.screen instanceof CatJournalScreen screen) || !screen.getTitle().getString().contains("Mochi")) {
+                    throw new IllegalStateException("26.1.2 Fabric collection did not display the observed cat");
+                }
+                screenshot(client, "port2612-cat-collection.png");
+                var filter = screen.children().stream().filter(Button.class::isInstance).map(Button.class::cast).toList().get(1);
+                screen.mouseClicked(new MouseButtonEvent(filter.getX() + 8, filter.getY() + 8, new MouseButtonInfo(0, 0)), false);
+            }
+            case 345 -> server.execute(() -> {
+                var file = ServerQuestFile.getInstance();
+                var player = server.getPlayerList().getPlayers().getFirst();
+                if (!file.getTeamData(player).orElseThrow().isCompleted(file.getQuest(CAT_COLLECTION_QUEST_ID))) {
+                    throw new IllegalStateException("Collection filter did not complete the FTB quest");
+                }
+                verifiedCat = true;
+                LOGGER.info("CAT_LIFE_FTB_2612_PASS");
+            });
+            case 380 -> {
+                if (!verifiedCat) {
+                    throw new IllegalStateException("FTB collection verification failed");
+                }
+                client.stop();
+            }
             default -> {}
         }
     }

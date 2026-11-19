@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 public final class AbsModFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        net.minecraft.client.gui.screens.MenuScreens.register(com.abyssredemption.absmod.cat.CatJournalMenu.TYPE,
+                com.abyssredemption.absmod.client.CatJournalScreen::new);
         net.minecraft.client.gui.screens.MenuScreens.register(com.abyssredemption.absmod.spirit.ResonanceMenu.TYPE,
                 com.abyssredemption.absmod.client.ResonanceScreen::new);
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
