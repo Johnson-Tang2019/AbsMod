@@ -17,6 +17,7 @@ import com.abyssredemption.absmod.spirit.ResonanceMenu;
 import com.abyssredemption.absmod.spirit.SpiritTransformationService;
 import com.abyssredemption.absmod.spirit.SpiritAdornment;
 import com.abyssredemption.absmod.spirit.SpiritGameMenu;
+import com.abyssredemption.absmod.spirit.SpiritGameType;
 import com.abyssredemption.absmod.spirit.SpiritWardrobe;
 import com.abyssredemption.absmod.entity.BladeSpiritEntity;
 import java.util.Arrays;
@@ -57,11 +58,14 @@ public final class PortVisualTest implements ClientModInitializer {
     private static final long BRUSH_QUEST_ID = 0x4a47756ba2b0d3f5L;
     private static final long ADORNMENT_QUEST_ID = 0x4c1b8cf84280f105L;
     private static final long BOARD_QUEST_ID = 0x03e3d6eff96763a4L;
+    private static final long GOMOKU_QUEST_ID = 0x36ed45abd53f632eL;
+    private static final long REVERSI_QUEST_ID = 0x77e539a2439bd876L;
     private volatile BladeSpiritEntity spirit;
     private volatile boolean verifiedLeisure;
     private Cat observedCat;
     private volatile boolean verifiedBrush;
     private int spiritMenuWait;
+    private int wardrobeMenuWait;
     private volatile long activityRevision;
     private boolean started;
     private volatile boolean verified;
@@ -144,12 +148,12 @@ public final class PortVisualTest implements ClientModInitializer {
                 }
                 var file = ServerQuestFile.getInstance();
                 var chapter = file.getChapterOrThrow(CHAPTER_ID);
-                if (chapter.getQuests().size() != 40 || !file.getTeamData(player).orElseThrow()
+                if (chapter.getQuests().size() != 42 || !file.getTeamData(player).orElseThrow()
                         .isCompleted(file.getQuest(STAGE_TWO_QUEST_ID))) {
                     throw new IllegalStateException("FTB chapter or stage-two advancement task did not load and complete");
                 }
                 verified = true;
-                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 40 FTB quests and stage two completed");
+                LOGGER.info("PORT_2612_PASS pink screen action, retained blade, replay rejected, 42 FTB quests and stage two completed");
             });
             case 165 -> {
                 if (!verified) {
@@ -357,16 +361,30 @@ public final class PortVisualTest implements ClientModInitializer {
                 if (!verifiedBrush) {
                     throw new IllegalStateException("Brush verification did not finish successfully");
                 }
+                client.player.getInventory().setSelectedSlot(1);
                 server.execute(() -> {
                     var player = server.getPlayerList().getPlayers().getFirst();
                     player.getInventory().setItem(10, stack("blossom_clip"));
                     player.getInventory().setItem(11, stack("moon_clip"));
+                    player.getInventory().setItem(12, stack("paw_clip"));
+                    player.getInventory().setItem(13, stack("berry_clip"));
                     player.getInventory().setSelectedSlot(1);
-                    player.getMainHandItem().getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
+                    player.setShiftKeyDown(false);
+                    var bell = player.getInventory().getItem(1);
+                    if (!bell.is(stack("bond_bell").getItem())) {
+                        throw new IllegalStateException("Bond Bell missing in client fixture: " + bell);
+                    }
+                    bell.getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
                 });
             }
             case 625 -> {
-                var screen = (CatJournalScreen) client.screen;
+                if (!(client.screen instanceof CatJournalScreen screen)) {
+                    if (++wardrobeMenuWait > 100) {
+                        throw new IllegalStateException("Bond Bell did not reopen before the wardrobe test");
+                    }
+                    --ticks;
+                    return;
+                }
                 var spiritButton = screen.children().stream().filter(Button.class::isInstance).map(Button.class::cast)
                         .filter(button -> button.getMessage().getString().contains("Lumen")).findFirst().orElseThrow();
                 press(screen, spiritButton);
@@ -385,34 +403,48 @@ public final class PortVisualTest implements ClientModInitializer {
                 if (clientSpirit(client).adornment() != SpiritAdornment.MOON) {
                     throw new IllegalStateException("Moon clip did not reach client");
                 }
+                pressLabel(client.screen, "cats.absmod.next");
+            }
+            case 725 -> pressLabel(client.screen, "item.absmod.paw_clip");
+            case 742 -> {
+                if (clientSpirit(client).adornment() != SpiritAdornment.PAW) {
+                    throw new IllegalStateException("Paw clip did not reach client from page two");
+                }
+                screenshot(client, "port2612-wardrobe-page-two.png");
+                pressLabel(client.screen, "cats.absmod.next");
+            }
+            case 757 -> pressLabel(client.screen, "item.absmod.berry_clip");
+            case 775 -> {
+                if (clientSpirit(client).adornment() != SpiritAdornment.BERRY) {
+                    throw new IllegalStateException("Berry clip did not reach client from page three");
+                }
                 pressLabel(client.screen, "cats.absmod.back");
             }
-            case 730 -> pressLabel(client.screen, "leisure.absmod.play");
-            case 827 -> {
-                if (!(client.screen instanceof SpiritGameScreen) || !(client.player.containerMenu instanceof SpiritGameMenu game)
-                        || game.result() == 0) {
-                    throw new IllegalStateException("The board did not finish");
-                }
-                client.getToastManager().clear();
-                screenshot(client, "port2612-spirit-board.png");
-                pressLabel(client.screen, "leisure.absmod.again");
+            case 790 -> pressLabel(client.screen, "leisure.absmod.play");
+            case 807 -> {
+                screenshot(client, "port2612-spirit-games.png");
+                pressLabel(client.screen, "leisure.absmod.board");
             }
-            case 851 -> {
-                var game = (SpiritGameMenu) client.player.containerMenu;
-                if (game.result() != 0 || java.util.stream.IntStream.range(0, 9).anyMatch(i -> game.cell(i) != 0)) {
-                    throw new IllegalStateException("Starting another game did not clear the board");
-                }
-                pressLabel(client.screen, "leisure.absmod.back");
-            }
-            case 874 -> server.execute(() -> {
+            case 875 -> finishGame(client, SpiritGameType.TIC_TAC_TOE, "port2612-spirit-board.png");
+            case 892 -> checkRematch(client, SpiritGameType.TIC_TAC_TOE, 0);
+            case 910 -> pressLabel(client.screen, "leisure.absmod.gomoku");
+            case 1211 -> finishGame(client, SpiritGameType.GOMOKU, "port2612-spirit-gomoku.png");
+            case 1240 -> checkRematch(client, SpiritGameType.GOMOKU, 0);
+            case 1270 -> pressLabel(client.screen, "leisure.absmod.reversi");
+            case 1550 -> finishGame(client, SpiritGameType.REVERSI, "port2612-spirit-reversi.png");
+            case 1580 -> checkRematch(client, SpiritGameType.REVERSI, 4);
+            case 1610 -> server.execute(() -> {
                 var player = server.getPlayerList().getPlayers().getFirst();
                 var quests = ServerQuestFile.getInstance();
                 var team = quests.getTeamData(player).orElseThrow();
                 var before = spirit.soulId();
                 if (player.getInventory().getItem(10).getCount() != 1 || player.getInventory().getItem(11).getCount() != 1
-                        || SpiritWardrobe.read(server, before) != SpiritAdornment.MOON
+                        || player.getInventory().getItem(12).getCount() != 1 || player.getInventory().getItem(13).getCount() != 1
+                        || SpiritWardrobe.read(server, before) != SpiritAdornment.BERRY
                         || !team.isCompleted(quests.getQuest(ADORNMENT_QUEST_ID))
-                        || !team.isCompleted(quests.getQuest(BOARD_QUEST_ID))) {
+                        || !team.isCompleted(quests.getQuest(BOARD_QUEST_ID))
+                        || !team.isCompleted(quests.getQuest(GOMOKU_QUEST_ID))
+                        || !team.isCompleted(quests.getQuest(REVERSI_QUEST_ID))) {
                     throw new IllegalStateException("Adornment inventory or leisure quest failed");
                 }
                 player.closeContainer();
@@ -428,32 +460,51 @@ public final class PortVisualTest implements ClientModInitializer {
                 spirit.setYHeadRot(180);
                 verifiedLeisure = true;
             });
-            case 956 -> {
-                if (!verifiedLeisure || clientSpirit(client).adornment() != SpiritAdornment.MOON) {
+            case 1705 -> {
+                if (!verifiedLeisure || clientSpirit(client).adornment() != SpiritAdornment.BERRY) {
                     throw new IllegalStateException("Accessory did not survive the recall and manifestation");
                 }
                 client.player.setYRot(0);
                 client.player.setXRot(8);
                 client.getToastManager().clear();
             }
-            case 965 -> {
-                screenshot(client, "port2612-spirit-adornment.png");
-                LOGGER.info("SPIRIT_LEISURE_2612_PASS");
+            case 1715 -> {
+                screenshot(client, "port2612-spirit-berry.png");
+                LOGGER.info("SPIRIT_COMPANIONS_2612_PASS");
                 client.stop();
             }
             default -> {}
         }
-        if (ticks >= 748 && ticks < 815 && ticks % 12 == 4
-                && client.screen instanceof SpiritGameScreen screen
+        boolean playing = (ticks >= 814 && ticks < 865) || (ticks >= 917 && ticks < 1206) || (ticks >= 1277 && ticks < 1540);
+        if (playing && ticks % 7 == 0 && client.screen instanceof SpiritGameScreen screen
                 && client.player.containerMenu instanceof SpiritGameMenu game && game.result() == 0) {
             var buttons = screen.children().stream().filter(Button.class::isInstance).map(Button.class::cast).toList();
-            for (int i = 0; i < 9; i++) {
-                if (game.cell(i) == 0 && buttons.get(i).active) {
+            for (int i = 0; i < game.gameType().cellCount(); i++) {
+                if (game.canSelect(i) && buttons.get(i).active) {
                     press(screen, buttons.get(i));
                     break;
                 }
             }
         }
+    }
+
+    private static void finishGame(Minecraft client, SpiritGameType type, String picture) {
+        if (!(client.screen instanceof SpiritGameScreen) || !(client.player.containerMenu instanceof SpiritGameMenu game)
+                || game.gameType() != type || game.result() == 0) {
+            throw new IllegalStateException("The client match did not finish: " + type);
+        }
+        client.getToastManager().clear();
+        screenshot(client, picture);
+        pressLabel(client.screen, "leisure.absmod.again");
+    }
+
+    private static void checkRematch(Minecraft client, SpiritGameType type, int startingPieces) {
+        var game = (SpiritGameMenu) client.player.containerMenu;
+        if (game.gameType() != type || game.result() != 0 || java.util.stream.IntStream.range(0, type.cellCount())
+                .filter(i -> game.cell(i) != 0).count() != startingPieces) {
+            throw new IllegalStateException("Starting another game did not reset the board: " + type);
+        }
+        pressLabel(client.screen, "leisure.absmod.back");
     }
 
     private BladeSpiritEntity clientSpirit(Minecraft client) {

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:prismarine_crystals",
+    "minecraft:gold_nugget",
+    "minecraft:string"
+  ],
+  "result": {
+    "id": "absmod:crystal_clip",
+    "count": 1
+  }
+}

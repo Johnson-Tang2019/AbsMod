@@ -10,6 +10,7 @@ import com.abyssredemption.absmod.spirit.BladeSoulRecord;
 import com.abyssredemption.absmod.spirit.ResonanceMenu;
 import com.abyssredemption.absmod.spirit.SpiritAdornment;
 import com.abyssredemption.absmod.spirit.SpiritGameMenu;
+import com.abyssredemption.absmod.spirit.SpiritGameType;
 import com.abyssredemption.absmod.spirit.SpiritWardrobe;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -207,26 +208,35 @@ final class CatJournalViews {
                     partners(player, page);
                 }),
                 new Control(label("spirit_refresh"), () -> partnerSpirit(player, id, page)),
-                new Control(leisure("wardrobe"), nearby == null ? null : () -> wardrobe(player, id, page)),
-                new Control(leisure("play"), nearby == null ? null : () -> {
-                    var found = CatLife.spirit(player, id).map(record -> CatLife.nearbySpirit(player, record)).orElse(null);
-                    if (found == null) {
-                        partnerSpirit(player, id, page);
-                    } else {
-                        SpiritGameMenu.open(player, found, () -> partnerSpirit(player, id, page));
-                    }
-                })));
+                new Control(leisure("wardrobe"), nearby == null ? null : () -> wardrobe(player, id, page, 0)),
+                new Control(leisure("play"), nearby == null ? null : () -> spiritGames(player, id, page))));
     }
 
-    private static void wardrobe(ServerPlayer player, UUID id, int page) {
+    private static void spiritGames(ServerPlayer player, UUID id, int partnerPage) {
+        var rows = java.util.Arrays.stream(SpiritGameType.values()).map(type ->
+                new Row(type.title(), type.rules(), () -> {
+                    var found = CatLife.spirit(player, id).map(record -> CatLife.nearbySpirit(player, record)).orElse(null);
+                    if (found == null) {
+                        partnerSpirit(player, id, partnerPage);
+                    } else {
+                        SpiritGameMenu.open(player, found, type, () -> spiritGames(player, id, partnerPage));
+                    }
+                })).toList();
+        CatJournalMenu.show(player, leisure("play"), leisure("choose_game"), rows,
+                List.of(new Control(label("back"), () -> partnerSpirit(player, id, partnerPage))));
+    }
+
+    private static void wardrobe(ServerPlayer player, UUID id, int partnerPage, int stylePage) {
         var target = CatLife.spirit(player, id).map(record -> CatLife.nearbySpirit(player, record)).orElse(null);
         if (target == null) {
-            partnerSpirit(player, id, page);
+            partnerSpirit(player, id, partnerPage);
             return;
         }
         try {
             var equipped = SpiritWardrobe.read(player.level().getServer(), id);
-            var rows = java.util.Arrays.stream(SpiritAdornment.values()).map(style -> {
+            int last = SpiritAdornment.items().size() / CatJournalMenu.PAGE_SIZE;
+            var rows = java.util.Arrays.stream(SpiritAdornment.values())
+                    .skip((long) stylePage * CatJournalMenu.PAGE_SIZE).limit(CatJournalMenu.PAGE_SIZE).map(style -> {
                 boolean available = SpiritWardrobe.canChoose(player, style);
                 var detail = leisure(style == equipped ? "equipped" : available ? "available" : "needs_item");
                 return new Row(style.displayName(), detail, available && style != equipped ? () -> {
@@ -235,14 +245,16 @@ final class CatJournalViews {
                     } catch (IllegalStateException unavailable) {
                         player.sendSystemMessage(leisure("wardrobe_unavailable"), true);
                     }
-                    wardrobe(player, id, page);
+                    wardrobe(player, id, partnerPage, stylePage);
                 } : null);
             }).toList();
-            CatJournalMenu.show(player, leisure("wardrobe"), leisure("wardrobe_hint"), rows,
-                    List.of(new Control(label("back"), () -> partnerSpirit(player, id, page))));
+            CatJournalMenu.show(player, leisure("wardrobe"), Component.translatable("leisure.absmod.wardrobe_hint", stylePage + 1, last + 1), rows,
+                    List.of(new Control(label("back"), () -> partnerSpirit(player, id, partnerPage)),
+                            new Control(label("previous"), stylePage > 0 ? () -> wardrobe(player, id, partnerPage, stylePage - 1) : null),
+                            new Control(label("next"), stylePage < last ? () -> wardrobe(player, id, partnerPage, stylePage + 1) : null)));
         } catch (IllegalStateException unavailable) {
             player.sendSystemMessage(leisure("wardrobe_unavailable"), true);
-            partnerSpirit(player, id, page);
+            partnerSpirit(player, id, partnerPage);
         }
     }
 

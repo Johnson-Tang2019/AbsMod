@@ -1,0 +1,25 @@
+{
+  "parent": "absmod:progression/manifest",
+  "display": {
+    "icon": {
+      "id": "minecraft:amethyst_shard"
+    },
+    "title": {
+      "translate": "advancement.absmod.spirit_gomoku.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.spirit_gomoku.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ]
+}

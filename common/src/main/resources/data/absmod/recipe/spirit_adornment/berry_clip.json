@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:sweet_berries",
+    "minecraft:gold_nugget",
+    "minecraft:string"
+  ],
+  "result": {
+    "id": "absmod:berry_clip",
+    "count": 1
+  }
+}

@@ -100,8 +100,7 @@ public final class AbsModFabric implements ModInitializer {
                 com.abyssredemption.absmod.cat.CatJournalMenu.TYPE);
         Registry.register(BuiltInRegistries.MENU, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, "spirit_board_game"),
                 com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE);
-        var adornments = Arrays.stream(com.abyssredemption.absmod.spirit.SpiritAdornment.values())
-                .filter(style -> style != com.abyssredemption.absmod.spirit.SpiritAdornment.NONE)
+        var adornments = com.abyssredemption.absmod.spirit.SpiritAdornment.items().stream()
                 .map(style -> {
                     var key = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(AbsMod.MOD_ID, style.getSerializedName()));
                     return Registry.register(BuiltInRegistries.ITEM, key, new Item(new Item.Properties().setId(key).stacksTo(1)));

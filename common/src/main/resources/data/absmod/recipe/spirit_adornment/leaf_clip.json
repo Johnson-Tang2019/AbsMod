@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:fern",
+    "minecraft:gold_nugget",
+    "minecraft:string"
+  ],
+  "result": {
+    "id": "absmod:leaf_clip",
+    "count": 1
+  }
+}

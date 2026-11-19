@@ -76,8 +76,7 @@ public final class AbsModNeoForge {
             event.accept(ModItems.FIELD_GUIDE);
             event.accept(ModItems.BOND_BELL);
             event.accept(ModItems.GENTLE_BRUSH);
-            event.accept(ModItems.BLOSSOM_CLIP);
-            event.accept(ModItems.MOON_CLIP);
+            ModItems.SPIRIT_ADORNMENTS.forEach(event::accept);
             event.accept(ModItems.CAT_NEST);
         }
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {

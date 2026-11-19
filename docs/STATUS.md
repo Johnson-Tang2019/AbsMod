@@ -1,5 +1,15 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-19 · 26.1.2 十二款饰品与三种陪伴游戏
+
+基线 `main/3bbae87`。PLAN-UI-01、PLAN-GUIDE-01、PLAN-PORT-01。以车万女仆 1.5.3 本体的 12 项饰品绑定与 3 种棋局为数量基准。`SpiritAdornment` 增加十款独立的可合成头饰。`CatJournalViews` 为十二款饰品提供三页切换，并新增三棋种入口。`SpiritLineGame` 处理井字棋和五子棋，`SpiritReversi` 处理翻子、跳过和终局。`SpiritGameMenu` 同步棋盘和合法落点，`SpiritGameScreen` 支持三种布局与重开。来源口径和规则见 [剑灵规格](SPIRIT_SYSTEM.md)。
+
+Minecraft 实测：26.1.2 Fabric 中文客户端进入隔离单人世界。翻阅三页，佩戴樱花、月纹、猫爪和莓果发夹，核对数量及莓果发夹在召回再显现时的显示，退出后检查世界文件中保存了佩戴选择。三种棋局均通过鼠标完成并重开，确认各对应的 FTB 任务完成。截图与日志见 `26.1.2Fabric/run/screenshots/port2612-spirit-*.png` 和 `build/spirit-companions-client-final.log`。多人联机、重新登录和其余八款饰品逐款目视尚待实测。
+
+构建：26.1.2 发布构建和全部 27 项服务端 GameTest 通过，包含实际配方解析与组装全部十二款、两种新棋局结算与棋局隔离。26.2 Fabric／NeoForge 和 1.21.1 兼容构建通过，逐包核对新模型、物品、配方、进度与语言。观察手册更新至第 35 页，FTB 增至 42 项，原 40 项章内定义逐项相同。见 `build/spirit-companions-2612-release.log`、`build/spirit-companions-26.log` 和 `build/spirit-companions-1211.log`。
+
+交付：26.1.2 Fabric 0.19.2 实例已更新 JAR、FTB 章节和中文说明，逐件核对 SHA-256。旧文件备份到该实例的 `absmod-backups/20261119-234815`。实测客户端使用构建环境的 Fabric Loader 0.19.5。安装记录见 `build/spirit-companions-delivery.json`。
+
 ## 2026-11-19 · 26.1.2 剑灵饰品与井字棋
 
 基线 `main/61691d1`。PLAN-UI-01、PLAN-GUIDE-01 与 PLAN-PORT-01。结缘铃的剑灵详情新增饰品与棋局入口。`SpiritWardrobe` 按灵魂 UUID 保存可重复佩戴的樱花发夹和月牙发夹，`BladeSpiritEntity` 同步选择，Bedrock 头骨骼带动饰品渲染。`SpiritGameMenu` 管理每场独立的井字棋，`SpiritGameScreen` 显示棋盘、结果和重开按钮。注册、原创发夹模型、两款配方、原版进度与中英说明一并接入。见 [剑灵规格](SPIRIT_SYSTEM.md) 和 [26.1.2 指南](PORT_2612.md)。

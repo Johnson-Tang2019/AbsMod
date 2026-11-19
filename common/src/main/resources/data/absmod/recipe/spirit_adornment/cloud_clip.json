@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:snowball",
+    "minecraft:gold_nugget",
+    "minecraft:string"
+  ],
+  "result": {
+    "id": "absmod:cloud_clip",
+    "count": 1
+  }
+}

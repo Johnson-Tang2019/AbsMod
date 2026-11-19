@@ -1,6 +1,8 @@
 package com.abyssredemption.absmod.gametest;
 
 import com.abyssredemption.absmod.spirit.*;
+import java.util.List;
+import java.util.Map;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -8,22 +10,24 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameType;
 
 public final class SpiritGameTests {
     @GameTest
     public void spiritTicTacToeRejectsRepeatedMoves(GameTestHelper helper) {
-        var game = new SpiritTicTacToe();
+        var game = SpiritGameType.TIC_TAC_TOE.newGame();
         var random = net.minecraft.util.RandomSource.create(44);
         helper.assertTrue(game.play(4, random) && !game.play(4, random) && !game.play(-1, random)
                 && !game.play(9, random), "Board allowed an invalid move");
         int replies = 0;
         for (int cell = 0; cell < 9; cell++) {
-            if (game.cell(cell) == SpiritTicTacToe.SPIRIT) {
+            if (game.cell(cell) == SpiritBoardGame.SPIRIT) {
                 replies++;
             }
         }
-        helper.assertTrue(replies == 1 && game.cell(4) == SpiritTicTacToe.PLAYER, "A move did not receive exactly one reply");
+        helper.assertTrue(replies == 1 && game.cell(4) == SpiritBoardGame.PLAYER, "A move did not receive exactly one reply");
         for (int turn = 0; turn < 4 && game.result() == 0; turn++) {
             for (int cell = 0; cell < 9; cell++) {
                 if (game.play(cell, random)) {
@@ -32,8 +36,62 @@ public final class SpiritGameTests {
             }
         }
         helper.assertTrue(game.result() != 0 && !game.play(0, random), "A completed board accepted another move");
-        game.reset();
-        helper.assertTrue(game.result() == 0 && game.cell(4) == 0 && game.play(4, random), "Rematch retained the old board");
+        var rematch = SpiritGameType.TIC_TAC_TOE.newGame();
+        helper.assertTrue(rematch.result() == 0 && rematch.cell(4) == 0 && rematch.play(4, random), "Rematch retained the old board");
+        helper.succeed();
+    }
+
+    @GameTest
+    public void spiritAdornmentRecipesCraftDistinctItems(GameTestHelper helper) {
+        var materials = Map.ofEntries(Map.entry(SpiritAdornment.BLOSSOM, Items.PINK_WOOL),
+                Map.entry(SpiritAdornment.MOON, Items.AMETHYST_SHARD), Map.entry(SpiritAdornment.STAR, Items.GLOWSTONE_DUST),
+                Map.entry(SpiritAdornment.LEAF, Items.FERN), Map.entry(SpiritAdornment.SHELL, Items.NAUTILUS_SHELL),
+                Map.entry(SpiritAdornment.BOW, Items.MAGENTA_WOOL), Map.entry(SpiritAdornment.BUTTERFLY, Items.LIGHT_BLUE_DYE),
+                Map.entry(SpiritAdornment.PAW, Items.WHITE_WOOL), Map.entry(SpiritAdornment.CRYSTAL, Items.PRISMARINE_CRYSTALS),
+                Map.entry(SpiritAdornment.BELL, Items.COPPER_INGOT), Map.entry(SpiritAdornment.CLOUD, Items.SNOWBALL),
+                Map.entry(SpiritAdornment.BERRY, Items.SWEET_BERRIES));
+        var level = helper.getLevel();
+        for (var style : SpiritAdornment.items()) {
+            var input = CraftingInput.of(3, 1, List.of(new ItemStack(Items.STRING), new ItemStack(materials.get(style)),
+                    new ItemStack(Items.GOLD_NUGGET)));
+            var result = level.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, input, level)
+                    .orElseThrow(() -> new IllegalStateException("Missing recipe for " + style)).value().assemble(input);
+            helper.assertTrue(result.is(style.stack().getItem()) && result.getCount() == 1, "Unexpected recipe output for " + style);
+        }
+        helper.succeed();
+    }
+
+    @GameTest
+    public void spiritCompanionGamesFinishAndReset(GameTestHelper helper) {
+        var random = net.minecraft.util.RandomSource.create(71);
+        var reversi = SpiritGameType.REVERSI.newGame();
+        var startingMoves = java.util.stream.IntStream.range(0, 64).filter(reversi::canPlay).boxed().toList();
+        helper.assertTrue(startingMoves.equals(java.util.List.of(19, 26, 37, 44)), "Reversi opening must allow four captures");
+        helper.assertTrue(!reversi.play(0, random), "Reversi allowed a move that captures no discs");
+        helper.assertTrue(reversi.play(19, random) && reversi.cell(19) == SpiritBoardGame.PLAYER
+                        && reversi.cell(27) == (reversi.cell(18) == SpiritBoardGame.SPIRIT ? SpiritBoardGame.SPIRIT : SpiritBoardGame.PLAYER),
+                "Reversi did not flip a trapped disc");
+        for (var type : java.util.List.of(SpiritGameType.GOMOKU, SpiritGameType.REVERSI)) {
+            for (int round = 0; round < 5; round++) {
+                var game = type.newGame();
+                var untouched = type.newGame();
+                for (int turn = 0; turn < type.cellCount() && game.result() == 0; turn++) {
+                    var options = java.util.stream.IntStream.range(0, type.cellCount()).filter(game::canPlay).toArray();
+                    helper.assertTrue(options.length > 0 && game.play(options[random.nextInt(options.length)], random),
+                            "A non-terminal board must allow a player move");
+                }
+                helper.assertTrue(game.result() != 0 && !game.canPlay(0) && untouched.result() == 0,
+                        "Completed and concurrent matches did not stay isolated");
+                if (type == SpiritGameType.REVERSI) {
+                    long black = java.util.stream.IntStream.range(0, 64).filter(i -> game.cell(i) == SpiritBoardGame.PLAYER).count();
+                    long white = java.util.stream.IntStream.range(0, 64).filter(i -> game.cell(i) == SpiritBoardGame.SPIRIT).count();
+                    helper.assertTrue(game.result() == (black > white ? SpiritBoardGame.PLAYER : black < white
+                            ? SpiritBoardGame.SPIRIT : SpiritBoardGame.DRAW), "Reversi final score did not match the disc count");
+                }
+            }
+        }
+        helper.assertTrue(SpiritAdornment.items().size() == 12 && SpiritAdornment.items().stream()
+                .map(style -> style.stack().getItem()).distinct().count() == 12, "Wardrobe must register twelve unique items");
         helper.succeed();
     }
 

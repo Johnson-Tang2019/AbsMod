@@ -682,6 +682,40 @@
           "criterion": ""
         }
       ]
+    },
+    {
+      "id": "36ED45ABD53F632E",
+      "x": 8.0,
+      "y": -4.0,
+      "rewards": [],
+      "dependencies": [
+        "40A7C3C1C2EE40FF"
+      ],
+      "tasks": [
+        {
+          "id": "54D07B35BCA2D7F1",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/spirit_gomoku",
+          "criterion": ""
+        }
+      ]
+    },
+    {
+      "id": "77E539A2439BD876",
+      "x": 10.0,
+      "y": -4.0,
+      "rewards": [],
+      "dependencies": [
+        "40A7C3C1C2EE40FF"
+      ],
+      "tasks": [
+        {
+          "id": "49D21141256497C1",
+          "type": "ftbquests:advancement",
+          "advancement": "absmod:progression/spirit_reversi",
+          "criterion": ""
+        }
+      ]
     }
   ]
 }

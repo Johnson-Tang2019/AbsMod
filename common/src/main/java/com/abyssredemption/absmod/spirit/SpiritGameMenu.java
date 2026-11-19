@@ -14,38 +14,53 @@ import net.minecraft.world.item.ItemStack;
 
 public final class SpiritGameMenu extends AbstractContainerMenu {
     public static final MenuType<SpiritGameMenu> TYPE = new MenuType<>(SpiritGameMenu::new, FeatureFlags.DEFAULT_FLAGS);
-    public static final int RESTART = 9;
-    public static final int BACK = 10;
-    private final DataSlot[] cells = new DataSlot[9];
+    public static final int RESTART = 100;
+    public static final int BACK = 101;
+    private static final int CELLS_PER_SLOT = 5;
+    private static final int CELL_BITS = 3;
+    private static final int LEGAL_MOVE = 4;
+    private final DataSlot[] cells = new DataSlot[(SpiritGameType.MAX_CELLS + CELLS_PER_SLOT - 1) / CELLS_PER_SLOT];
     private final DataSlot result = DataSlot.standalone();
+    private final DataSlot type = DataSlot.standalone();
     private final Player viewer;
     private final BladeSpiritEntity opponent;
-    private final SpiritTicTacToe game;
+    private SpiritBoardGame game;
     private final Runnable back;
 
     private SpiritGameMenu(int id, Inventory inventory) {
-        this(id, inventory, null, null);
+        this(id, inventory, null, SpiritGameType.TIC_TAC_TOE, null);
     }
 
-    private SpiritGameMenu(int id, Inventory inventory, BladeSpiritEntity opponent, Runnable back) {
+    private SpiritGameMenu(int id, Inventory inventory, BladeSpiritEntity opponent, SpiritGameType gameType, Runnable back) {
         super(TYPE, id);
         this.viewer = inventory.player;
         this.opponent = opponent;
-        this.game = opponent == null ? null : new SpiritTicTacToe();
+        this.game = opponent == null ? null : gameType.newGame();
         this.back = back;
         for (int i = 0; i < cells.length; i++) {
             cells[i] = addDataSlot(DataSlot.standalone());
         }
         addDataSlot(result);
+        addDataSlot(type);
+        type.set(gameType.ordinal());
+        if (game != null) {
+            sync(gameType);
+        }
     }
 
-    public static void open(ServerPlayer player, BladeSpiritEntity spirit, Runnable back) {
-        player.openMenu(new SimpleMenuProvider((id, inventory, viewer) -> new SpiritGameMenu(id, inventory, spirit, back),
-                Component.translatable("leisure.absmod.board")));
+    public static void open(ServerPlayer player, BladeSpiritEntity spirit, SpiritGameType type, Runnable back) {
+        player.openMenu(new SimpleMenuProvider((id, inventory, viewer) -> new SpiritGameMenu(id, inventory, spirit, type, back),
+                type.title()));
     }
 
-    public int cell(int slot) { return cells[slot].get(); }
+    public SpiritGameType gameType() { return SpiritGameType.fromNetwork(type.get()); }
+    public int cell(int slot) { return readCell(slot) & 3; }
+    public boolean canSelect(int slot) { return readCell(slot) == LEGAL_MOVE; }
     public int result() { return result.get(); }
+
+    private int readCell(int slot) {
+        return cells[slot / CELLS_PER_SLOT].get() >> (CELL_BITS * (slot % CELLS_PER_SLOT)) & 7;
+    }
 
     @Override public boolean stillValid(Player player) {
         return player.isAlive() && (opponent == null || (!player.isSpectator() && opponent.isAlive()
@@ -66,20 +81,34 @@ public final class SpiritGameMenu extends AbstractContainerMenu {
             if (game.result() == 0) {
                 return false;
             }
-            game.reset();
+            game = gameType().newGame();
         } else {
             if (!game.play(button, player.getRandom())) {
                 return false;
             }
             if (game.result() != 0) {
-                BladeAdvancements.award(serverPlayer, "spirit_board_game");
+                BladeAdvancements.award(serverPlayer, gameType().advancement());
             }
         }
-        for (int i = 0; i < cells.length; i++) {
-            cells[i].set(game.cell(i));
+        sync(gameType());
+        return true;
+    }
+
+    private void sync(SpiritGameType variant) {
+        // The vanilla data-slot packet uses signed shorts. Pack five three-bit cells in each slot.
+        for (int group = 0; group < cells.length; group++) {
+            int packed = 0;
+            for (int offset = 0; offset < CELLS_PER_SLOT; offset++) {
+                int slot = group * CELLS_PER_SLOT + offset;
+                if (slot >= variant.cellCount()) {
+                    break;
+                }
+                int value = game.canPlay(slot) ? LEGAL_MOVE : game.cell(slot);
+                packed |= value << (offset * CELL_BITS);
+            }
+            cells[group].set(packed);
         }
         result.set(game.result());
-        return true;
     }
 
     @Override public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
