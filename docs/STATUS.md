@@ -1,5 +1,22 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-19 · 剑灵跨维度与中断交接
+
+PLAN-SPIRIT-02、PLAN-SPIRIT-03（剑灵交接）、PLAN-GUIDE-01、PLAN-PORT-01。基线 `main/0c2cecd`。现有未跟踪美术参考保留。换维度和重登后可在安全地面等待剑灵。客户端用虚化剑查询最后位置或重试自己尚未结束的交接。放入原交接槽前会先核对占用与原剑副本。实现方案、旧记录兼容及范围见 [剑灵恢复](IMPLEMENTATION_SPIRIT_RECOVERY.md)。
+
+源码：两个版本的 `SpiritCompanionTravel`、`SpiritTransferJournal`、`SpiritTransformationService`、`BladeSoulStore`、`SpiritCarrier`、`BladeSoulRecord` 和 `BladeSpiritEntity`。三目标分别注册共享服务器轮询，1.21.1 另适配集成主机库存保存。双语 README、手册第 10 页和 FTB 显现任务同步。33 个任务 ID、条件与依赖保持原样。
+
+验证：26.2 Fabric／NeoForge 和 1.21.1 NeoForge 发布构建通过，23 项 Fabric GameTest 通过。发布 JAR 检查排除夹具、包含双语定位与恢复文案。日志为 `build/spirit-transfer-release-26.log` 和 `build/spirit-transfer-release-1211.log`。
+
+实机：用两个 NeoForge 客户端分别启动独立简体中文测试世界。先验证目的地受阻会保留旧载体，开放地面后跨维度跟上，再构造五个中断点并强制以 86 退出。重开同一世界验证另一维度剑灵重新加载后跟上、更新的交接日志覆盖旧 SavedData、显现与跨维度中断恢复、召回前后断点、占槽保留及腾槽后恢复。六把测试剑逐一核对名字、附魔、耐久、主人和好感，每个魂仅检出一把可用剑。重复调用未增加物品。1.21.1 两阶段实际载入 33 项 FTB。日志 `build/spirit-transfer-{26,1211}-{prepare,recover}-final.log`。准备阶段故意以非零退出，判据为 `SPIRIT_TRANSFER_HALT_READY`，重开阶段为 `SPIRIT_TRANSFER_RESTART_PASS` 和构建成功。
+
+未验收真实双玩家联机、整机断电、硬盘损坏、管理员或外部模组改写存档后的冲突。共鸣升阶事务的强制中断恢复属于后续范围，普通八升九继续等待同魂心魔。测试从开发客户端启动，安装目录的玩家世界未用于注入中断。
+
+安装：两个 PCL 实例已备份并更新，1.21.1 同步对应 FTB 章节及中文键。备份目录为各实例的 `absmod-backups/20261119-133308`。发布和已安装 JAR 的 SHA-256 一致：
+
+- `26.2-NeoForge_26.2.0.87_miao` · `f71f4fe2ce264e599603634fc57cdbccb8033197a989a1b15eddaa9e31711988`
+- `1.21.1-NeoForge_21.1.265_miao` · `6fe26c75a7b3393f115167b3041a858692f4cb737014e72ce96198f90809cbf6`
+
 ## 2026-11-19 当前状态
 
 | 模块 | 已接入 | 下一步 |

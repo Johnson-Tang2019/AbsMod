@@ -48,7 +48,7 @@
   "message.absmod.spirit.manifested": "剑灵已显现，虚化剑保留在原槽位。",
   "message.absmod.spirit.recalled": "剑灵已回到剑形态。",
   "message.absmod.spirit.error.owner_mismatch": "只有主人才能切换这把剑。",
-  "message.absmod.spirit.error.slot_occupied": "请手持对应虚化剑，或腾空主手槽位后召回。",
+  "message.absmod.spirit.error.slot_occupied": "召回请持对应虚化剑或腾空所选槽。若中断恢复受阻，请腾空原交接槽再重登。",
   "message.absmod.spirit.error.blocked_space": "身旁没有足够的显现空间。",
   "message.absmod.spirit.error.missing_record": "剑灵档案缺失，已停止切换。",
   "message.absmod.spirit.error.uninitialized": "剑尚未初始化。",
@@ -160,7 +160,7 @@
   "guide.absmod.page.7": "暗黑二至四阶\n\n二阶：好感5；黑曜石8。\n三阶：好感12；金锭8、烈焰棒2。\n四阶：好感22；哭泣黑曜石8。",
   "guide.absmod.page.8": "暗黑五至八阶\n\n五阶：好感35；恶魂之泪2。\n六阶：好感50；下界合金碎片2。\n七阶：好感70；烈焰棒8、末影珍珠8。\n八阶：好感100；下界合金锭1。暗黑八阶封顶。",
   "guide.absmod.page.9": "战斗\n\n按住攻击持续挥刀。普通喵刀有效命中叠连击，暗黑不叠。暗黑重击默认G键（可改键），前摇0.6秒、冷却8秒。换剑或打开界面会中断准备。",
-  "guide.absmod.page.10": "剑灵与找回\n\n潜行右键喵刀显现。主手持虚化剑对空气右键查看坐标。走散或换维度后，按最后记录返回原处。\n\n靠近剑灵后潜行右键召回。虚化剑攻击也能召回同维度已加载的剑灵。",
+  "guide.absmod.page.10": "剑灵与找回\n\n持喵刀潜行右键显现。换维度后在安全处等待。持虚化剑对空气右键查位置。\n\n潜行右键剑灵或用虚化剑攻击召回。交接中断会在重登时核对。原槽被占请先腾空。",
   "guide.absmod.page.11": "好感\n\n每游戏日：交流+1；赠送生鳕鱼+2；活跃同行每5分钟+1（最多4）；每命中10个不同敌对目标+1（最多4）。升阶只检查好感，不扣除。单纯挂机不算活跃同行。",
   "guide.absmod.page.12": "修复与保管\n\n喵刀耐久归零后保留，但不能攻击。铁砧修复：普通用钻石，暗黑用下界合金。经验修补有效。禁止合并两把喵刀，以免抹掉身份。关闭共鸣界面会返还输入物品。",
   "guide.absmod.page.13": "猫咪收集\n\n在村庄寻找猫，用生鱼驯服。拿手册右键猫，查看稀释基因与代数。旧猫不会因安装模组突然变色；已记录基因会随存档保存。",
@@ -249,5 +249,9 @@
   "message.absmod.spirit.last_location": "剑灵暂不在本维度的已加载区域。最后记录：%1$s，坐标 %2$s %3$s %4$s。返回附近加载区块后再召回。",
   "message.absmod.spirit.location_unknown": "这只剑灵暂无位置记录。返回上次显现或分开的地方，让原剑灵重新加载。",
   "message.absmod.spirit.error.recovery_pending": "剑灵交接状态待核对，原剑仍由档案保管。请联系管理员。",
-  "message.absmod.spirit.error.store_unreadable": "剑灵档案暂时无法读取。请联系管理员。"
+  "message.absmod.spirit.error.store_unreadable": "剑灵档案暂时无法读取。请联系管理员。",
+  "message.absmod.spirit.followed": "剑灵已跟随你进入当前维度。",
+  "message.absmod.spirit.follow_waiting": "剑灵暂时无法跟上。主手持虚化剑对空气右键查看最后位置。",
+  "message.absmod.spirit.recovered": "已核对中断的交接，原剑已归还。",
+  "message.absmod.spirit.error.transfer_storage": "暂时无法保存交接。请重新登录核对；若提示持续出现，请联系管理员。"
 }

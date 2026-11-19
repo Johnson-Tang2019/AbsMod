@@ -52,3 +52,10 @@ if (providers.gradleProperty("catVisualTest").isPresent()) { sourceSets.main.jav
 if (providers.gradleProperty("spiritRecoveryTest").isPresent()) {
     sourceSets.main.java.srcDir "src/recoverytest/java"
 }
+
+// Explicit fault injection in a disposable world. Never part of a release.
+if (providers.gradleProperty("spiritTransferPhase").isPresent()) {
+    sourceSets.main.java.srcDir "src/transfertest/java"
+    neoForge.runs.client.systemProperty "absmod.transferPhase", providers.gradleProperty("spiritTransferPhase").get()
+    neoForge.runs.client.systemProperty "absmod.transferWorld", providers.gradleProperty("spiritTransferWorld").get()
+}

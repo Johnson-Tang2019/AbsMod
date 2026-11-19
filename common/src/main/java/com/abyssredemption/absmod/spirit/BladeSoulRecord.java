@@ -35,7 +35,7 @@ public record BladeSoulRecord(UUID soulId, Optional<UUID> ownerId, BladeRoute ro
                 && affection.map(Double::isFinite).orElse(true)
                 && ((schemaVersion == 1 && form.equals("sword") && carrier.isEmpty())
                 || (schemaVersion == 2 && ownerId.isPresent() && carrier.isPresent()
-                && java.util.Set.of("materializing", "spirit", "recalling", "recovery_pending").contains(form)
+                && java.util.Set.of("materializing", "spirit", "recalling", "travelling", "recovery_pending").contains(form)
                 && validCarrier(carrier.orElseThrow())));
     }
 

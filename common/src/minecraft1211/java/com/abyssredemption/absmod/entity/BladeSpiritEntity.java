@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.entity;
 
 import com.abyssredemption.absmod.spirit.BladeAffection;
+import com.abyssredemption.absmod.spirit.BladeSoulStore;
 import com.abyssredemption.absmod.spirit.SpiritTransformationService;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
@@ -63,12 +64,19 @@ public final class BladeSpiritEntity extends PathfinderMob {
         return result == net.minecraft.world.InteractionResult.PASS ? super.mobInteract(player, hand) : result;
     }
 
+    @Override
+    public boolean canUsePortal(boolean ignorePassengers) {
+        // The soul service controls dimension handoffs and their durable authority.
+        return false;
+    }
+
     @Override protected void registerGoals() { goalSelector.addGoal(0, new FloatGoal(this)); }
 
     @Override
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel level) || isRemoved()) { return; }
+        if ((tickCount == 1 || tickCount % FOLLOW_INTERVAL == 0) && retireStaleCarrier(level)) { return; }
         rememberLocation(level);
         if (tickCount % FOLLOW_INTERVAL != 0 || isNoAi()) { return; }
 
@@ -119,20 +127,41 @@ public final class BladeSpiritEntity extends PathfinderMob {
     }
 
     private boolean tryCatchUp(ServerLevel level, BlockPos target) {
+        BlockPos feet = findSafeArrival(level, target);
+        if (feet == null) { return false; }
+        getNavigation().stop();
+        moveTo(feet.getX() + .5, feet.getY(), feet.getZ() + .5);
+        setDeltaMovement(Vec3.ZERO);
+        resetFallDistance();
+        return true;
+    }
+
+    public BlockPos findSafeArrival(ServerLevel level, BlockPos target) {
         for (int dy : new int[]{0, -1, 1}) {
             for (int dx = -3; dx <= 3; dx++) {
                 for (int dz = -3; dz <= 3; dz++) {
-                    int distance = Math.max(Math.abs(dx), Math.abs(dz));
-                    if (distance < 2) { continue; }
+                    if (Math.max(Math.abs(dx), Math.abs(dz)) < 2) { continue; }
                     BlockPos feet = target.offset(dx, dy, dz);
-                    if (!canStandAt(level, feet)) { continue; }
-                    getNavigation().stop();
-                    moveTo(feet.getX() + .5, feet.getY(), feet.getZ() + .5);
-                    setDeltaMovement(Vec3.ZERO);
-                    resetFallDistance();
-                    return true;
+                    if (canStandAt(level, feet)) { return feet; }
                 }
             }
+        }
+        return null;
+    }
+
+    private boolean retireStaleCarrier(ServerLevel level) {
+        if (soulId == null || ownerId == null) { return false; }
+        try {
+            var record = BladeSoulStore.find(level.getServer()).flatMap(store -> store.find(soulId)).orElse(null);
+            if (record != null && record.ownerId().filter(ownerId::equals).isPresent()
+                    && (record.form().equals("sword") || (record.form().equals("spirit")
+                    && record.carrier().filter(carrier -> !carrier.entityId().equals(getUUID())
+                            || carrier.lastLocation().filter(position -> !position.dimension().equals(level.dimension())).isPresent()).isPresent()))) {
+                discard();
+                return true;
+            }
+        } catch (IllegalStateException ignored) {
+            // Without an authoritative record, retain the entity but deny transactions.
         }
         return false;
     }
@@ -154,7 +183,8 @@ public final class BladeSpiritEntity extends PathfinderMob {
         }
         if (!level.isEmptyBlock(feet) || !level.isEmptyBlock(head)
                 || !level.getBlockState(floor).isFaceSturdy(level, floor, Direction.UP)
-                || WalkNodeEvaluator.getPathTypeStatic(this, feet) != PathType.WALKABLE) {
+                || WalkNodeEvaluator.getPathTypeStatic(
+                        new net.minecraft.world.level.pathfinder.PathfindingContext(level, this), feet.mutable()) != PathType.WALKABLE) {
             return false;
         }
         var bounds = getBoundingBox().move(feet.getX() + .5 - getX(),
@@ -169,7 +199,9 @@ public final class BladeSpiritEntity extends PathfinderMob {
                     .flatMap(store -> store.find(soulId))
                     .filter(record -> record.form().equals("spirit") && record.ownerId().filter(id -> id.equals(ownerId)).isPresent())
                     .flatMap(com.abyssredemption.absmod.spirit.BladeSoulRecord::carrier)
-                    .filter(carrier -> carrier.entityId().equals(getUUID())).isPresent();
+                    .filter(carrier -> carrier.entityId().equals(getUUID()))
+                    .filter(carrier -> carrier.lastLocation().map(GlobalPos::dimension)
+                            .map(serverLevel.dimension()::equals).orElse(true)).isPresent();
         } catch (IllegalStateException exception) { return false; }
     }
 

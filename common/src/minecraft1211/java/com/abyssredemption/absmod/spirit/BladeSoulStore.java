@@ -38,6 +38,7 @@ public final class BladeSoulStore extends SavedData {
         return (net.minecraft.nbt.CompoundTag)CODEC.encodeStart(registries.createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE),this).getOrThrow();
     }
     private final Map<UUID, BladeSoulRecord> records = new HashMap<>();
+    private boolean journalLoaded;
 
     public static Optional<BladeSoulStore> find(MinecraftServer server) {
         if (!server.isSameThread()) { throw new IllegalStateException("server_thread"); }
@@ -45,15 +46,45 @@ public final class BladeSoulStore extends SavedData {
         if (store == null && !Files.notExists(server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("data").resolve(STORAGE_ID+".dat"))) {
             throw new IllegalStateException("store_unreadable");
         }
-        return Optional.ofNullable(store);
+        if (store == null) {
+            var handoffs = SpiritTransferJournal.read(server);
+            if (handoffs.isEmpty()) { return Optional.empty(); }
+            store = new BladeSoulStore();
+            store.loadJournal(handoffs);
+            server.overworld().getDataStorage().set(STORAGE_ID, store);
+        } else if (!store.journalLoaded) {
+            store.loadJournal(SpiritTransferJournal.read(server));
+        }
+        return Optional.of(store);
     }
 
     public static BladeSoulStore forInitialization(MinecraftServer server) {
         return find(server).orElseGet(() -> {
             BladeSoulStore store = new BladeSoulStore();
+            store.journalLoaded = true;
             server.overworld().getDataStorage().set(STORAGE_ID, store);
             return store;
         });
+    }
+
+    private void loadJournal(List<BladeSoulRecord> handoffs) {
+        for (BladeSoulRecord handoff : handoffs) {
+            var current = records.get(handoff.soulId());
+            if (current == null || handoff.revision() > current.revision()) {
+                records.put(handoff.soulId(), handoff);
+                setDirty();
+            }
+        }
+        journalLoaded = true;
+    }
+
+    void commitHandoff(MinecraftServer server, BladeSoulRecord expected, BladeSoulRecord replacement) {
+        if (records.get(expected.soulId()) != expected || !replacement.valid()
+                || !expected.soulId().equals(replacement.soulId()) || replacement.revision() != expected.revision() + 1) {
+            throw new IllegalStateException("stale_revision");
+        }
+        SpiritTransferJournal.write(server, replacement);
+        replace(expected, replacement);
     }
 
     private static DataResult<BladeSoulStore> decode(List<BladeSoulRecord> list) {

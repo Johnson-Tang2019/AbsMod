@@ -48,7 +48,7 @@
   "message.absmod.spirit.manifested": "Spirit manifested; a spectral link remains in the original slot.",
   "message.absmod.spirit.recalled": "Spirit returned to sword form.",
   "message.absmod.spirit.error.owner_mismatch": "Only the owner can transform this blade.",
-  "message.absmod.spirit.error.slot_occupied": "Hold the matching spectral blade or empty your selected slot.",
+  "message.absmod.spirit.error.slot_occupied": "Hold the matching spectral blade or select an empty slot to recall. If recovery is blocked, empty the original handoff slot and rejoin.",
   "message.absmod.spirit.error.blocked_space": "Not enough space beside you.",
   "message.absmod.spirit.error.missing_record": "Soul record missing; transformation stopped.",
   "message.absmod.spirit.error.uninitialized": "Blade is not initialized.",
@@ -160,7 +160,7 @@
   "guide.absmod.page.7": "Dark 2-4\n\n2: affection 5; 8 obsidian.\n3: affection 12; 8 gold ingots, 2 blaze rods.\n4: affection 22; 8 crying obsidian.",
   "guide.absmod.page.8": "Dark 5-8\n\n5: affection 35; 2 ghast tears.\n6: affection 50; 2 netherite scraps.\n7: affection 70; 8 blaze rods, 8 pearls.\n8: affection 100; netherite ingot. This is the final dark stage.",
   "guide.absmod.page.9": "Combat\n\nHold attack to slash. Normal blades build combos on valid hits. Dark blades do not. Dark heavy strike: default G, rebindable; 0.6s windup, 8s cooldown. Switching weapons or opening a menu cancels preparation.",
-  "guide.absmod.page.10": "Spirit and recovery\n\nSneak-use a Meow Blade to manifest. Use the spectral link in the air for coordinates. If separated, return to the last known area.\n\nApproach and sneak-use the spirit to recall. Attacking with the link also recalls a loaded spirit in your dimension.",
+  "guide.absmod.page.10": "Spirit recovery\n\nSneak-use the sword to manifest. The spirit follows across dimensions when safe. Use the link in the air to locate it.\n\nSneak-use the spirit or attack with the link to recall. Rejoining checks interrupted handoffs. If blocked, free the original slot and rejoin.",
   "guide.absmod.page.11": "Affection\n\nEach game day: talk +1; raw-cod gift +2; active following +1 per 5 min (max 4); 10 distinct hostile hits +1 (max 4). Upgrade gates do not spend affection. Sitting online alone is not active following.",
   "guide.absmod.page.12": "Repair\n\nA broken blade remains but cannot attack. Use an anvil: diamond for normal, netherite for dark. Mending works. Combining two soul blades is blocked to protect identities. Close resonance to recover your inputs.",
   "guide.absmod.page.13": "Cat collecting\n\nFind village cats and tame with raw fish. Use this guide on a cat to read its dilution genes and generation. Your existing cats keep their looks. Genes stay saved across reloads.",
@@ -249,5 +249,9 @@
   "message.absmod.spirit.last_location": "Spirit unavailable in this dimension's loaded area. Last seen in %1$s at %2$s %3$s %4$s. Return to the area and recall once it loads.",
   "message.absmod.spirit.location_unknown": "No location is recorded yet. Return to where you manifested or last saw the spirit so it can load.",
   "message.absmod.spirit.error.recovery_pending": "Spirit transfer needs review. The original blade remains in the soul record. Contact an administrator.",
-  "message.absmod.spirit.error.store_unreadable": "The soul record could not be read. Contact an administrator."
+  "message.absmod.spirit.error.store_unreadable": "The soul record could not be read. Contact an administrator.",
+  "message.absmod.spirit.followed": "Your spirit followed you into this dimension.",
+  "message.absmod.spirit.follow_waiting": "Your spirit could not follow yet. Use the spectral blade in the air to see its last location.",
+  "message.absmod.spirit.recovered": "The interrupted handoff was checked and the original blade was returned.",
+  "message.absmod.spirit.error.transfer_storage": "The handoff could not be saved. Rejoin to check it again. If it persists, contact an administrator."
 }

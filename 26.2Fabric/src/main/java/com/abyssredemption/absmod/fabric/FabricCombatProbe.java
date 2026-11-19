@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.fabric;
 
 import com.abyssredemption.absmod.combat.BladeCombatServer;
+import com.abyssredemption.absmod.spirit.SpiritCompanionTravel;
 import com.abyssredemption.absmod.command.CombatProbeCommands;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
 import com.abyssredemption.absmod.network.CombatProbePayload;
@@ -28,9 +29,11 @@ public final class FabricCombatProbe {
         ServerPlayNetworking.registerGlobalReceiver(AttackIntentPayload.TYPE, (payload, context) -> probe.receive(context.player(), payload));
         PayloadTypeRegistry.serverboundPlay().register(com.abyssredemption.absmod.network.HeavyIntentPayload.TYPE,com.abyssredemption.absmod.network.HeavyIntentPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(com.abyssredemption.absmod.network.HeavyIntentPayload.TYPE,(payload,context)->probe.receiveHeavy(context.player(),payload));
+        var spirits = new SpiritCompanionTravel();
+        ServerTickEvents.END_SERVER_TICK.register(spirits::tick);
         ServerTickEvents.END_SERVER_TICK.register(probe::tick);
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> probe.disconnect(handler.player));
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> probe.clear());
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> { spirits.clear(); probe.clear(); });
         CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) ->
                 CombatProbeCommands.register(dispatcher, probe, (player, payload) -> ServerPlayNetworking.send(player, payload)));
     }

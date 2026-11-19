@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.neoforge;
 
 import com.abyssredemption.absmod.combat.BladeCombatServer;
+import com.abyssredemption.absmod.spirit.SpiritCompanionTravel;
 import com.abyssredemption.absmod.command.CombatProbeCommands;
 import com.abyssredemption.absmod.network.AttackIntentPayload;
 import com.abyssredemption.absmod.network.CombatProbePayload;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class NeoForgeCombatProbe {
+    private final SpiritCompanionTravel spirits = new SpiritCompanionTravel();
     private final BladeCombatServer probe = new BladeCombatServer((player, payload) -> PacketDistributor.sendToPlayer(player, payload));
 
     public NeoForgeCombatProbe(IEventBus modBus) {
@@ -36,8 +38,11 @@ public final class NeoForgeCombatProbe {
         registrar.playToClient(com.abyssredemption.absmod.network.BladeSwingPayload.TYPE, com.abyssredemption.absmod.network.BladeSwingPayload.CODEC,(payload,context)->com.abyssredemption.absmod.network.ClientPayloadBridge.swing.accept(payload));
     }
 
-    private void tick(ServerTickEvent.Post event) { probe.tick(event.getServer()); }
-    private void stopped(ServerStoppedEvent event) { probe.clear(); }
+    private void tick(ServerTickEvent.Post event) {
+        spirits.tick(event.getServer());
+        probe.tick(event.getServer());
+    }
+    private void stopped(ServerStoppedEvent event) { spirits.clear(); probe.clear(); }
     private void connected(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) { PacketDistributor.sendToPlayer(player, new CombatProbePayload(true)); }
     }
