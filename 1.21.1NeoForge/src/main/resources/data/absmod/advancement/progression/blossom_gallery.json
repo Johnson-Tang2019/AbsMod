@@ -1,0 +1,27 @@
+{
+  "parent": "absmod:progression/blossom_windows",
+  "display": {
+    "icon": {
+      "id": "absmod:pink_display_frame"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_gallery.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_gallery.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "pink_display_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:pink_display_frame"
+          }
+        ]
+      }
+    }
+  }
+}

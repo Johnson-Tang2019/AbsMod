@@ -1,0 +1,266 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/cherry_planks",
+    "p": "minecraft:block/cherry_planks",
+    "r": "absmod:block/rose_gold_block"
+  },
+  "elements": [
+    {
+      "from": [
+        1.5,
+        1.5,
+        15
+      ],
+      "to": [
+        14.5,
+        2.4,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#p"
+        },
+        "east": {
+          "texture": "#p"
+        },
+        "south": {
+          "texture": "#p"
+        },
+        "west": {
+          "texture": "#p"
+        },
+        "up": {
+          "texture": "#p"
+        },
+        "down": {
+          "texture": "#p"
+        }
+      }
+    },
+    {
+      "from": [
+        1.5,
+        13.6,
+        15
+      ],
+      "to": [
+        14.5,
+        14.5,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#p"
+        },
+        "east": {
+          "texture": "#p"
+        },
+        "south": {
+          "texture": "#p"
+        },
+        "west": {
+          "texture": "#p"
+        },
+        "up": {
+          "texture": "#p"
+        },
+        "down": {
+          "texture": "#p"
+        }
+      }
+    },
+    {
+      "from": [
+        1.5,
+        2.4,
+        15
+      ],
+      "to": [
+        2.4,
+        13.6,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#p"
+        },
+        "east": {
+          "texture": "#p"
+        },
+        "south": {
+          "texture": "#p"
+        },
+        "west": {
+          "texture": "#p"
+        },
+        "up": {
+          "texture": "#p"
+        },
+        "down": {
+          "texture": "#p"
+        }
+      }
+    },
+    {
+      "from": [
+        13.6,
+        2.4,
+        15
+      ],
+      "to": [
+        14.5,
+        13.6,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#p"
+        },
+        "east": {
+          "texture": "#p"
+        },
+        "south": {
+          "texture": "#p"
+        },
+        "west": {
+          "texture": "#p"
+        },
+        "up": {
+          "texture": "#p"
+        },
+        "down": {
+          "texture": "#p"
+        }
+      }
+    },
+    {
+      "from": [
+        1.2,
+        1.2,
+        14.8
+      ],
+      "to": [
+        2.7,
+        2.7,
+        16.1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#r"
+        },
+        "east": {
+          "texture": "#r"
+        },
+        "south": {
+          "texture": "#r"
+        },
+        "west": {
+          "texture": "#r"
+        },
+        "up": {
+          "texture": "#r"
+        },
+        "down": {
+          "texture": "#r"
+        }
+      }
+    },
+    {
+      "from": [
+        1.2,
+        13.3,
+        14.8
+      ],
+      "to": [
+        2.7,
+        14.8,
+        16.1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#r"
+        },
+        "east": {
+          "texture": "#r"
+        },
+        "south": {
+          "texture": "#r"
+        },
+        "west": {
+          "texture": "#r"
+        },
+        "up": {
+          "texture": "#r"
+        },
+        "down": {
+          "texture": "#r"
+        }
+      }
+    },
+    {
+      "from": [
+        13.3,
+        1.2,
+        14.8
+      ],
+      "to": [
+        14.8,
+        2.7,
+        16.1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#r"
+        },
+        "east": {
+          "texture": "#r"
+        },
+        "south": {
+          "texture": "#r"
+        },
+        "west": {
+          "texture": "#r"
+        },
+        "up": {
+          "texture": "#r"
+        },
+        "down": {
+          "texture": "#r"
+        }
+      }
+    },
+    {
+      "from": [
+        13.3,
+        13.3,
+        14.8
+      ],
+      "to": [
+        14.8,
+        14.8,
+        16.1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#r"
+        },
+        "east": {
+          "texture": "#r"
+        },
+        "south": {
+          "texture": "#r"
+        },
+        "west": {
+          "texture": "#r"
+        },
+        "up": {
+          "texture": "#r"
+        },
+        "down": {
+          "texture": "#r"
+        }
+      }
+    }
+  ]
+}

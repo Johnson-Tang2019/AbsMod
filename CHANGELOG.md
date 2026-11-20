@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0 · Minecraft 1.21.1 NeoForge
+
+Add a clear pink item frame, luminous pink glass and panes, a switchable cherry floor lamp, table lamp, low tea table, flower stand and storage cabinet. Add four guide pages and four FTB quests.
+
 ## 0.4.0 · Minecraft 1.21.1 NeoForge
 
 - Add rose gold alloy and template upgrades for diamond equipment. Rose gold tools have intrinsic Silk Touch.

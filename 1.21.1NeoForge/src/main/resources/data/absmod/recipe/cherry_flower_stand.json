@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " S ",
+    " F ",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:cherry_slab"
+    },
+    "F": {
+      "item": "minecraft:cherry_fence"
+    }
+  },
+  "result": {
+    "id": "absmod:cherry_flower_stand",
+    "count": 1
+  }
+}

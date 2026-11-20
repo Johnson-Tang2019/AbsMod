@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:item_frame"
+    },
+    {
+      "item": "absmod:pink_glowing_glass_pane"
+    },
+    {
+      "item": "minecraft:pink_petals"
+    }
+  ],
+  "result": {
+    "id": "absmod:pink_display_frame",
+    "count": 1
+  }
+}

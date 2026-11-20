@@ -1,5 +1,13 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-20 · 1.21.1 樱花家居 0.5.0
+
+- HOME-INTERIORS：`CherryInteriors`、`PinkDisplayFrame`、`CherryFloorLampBlock`、`CherryFurnitureBlock` 和 `CherryCabinetBlock` 接入八项生存配方。粉色细边框中心镂空，沿用物品、地图与旋转交互。粉色发光玻璃及玻璃板亮度为 12。两格高落地灯的灯罩亮度为 15，台灯亮度为 12。低茶桌、高花架与 27 格收纳柜使用独立几何。樱花灯纸由原创新图缩成 32×32 材质。
+- GUIDE：观察手册增至 55 页，FTB Quests 2101.1.37 现含 60 项。逐项核对 0.4.0 的 56 条任务内容和 ID 均相同。四个新任务在同一个中文生存测试世界实际完成。双语 README、资源、FTB 导出及旧验证入口的当前计数已同步。
+- 客户端：`runClient -PinteriorsTest` 实际合成八件物品，检查方块光、窗格连接与含水、花盆、柜子开启及物品读写、拆柜掉落、空框与放剑后的外观、贴顶放地图、旋转、展品与框分别取回。落地灯测试了两半切换、摆放空间不足、从上下两端分别拆除只掉一盏。模型与四项 FTB 结果均通过；最初发现的茶桌配方冲突已通过加入粉红色花簇解决。日志 `build/interiors-client-final.log`。[房间实拍](../art/cherry_interiors/room.png) · [展示框近景](../art/cherry_interiors/frames.png)
+- 独立服务器：无 FTB、森罗、Curios 或农夫乐事时八项配方加载通过。正式 1.21.1 与历史 26.2 Fabric／NeoForge 回归构建通过。见 `build/interiors-standalone.log` 和 `build/interiors-release.log`。本轮未做双客户端并发操作及整服重启后的实地复查。
+- 交付：已备份并安装至指定 1.21.1 PCL2 实例，JAR 和两份 FTB 文件逐一复核 SHA-256。正式 JAR 为 `e77948a2e5948f14912c8fab7575042f6dee07b7889f6d8a2431be2d634d6608`；备份目录 `absmod-backups/20261120-170344`。本轮游戏实测使用独立世界，未打开个人存档。[后续开发方案](CHERRY_HOME_ROADMAP.md)
+
 ## 2026-11-20 · 1.21.1 樱纹加护、玫瑰金与森罗厨房 0.4.0
 
 - GEAR-PATTERN：已有四件樱纹铁工具与四件樱纹盔甲自动提高各项已有附魔的生效等级，已有存档的装备也按同一规则读取。 `RosePatternEnchantments` 负责附魔查询和悬浮说明，铁砧与砂轮继续使用物品保存的基础等级。游戏中效率 V 的樱纹镐得到 VI 的采掘效率加成 37，保护 IV 的胸甲按 V 贡献 5 点保护。已检查显示 VI、砂轮去除附魔、空装备和普通钻石镐。

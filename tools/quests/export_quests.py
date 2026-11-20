@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCES = ROOT / "common/src/main/resources"
 COMPANION_QUESTS = {"gentle_brush", "milkshake_tray", "spirit_adornment", "spirit_board_game", "spirit_gomoku", "spirit_reversi"}
-POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | COMPANION_QUESTS | {"paw_crystal", "rose_charms", "rose_tools", "rose_armor", "rose_kitchen", "whisker_compass", "petal_anklet", "rainfish_locket", "rose_alloy", "rose_gold_tools", "rose_gold_armor", "cookery_finish", "rose_pattern"}
+POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | COMPANION_QUESTS | {"paw_crystal", "rose_charms", "rose_tools", "rose_armor", "rose_kitchen", "whisker_compass", "petal_anklet", "rainfish_locket", "rose_alloy", "rose_gold_tools", "rose_gold_armor", "cookery_finish", "rose_pattern", "blossom_windows", "blossom_gallery", "blossom_lighting", "cherry_tearoom"}
 
 
 def stable_id(name):
@@ -139,13 +139,16 @@ def generate():
     workshop_positions = {"paw_crystal": (2, -6), "rose_charms": (4, -6), "rose_tools": (4, -8),
                           "rose_armor": (4, -10), "rose_kitchen": (4, -12), "whisker_compass": (6, -6),
                           "petal_anklet": (6, -8), "rainfish_locket": (6, -10), "rose_alloy": (2, -14), "rose_gold_tools": (4, -14),
-                          "rose_gold_armor": (4, -16), "cookery_finish": (4, -18), "rose_pattern": (6, -14)}
+                          "rose_gold_armor": (4, -16), "cookery_finish": (4, -18), "rose_pattern": (6, -14),
+                          "blossom_windows": (0, -8), "blossom_gallery": (-2, -10),
+                          "blossom_lighting": (0, -10), "cherry_tearoom": (-2, -8)}
     for name, (x, y) in workshop_positions.items():
         advancement = json.loads((active / "resources/data/absmod/advancement/progression" / (name + ".json")).read_text(encoding="utf-8"))
         desc = [workshop_text["advancement.absmod." + name + ".description"]]
         pages = {"paw_crystal": [], "rose_charms": [39, 40], "whisker_compass": [42],
                  "petal_anklet": [43], "rainfish_locket": [44], "rose_alloy": [45, 46],
-                 "rose_gold_tools": [46, 47], "rose_gold_armor": [46, 48], "cookery_finish": [49, 50], "rose_pattern": [41, 51]}.get(name, [41])
+                 "rose_gold_tools": [46, 47], "rose_gold_armor": [46, 48], "cookery_finish": [49, 50], "rose_pattern": [41, 51],
+                 "blossom_windows": [52], "blossom_gallery": [53], "blossom_lighting": [54], "cherry_tearoom": [55]}.get(name, [41])
         desc.extend(workshop_text[f"guide.absmod.page.{page}"] for page in pages)
         legacy_quests.append({"id": stable_id(name), "title": workshop_text["advancement.absmod." + name + ".title"],
                               "description": desc, "x": x, "y": y,

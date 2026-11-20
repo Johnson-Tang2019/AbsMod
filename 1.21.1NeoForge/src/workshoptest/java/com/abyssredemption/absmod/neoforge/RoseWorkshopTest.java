@@ -193,7 +193,7 @@ public final class RoseWorkshopTest {
                     check(data.isCompleted(file.getQuest(id)), "FTB completion " + id);
                 }
             });
-            com.mojang.logging.LogUtils.getLogger().info("BLUSH_KEEPSAKES_CLIENT_PASS three exchanges, three active effects, daily gate, preserved soul, 56 quests");
+            com.mojang.logging.LogUtils.getLogger().info("BLUSH_KEEPSAKES_CLIENT_PASS three exchanges, three active effects, daily gate, preserved soul, 60 quests");
             com.mojang.logging.LogUtils.getLogger().info("ROSE_WORKSHOP_CLIENT_PASS kitchen, cooking, rose tools, armor, Curios, FTB, tray, grooming, wardrobe and board");
             server(mc, AlloyKitchenTest::exercise);
             mc.options.hideGui=true;
@@ -285,7 +285,7 @@ public final class RoseWorkshopTest {
         for(var effect:java.util.List.of(MobEffects.LUCK,MobEffects.NIGHT_VISION,MobEffects.DIG_SPEED,MobEffects.JUMP,
                 MobEffects.WATER_BREATHING,MobEffects.MOVEMENT_SPEED,MobEffects.SLOW_FALLING)) check(p.hasEffect(effect),"worn effect "+effect);
         var chapter=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-        check(chapter!=null && chapter.getQuests().size()==56,"FTB count");
+        check(chapter!=null && chapter.getQuests().size()==60,"FTB count");
         var pos=ORIGIN.offset(0,1,1);
         var pot=(CookingPotBlockEntity)level.getBlockEntity(pos);
         for(int i=0;i<150 && pot.getMeal().isEmpty() && pot.getInventory().getStackInSlot(8).isEmpty();i++)

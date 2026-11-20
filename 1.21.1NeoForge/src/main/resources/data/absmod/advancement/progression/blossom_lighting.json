@@ -1,0 +1,37 @@
+{
+  "parent": "absmod:progression/blossom_windows",
+  "display": {
+    "icon": {
+      "id": "absmod:cherry_floor_lamp"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_lighting.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_lighting.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "cherry_floor_lamp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:cherry_floor_lamp"
+          }
+        ]
+      }
+    },
+    "cherry_table_lamp": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:cherry_table_lamp"
+          }
+        ]
+      }
+    }
+  }
+}

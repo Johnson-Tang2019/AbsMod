@@ -1,0 +1,47 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:cherry_tea_table"
+    },
+    "title": {
+      "translate": "advancement.absmod.cherry_tearoom.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cherry_tearoom.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "cherry_tea_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:cherry_tea_table"
+          }
+        ]
+      }
+    },
+    "cherry_flower_stand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:cherry_flower_stand"
+          }
+        ]
+      }
+    },
+    "cherry_display_cabinet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:cherry_display_cabinet"
+          }
+        ]
+      }
+    }
+  }
+}

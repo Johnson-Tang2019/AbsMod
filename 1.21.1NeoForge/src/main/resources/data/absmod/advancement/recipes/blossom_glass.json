@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ingredient": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:pink_stained_glass"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:pink_glowing_glass"
+    ]
+  }
+}

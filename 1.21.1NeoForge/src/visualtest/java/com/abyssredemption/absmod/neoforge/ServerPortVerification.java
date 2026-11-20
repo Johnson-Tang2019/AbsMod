@@ -51,7 +51,7 @@ public final class ServerPortVerification {
             check(recipe.value().assemble(grid,server.registryAccess()).getItem() instanceof MeowBladeItem,"Loaded crafting recipe failed");
             var file=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;
             var chapter=file.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-            check(chapter!=null && chapter.getQuests().size()==56,"FTB chapter failed on dedicated server");
+            check(chapter!=null && chapter.getQuests().size()==60,"FTB chapter failed on dedicated server");
             long completed=file.getAllTeamData().stream().mapToLong(data->chapter.getQuests().stream().filter(data::isCompleted).count()).sum();
             check(completed>=13,"FTB saved progress not restored: "+completed);
             com.mojang.logging.LogUtils.getLogger().info("PORT_SERVER_PASS genetics, NBT, durability, transformation, invincibility, attack recall, loaded recipe; FTB persisted completed={}",completed);

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PGP",
+    " F ",
+    " S "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "G": {
+      "item": "absmod:pink_glowing_glass"
+    },
+    "F": {
+      "item": "minecraft:cherry_fence"
+    },
+    "S": {
+      "item": "minecraft:cherry_slab"
+    }
+  },
+  "result": {
+    "id": "absmod:cherry_floor_lamp",
+    "count": 1
+  }
+}

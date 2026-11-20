@@ -26,6 +26,12 @@ public final class RoseStandaloneTest {
         if (server.getRecipeManager().byKey(ResourceLocation.parse("absmod:rose_gold_pickaxe")).isEmpty())
             throw new IllegalStateException("Missing standalone rose gold upgrade");
         com.mojang.logging.LogUtils.getLogger().info("ROSE_ALLOY_STANDALONE_PASS rose gold present with optional kitchens absent");
+        for (String id : java.util.List.of("pink_display_frame", "pink_glowing_glass", "pink_glowing_glass_pane",
+                "cherry_floor_lamp", "cherry_table_lamp", "cherry_tea_table", "cherry_flower_stand", "cherry_display_cabinet")) {
+            if (server.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("absmod", id)).isEmpty())
+                throw new IllegalStateException("Missing standalone furniture recipe " + id);
+        }
+        com.mojang.logging.LogUtils.getLogger().info("CHERRY_INTERIORS_STANDALONE_PASS all eight recipes without optional mods");
         var player = FakePlayerFactory.getMinecraft(server.overworld());
         var charm = ResourceLocation.fromNamespaceAndPath("absmod", "paw_signet");
         player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(BuiltInRegistries.ITEM.get(charm)));

@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.4.0+1.21.1'
+version = '0.5.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -124,4 +124,9 @@ if (providers.gradleProperty("workshopTest").isPresent()) {
 if (providers.gradleProperty("standaloneTest").isPresent()) {
     sourceSets.main.java.srcDir "src/standalonetest/java"
     neoForge.runs.server.gameDirectory = layout.buildDirectory.dir("standalone-test")
+}
+
+if (providers.gradleProperty("interiorsTest").isPresent()) {
+    sourceSets.main.java.srcDir "src/interiorstest/java"
+    dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") }
 }

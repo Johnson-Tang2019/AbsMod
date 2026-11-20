@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GGG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "absmod:pink_glowing_glass"
+    }
+  },
+  "result": {
+    "id": "absmod:pink_glowing_glass_pane",
+    "count": 16
+  }
+}

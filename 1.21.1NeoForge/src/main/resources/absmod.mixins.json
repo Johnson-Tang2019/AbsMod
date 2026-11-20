@@ -17,6 +17,7 @@
     "MobGoalAccessor",
     "CatGeneticsMixin",
     "RosePotMenuMixin",
+    "CherryCabinetNameMixin",
     "RoseGoldEnchantmentMixin",
     "CookeryStateMixin",
     "CookeryPickMixin",
@@ -31,7 +32,8 @@
     "client.BladeAttackIndicatorMixin",
     "client.BladeFirstPersonMixin",
     "client.BladePlayerPoseMixin",
-    "client.CookeryRendererMixin"
+    "client.CookeryRendererMixin",
+    "client.PinkDisplayFrameModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

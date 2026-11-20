@@ -1,0 +1,27 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:pink_glowing_glass_pane"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_windows.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_windows.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "pink_glowing_glass_pane": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:pink_glowing_glass_pane"
+          }
+        ]
+      }
+    }
+  }
+}

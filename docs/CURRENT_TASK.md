@@ -1,5 +1,9 @@
 # 下一批开发任务单
 
+## 1.21.1 · 樱花家居
+
+HOME-INTERIORS、GUIDE：展示框、发光玻璃与五款家具的实现和实测记录见 [STATUS](STATUS.md)。下一批的优先顺序、依赖和验收见[樱花家居后的开发方案](CHERRY_HOME_ROADMAP.md)。
+
 ## 1.21.1 · 玫瑰金与森罗厨房
 
 GEAR-ALLOY／COOKERY／GEAR-PATTERN／GUIDE：新增材料、模板和装备；森罗 1.6.0 厨具按单件上釉；樱纹装备自带附魔加级。交付证据见 STATUS。

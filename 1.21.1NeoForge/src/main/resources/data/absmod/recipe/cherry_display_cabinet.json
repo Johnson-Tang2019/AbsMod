@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SSS",
+    "PBP",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:cherry_slab"
+    },
+    "P": {
+      "item": "minecraft:pink_petals"
+    },
+    "B": {
+      "item": "minecraft:barrel"
+    }
+  },
+  "result": {
+    "id": "absmod:cherry_display_cabinet",
+    "count": 1
+  }
+}

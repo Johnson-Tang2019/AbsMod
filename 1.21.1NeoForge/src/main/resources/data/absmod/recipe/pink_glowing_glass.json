@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:pink_stained_glass"
+    },
+    {
+      "item": "minecraft:pink_stained_glass"
+    },
+    {
+      "item": "minecraft:pink_stained_glass"
+    },
+    {
+      "item": "minecraft:pink_stained_glass"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": {
+    "id": "absmod:pink_glowing_glass",
+    "count": 4
+  }
+}

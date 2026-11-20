@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "half=lower,lit=true": {
+      "model": "absmod:block/cherry_floor_lamp_base"
+    },
+    "half=lower,lit=false": {
+      "model": "absmod:block/cherry_floor_lamp_base"
+    },
+    "half=upper,lit=true": {
+      "model": "absmod:block/cherry_floor_lamp_lit"
+    },
+    "half=upper,lit=false": {
+      "model": "absmod:block/cherry_floor_lamp_shade"
+    }
+  }
+}

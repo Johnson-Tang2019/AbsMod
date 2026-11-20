@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ingredient": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:cherry_planks"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:cherry_tea_table",
+      "absmod:cherry_flower_stand",
+      "absmod:cherry_display_cabinet"
+    ]
+  }
+}

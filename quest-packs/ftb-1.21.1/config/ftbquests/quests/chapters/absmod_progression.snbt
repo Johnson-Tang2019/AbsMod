@@ -1298,6 +1298,94 @@
         }
       ],
       "rewards": []
+    },
+    {
+      "id": "2AA18B80E5226D11",
+      "title": "透光粉窗",
+      "description": [
+        "获得一片粉色发光玻璃板。",
+        "粉窗：工作台放 4 块粉红色染色玻璃和 1 份荧石粉，得到 4 块粉色发光玻璃。6 块排成两行，得 16 片玻璃板。两种都发出亮度 12 的光，可直接拆取。玻璃板和相邻窗格相连。"
+      ],
+      "x": 0,
+      "y": -8,
+      "dependencies": [
+        "D093C5A19DFEFCB0"
+      ],
+      "tasks": [
+        {
+          "id": "60BFF1FCED67F58F",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_windows",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "563AE4F1ED152BCA",
+      "title": "樱边小画廊",
+      "description": [
+        "取得粉色透明展示框，试着在家中展示喵刀。",
+        "画廊：普通物品展示框、1 片粉色发光玻璃板和 1 份粉红色花簇无序合成。对墙面、地板或天花板右键悬挂。中间镂空。持物品右键放入，再右键旋转；生存模式先打下展品，再打下框。"
+      ],
+      "x": -2,
+      "y": -10,
+      "dependencies": [
+        "2AA18B80E5226D11"
+      ],
+      "tasks": [
+        {
+          "id": "621D26B326367B80",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_gallery",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "080AD3073C650462",
+      "title": "一室樱灯",
+      "description": [
+        "先后取得樱花落地灯和台灯。",
+        "樱灯：首行放纸、粉色发光玻璃、纸。下方中格放樱花木台阶可得台灯；改放樱花木栅栏、底行中格再放台阶可得落地灯。落地灯需坚固地面和两格净高，空手右键任一半开关。台灯常亮。"
+      ],
+      "x": 0,
+      "y": -10,
+      "dependencies": [
+        "2AA18B80E5226D11"
+      ],
+      "tasks": [
+        {
+          "id": "4B6AC1A0F0F76A46",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_lighting",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "4E879B6570E66FD8",
+      "title": "布置樱木茶室",
+      "description": [
+        "先后取得樱花矮茶桌、高花架和收纳柜。",
+        "茶室：三个樱花木台阶横排，下排放栅栏、粉红色花簇、栅栏，得矮茶桌。台阶、栅栏、台阶竖排，得高花架，顶面可放花盆。上下各一排樱花木台阶，中排为粉红色花簇、木桶、花簇，得 27 格收纳柜。"
+      ],
+      "x": -2,
+      "y": -8,
+      "dependencies": [
+        "D093C5A19DFEFCB0"
+      ],
+      "tasks": [
+        {
+          "id": "5C994B63740757A9",
+          "type": "advancement",
+          "advancement": "absmod:progression/cherry_tearoom",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
     }
   ]
 }

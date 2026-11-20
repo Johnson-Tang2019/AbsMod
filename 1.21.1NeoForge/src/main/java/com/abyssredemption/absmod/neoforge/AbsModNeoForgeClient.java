@@ -21,6 +21,8 @@ public final class AbsModNeoForgeClient {
             event.register(com.abyssredemption.absmod.cat.CatJournalMenu.TYPE,
                     com.abyssredemption.absmod.client.CatJournalScreen::new);
         });
+        bus.addListener((EntityRenderersEvent.RegisterRenderers event) -> event.registerEntityRenderer(
+                com.abyssredemption.absmod.registry.CherryInteriors.FRAME.get(), net.minecraft.client.renderer.entity.ItemFrameRenderer::new));
         bus.addListener((RegisterMenuScreensEvent e) -> e.register(com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE,
                 com.abyssredemption.absmod.client.SpiritGameScreen::new));
         bus.addListener((EntityRenderersEvent.RegisterRenderers e) -> e.registerBlockEntityRenderer(

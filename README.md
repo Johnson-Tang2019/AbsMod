@@ -1,6 +1,8 @@
 # Ab's Mod
 
-**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 51 pages. The optional FTB chapter has 56 quests. [Setup](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 55 pages. The optional FTB chapter has 60 quests. [Setup](docs/PORT_1211.md)
+
+**0.5.0 · Cherry interiors.** Mount items or maps in an open pink display frame. Pink glowing glass and panes provide level 12 light. Switch the two-block floor lamp from either half, pair a table lamp with the 27-slot cabinet, or arrange tea tables and flower stands. Guide pages 52–55 list the recipes. [In-game room](art/cherry_interiors/room.png) · [Development plan (Chinese)](docs/CHERRY_HOME_ROADMAP.md)
 
 **0.4.0 · Rose Gold and Blush Cookery.** Combine 2 gold ingots, 4 copper ingots and a Paw Crystal for 2 rose gold ingots. Craft the upgrade template with a diamond, a copper block, a Paw Crystal and pink dye. In a smithing table, use the template, diamond gear and one alloy ingot to upgrade five tools/weapons or four pieces of armor. The tools have intrinsic Silk Touch. Ingots repair the gear and compact into storage blocks. The same template gives Kaleidoscope Cookery 1.6.0 utensils a pale pink finish. Existing rose-patterned tools and armor independently add one effective level to each enchantment, even above its vanilla maximum. Guide pages 45–51 explain all three paths.
 

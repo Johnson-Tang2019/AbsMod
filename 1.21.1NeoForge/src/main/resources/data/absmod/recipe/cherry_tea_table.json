@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SSS",
+    "FBF"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:cherry_slab"
+    },
+    "F": {
+      "item": "minecraft:cherry_fence"
+    },
+    "B": {
+      "item": "minecraft:pink_petals"
+    }
+  },
+  "result": {
+    "id": "absmod:cherry_tea_table",
+    "count": 1
+  }
+}

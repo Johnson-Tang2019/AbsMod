@@ -16,6 +16,11 @@
     {
       "id": "absmod:rose_cabinet",
       "required": false
-    }
+    },
+    "absmod:cherry_floor_lamp",
+    "absmod:cherry_table_lamp",
+    "absmod:cherry_tea_table",
+    "absmod:cherry_flower_stand",
+    "absmod:cherry_display_cabinet"
   ]
 }

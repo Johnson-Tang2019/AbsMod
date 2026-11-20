@@ -72,6 +72,7 @@ public final class AbsModNeoForge {
     }
     public AbsModNeoForge(IEventBus modEventBus) {
         RECIPES.register("rose_upgrade", () -> com.abyssredemption.absmod.item.RoseUpgradeRecipe.SERIALIZER);
+        com.abyssredemption.absmod.registry.CherryInteriors.register(modEventBus);
         com.abyssredemption.absmod.registry.RoseGold.register(modEventBus);
         NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.registry.RoseGold::enchantments);
         NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.registry.RosePatternEnchantments::boost);
