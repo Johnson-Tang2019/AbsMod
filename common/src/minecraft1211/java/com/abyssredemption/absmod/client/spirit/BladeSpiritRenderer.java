@@ -18,6 +18,13 @@ public final class BladeSpiritRenderer extends MobRenderer<BladeSpiritEntity, Be
         addLayer(new net.minecraft.client.renderer.entity.layers.RenderLayer<>(this) {
             @Override public void render(com.mojang.blaze3d.vertex.PoseStack pose, net.minecraft.client.renderer.MultiBufferSource buffers,
                     int light, BladeSpiritEntity spirit, float swing, float amount, float tick, float age, float yaw, float pitch) {
+                if (!spirit.isInvisible() && !spirit.teaCup().isEmpty()) {
+                    pose.pushPose();
+                    getParentModel().positionCup(pose);
+                    context.getItemRenderer().renderStatic(spirit.teaCup(), net.minecraft.world.item.ItemDisplayContext.FIXED,
+                            light, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, pose, buffers, spirit.level(), spirit.getId());
+                    pose.popPose();
+                }
                 var accessory = spirit.adornment().stack();
                 if (accessory.isEmpty() || spirit.isInvisible()) return;
                 pose.pushPose();

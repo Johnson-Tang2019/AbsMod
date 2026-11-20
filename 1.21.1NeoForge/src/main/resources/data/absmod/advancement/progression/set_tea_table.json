@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/milkshake_tray",
+  "display": {
+    "icon": {
+      "id": "absmod:cherry_tea_table"
+    },
+    "title": {
+      "translate": "advancement.absmod.set_tea_table.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.set_tea_table.description"
+    },
+    "announce_to_chat": false,
+    "frame": "task"
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

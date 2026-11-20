@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/normal_stage_8",
+  "display": {
+    "icon": {
+      "id": "absmod:heart_mirror"
+    },
+    "title": {
+      "translate": "advancement.absmod.mirror_trial.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.mirror_trial.description"
+    },
+    "announce_to_chat": false,
+    "frame": "task"
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

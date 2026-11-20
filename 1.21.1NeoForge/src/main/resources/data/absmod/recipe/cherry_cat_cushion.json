@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "WCW"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:pink_petals"
+    },
+    "W": {
+      "item": "minecraft:pink_wool"
+    },
+    "C": {
+      "item": "minecraft:cherry_slab"
+    }
+  },
+  "result": {
+    "id": "absmod:cherry_cat_cushion"
+  }
+}

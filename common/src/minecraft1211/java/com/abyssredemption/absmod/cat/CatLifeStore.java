@@ -38,6 +38,23 @@ public final class CatLifeStore extends SavedData {
         ).apply(i, Home::new));
     }
 
+    public record RestVisit(UUID owner, UUID cat, GlobalPos spot, long time) {
+        static final Codec<RestVisit> CODEC = RecordCodecBuilder.create(i -> i.group(
+                UUIDUtil.CODEC.fieldOf("owner").forGetter(RestVisit::owner),
+                UUIDUtil.CODEC.fieldOf("cat").forGetter(RestVisit::cat),
+                GlobalPos.CODEC.fieldOf("spot").forGetter(RestVisit::spot),
+                Codec.LONG.fieldOf("time").forGetter(RestVisit::time)
+        ).apply(i, RestVisit::new));
+    }
+    private final Map<Selection, RestVisit> visits = new HashMap<>();
+
+    public void arrived(Home home, UUID cat, long time) {
+        visits.put(new Selection(home.owner(), cat), new RestVisit(home.owner(), cat, home.spot(), time));
+        setDirty();
+    }
+
+    public RestVisit visit(UUID owner, UUID cat) { return visits.get(new Selection(owner, cat)); }
+
     private record Selection(UUID player, UUID cat) {
         static final Codec<Selection> CODEC = RecordCodecBuilder.create(i -> i.group(
                 UUIDUtil.CODEC.fieldOf("player").forGetter(Selection::player),
@@ -50,7 +67,8 @@ public final class CatLifeStore extends SavedData {
                     .flatMap(entries -> entries.values().stream()).toList()),
             Home.CODEC.listOf().fieldOf("homes").forGetter(store -> List.copyOf(store.homes.values())),
             Selection.CODEC.listOf().fieldOf("selections").forGetter(store -> store.selections.entrySet().stream()
-                    .map(entry -> new Selection(entry.getKey(), entry.getValue())).toList())
+                    .map(entry -> new Selection(entry.getKey(), entry.getValue())).toList()),
+            RestVisit.CODEC.listOf().optionalFieldOf("rest_visits", List.of()).forGetter(store -> List.copyOf(store.visits.values()))
     ).apply(i, CatLifeStore::new));
     private static final String STORAGE_ID = "absmod_cat_life";
     private static final Factory<CatLifeStore> TYPE = new Factory<>(CatLifeStore::new, (tag, registries) ->
@@ -69,7 +87,8 @@ public final class CatLifeStore extends SavedData {
 
     private CatLifeStore() {}
 
-    private CatLifeStore(List<Observation> records, List<Home> homes, List<Selection> selections) {
+    private CatLifeStore(List<Observation> records, List<Home> homes, List<Selection> selections, List<RestVisit> visits) {
+        visits.forEach(v -> this.visits.put(new Selection(v.owner(), v.cat()), v));
         records.forEach(row -> this.observations.computeIfAbsent(row.observer(), ignored -> new HashMap<>()).put(row.cat(), row));
         homes.forEach(home -> {
             if (this.homes.containsKey(home.spot()) || home.cat().filter(byCat::containsKey).isPresent()) {

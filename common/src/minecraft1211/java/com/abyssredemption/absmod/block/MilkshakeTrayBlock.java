@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class MilkshakeTrayBlock extends BaseEntityBlock {
+public class MilkshakeTrayBlock extends BaseEntityBlock {
     private static final MapCodec<MilkshakeTrayBlock> CODEC = simpleCodec(MilkshakeTrayBlock::new);
     private static final VoxelShape BASE = box(1, 0, 1, 15, 2.5, 15);
     private static final VoxelShape[] CUP_BOUNDS = new VoxelShape[MilkshakeTrayBlockEntity.CUP_COUNT];
@@ -39,6 +39,8 @@ public final class MilkshakeTrayBlock extends BaseEntityBlock {
     public MilkshakeTrayBlock(Properties properties) {
         super(properties);
     }
+
+    public boolean mounted() { return this instanceof TeaTableBlock.Laid; }
 
     public static double cupX(int slot) { return slot % 2 == 0 ? 0.29 : 0.71; }
     public static double cupZ(int slot) { return slot < 2 ? 0.29 : 0.71; }
@@ -59,15 +61,20 @@ public final class MilkshakeTrayBlock extends BaseEntityBlock {
                 }
             }
         }
-        return shape;
+        return mounted() ? Shapes.or(TeaTableBlock.TABLE, shape.move(0, 9 / 16.0, 0)) : shape;
     }
 
     @Override protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return BASE;
+        return mounted() ? Shapes.or(TeaTableBlock.TABLE, BASE.move(0, 9 / 16.0, 0)) : BASE;
     }
 
     @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
                                                      Player player, InteractionHand hand, BlockHitResult hit) {
+        if (mounted() && hand == InteractionHand.MAIN_HAND && held.getItem() instanceof com.abyssredemption.absmod.item.BondBellItem) {
+            if (player instanceof ServerPlayer owner && !owner.isSpectator() && level.getBlockEntity(pos) instanceof MilkshakeTrayBlockEntity tray)
+                com.abyssredemption.absmod.spirit.SpiritTea.invite(owner, held, tray, slot(hit));
+            return net.minecraft.world.ItemInteractionResult.SUCCESS;
+        }
         if (hand != InteractionHand.MAIN_HAND || !(held.getItem() instanceof MilkshakeItem)) {
             return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
@@ -108,7 +115,7 @@ public final class MilkshakeTrayBlock extends BaseEntityBlock {
         super.onRemove(state, level, pos, next, moving);
     }
 
-    private static int slot(BlockHitResult hit) {
+    public static int slot(BlockHitResult hit) {
         var local = hit.getLocation().subtract(hit.getBlockPos().getX(), 0, hit.getBlockPos().getZ());
         return (local.x >= 0.5 ? 1 : 0) + (local.z >= 0.5 ? 2 : 0);
     }

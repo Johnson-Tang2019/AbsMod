@@ -33,6 +33,11 @@ public final class BladeSpiritEntity extends PathfinderMob {
             SynchedEntityData.defineId(BladeSpiritEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ADORNMENT =
             SynchedEntityData.defineId(BladeSpiritEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<net.minecraft.world.item.ItemStack> TEA_CUP =
+            SynchedEntityData.defineId(BladeSpiritEntity.class, EntityDataSerializers.ITEM_STACK);
+    public final com.abyssredemption.absmod.spirit.SpiritTea tea = new com.abyssredemption.absmod.spirit.SpiritTea();
+    public net.minecraft.world.item.ItemStack teaCup() { return entityData.get(TEA_CUP); }
+    public void showTeaCup(net.minecraft.world.item.ItemStack cup) { entityData.set(TEA_CUP, cup.copy()); }
     private UUID ownerId;
     private UUID soulId;
     private static final int FOLLOW_INTERVAL = 10;
@@ -60,6 +65,7 @@ public final class BladeSpiritEntity extends PathfinderMob {
 
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
+        builder.define(TEA_CUP, net.minecraft.world.item.ItemStack.EMPTY);
         builder.define(GROOMING, false);
         builder.define(ADORNMENT, SpiritAdornment.NONE.ordinal());
     }
@@ -99,6 +105,11 @@ public final class BladeSpiritEntity extends PathfinderMob {
     @Override
     protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand) {
+        if (hand == net.minecraft.world.InteractionHand.MAIN_HAND && !player.isShiftKeyDown()
+                && player.getItemInHand(hand).getItem() instanceof com.abyssredemption.absmod.item.BondBellItem) {
+            if (player instanceof ServerPlayer owner) tea.select(owner, this, player.getItemInHand(hand));
+            return net.minecraft.world.InteractionResult.sidedSuccess(level().isClientSide);
+        }
         if (hand == net.minecraft.world.InteractionHand.MAIN_HAND && !player.isShiftKeyDown()
                 && player.getItemInHand(hand).getItem() instanceof GentleBrushItem) {
             return player instanceof ServerPlayer serverPlayer ? GentleBrushItem.groomSpirit(serverPlayer, this, hand)
@@ -143,6 +154,7 @@ public final class BladeSpiritEntity extends PathfinderMob {
             }
         }
         rememberLocation(level);
+        if (tea.tick(this, level)) return;
         if (tickCount % FOLLOW_INTERVAL != 0 || isNoAi()) { return; }
 
         var owner = ownerId == null ? null : level.getPlayerByUUID(ownerId);

@@ -31,6 +31,12 @@ public final class CatNestBlock extends Block {
         return OUTLINE;
     }
 
+    public static final double REST_HEIGHT = 0.25;
+    private static final VoxelShape PILLOW = box(1, 0, 1, 15, REST_HEIGHT * 16, 15);
+    @Override protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return PILLOW;
+    }
+
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         if (placer instanceof ServerPlayer player && level instanceof ServerLevel server) {
             CatLifeStore.get(server.getServer()).place(GlobalPos.of(server.dimension(), pos), player.getUUID());

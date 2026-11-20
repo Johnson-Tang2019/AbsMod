@@ -16,7 +16,9 @@
     "recipes": [
       "absmod:cherry_tea_table",
       "absmod:cherry_flower_stand",
-      "absmod:cherry_display_cabinet"
+      "absmod:cherry_display_cabinet",
+      "absmod:cherry_cat_cushion",
+      "absmod:cherry_scratching_post"
     ]
   }
 }

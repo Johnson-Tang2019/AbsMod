@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class CherryFurnitureBlock extends Block {
+public class CherryFurnitureBlock extends Block {
     private final VoxelShape shape;
 
     public CherryFurnitureBlock(Properties properties, VoxelShape shape) {

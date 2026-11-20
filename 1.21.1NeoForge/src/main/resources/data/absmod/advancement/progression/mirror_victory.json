@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/mirror_trial",
+  "display": {
+    "icon": {
+      "id": "absmod:dark_meow_blade_stage_8"
+    },
+    "title": {
+      "translate": "advancement.absmod.mirror_victory.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.mirror_victory.description"
+    },
+    "announce_to_chat": false,
+    "frame": "challenge"
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

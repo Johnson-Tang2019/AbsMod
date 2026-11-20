@@ -56,9 +56,8 @@ public final class ResonanceScreen extends AbstractContainerScreen<ResonanceMenu
         }
         var stage = blade.stage();
         int next = stage.number() + 1;
-        if (next >= 9) {
-            return label(stage.route() == com.abyssredemption.absmod.item.BladeRoute.NORMAL && next == 9 ? "limit" : "max_stage");
-        }
+        if (!stage.route().accepts(next)) return label("max_stage");
+        if (next == 9 && !menu.mirrorCleared()) return label("limit");
         if (menu.currentAffection() < 0) {
             return label("check_identity");
         }
@@ -116,7 +115,11 @@ public final class ResonanceScreen extends AbstractContainerScreen<ResonanceMenu
         if (menu.getSlot(0).getItem().getItem() instanceof MeowBladeItem blade) {
             var stage = blade.stage();
             int next = stage.number() + 1;
-            if (next < 9 && menu.currentAffection() >= 0) {
+            if (next == 9 && stage.route().accepts(next)) {
+                var status = label(menu.mirrorCleared() ? "trial_passed" : "trial_needed");
+                graphics.drawString(font, status, imageWidth-13-font.width(status), 10, INK, false);
+            }
+            if (stage.route().accepts(next) && menu.currentAffection() >= 0) {
                 graphics.drawString(font, label("bond_progress", menu.currentAffection(),
                         ResonanceMenu.affection(stage.route(), next)), 121, 92, INK, false);
             }

@@ -16,13 +16,14 @@ public final class MilkshakeTrayRenderer implements BlockEntityRenderer<Milkshak
 
     @Override public void render(MilkshakeTrayBlockEntity tray, float tick, PoseStack pose,
                                  MultiBufferSource buffers, int light, int overlay) {
+        double height = tray.getBlockState().getBlock() instanceof com.abyssredemption.absmod.block.TeaTableBlock.Laid ? 9 / 16.0 : 0;
         for (int slot = 0; slot < MilkshakeTrayBlockEntity.CUP_COUNT; slot++) {
             var cup = tray.cup(slot);
             if (cup.isEmpty()) {
                 continue;
             }
             pose.pushPose();
-            pose.translate(MilkshakeTrayBlock.cupX(slot), 0.181, MilkshakeTrayBlock.cupZ(slot));
+            pose.translate(MilkshakeTrayBlock.cupX(slot), height + 0.181, MilkshakeTrayBlock.cupZ(slot));
             pose.mulPose(Axis.XP.rotationDegrees(-65));
             pose.scale(0.36F, 0.36F, 0.36F);
             items.renderStatic(cup, ItemDisplayContext.FIXED, light, overlay, pose, buffers, tray.getLevel(), slot);

@@ -1,6 +1,8 @@
 # Ab's Mod
 
-**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 55 pages. The optional FTB chapter has 60 quests. [Setup](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 61 pages. The optional FTB chapter has 66 quests. [Setup](docs/PORT_1211.md)
+
+**0.6.0 · Tea, cats and the Heart Mirror.** Mount a tray on a low cherry table, then use the Bond Bell to invite your spirit to a particular cup. Cats can lie in their own nests or cherry cushions. The bell remembers each cat’s last rest. Carry your bound normal VIII blade into the Heart Mirror trial, dodge the sweep and slam, then attack the open echo. At 250 affection, combine the winning blade with 16 amethyst blocks in the Resonance Workshop to reach IX. The eight dark blades each have their own sprite. See guide pages 56–61.
 
 **0.5.0 · Cherry interiors.** Mount items or maps in an open pink display frame. Pink glowing glass and panes provide level 12 light. Switch the two-block floor lamp from either half, pair a table lamp with the 27-slot cabinet, or arrange tea tables and flower stands. Guide pages 52–55 list the recipes. [In-game room](art/cherry_interiors/room.png) · [Development plan (Chinese)](docs/CHERRY_HOME_ROADMAP.md)
 
@@ -12,7 +14,7 @@ Hold a physical Meow Blade in your main hand and an amethyst shard offhand. Use 
 
 Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
 
-Crafting and progression are now playable prototypes on both loaders. Craft a normal blade from a diamond sword, four separate amethyst shards, raw cod and pink dye; craft a dark blade from a netherite sword, four separate crying obsidian and purple dye. Craft a **Resonance Heart** from four amethyst shards, a gold ingot and pink dye, then right-click it to upgrade the same blade. Normal stages 2–8 and all eight dark stages are available; normal stage 9 remains locked until the soul-bound boss trial exists.
+Crafting and progression are now playable prototypes on both loaders. Craft a normal blade from a diamond sword, four separate amethyst shards, raw cod and pink dye; craft a dark blade from a netherite sword, four separate crying obsidian and purple dye. Craft a **Resonance Heart** from four amethyst shards, a gold ingot and pink dye, then right-click it to upgrade the same blade. The active 1.21.1 version supports nine normal stages and eight dark stages.
 
 The vanilla Advancements screen guides both routes, affection and resonance. Earn daily-capped affection through talking, raw-cod gifts, active following and combat. Dark heavy strike defaults to **G** (rebindable): 0.6s windup, 8s cooldown, 1.8× stage base damage, sharing the existing attack budget. Broken blades are retained for repair. Numerical values remain prototype candidates.
 
@@ -20,7 +22,7 @@ Use a Resonance Heart to open the pink workshop. Place the blade on the left and
 
 Hover over the required materials to see how many you have inserted and how many are missing. The combat status line above the hotbar shows ordinary combo stacks and their decay, or dark heavy strike preparation and cooldown. Set **Toggle Meow Blade combat status** in Controls to hide or show it during the session.
 
-Two new AI-generated textures are included: Resonance Heart and the shared dark-blade prototype sprite. The original nine sword textures are unchanged. See [implementation and validation limits](docs/IMPLEMENTATION_PROGRESSION.md), [asset provenance](art/progression/ASSETS.md), and [actual advancement UI](art/progression/advancements.png).
+Two new AI-generated textures are included: Resonance Heart and the original dark-blade prototype sprite. The original nine sword textures are unchanged. See [implementation and validation limits](docs/IMPLEMENTATION_PROGRESSION.md), [asset provenance](art/progression/ASSETS.md), and [actual advancement UI](art/progression/advancements.png).
 
 
 A short pose transition now smooths consecutive blade actions. Two real NeoForge clients were connected locally and 54 observer screenshots were captured; see [validation](docs/MOTION_MULTIPLAYER_VALIDATION.md). The [growth and recipe design](docs/MEOW_BLADE_PROGRESSION_PROPOSAL.md) remains the numerical prototype reference; the latest implementation is described above.
@@ -68,7 +70,7 @@ The active gameplay sources are in `common/src/minecraft1211/java`, with NeoForg
   Successful hits build a normal blade combo that increases damage and attack speed. These values are balance prototypes.
 - Normal blades have stage-specific durability, use diamonds for repairs and belong to `minecraft:swords`.
 - Obtain items from the Combat tab or use `/give @s absmod:meow_blade` or `/give @s absmod:meow_blade_stage_9`.
-- In survival, use the Resonance Heart to reach stage 8. Stage 9 awaits the soul-bound trial.
+- In 1.21.1 survival, the Heart Mirror trial unlocks the last normal resonance for the blade that wins it.
 
 Each stage has its own client item definition, model JSON and supplied texture.
 The supplied `meowsword1.png` through `meowsword9.png` map to stages 1–9 respectively.

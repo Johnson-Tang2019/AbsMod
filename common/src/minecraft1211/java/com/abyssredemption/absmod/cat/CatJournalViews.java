@@ -96,7 +96,12 @@ final class CatJournalViews {
         int last = lastPage(children.size(), FAMILY_PAGE_SIZE);
         int page = Math.clamp(requested, 0, last);
         var rows = new ArrayList<Row>();
-        rows.add(new Row(CatLife.name(row), label("family_traits", genome.generation(), genome.fullNotation(), appearance(row)), null));
+        rows.add(new Row(CatLife.name(row), label("family_traits", genome.generation(), genome.fullNotation(), appearance(row)), row.owned() ? () -> {
+            var nearby = CatLife.nearby(player, id);
+            if (nearby != null) CatLife.select(player, nearby);
+            else CatLife.store(player).select(player.getUUID(), id);
+            partnerCat(player, row, 0);
+        } : null));
         rows.add(relative(player, all, genome.firstParent().orElse(null), "first_parent", filter, collectionPage));
         rows.add(relative(player, all, genome.secondParent().orElse(null), "second_parent", filter, collectionPage));
         children.stream().skip((long) page * FAMILY_PAGE_SIZE).limit(FAMILY_PAGE_SIZE)
@@ -156,9 +161,15 @@ final class CatJournalViews {
         }
         var current = store.observation(player.getUUID(), observed.cat());
         var home = CatLife.findHome(player, observed.cat());
+        var visit = store.visit(player.getUUID(), observed.cat());
+        if (visit != null) BladeAdvancements.award(player, "cat_rest");
+        boolean atRest = cat instanceof CatHomeGoal.Carrier carrier && carrier.absmod$homeGoal().isResting();
         var rows = List.of(
                 new Row(label("cat_kind", CatLife.name(current)), label(cat == null ? "away" : "nearby"), null),
                 new Row(label("nest"), home == null || !home.owner().equals(player.getUUID()) ? label("no_home") : CatLife.position(home.spot()), null),
+                new Row(label("rest_state"), label(cat == null ? "rest_unknown" : atRest ? "rest_now" : "rest_awake"), null),
+                new Row(label("last_rest"), visit == null ? label("unrecorded") :
+                        label("rest_visit", CatLife.position(visit.spot()), visit.time()), null),
                 new Row(label("last_seen"), current.lastSeen().map(CatLife::position).orElse(label("unrecorded")), null));
         CatJournalMenu.show(player, label("partners"), label("partner_details"), rows, List.of(
                 new Control(label("back"), () -> partners(player, page)),
@@ -267,7 +278,7 @@ final class CatJournalViews {
         if (!spirit.route().accepts(next)) {
             return label("spirit_max_stage");
         }
-        if (next == 9) {
+        if (next == 9 && !spirit.mirrorCleared()) {
             return label("spirit_trial_locked");
         }
         int required = ResonanceMenu.affection(spirit.route(), next);

@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/cat_nest",
+  "display": {
+    "icon": {
+      "id": "absmod:cherry_cat_cushion"
+    },
+    "title": {
+      "translate": "advancement.absmod.cat_rest.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cat_rest.description"
+    },
+    "announce_to_chat": false,
+    "frame": "task"
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

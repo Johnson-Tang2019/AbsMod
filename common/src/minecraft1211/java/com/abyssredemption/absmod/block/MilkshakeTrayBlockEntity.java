@@ -46,7 +46,7 @@ public final class MilkshakeTrayBlockEntity extends BlockEntity {
         return true;
     }
 
-    ItemStack removeCup(int slot) {
+    public ItemStack removeCup(int slot) {
         if (!(level instanceof ServerLevel) || isRemoved()) {
             return ItemStack.EMPTY;
         }

@@ -27,6 +27,8 @@ public final class ResonanceMenu extends AbstractContainerMenu {
     private static final int MAX_COST_SLOTS = 3;
 
     private final DataSlot affectionTenths = DataSlot.standalone();
+    private final DataSlot mirror = DataSlot.standalone();
+    public boolean mirrorCleared() { return mirror.get() != 0; }
     private final DataSlot completed = DataSlot.standalone();
     private final SimpleContainer contents;
     private final ResonanceEscrow escrow;
@@ -42,6 +44,7 @@ public final class ResonanceMenu extends AbstractContainerMenu {
             case 6 -> List.of(new Cost(Items.GHAST_TEAR,2),new Cost(Items.PHANTOM_MEMBRANE,4),new Cost(Items.AMETHYST_BLOCK,8));
             case 7 -> List.of(new Cost(Items.CHORUS_FRUIT,16),new Cost(Items.SHULKER_SHELL,2),new Cost(Items.DIAMOND,4));
             case 8 -> List.of(new Cost(Items.NETHER_STAR,1),new Cost(Items.HEART_OF_THE_SEA,1));
+            case 9 -> List.of(new Cost(Items.AMETHYST_BLOCK,16));
             default -> List.of();
         };
     }
@@ -71,6 +74,7 @@ public final class ResonanceMenu extends AbstractContainerMenu {
         }
         addDataSlot(affectionTenths);
         addDataSlot(completed);
+        addDataSlot(mirror);
         for (int i = 0; i < contents.getContainerSize(); i++) {
             final int position = i;
             boolean material = i > 0 && i < INPUT_SLOTS;
@@ -142,6 +146,7 @@ public final class ResonanceMenu extends AbstractContainerMenu {
 
     private void updatePreview(ServerPlayer player) {
         affectionTenths.set(0);
+        mirror.set(0);
         contents.setItem(PREVIEW_SLOT, ItemStack.EMPTY);
         for (int i = FIRST_COST_SLOT; i < FIRST_COST_SLOT + MAX_COST_SLOTS; i++) {
             contents.setItem(i, ItemStack.EMPTY);
@@ -154,6 +159,7 @@ public final class ResonanceMenu extends AbstractContainerMenu {
             try {
                 var store = BladeSoulStore.find(player.level().getServer());
                 var record = store.map(saved -> BladeSoulService.requireRecord(saved, sword));
+                mirror.set(record.filter(r -> r.ownerId().filter(player.getUUID()::equals).isPresent() && r.mirrorCleared()).isPresent() ? 1 : 0);
                 int value = record.map(saved -> (int) Math.floor(saved.affection().orElse(0D) * 10)).orElse(-1);
                 affectionTenths.set(Math.clamp(value, -1, Short.MAX_VALUE));
             } catch (IllegalStateException error) {
@@ -162,9 +168,8 @@ public final class ResonanceMenu extends AbstractContainerMenu {
         }
         int target = blade.stage().number() + 1;
         var route = blade.stage().route();
-        if (target >= 9) {
-            contents.setItem(PREVIEW_SLOT, label(Items.BARRIER, route == BladeRoute.NORMAL && target == 9
-                    ? "resonance.absmod.boss_locked" : "resonance.absmod.max_stage"));
+        if (!route.accepts(target)) {
+            contents.setItem(PREVIEW_SLOT, label(Items.BARRIER, "resonance.absmod.max_stage"));
             return;
         }
         var stage = BladeStage.of(route, target);
@@ -211,9 +216,8 @@ public final class ResonanceMenu extends AbstractContainerMenu {
             var sword=contents.getItem(0);
             if(sword.getCount()!=1 || !(sword.getItem() instanceof MeowBladeItem blade))throw new IllegalStateException("not_blade");
             int target=blade.stage().number()+1;
-            if (target >= 9) {
-                throw new IllegalStateException(blade.stage().route() == BladeRoute.NORMAL && target == 9
-                        ? "boss_locked" : "max_stage");
+            if (!blade.stage().route().accepts(target)) {
+                throw new IllegalStateException("max_stage");
             }
             var server = player.level().getServer();
             var store = BladeSoulStore.forInitialization(server);
@@ -227,6 +231,7 @@ public final class ResonanceMenu extends AbstractContainerMenu {
                 contents.setItem(0, sword);
             }
             if(!before.ownerId().filter(player.getUUID()::equals).isPresent())throw new IllegalStateException("not_owner");
+            if (target == 9 && !before.mirrorCleared()) throw new IllegalStateException("boss_locked");
             if(before.affection().orElse(0D)<affection(blade.stage().route(),target))throw new IllegalStateException("affection");
             var costs = costs(blade.stage().route(), target);
             if (!hasMaterials(costs)) {

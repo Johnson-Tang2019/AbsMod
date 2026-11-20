@@ -12,11 +12,15 @@ public final class BedrockSpiritModel extends EntityModel<BladeSpiritEntity> {
     private final boolean nurseFox;
     private final ModelPart root;
     private final java.util.List<ModelPart> headAncestry;
+    private final java.util.List<ModelPart> cupArm;
+    private final boolean hasCupHand;
     public BedrockSpiritModel(BedrockGeometry.Baked baked) {
         super();
         root=baked.root();
         nurseFox = baked.bones().containsKey("GuiRoot") && baked.bones().containsKey("NurseCap");
         headAncestry = baked.ancestry(nurseFox ? "Head" : "head");
+        hasCupHand = nurseFox && baked.bones().containsKey("RightForeArm") && baked.bones().containsKey("RightHandLocator");
+        cupArm = baked.ancestry(hasCupHand ? "RightHandLocator" : nurseFox ? "RightArm" : "right_arm");
         bones = new java.util.LinkedHashMap<>(baked.bones());
         if (nurseFox) {
             String[][] aliases = {{"head","Head"},{"body","UpBody"},{"left_arm","LeftArm"},
@@ -31,6 +35,12 @@ public final class BedrockSpiritModel extends EntityModel<BladeSpiritEntity> {
         for (String name : new String[]{"head","body","left_arm","right_arm","left_leg","right_leg","left_ear","right_ear","tail"}) {
             if (!bones.containsKey(name)) { throw new IllegalArgumentException("Required spirit bone missing: " + name); }
         }
+    }
+    void positionCup(com.mojang.blaze3d.vertex.PoseStack pose) {
+        for (var part : cupArm) part.translateAndRotate(pose);
+        pose.translate(0, hasCupHand ? -0.02F : 0.48F, -0.13F);
+        pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(hasCupHand ? 110 : 75));
+        pose.scale(0.54F,-0.54F,0.54F);
     }
     void positionAdornment(com.mojang.blaze3d.vertex.PoseStack poses) {
         for (var part : headAncestry) {
@@ -58,6 +68,11 @@ public final class BedrockSpiritModel extends EntityModel<BladeSpiritEntity> {
         bones.get("right_arm").xRot += step;
         bones.get("tail").yRot += (float)Math.sin(age*0.075F)*0.25F;
         if (bones.containsKey("tail_tip")) { bones.get("tail_tip").zRot += (float)Math.sin(age*0.075F-0.7F)*0.15F; }
+        if (!entity.teaCup().isEmpty()) {
+            bones.get("right_arm").xRot -= (hasCupHand ? 0.96F : 1.36F) + (float)Math.sin(age * 0.17F) * 0.09F;
+            if (hasCupHand) bones.get("RightForeArm").xRot -= 1.0F;
+            bones.get("right_arm").zRot -= 0.25F;
+        }
         float progress = entity.groomingProgress(age - entity.tickCount);
         if (progress > 0) {
             float ease = (float) Math.sin(Math.PI * progress);

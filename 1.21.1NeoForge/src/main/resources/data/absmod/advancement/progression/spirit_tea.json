@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/set_tea_table",
+  "display": {
+    "icon": {
+      "id": "absmod:bond_bell"
+    },
+    "title": {
+      "translate": "advancement.absmod.spirit_tea.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.spirit_tea.description"
+    },
+    "announce_to_chat": false,
+    "frame": "task"
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

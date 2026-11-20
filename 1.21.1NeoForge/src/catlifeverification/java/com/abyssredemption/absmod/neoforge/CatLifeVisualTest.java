@@ -147,7 +147,7 @@ public final class CatLifeVisualTest {
                     + " active=" + goals.getAvailableGoals().stream().filter(net.minecraft.world.entity.ai.goal.WrappedGoal::isRunning).map(g -> g.getGoal().getClass().getSimpleName()).toList()
                     + " custom=" + goal);
         }
-        if (phase == 2 && amber.isInSittingPose() && amber.distanceToSqr(Vec3.atBottomCenterOf(NEST)) < 1) {
+        if (phase == 2 && amber.isLying() && amber.distanceToSqr(Vec3.atBottomCenterOf(NEST)) < 1) {
             screenshotFromServer("cat-life-nest.png");
             equip(player, stack("bond_bell"));
             player.setShiftKeyDown(true);
@@ -155,7 +155,7 @@ public final class CatLifeVisualTest {
             player.setShiftKeyDown(false);
             phase++;
         }
-        if (phase == 3 && amber.distanceToSqr(player) <= 4 && !amber.isInSittingPose()) {
+        if (phase == 3 && amber.distanceToSqr(player) <= 4 && !amber.isLying()) {
             equip(player, stack("meow_blade"));
             var blade = player.getMainHandItem();
             var store = BladeSoulStore.forInitialization(server);
@@ -182,7 +182,7 @@ public final class CatLifeVisualTest {
             }
             var file = dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;
             var chapter = file.getChapter(0x1C4E810187B7DDC2L);
-            check(chapter != null && chapter.getQuests().size() == 60, "Cat FTB chapter did not load");
+            check(chapter != null && chapter.getQuests().size() == 66, "Cat FTB chapter did not load");
             var team = file.getTeamData(player).orElseThrow();
             long completed = chapter.getQuests().stream().filter(quest -> CAT_QUESTS.contains(quest.id))
                     .filter(team::isCompleted).count();

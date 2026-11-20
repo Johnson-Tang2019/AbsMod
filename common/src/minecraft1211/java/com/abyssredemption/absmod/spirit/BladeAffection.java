@@ -82,6 +82,18 @@ public final class BladeAffection {
         }
         return InteractionResult.SUCCESS;
     }
+    public static void tea(ServerPlayer owner, BladeSpiritEntity spirit) {
+        try {
+            var store = BladeGrowthStore.get(owner.serverLevel().getServer());
+            var d = store.day(spirit.soulId(), day(owner));
+            if (d.talked()) return;
+            award(owner, spirit.soulId(), 1);
+            store.put(new BladeGrowthStore.Day(d.soul(), d.day(), d.walking(), d.follow(), d.hits(),
+                    d.combat(), true, d.gifted(), d.targets()));
+        } catch (IllegalStateException unavailable) {
+            reportUnavailable(unavailable);
+        }
+    }
     public static void hit(ServerPlayer owner,Entity target) {
         try { hitUnchecked(owner,target); }
         catch(IllegalStateException error) { reportUnavailable(error); }

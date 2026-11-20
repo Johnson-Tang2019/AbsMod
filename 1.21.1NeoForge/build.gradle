@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.5.0+1.21.1'
+version = '0.6.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -41,7 +41,8 @@ tasks.withType(JavaCompile).configureEach {
 
 processResources {
     from('../common/src/main/resources') {
-        exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**',
+        exclude 'assets/absmod/models/item/dark_meow_blade*.json', 'data/absmod/advancement/progression/normal_stage_9.json',
+                'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**',
                 'data/minecraft/tags/item/swords.json', 'assets/absmod/textures/item/pink_milkshake.png', 'assets/absmod/textures/item/resonance_heart.png'
     }
     from('../client-bedrock/src/main/resources')
@@ -129,4 +130,20 @@ if (providers.gradleProperty("standaloneTest").isPresent()) {
 if (providers.gradleProperty("interiorsTest").isPresent()) {
     sourceSets.main.java.srcDir "src/interiorstest/java"
     dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") }
+}
+
+if (providers.gradleProperty("homeFinale").isPresent()) {
+    sourceSets.main.java.srcDir "src/homeverification/java"
+    dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") }
+    neoForge.runs.client.systemProperty "absmod.homeFinale", providers.gradleProperty("homeFinale").get()
+    neoForge.runs.client.systemProperty "absmod.homeWorld", providers.gradleProperty("homeWorld").get()
+}
+
+if (providers.gradleProperty("homePeerTest").isPresent()) {
+    sourceSets.main.java.srcDir "src/homepeers/java"
+    neoForge.runs.server.gameDirectory = layout.buildDirectory.dir("home-peers/server")
+    def role = providers.gradleProperty("homePeerRole").getOrElse("HomeOwner")
+    if (!(role in ["HomeOwner", "HomeGuest"])) throw new GradleException("Unknown home test role")
+    neoForge.runs.client.gameDirectory = layout.buildDirectory.dir("home-peers/" + role)
+    neoForge.runs.client.programArguments.addAll("--username", role)
 }

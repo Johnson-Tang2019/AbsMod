@@ -173,6 +173,8 @@ public final class ResonanceEscrow extends SimpleContainer {
         if (current.equals(before)) {
             store.commitHandoff(server, current, after);
         }
+        if (after.stage() == 9 && after.mirrorCleared())
+            com.abyssredemption.absmod.entity.MirrorEchoEntity.restoreVictory(player);
         BladeAdvancements.award(player, after.route().getSerializedName() + "_stage_" + after.stage());
         if (player.connection != null) {
             player.getAdvancements().save();

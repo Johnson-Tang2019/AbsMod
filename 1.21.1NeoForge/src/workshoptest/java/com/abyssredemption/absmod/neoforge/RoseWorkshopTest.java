@@ -285,7 +285,7 @@ public final class RoseWorkshopTest {
         for(var effect:java.util.List.of(MobEffects.LUCK,MobEffects.NIGHT_VISION,MobEffects.DIG_SPEED,MobEffects.JUMP,
                 MobEffects.WATER_BREATHING,MobEffects.MOVEMENT_SPEED,MobEffects.SLOW_FALLING)) check(p.hasEffect(effect),"worn effect "+effect);
         var chapter=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-        check(chapter!=null && chapter.getQuests().size()==60,"FTB count");
+        check(chapter!=null && chapter.getQuests().size()==66,"FTB count");
         var pos=ORIGIN.offset(0,1,1);
         var pot=(CookingPotBlockEntity)level.getBlockEntity(pos);
         for(int i=0;i<150 && pot.getMeal().isEmpty() && pot.getInventory().getStackInSlot(8).isEmpty();i++)

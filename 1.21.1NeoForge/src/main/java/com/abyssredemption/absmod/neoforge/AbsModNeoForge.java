@@ -38,9 +38,11 @@ public final class AbsModNeoForge {
             net.neoforged.neoforge.registries.DeferredRegister.create(
                     net.minecraft.core.registries.Registries.ENTITY_TYPE, AbsMod.MOD_ID);
     static {
+        ENTITIES.register("mirror_echo", com.abyssredemption.absmod.entity.MirrorEchoEntity::create);
         ENTITIES.register("blade_spirit", com.abyssredemption.absmod.entity.SpiritEntityType::create);
     }
     private static void attributes(net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event) {
+        event.put(com.abyssredemption.absmod.entity.MirrorEchoEntity.type(), com.abyssredemption.absmod.entity.MirrorEchoEntity.attributes().build());
         event.put(com.abyssredemption.absmod.entity.SpiritEntityType.get(),
                 com.abyssredemption.absmod.entity.BladeSpiritEntity.attributes().build());
     }
@@ -67,7 +69,8 @@ public final class AbsModNeoForge {
     static {
         BLOCK_ENTITIES.register("milkshake_tray", () -> net.minecraft.world.level.block.entity.BlockEntityType.Builder.of(
                 com.abyssredemption.absmod.block.MilkshakeTrayBlockEntity::new,
-                com.abyssredemption.absmod.registry.ModBlocks.MILKSHAKE_TRAY.get()).build(null));
+                com.abyssredemption.absmod.registry.ModBlocks.MILKSHAKE_TRAY.get(),
+                com.abyssredemption.absmod.registry.ModBlocks.LAID_TEA_TABLE.get()).build(null));
         MENUS.register("spirit_game", () -> com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE);
     }
     public AbsModNeoForge(IEventBus modEventBus) {

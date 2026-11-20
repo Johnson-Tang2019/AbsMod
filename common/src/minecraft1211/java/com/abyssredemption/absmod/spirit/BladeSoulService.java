@@ -50,6 +50,17 @@ public final class BladeSoulService {
         return new MigrationPlan(before, before.withStage(target.stage().number()), result);
     }
 
+    public static boolean winMirror(net.minecraft.server.level.ServerPlayer player, UUID soul) {
+        var server = player.serverLevel().getServer();
+        var store = BladeSoulStore.find(server).orElseThrow(() -> new IllegalStateException("missing_store"));
+        var record = requireRecord(store, player.getMainHandItem());
+        if (!record.soulId().equals(soul) || record.ownerId().filter(player.getUUID()::equals).isEmpty()
+                || record.route() != BladeRoute.NORMAL || record.stage() != 8) return false;
+        if (com.abyssredemption.absmod.command.SoulCommands.findLoadedCopies(server,soul).size() > 1) return false;
+        if (!record.mirrorCleared()) store.commitHandoff(server, record, record.clearMirror());
+        return true;
+    }
+
     public record MigrationPlan(BladeSoulRecord before, BladeSoulRecord after, ItemStack target) {}
 
     private static MeowBladeItem requireBlade(ItemStack stack) {

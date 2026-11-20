@@ -49,11 +49,15 @@ public final class CherryInteriors {
                 s.getValue(BlockStateProperties.LIT) && s.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER ? 15 : 0)));
         block("cherry_table_lamp", () -> new CherryFurnitureBlock(cherry().lightLevel(s -> 12), Shapes.or(
                 Block.box(3, 0, 3, 13, 2, 13), Block.box(6, 2, 6, 10, 6, 10), Block.box(2, 6, 2, 14, 15, 14))));
-        block("cherry_tea_table", () -> new CherryFurnitureBlock(cherry(), Shapes.or(Block.box(0, 7, 0, 16, 9, 16),
-                Block.box(1, 0, 1, 4, 7, 4), Block.box(12, 0, 1, 15, 7, 4),
-                Block.box(1, 0, 12, 4, 7, 15), Block.box(12, 0, 12, 15, 7, 15))));
+        block("cherry_tea_table", () -> new com.abyssredemption.absmod.block.TeaTableBlock(cherry()));
         block("cherry_flower_stand", () -> new CherryFurnitureBlock(cherry(), Shapes.or(
                 Block.box(1, 0, 1, 15, 2, 15), Block.box(5, 2, 5, 11, 14, 11), Block.box(0, 14, 0, 16, 16, 16))));
+        block("heart_mirror", () -> new com.abyssredemption.absmod.block.HeartMirrorBlock(
+                BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK).noOcclusion().lightLevel(s -> 6)));
+        block("cherry_cat_cushion", () -> new com.abyssredemption.absmod.cat.CatNestBlock(
+                BlockBehaviour.Properties.of().noOcclusion().strength(0.4F).sound(SoundType.WOOL)
+                        .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK)));
+        block("cherry_scratching_post", () -> new com.abyssredemption.absmod.cat.ScratchingPostBlock(cherry()));
         var cabinet = block("cherry_display_cabinet", () -> new com.abyssredemption.absmod.block.CherryCabinetBlock(cherry()));
         bus.addListener((BlockEntityTypeAddBlocksEvent event) -> event.modify(BlockEntityType.BARREL, cabinet.get()));
     }

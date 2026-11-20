@@ -29,6 +29,8 @@ public final class CatHomeGoal extends Goal {
         setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
     }
 
+    public boolean isResting() { return resting && cat.isLying(); }
+
     public void call(UUID owner) {
         caller = owner;
         callTicks = cat.tickCount + 120;
@@ -61,8 +63,16 @@ public final class CatHomeGoal extends Goal {
         if (cat.distanceToSqr(target) <= (caller == null ? 0.12 : 2.25)) {
             cat.getNavigation().stop();
             if (caller == null) {
+                if (!resting && cat.level() instanceof ServerLevel level) {
+                    var store = CatLifeStore.get(level.getServer());
+                    var home = store.home(cat.getUUID());
+                    store.arrived(home, cat.getUUID(), level.getGameTime());
+                    var owner = level.getServer().getPlayerList().getPlayer(home.owner());
+                    if (owner != null) com.abyssredemption.absmod.spirit.BladeAdvancements.award(owner, "cat_rest");
+                }
                 resting = true;
-                cat.setInSittingPose(true);
+                cat.setInSittingPose(false);
+                cat.setLying(true);
             } else {
                 caller = null;
             }
@@ -70,6 +80,7 @@ public final class CatHomeGoal extends Goal {
         }
         if (resting) {
             cat.setInSittingPose(false);
+            cat.setLying(false);
             resting = false;
         }
         if (caller == null && stepOntoCushion(target)) {
@@ -86,7 +97,7 @@ public final class CatHomeGoal extends Goal {
     private boolean stepOntoCushion(Vec3 target) {
         Vec3 step = target.subtract(cat.position());
         if (step.lengthSqr() > 2.25 || Math.abs(step.y) > 0.5
-                || !cat.level().noCollision(cat, cat.getBoundingBox().expandTowards(step))) {
+                || !cat.level().noCollision(cat, cat.getBoundingBox().move(0, Math.max(0,step.y), 0).expandTowards(step.x, 0, step.z))) {
             return false;
         }
         var floor = BlockPos.containing(target).below();
@@ -102,6 +113,7 @@ public final class CatHomeGoal extends Goal {
         cat.getNavigation().stop();
         if (resting) {
             cat.setInSittingPose(false);
+            cat.setLying(false);
             resting = false;
         }
     }
@@ -124,7 +136,7 @@ public final class CatHomeGoal extends Goal {
             return null;
         }
         GlobalPos spot = home.spot();
-        Vec3 target = Vec3.atBottomCenterOf(spot.pos());
+        Vec3 target = Vec3.atBottomCenterOf(spot.pos()).add(0, CatNestBlock.REST_HEIGHT, 0);
         return level.dimension().equals(spot.dimension()) && cat.distanceToSqr(target) <= RANGE * RANGE
                 && level.hasChunkAt(spot.pos()) && level.getBlockState(spot.pos()).getBlock() instanceof CatNestBlock ? target : null;
     }

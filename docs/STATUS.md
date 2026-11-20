@@ -1,5 +1,18 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-20 · 1.21.1 茶约、猫窝与心镜 0.6.0
+
+- HOME-TEA。矮桌顶面可安装原奶昔茶盘，沿用四个独立杯位。结缘铃先选剑灵再点杯，剑灵寻路、转向主人、举杯后才结算。访客可在结算前拿走饮品。喝完返一个空桶并复用每日交流额度。主要改动为 TeaTableBlock、MilkshakeTrayBlock、SpiritTea、BladeSpiritEntity 与 BedrockSpiritModel。
+- CAT-REST。CatHomeGoal 在绒月猫窝或樱爪绒垫上触发趴卧，CatLifeStore 按主人和猫保存最近回窝记录，旧档缺少此字段时从空记录开始。手册家谱首行可以选择自家猫，铃铛显示附近姿态和历史记录。另有樱木抓柱，可用铃引导近处的醒猫互动。
+- TRIAL-IX。HeartMirrorBlock 与 MirrorEchoEntity 只允许主人持普通八阶实体原剑挑战。横斩预告、定点重落、收势窗口依次轮换。胜利写入剑魂交接日志，BladeSoulRecord 旧记录默认未通过。现有共鸣事务检查同魂资格、250 好感和 16 紫水晶块，沿用原剑命名、附魔、耐久比例与身份迁移。心魔 100 生命、横斩 5、重落 7 伤害属于 PROPOSED 首版数值。
+- ART-DARK／GUIDE。暗黑八阶各有生成并打包的独立刀图。手册共 61 页，FTB Quests 2101.1.37 共 66 项；原有 60 项任务与任务条件 ID 保留，普通八阶的后续说明已更新。26.x 任务导出维持原版内容。
+- 客户端实测。简体中文生存测试世界实际完成六个新增进度及 FTB 任务。脚本提供器材、已绑定的八阶剑、250 好感及先前章节进度。取杯取消、喝完仅返一桶、拆桌返还桌盘和余下三杯、两只猫分别趴窝均经过检查。以现有喵刀瞄准／授权伤害入口击败心魔；共鸣中换入未通关的另一把剑会被拒绝，16 个材料保留。用原剑确认后重复点击被拒绝，九阶剑的名字、附魔、耐久比例和剑魂一致。另起一个客户端进程重登同一存档，验证一把九阶剑、另一把未通关的八阶剑与两份回窝记录。
+- 独立服实测。两个独立 Java 客户端使用不同开发身份经本机 TCP 加入 NeoForge 专用服。服务端脚本用两份在线玩家对象驱动交互；测试只允许一面镜同时承接一个挑战，且只接受参战者的致命一击。访客在茶约中取杯无重复结算；猫与窝分别卸载，搬窝后同一只猫可绑定新绒垫；击杀后立即断开参战客户端，重新连接后资格只在胜者原剑上。首轮证据为 home-play6.log、home-reload.log 与独立服的 HOME_PEERS_PASS 标记。
+- 最终复验。中文客户端实际用工作台配方管理器组装心镜、樱爪绒垫与樱木抓柱，检查同款饮品在举杯前被替换会取消、本次邀请中召回仍可取得余杯，六个新增 FTB 任务再次完成。重新打开相同存档复核通过。双客户端独立服额外验证了战败时只掉落一把未获资格的原剑、拾回后重新挑战、同一面镜的并发邀请、致命一击后断线再登录。完整窗口标记为 `HOME_FINALE_GAME_PASS`、`HOME_FINALE_RELOAD_PASS`、`HOME_PEERS_PASS`。本机记录为 `build/home-accepted.log`、`build/home-accepted-reload.log` 及 `1.21.1NeoForge/build/home-peers/server/session.log`。
+- 构建与安装。1.21.1 NeoForge 以及归档 26.2 Fabric、NeoForge 均构建成功。正式 JAR 验证无测试类、八张暗黑图分别打包，中文／英文资源与 66 项任务引用齐全。已备份并安装到 `1.21.1-NeoForge_21.1.265_miao`，备份目录为 `absmod-backups/20261120-181148`。已安装 JAR 的 SHA-256 为 `84e6b1b2e571f8bacefbe1802744f9568d575e046bd5c4291829efc98407baf5`，安装时合并既有中文语言项并保留其他章节与存档。游戏验证使用独立开发实例。
+- 长期自然生存升到八阶的耗时、试炼难度调优与公网延迟下的手动操作仍待玩家体验。26.x为归档构建。图像证据见[茶约](../art/cherry_home/spirit-tea.png)、[回窝](../art/cherry_home/resting-cats.png)、[心镜](../art/cherry_home/mirror-sweep.png)、[九阶共鸣](../art/cherry_home/final-resonance.png)、[暗黑八阶刀图](../art/cherry_home/dark-blades.png)。
+
+
 ## 2026-11-20 · 1.21.1 樱花家居 0.5.0
 
 - HOME-INTERIORS：`CherryInteriors`、`PinkDisplayFrame`、`CherryFloorLampBlock`、`CherryFurnitureBlock` 和 `CherryCabinetBlock` 接入八项生存配方。粉色细边框中心镂空，沿用物品、地图与旋转交互。粉色发光玻璃及玻璃板亮度为 12。两格高落地灯的灯罩亮度为 15，台灯亮度为 12。低茶桌、高花架与 27 格收纳柜使用独立几何。樱花灯纸由原创新图缩成 32×32 材质。
