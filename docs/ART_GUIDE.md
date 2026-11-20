@@ -1,5 +1,11 @@
 # Ab's Mod 美术与生图执行指南
 
+## 玫瑰金与森罗粉釉
+
+玫瑰金以莓紫描边、铜粉金属、金色铆钉和猫爪钢印区别于奶粉色樱纹铁装。独立护甲 UV 用于穿戴层。[玫瑰金图集](../art/rose_workshop/rose-gold-equipment.png)
+
+森罗厨具依照 1.6.0 的 UV、模型、动态茶壶和石磨模型渲染。上游资源及其粉色改作按 CC BY-NC-SA 4.0 署名并同许可分发，随可选资源包附 ATTRIBUTION.txt。[游戏内厨具实拍](../art/rose_workshop/rose-cookery-world.png) · [森罗物语官方来源](https://github.com/KaleidoscopeMods/KaleidoscopeCookery)
+
 ## 1.21.1 · 奶樱浅粉
 
 工坊、厨具、护甲穿戴层、粉色奶昔和共鸣之心采用奶白偏粉的中亮部，保留深梅色轮廓、金属和水色。沿用旧 UV、透明通道与灶火动画帧。三款新图标使用生成的原创图集，按可见轮廓分别排入 32×32 物品贴图。寻伴针以猫须和罗盘针定方向，脚铃以爪垫缎带识别，游鱼坠以水滴和粉鱼识别。[实际游戏图标](../art/rose_workshop/blush-keepsakes.png)

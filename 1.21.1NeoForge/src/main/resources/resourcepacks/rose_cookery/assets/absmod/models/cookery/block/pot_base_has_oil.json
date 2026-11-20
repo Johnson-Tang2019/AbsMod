@@ -1,0 +1,10 @@
+{
+  "parent": "kaleidoscope_cookery:block/pot_base_has_oil",
+  "textures": {
+    "1": "absmod:cookery/block/stockpot_base",
+    "3": "absmod:cookery/block/pot_side",
+    "4": "absmod:cookery/block/pot_top",
+    "5": "absmod:cookery/block/pot_oil",
+    "particle": "absmod:cookery/block/pot_top"
+  }
+}

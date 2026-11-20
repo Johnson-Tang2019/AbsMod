@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "absmod:cookery/item/kitchen_shovel_has_oil"
+  }
+}

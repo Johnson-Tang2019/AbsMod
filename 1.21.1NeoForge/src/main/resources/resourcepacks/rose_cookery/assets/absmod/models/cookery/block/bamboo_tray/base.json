@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/bamboo_tray/base",
+  "textures": {
+    "particle": "absmod:cookery/block/bamboo_tray",
+    "leaves": "absmod:cookery/block/bamboo_tray"
+  }
+}

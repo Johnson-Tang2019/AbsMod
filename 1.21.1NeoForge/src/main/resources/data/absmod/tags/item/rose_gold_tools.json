@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "absmod:rose_gold_pickaxe",
+    "absmod:rose_gold_axe",
+    "absmod:rose_gold_shovel",
+    "absmod:rose_gold_hoe",
+    "absmod:rose_gold_sword"
+  ]
+}

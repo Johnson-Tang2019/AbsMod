@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/recipe_block",
+  "textures": {
+    "1": "absmod:cookery/block/recipe_block",
+    "particle": "absmod:cookery/block/recipe_block"
+  }
+}

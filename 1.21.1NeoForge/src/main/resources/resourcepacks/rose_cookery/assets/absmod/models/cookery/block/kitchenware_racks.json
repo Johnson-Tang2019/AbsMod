@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/kitchenware_racks",
+  "textures": {
+    "3": "absmod:cookery/block/kitchenware_racks",
+    "particle": "absmod:cookery/block/kitchenware_racks"
+  }
+}

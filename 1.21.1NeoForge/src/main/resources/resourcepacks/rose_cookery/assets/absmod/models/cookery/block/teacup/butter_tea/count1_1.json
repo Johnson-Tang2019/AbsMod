@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/teacup/butter_tea/count1_1",
+  "textures": {
+    "0": "absmod:cookery/block/teacup/butter_tea",
+    "particle": "absmod:cookery/block/teacup/butter_tea"
+  }
+}

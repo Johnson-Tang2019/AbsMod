@@ -16,14 +16,22 @@
     "BladeStunMixin",
     "MobGoalAccessor",
     "CatGeneticsMixin",
-    "RosePotMenuMixin"
+    "RosePotMenuMixin",
+    "RoseGoldEnchantmentMixin",
+    "CookeryStateMixin",
+    "CookeryPickMixin",
+    "CookeryDefinitionMixin",
+    "CookeryCupMixin",
+    "CookeryDrinkMixin",
+    "CookeryMilkTeaMixin"
   ],
   "client": [
     "client.MinecraftAttackMixin",
     "client.BladeMotionReloadMixin",
     "client.BladeAttackIndicatorMixin",
     "client.BladeFirstPersonMixin",
-    "client.BladePlayerPoseMixin"
+    "client.BladePlayerPoseMixin",
+    "client.CookeryRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

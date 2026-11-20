@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "absmod_rose=false,facing=east,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/chopping_board",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,waterlogged=false": {
+      "model": "absmod:cookery/block/chopping_board",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/chopping_board",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,waterlogged=true": {
+      "model": "absmod:cookery/block/chopping_board",
+      "y": 90
+    },
+    "absmod_rose=false,facing=north,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/chopping_board"
+    },
+    "absmod_rose=true,facing=north,waterlogged=false": {
+      "model": "absmod:cookery/block/chopping_board"
+    },
+    "absmod_rose=false,facing=north,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/chopping_board"
+    },
+    "absmod_rose=true,facing=north,waterlogged=true": {
+      "model": "absmod:cookery/block/chopping_board"
+    },
+    "absmod_rose=false,facing=south,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/chopping_board",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,waterlogged=false": {
+      "model": "absmod:cookery/block/chopping_board",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/chopping_board",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,waterlogged=true": {
+      "model": "absmod:cookery/block/chopping_board",
+      "y": 180
+    },
+    "absmod_rose=false,facing=west,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/chopping_board",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,waterlogged=false": {
+      "model": "absmod:cookery/block/chopping_board",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/chopping_board",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,waterlogged=true": {
+      "model": "absmod:cookery/block/chopping_board",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "parent": "absmod:progression/rose_alloy",
+  "display": {
+    "icon": {
+      "id": "absmod:rose_gold_chestplate"
+    },
+    "title": {
+      "translate": "advancement.absmod.rose_gold_armor.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.rose_gold_armor.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "acquire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#absmod:rose_gold_armor"
+          }
+        ]
+      }
+    }
+  }
+}

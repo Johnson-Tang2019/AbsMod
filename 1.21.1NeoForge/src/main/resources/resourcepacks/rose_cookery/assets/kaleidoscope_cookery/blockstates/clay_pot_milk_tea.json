@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "absmod_rose=false,facing=east": {
+      "model": "kaleidoscope_cookery:block/clay_pot_milk_tea",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east": {
+      "model": "absmod:cookery/block/clay_pot_milk_tea",
+      "y": 90
+    },
+    "absmod_rose=false,facing=north": {
+      "model": "kaleidoscope_cookery:block/clay_pot_milk_tea"
+    },
+    "absmod_rose=true,facing=north": {
+      "model": "absmod:cookery/block/clay_pot_milk_tea"
+    },
+    "absmod_rose=false,facing=south": {
+      "model": "kaleidoscope_cookery:block/clay_pot_milk_tea",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south": {
+      "model": "absmod:cookery/block/clay_pot_milk_tea",
+      "y": 180
+    },
+    "absmod_rose=false,facing=west": {
+      "model": "kaleidoscope_cookery:block/clay_pot_milk_tea",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west": {
+      "model": "absmod:cookery/block/clay_pot_milk_tea",
+      "y": 270
+    }
+  }
+}

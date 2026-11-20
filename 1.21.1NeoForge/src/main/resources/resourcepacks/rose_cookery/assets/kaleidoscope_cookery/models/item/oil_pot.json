@@ -1,0 +1,30 @@
+{
+  "overrides": [
+    {
+      "model": "kaleidoscope_cookery:item/pot_no_oil",
+      "predicate": {
+        "kaleidoscope_cookery:has_oil": 0.0
+      }
+    },
+    {
+      "model": "kaleidoscope_cookery:item/pot_has_oil",
+      "predicate": {
+        "kaleidoscope_cookery:has_oil": 1.0
+      }
+    },
+    {
+      "model": "absmod:cookery/item/pot_no_oil",
+      "predicate": {
+        "kaleidoscope_cookery:has_oil": 0.0,
+        "absmod:rose_finish": 1
+      }
+    },
+    {
+      "model": "absmod:cookery/item/pot_has_oil",
+      "predicate": {
+        "kaleidoscope_cookery:has_oil": 1.0,
+        "absmod:rose_finish": 1
+      }
+    }
+  ]
+}

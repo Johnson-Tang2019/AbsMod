@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "absmod:rose_pickaxe",
+    "absmod:rose_axe",
+    "absmod:rose_hoe",
+    "absmod:rose_shovel",
+    "absmod:rose_helmet",
+    "absmod:rose_chestplate",
+    "absmod:rose_leggings",
+    "absmod:rose_boots"
+  ]
+}

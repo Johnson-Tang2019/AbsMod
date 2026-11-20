@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/steamer_full_lid",
+  "textures": {
+    "2": "absmod:cookery/block/steamer",
+    "particle": "absmod:cookery/block/steamer_particle"
+  }
+}

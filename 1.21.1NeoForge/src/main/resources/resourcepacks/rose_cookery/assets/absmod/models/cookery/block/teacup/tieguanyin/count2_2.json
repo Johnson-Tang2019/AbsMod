@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/teacup/tieguanyin/count2_2",
+  "textures": {
+    "0": "absmod:cookery/block/teacup/tieguanyin",
+    "particle": "absmod:cookery/block/teacup/tieguanyin"
+  }
+}

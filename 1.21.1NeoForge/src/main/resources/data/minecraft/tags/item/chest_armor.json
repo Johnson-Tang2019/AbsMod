@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "absmod:rose_chestplate"
+    "absmod:rose_chestplate",
+    "absmod:rose_gold_chestplate"
   ]
 }

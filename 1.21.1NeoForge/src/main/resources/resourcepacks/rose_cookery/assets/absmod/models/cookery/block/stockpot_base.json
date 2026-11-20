@@ -1,0 +1,8 @@
+{
+  "parent": "kaleidoscope_cookery:block/stockpot_base",
+  "textures": {
+    "1": "absmod:cookery/block/stockpot_base",
+    "2": "absmod:cookery/block/stockpot",
+    "particle": "absmod:cookery/block/pot_top"
+  }
+}

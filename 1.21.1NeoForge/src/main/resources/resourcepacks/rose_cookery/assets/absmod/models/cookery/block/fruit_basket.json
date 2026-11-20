@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/fruit_basket",
+  "textures": {
+    "1": "absmod:cookery/block/fruit_basket",
+    "particle": "minecraft:block/oak_planks"
+  }
+}

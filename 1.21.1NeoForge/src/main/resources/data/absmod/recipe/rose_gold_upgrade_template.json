@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:copper_block"
+    },
+    {
+      "item": "absmod:paw_crystal"
+    },
+    {
+      "item": "minecraft:pink_dye"
+    }
+  ],
+  "result": {
+    "id": "absmod:rose_gold_upgrade_template",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "kaleidoscope_cookery:item/sickle"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "absmod:rose_finish": 1
+      },
+      "model": "absmod:cookery/item/sickle"
+    }
+  ]
+}

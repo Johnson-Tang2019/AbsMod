@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "absmod:rose_pickaxe"
+    "absmod:rose_pickaxe",
+    "absmod:rose_gold_pickaxe"
   ]
 }

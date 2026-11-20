@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "absmod:cookery/item/sakura_fubuki"
+  }
+}

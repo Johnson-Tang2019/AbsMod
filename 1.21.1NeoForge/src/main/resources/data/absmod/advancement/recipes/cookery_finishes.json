@@ -1,0 +1,58 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ingredient": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:rose_gold_upgrade_template"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:cookery_finish/bamboo_tray",
+      "absmod:cookery_finish/barley_tea",
+      "absmod:cookery_finish/biluochun",
+      "absmod:cookery_finish/butter_tea",
+      "absmod:cookery_finish/chopping_board",
+      "absmod:cookery_finish/clay_pot_milk_tea",
+      "absmod:cookery_finish/diamond_kitchen_knife",
+      "absmod:cookery_finish/empty_cup",
+      "absmod:cookery_finish/enamel_basin",
+      "absmod:cookery_finish/flower_tea",
+      "absmod:cookery_finish/fruit_basket",
+      "absmod:cookery_finish/gold_kitchen_knife",
+      "absmod:cookery_finish/iron_kitchen_knife",
+      "absmod:cookery_finish/kitchen_shovel",
+      "absmod:cookery_finish/kitchenware_racks",
+      "absmod:cookery_finish/millstone",
+      "absmod:cookery_finish/mystery_tea",
+      "absmod:cookery_finish/netherite_kitchen_knife",
+      "absmod:cookery_finish/oil_pot",
+      "absmod:cookery_finish/oolong",
+      "absmod:cookery_finish/pot",
+      "absmod:cookery_finish/recipe_item",
+      "absmod:cookery_finish/sakura_fubuki",
+      "absmod:cookery_finish/shawarma_spit",
+      "absmod:cookery_finish/sickle",
+      "absmod:cookery_finish/steamer",
+      "absmod:cookery_finish/stockpot",
+      "absmod:cookery_finish/stockpot_lid",
+      "absmod:cookery_finish/stove",
+      "absmod:cookery_finish/teapot",
+      "absmod:cookery_finish/tieguanyin",
+      "absmod:cookery_finish/transmutation_lunch_bag",
+      "absmod:cookery_finish/trash_can"
+    ]
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "kaleidoscope_cookery"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/teacup/biluochun/count2_2",
+  "textures": {
+    "3": "absmod:cookery/block/teacup/biluochun",
+    "particle": "absmod:cookery/block/teacup/biluochun"
+  }
+}

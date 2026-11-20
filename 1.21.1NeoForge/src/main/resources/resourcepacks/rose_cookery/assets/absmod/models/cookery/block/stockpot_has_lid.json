@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/stockpot_has_lid",
+  "textures": {
+    "2": "absmod:cookery/block/stockpot",
+    "particle": "absmod:cookery/block/pot_top"
+  }
+}

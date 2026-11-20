@@ -39,3 +39,10 @@ type="optional"
 versionRange="[9.6,10)"
 ordering="AFTER"
 side="BOTH"
+
+[[dependencies.absmod]]
+modId="kaleidoscope_cookery"
+type="optional"
+versionRange="[1.6.0-neoforge+mc1.21.1]"
+ordering="AFTER"
+side="BOTH"

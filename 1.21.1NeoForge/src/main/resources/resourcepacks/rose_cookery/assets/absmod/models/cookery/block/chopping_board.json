@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/chopping_board",
+  "textures": {
+    "1": "absmod:cookery/block/chopping_board",
+    "particle": "absmod:cookery/block/chopping_board"
+  }
+}

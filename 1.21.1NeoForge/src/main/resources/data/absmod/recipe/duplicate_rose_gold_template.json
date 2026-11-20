@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GTG",
+    "GCG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "minecraft:copper_block"
+    },
+    "T": {
+      "item": "absmod:rose_gold_upgrade_template"
+    }
+  },
+  "result": {
+    "id": "absmod:rose_gold_upgrade_template",
+    "count": 2
+  }
+}

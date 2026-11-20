@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.3.0+1.21.1'
+version = '0.4.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -42,13 +42,19 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
     from('../common/src/main/resources') {
         exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**',
-                'assets/absmod/textures/item/pink_milkshake.png', 'assets/absmod/textures/item/resonance_heart.png'
+                'data/minecraft/tags/item/swords.json', 'assets/absmod/textures/item/pink_milkshake.png', 'assets/absmod/textures/item/resonance_heart.png'
     }
     from('../client-bedrock/src/main/resources')
+    inputs.file '../common/src/main/resources/data/minecraft/tags/item/swords.json'
     inputs.dir 'src/main/language'
     inputs.property 'version', project.version
     filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }
     doLast {
+        def swords = 'data/minecraft/tags/item/swords.json'
+        def parserForTags = new groovy.json.JsonSlurper()
+        def swordTag = parserForTags.parse(file('../common/src/main/resources/' + swords))
+        swordTag.values.addAll(parserForTags.parse(file('src/main/resources/' + swords)).values)
+        new File(destinationDir, swords).setText(groovy.json.JsonOutput.toJson(swordTag), 'UTF-8')
         fileTree('src/main/language').matching { include '*.json' }.each { overlay ->
             def target = new File(destinationDir, 'assets/absmod/lang/' + overlay.name)
             def parser = new groovy.json.JsonSlurper()

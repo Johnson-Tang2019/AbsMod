@@ -1,0 +1,32 @@
+{
+  "parent": "absmod:progression/rose_alloy",
+  "display": {
+    "icon": {
+      "id": "absmod:rose_gold_upgrade_template"
+    },
+    "title": {
+      "translate": "advancement.absmod.cookery_finish.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cookery_finish.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "acquire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#absmod:cookery_utensils",
+            "components": {
+              "minecraft:block_state": {
+                "absmod_rose": "true"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

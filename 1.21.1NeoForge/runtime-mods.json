@@ -28,5 +28,10 @@
     "file": "curios-neoforge-9.6.0+1.21.1.jar",
     "url": "https://cdn.modrinth.com/data/vvuO3ImH/versions/KJsZIQrT/curios-neoforge-9.6.0%2B1.21.1.jar",
     "sha256": "5ae6703ac25a5cfb138ce34924799b642021c8109aacef578e899e8591d67a3e"
+  },
+  {
+    "file": "kaleidoscopecookery-1.6.0-neoforge+mc1.21.1.jar",
+    "url": "https://cdn.modrinth.com/data/v17FatAc/versions/g8w0b2ly/kaleidoscopecookery-1.6.0-neoforge%2Bmc1.21.1.jar",
+    "sha256": "e93784a3f17e546ebfa7c449572933bf67c6b694c01cb26b83ad120c40452b33"
   }
 ]

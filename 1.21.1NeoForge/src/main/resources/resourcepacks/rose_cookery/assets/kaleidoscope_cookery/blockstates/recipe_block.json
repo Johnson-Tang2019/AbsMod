@@ -1,0 +1,216 @@
+{
+  "variants": {
+    "absmod_rose=false,face=ceiling,facing=east,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180,
+      "y": 270
+    },
+    "absmod_rose=true,face=ceiling,facing=east,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180,
+      "y": 270
+    },
+    "absmod_rose=false,face=ceiling,facing=east,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180,
+      "y": 270
+    },
+    "absmod_rose=true,face=ceiling,facing=east,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180,
+      "y": 270
+    },
+    "absmod_rose=false,face=ceiling,facing=north,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180,
+      "y": 180
+    },
+    "absmod_rose=true,face=ceiling,facing=north,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180,
+      "y": 180
+    },
+    "absmod_rose=false,face=ceiling,facing=north,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180,
+      "y": 180
+    },
+    "absmod_rose=true,face=ceiling,facing=north,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180,
+      "y": 180
+    },
+    "absmod_rose=false,face=ceiling,facing=south,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180
+    },
+    "absmod_rose=true,face=ceiling,facing=south,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180
+    },
+    "absmod_rose=false,face=ceiling,facing=south,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180
+    },
+    "absmod_rose=true,face=ceiling,facing=south,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180
+    },
+    "absmod_rose=false,face=ceiling,facing=west,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180,
+      "y": 90
+    },
+    "absmod_rose=true,face=ceiling,facing=west,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180,
+      "y": 90
+    },
+    "absmod_rose=false,face=ceiling,facing=west,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 180,
+      "y": 90
+    },
+    "absmod_rose=true,face=ceiling,facing=west,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 180,
+      "y": 90
+    },
+    "absmod_rose=false,face=floor,facing=east,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "y": 90
+    },
+    "absmod_rose=true,face=floor,facing=east,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "y": 90
+    },
+    "absmod_rose=false,face=floor,facing=east,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "y": 90
+    },
+    "absmod_rose=true,face=floor,facing=east,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "y": 90
+    },
+    "absmod_rose=false,face=floor,facing=north,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block"
+    },
+    "absmod_rose=true,face=floor,facing=north,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block"
+    },
+    "absmod_rose=false,face=floor,facing=north,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block"
+    },
+    "absmod_rose=true,face=floor,facing=north,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block"
+    },
+    "absmod_rose=false,face=floor,facing=south,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "y": 180
+    },
+    "absmod_rose=true,face=floor,facing=south,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "y": 180
+    },
+    "absmod_rose=false,face=floor,facing=south,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "y": 180
+    },
+    "absmod_rose=true,face=floor,facing=south,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "y": 180
+    },
+    "absmod_rose=false,face=floor,facing=west,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "y": 270
+    },
+    "absmod_rose=true,face=floor,facing=west,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "y": 270
+    },
+    "absmod_rose=false,face=floor,facing=west,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "y": 270
+    },
+    "absmod_rose=true,face=floor,facing=west,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "y": 270
+    },
+    "absmod_rose=false,face=wall,facing=east,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90,
+      "y": 90
+    },
+    "absmod_rose=true,face=wall,facing=east,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90,
+      "y": 90
+    },
+    "absmod_rose=false,face=wall,facing=east,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90,
+      "y": 90
+    },
+    "absmod_rose=true,face=wall,facing=east,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90,
+      "y": 90
+    },
+    "absmod_rose=false,face=wall,facing=north,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90
+    },
+    "absmod_rose=true,face=wall,facing=north,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90
+    },
+    "absmod_rose=false,face=wall,facing=north,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90
+    },
+    "absmod_rose=true,face=wall,facing=north,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90
+    },
+    "absmod_rose=false,face=wall,facing=south,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90,
+      "y": 180
+    },
+    "absmod_rose=true,face=wall,facing=south,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90,
+      "y": 180
+    },
+    "absmod_rose=false,face=wall,facing=south,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90,
+      "y": 180
+    },
+    "absmod_rose=true,face=wall,facing=south,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90,
+      "y": 180
+    },
+    "absmod_rose=false,face=wall,facing=west,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90,
+      "y": 270
+    },
+    "absmod_rose=true,face=wall,facing=west,waterlogged=false": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90,
+      "y": 270
+    },
+    "absmod_rose=false,face=wall,facing=west,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/recipe_block",
+      "x": 90,
+      "y": 270
+    },
+    "absmod_rose=true,face=wall,facing=west,waterlogged=true": {
+      "model": "absmod:cookery/block/recipe_block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

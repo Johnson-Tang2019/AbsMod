@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/enamel_basin/empty",
+  "textures": {
+    "1": "absmod:cookery/block/enamel_basin",
+    "particle": "absmod:cookery/block/enamel_basin"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "kaleidoscope_cookery:block/shawarma_spit_powered_upper",
+  "textures": {
+    "particle": "absmod:cookery/block/shawarma_spit"
+  }
+}

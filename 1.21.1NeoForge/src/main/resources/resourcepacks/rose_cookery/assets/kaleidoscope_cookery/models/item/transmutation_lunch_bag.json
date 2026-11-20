@@ -1,0 +1,30 @@
+{
+  "overrides": [
+    {
+      "model": "kaleidoscope_cookery:item/transmutation_lunch_bag_no_items",
+      "predicate": {
+        "kaleidoscope_cookery:has_items": 0.0
+      }
+    },
+    {
+      "model": "kaleidoscope_cookery:item/transmutation_lunch_bag_has_items",
+      "predicate": {
+        "kaleidoscope_cookery:has_items": 1.0
+      }
+    },
+    {
+      "model": "absmod:cookery/item/transmutation_lunch_bag_no_items",
+      "predicate": {
+        "kaleidoscope_cookery:has_items": 0.0,
+        "absmod:rose_finish": 1
+      }
+    },
+    {
+      "model": "absmod:cookery/item/transmutation_lunch_bag_has_items",
+      "predicate": {
+        "kaleidoscope_cookery:has_items": 1.0,
+        "absmod:rose_finish": 1
+      }
+    }
+  ]
+}

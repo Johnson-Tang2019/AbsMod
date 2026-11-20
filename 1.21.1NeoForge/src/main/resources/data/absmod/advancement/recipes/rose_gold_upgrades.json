@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ingredient": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:rose_gold_upgrade_template"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:duplicate_rose_gold_template",
+      "absmod:rose_gold_pickaxe",
+      "absmod:rose_gold_axe",
+      "absmod:rose_gold_shovel",
+      "absmod:rose_gold_hoe",
+      "absmod:rose_gold_sword",
+      "absmod:rose_gold_helmet",
+      "absmod:rose_gold_chestplate",
+      "absmod:rose_gold_leggings",
+      "absmod:rose_gold_boots"
+    ]
+  }
+}

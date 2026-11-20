@@ -1,0 +1,7 @@
+Rose Cookery finish resources
+Based on Kaleidoscope Cookery 1.6.0-neoforge+mc1.21.1, by the Kaleidoscope Official Production Team (ysbbbbbb, tartaric_acid, Azumic).
+Original: https://github.com/KaleidoscopeMods/KaleidoscopeCookery
+Version: https://modrinth.com/mod/kaleidoscope-cookery/version/g8w0b2ly
+The original resource artwork and the adapted model definitions, blockstate definitions and textures in this pack are licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International.
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+Ab's Mod modifications: pale rose material palette and per-stack/per-block model selection. Geometry, UV layout and animation frame order follow the installed upstream release.

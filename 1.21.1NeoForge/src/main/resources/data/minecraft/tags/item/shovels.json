@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "absmod:rose_shovel"
+    "absmod:rose_shovel",
+    "absmod:rose_gold_shovel"
   ]
 }

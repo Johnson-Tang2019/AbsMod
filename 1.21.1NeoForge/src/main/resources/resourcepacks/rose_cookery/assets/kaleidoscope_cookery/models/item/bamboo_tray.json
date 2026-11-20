@@ -1,0 +1,11 @@
+{
+  "parent": "kaleidoscope_cookery:block/bamboo_tray/base",
+  "overrides": [
+    {
+      "predicate": {
+        "absmod:rose_finish": 1
+      },
+      "model": "absmod:cookery/item/bamboo_tray"
+    }
+  ]
+}

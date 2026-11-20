@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/teacup/barley_tea/count3_2",
+  "textures": {
+    "2": "absmod:cookery/block/teacup/barley_tea",
+    "particle": "absmod:cookery/block/teacup/barley_tea"
+  }
+}

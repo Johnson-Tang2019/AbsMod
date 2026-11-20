@@ -71,6 +71,14 @@ public final class AbsModNeoForge {
         MENUS.register("spirit_game", () -> com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE);
     }
     public AbsModNeoForge(IEventBus modEventBus) {
+        RECIPES.register("rose_upgrade", () -> com.abyssredemption.absmod.item.RoseUpgradeRecipe.SERIALIZER);
+        com.abyssredemption.absmod.registry.RoseGold.register(modEventBus);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.registry.RoseGold::enchantments);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.registry.RosePatternEnchantments::boost);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.registry.RosePatternEnchantments::tooltip);
+        if (net.neoforged.fml.ModList.get().isLoaded("kaleidoscope_cookery")) {
+            com.abyssredemption.absmod.compat.CookeryKitchen.register(modEventBus);
+        }
         BLOCK_ENTITIES.register(modEventBus);
         com.abyssredemption.absmod.registry.RoseEquipment.register(modEventBus);
         NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::engrave);

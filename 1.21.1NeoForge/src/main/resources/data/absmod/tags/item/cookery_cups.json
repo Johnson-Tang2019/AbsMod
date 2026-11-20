@@ -1,0 +1,41 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "kaleidoscope_cookery:empty_cup",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:barley_tea",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:biluochun",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:butter_tea",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:flower_tea",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:mystery_tea",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:oolong",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:sakura_fubuki",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_cookery:tieguanyin",
+      "required": false
+    }
+  ]
+}

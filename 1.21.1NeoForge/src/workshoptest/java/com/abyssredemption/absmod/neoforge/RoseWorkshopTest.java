@@ -193,8 +193,18 @@ public final class RoseWorkshopTest {
                     check(data.isCompleted(file.getQuest(id)), "FTB completion " + id);
                 }
             });
-            com.mojang.logging.LogUtils.getLogger().info("BLUSH_KEEPSAKES_CLIENT_PASS three exchanges, three active effects, daily gate, preserved soul, 51 quests");
+            com.mojang.logging.LogUtils.getLogger().info("BLUSH_KEEPSAKES_CLIENT_PASS three exchanges, three active effects, daily gate, preserved soul, 56 quests");
             com.mojang.logging.LogUtils.getLogger().info("ROSE_WORKSHOP_CLIENT_PASS kitchen, cooking, rose tools, armor, Curios, FTB, tray, grooming, wardrobe and board");
+            server(mc, AlloyKitchenTest::exercise);
+            mc.options.hideGui=true;
+        }
+        if (tick == 350) {
+            AlloyKitchenTest.checkModels(mc);
+            screenshot(mc,"rose-gold-cookery-world.png");
+        }
+        if (tick == 385) {
+            server(mc,AlloyKitchenTest::quests);
+            mc.options.hideGui=false;
             mc.stop();
         }
     }
@@ -209,6 +219,7 @@ public final class RoseWorkshopTest {
         var blade = stack("meow_blade");
         blade.setDamageValue(5);
         p.setItemInHand(InteractionHand.MAIN_HAND, blade);
+        p.inventoryMenu.broadcastChanges();
         p.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(Items.AMETHYST_SHARD, 2));
         use(p, table, 0.5);
         check(p.getOffhandItem().getCount()==1 && p.getMainHandItem()==blade && blade.getDamageValue()==5
@@ -274,7 +285,7 @@ public final class RoseWorkshopTest {
         for(var effect:java.util.List.of(MobEffects.LUCK,MobEffects.NIGHT_VISION,MobEffects.DIG_SPEED,MobEffects.JUMP,
                 MobEffects.WATER_BREATHING,MobEffects.MOVEMENT_SPEED,MobEffects.SLOW_FALLING)) check(p.hasEffect(effect),"worn effect "+effect);
         var chapter=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-        check(chapter!=null && chapter.getQuests().size()==51,"FTB count");
+        check(chapter!=null && chapter.getQuests().size()==56,"FTB count");
         var pos=ORIGIN.offset(0,1,1);
         var pot=(CookingPotBlockEntity)level.getBlockEntity(pos);
         for(int i=0;i<150 && pot.getMeal().isEmpty() && pot.getInventory().getStackInSlot(8).isEmpty();i++)

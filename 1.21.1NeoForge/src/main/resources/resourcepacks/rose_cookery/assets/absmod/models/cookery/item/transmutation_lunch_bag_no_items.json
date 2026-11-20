@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "absmod:cookery/item/transmutation_lunch_bag_no_items"
+  }
+}

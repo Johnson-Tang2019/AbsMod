@@ -1,0 +1,5 @@
+{
+  "type": "absmod:rose_upgrade",
+  "base": "minecraft:diamond_pickaxe",
+  "result": "absmod:rose_gold_pickaxe"
+}

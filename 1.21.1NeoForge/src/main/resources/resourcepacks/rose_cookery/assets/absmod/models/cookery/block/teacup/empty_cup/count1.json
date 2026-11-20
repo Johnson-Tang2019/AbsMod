@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/teacup/empty_cup/count1",
+  "textures": {
+    "3": "absmod:cookery/block/teacup/empty_cup",
+    "particle": "absmod:cookery/block/teacup/empty_cup"
+  }
+}

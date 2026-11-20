@@ -1,0 +1,5 @@
+{
+  "type": "absmod:rose_upgrade",
+  "base": "minecraft:diamond_hoe",
+  "result": "absmod:rose_gold_hoe"
+}

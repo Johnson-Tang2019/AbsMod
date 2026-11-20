@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/oil_pot",
+  "textures": {
+    "3": "absmod:cookery/block/oil_pot",
+    "particle": "block/white_wool"
+  }
+}

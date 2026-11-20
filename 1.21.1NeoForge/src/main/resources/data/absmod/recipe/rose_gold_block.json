@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "absmod:rose_gold_ingot"
+    }
+  },
+  "result": {
+    "id": "absmod:rose_gold_block",
+    "count": 1
+  }
+}

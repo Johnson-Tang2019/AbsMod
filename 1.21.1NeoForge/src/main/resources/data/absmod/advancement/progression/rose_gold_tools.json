@@ -1,0 +1,27 @@
+{
+  "parent": "absmod:progression/rose_alloy",
+  "display": {
+    "icon": {
+      "id": "absmod:rose_gold_pickaxe"
+    },
+    "title": {
+      "translate": "advancement.absmod.rose_gold_tools.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.rose_gold_tools.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "acquire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#absmod:rose_gold_tools"
+          }
+        ]
+      }
+    }
+  }
+}

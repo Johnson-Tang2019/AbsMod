@@ -12,6 +12,7 @@
     {
       "id": "absmod:rose_skillet",
       "required": false
-    }
+    },
+    "absmod:rose_gold_block"
   ]
 }

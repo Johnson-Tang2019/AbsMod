@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "kaleidoscope_cookery:item/kitchenware_racks"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "absmod:rose_finish": 1
+      },
+      "model": "absmod:cookery/item/kitchenware_racks"
+    }
+  ]
+}

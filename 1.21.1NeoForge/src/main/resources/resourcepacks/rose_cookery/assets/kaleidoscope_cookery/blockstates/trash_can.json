@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "absmod_rose=false": {
+      "model": "kaleidoscope_cookery:block/trash_can"
+    },
+    "absmod_rose=true": {
+      "model": "absmod:cookery/block/trash_can"
+    }
+  }
+}

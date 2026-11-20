@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "absmod_rose=false,facing=east,lit=false": {
+      "model": "kaleidoscope_cookery:block/stove",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,lit=false": {
+      "model": "absmod:cookery/block/stove",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,lit=true": {
+      "model": "kaleidoscope_cookery:block/stove_lit",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,lit=true": {
+      "model": "absmod:cookery/block/stove_lit",
+      "y": 90
+    },
+    "absmod_rose=false,facing=north,lit=false": {
+      "model": "kaleidoscope_cookery:block/stove"
+    },
+    "absmod_rose=true,facing=north,lit=false": {
+      "model": "absmod:cookery/block/stove"
+    },
+    "absmod_rose=false,facing=north,lit=true": {
+      "model": "kaleidoscope_cookery:block/stove_lit"
+    },
+    "absmod_rose=true,facing=north,lit=true": {
+      "model": "absmod:cookery/block/stove_lit"
+    },
+    "absmod_rose=false,facing=south,lit=false": {
+      "model": "kaleidoscope_cookery:block/stove",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,lit=false": {
+      "model": "absmod:cookery/block/stove",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,lit=true": {
+      "model": "kaleidoscope_cookery:block/stove_lit",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,lit=true": {
+      "model": "absmod:cookery/block/stove_lit",
+      "y": 180
+    },
+    "absmod_rose=false,facing=west,lit=false": {
+      "model": "kaleidoscope_cookery:block/stove",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,lit=false": {
+      "model": "absmod:cookery/block/stove",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,lit=true": {
+      "model": "kaleidoscope_cookery:block/stove_lit",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,lit=true": {
+      "model": "absmod:cookery/block/stove_lit",
+      "y": 270
+    }
+  }
+}

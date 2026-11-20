@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "absmod_rose=false,facing=east,has_oil=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,has_oil=false,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,has_oil=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,has_oil=false,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,has_oil=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,has_oil=true,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot_with_oil",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,has_oil=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,has_oil=true,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot_with_oil",
+      "y": 90
+    },
+    "absmod_rose=false,facing=north,has_oil=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot"
+    },
+    "absmod_rose=true,facing=north,has_oil=false,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot"
+    },
+    "absmod_rose=false,facing=north,has_oil=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot"
+    },
+    "absmod_rose=true,facing=north,has_oil=false,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot"
+    },
+    "absmod_rose=false,facing=north,has_oil=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil"
+    },
+    "absmod_rose=true,facing=north,has_oil=true,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot_with_oil"
+    },
+    "absmod_rose=false,facing=north,has_oil=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil"
+    },
+    "absmod_rose=true,facing=north,has_oil=true,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot_with_oil"
+    },
+    "absmod_rose=false,facing=south,has_oil=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,has_oil=false,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,has_oil=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,has_oil=false,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,has_oil=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,has_oil=true,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot_with_oil",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,has_oil=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,has_oil=true,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot_with_oil",
+      "y": 180
+    },
+    "absmod_rose=false,facing=west,has_oil=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,has_oil=false,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,has_oil=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,has_oil=false,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,has_oil=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,has_oil=true,waterlogged=false": {
+      "model": "absmod:cookery/block/oil_pot_with_oil",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,has_oil=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/oil_pot_with_oil",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,has_oil=true,waterlogged=true": {
+      "model": "absmod:cookery/block/oil_pot_with_oil",
+      "y": 270
+    }
+  }
+}

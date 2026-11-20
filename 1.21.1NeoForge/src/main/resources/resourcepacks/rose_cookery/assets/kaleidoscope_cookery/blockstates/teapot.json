@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "absmod_rose=false": {
+      "model": "kaleidoscope_cookery:block/teapot"
+    },
+    "absmod_rose=true": {
+      "model": "absmod:cookery/block/teapot"
+    }
+  }
+}

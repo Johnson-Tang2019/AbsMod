@@ -1,6 +1,8 @@
 # Ab's Mod
 
-**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 44 pages. The optional FTB chapter has 51 quests. [Setup](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 51 pages. The optional FTB chapter has 56 quests. [Setup](docs/PORT_1211.md)
+
+**0.4.0 · Rose Gold and Blush Cookery.** Combine 2 gold ingots, 4 copper ingots and a Paw Crystal for 2 rose gold ingots. Craft the upgrade template with a diamond, a copper block, a Paw Crystal and pink dye. In a smithing table, use the template, diamond gear and one alloy ingot to upgrade five tools/weapons or four pieces of armor. The tools have intrinsic Silk Touch. Ingots repair the gear and compact into storage blocks. The same template gives Kaleidoscope Cookery 1.6.0 utensils a pale pink finish. Existing rose-patterned tools and armor independently add one effective level to each enchantment, even above its vanilla maximum. Guide pages 45–51 explain all three paths.
 
 **0.3.0 adds three companion keepsakes.** Calibrate a compass with your bound stage 2+ blade at a cartography table to trace a nearby companion. Finish a game with your stage 3+ spirit while holding a rabbit foot offhand to earn a drop-gathering anklet. Give your spirit the first raw cod of the day in open rain with a bottle offhand to earn a rain-catching locket. Wear them in Curios or hold one offhand when playing without Curios. See guide pages 42–44 and the [item artwork](art/rose_workshop/blush-keepsakes.png).
 

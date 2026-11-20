@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 · Minecraft 1.21.1 NeoForge
+
+- Add rose gold alloy and template upgrades for diamond equipment. Rose gold tools have intrinsic Silk Touch.
+- Add an optional blush finish for Kaleidoscope Cookery 1.6.0 utensils, with independent placed and held appearances.
+- Existing rose-patterned equipment grants +1 effective enchantment level. Add five guide quests and seven field guide pages.
+
 ## 0.2.0 · Rose Workshop
 
 Minecraft 1.21.1 NeoForge is the active target. Adds seven blade-crafted player charms, four tools, four armor pieces, eight optional Farmer’s Delight implements and paw-print slash trails. Ports the spirit journal, brush, wardrobe, three board games and milkshake tray. The field guide and 48 FTB quests cover the new paths.

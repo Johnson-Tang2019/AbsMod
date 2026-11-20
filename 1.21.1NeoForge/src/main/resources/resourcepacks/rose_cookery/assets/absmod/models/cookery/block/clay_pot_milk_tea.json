@@ -1,0 +1,7 @@
+{
+  "parent": "kaleidoscope_cookery:block/clay_pot_milk_tea",
+  "textures": {
+    "0": "absmod:cookery/block/clay_pot_milk_tea",
+    "particle": "absmod:cookery/block/clay_pot_milk_tea"
+  }
+}

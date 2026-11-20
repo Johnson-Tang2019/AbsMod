@@ -1,0 +1,484 @@
+{
+  "variants": {
+    "absmod_rose=false,facing=east,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=east,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base",
+      "y": 90
+    },
+    "absmod_rose=true,facing=east,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid_base",
+      "y": 90
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full"
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full"
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid"
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid"
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_base"
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_base"
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid_base"
+    },
+    "absmod_rose=false,facing=north,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base"
+    },
+    "absmod_rose=true,facing=north,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid_base"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_base"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_base"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid_base"
+    },
+    "absmod_rose=false,facing=north,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base"
+    },
+    "absmod_rose=true,facing=north,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid_base"
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=south,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base",
+      "y": 180
+    },
+    "absmod_rose=true,facing=south,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid_base",
+      "y": 180
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_base",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_base",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_full_lid_base",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_full_lid_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=false,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_full_lid_base",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=false,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=false,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=false,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=false,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=true,has_lid=false,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_base",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=true,has_lid=false,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_base",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=true,has_lid=true,waterlogged=false": {
+      "model": "absmod:cookery/block/steamer_half_lid_base",
+      "y": 270
+    },
+    "absmod_rose=false,facing=west,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "kaleidoscope_cookery:block/steamer_half_lid_base",
+      "y": 270
+    },
+    "absmod_rose=true,facing=west,half=true,has_base=true,has_lid=true,waterlogged=true": {
+      "model": "absmod:cookery/block/steamer_half_lid_base",
+      "y": 270
+    }
+  }
+}

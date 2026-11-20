@@ -1,0 +1,8 @@
+{
+  "parent": "kaleidoscope_cookery:block/pot",
+  "textures": {
+    "1": "absmod:cookery/block/pot_top",
+    "3": "absmod:cookery/block/pot_side",
+    "particle": "absmod:cookery/block/pot_top"
+  }
+}
