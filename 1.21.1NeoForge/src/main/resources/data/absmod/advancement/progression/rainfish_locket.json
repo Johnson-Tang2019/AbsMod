@@ -1,0 +1,20 @@
+{
+  "parent": "absmod:progression/bond",
+  "display": {
+    "icon": {
+      "id": "absmod:rainfish_locket"
+    },
+    "title": {
+      "translate": "advancement.absmod.rainfish_locket.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.rainfish_locket.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

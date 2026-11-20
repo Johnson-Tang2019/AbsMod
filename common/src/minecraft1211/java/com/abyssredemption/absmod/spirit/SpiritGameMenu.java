@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.spirit;
 
 import com.abyssredemption.absmod.entity.BladeSpiritEntity;
+import com.abyssredemption.absmod.item.SpiritKeepsake;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
@@ -88,6 +89,7 @@ public final class SpiritGameMenu extends AbstractContainerMenu {
             }
             if (game.result() != 0) {
                 BladeAdvancements.award(serverPlayer, gameType().advancement());
+                SpiritKeepsake.finishGame(serverPlayer, opponent);
             }
         }
         sync(gameType());

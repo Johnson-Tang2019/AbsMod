@@ -57,7 +57,7 @@ public final class RoseWorkshopTest {
             mc.options.hideGui = true;
         }
         if (tick == 100) {
-            for (String id : CHARMS) {
+            for (String id : java.util.stream.Stream.concat(java.util.Arrays.stream(CHARMS), java.util.stream.Stream.of("whisker_compass","petal_anklet","rainfish_locket")).toList()) {
                 var models = mc.getItemRenderer().getItemModelShaper().getModelManager();
                 check(mc.getItemRenderer().getModel(stack(id), mc.level, mc.player, 0) != models.getMissingModel(), "missing icon " + id);
             }
@@ -74,8 +74,41 @@ public final class RoseWorkshopTest {
         if (tick == 190) server(mc, p -> {
             p.setItemInHand(InteractionHand.MAIN_HAND, stack("meow_blade"));
             BladeSoulService.initialize(BladeSoulStore.forInitialization(p.server), p.getMainHandItem(), p.getUUID());
+            var chart = ORIGIN.offset(0, 0, -2);
+            p.serverLevel().setBlockAndUpdate(chart, Blocks.CARTOGRAPHY_TABLE.defaultBlockState());
+            p.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(Items.COMPASS));
+            use(p, chart, 0.5);
+            check(p.getOffhandItem().is(Items.COMPASS), "stage one consumed compass");
+            var blade = stack("meow_blade_stage_3");
+            blade.setDamageValue(17);
+            var bound = BladeSoulService.initialize(BladeSoulStore.forInitialization(p.server), blade, p.getUUID());
+            p.setItemInHand(InteractionHand.MAIN_HAND, blade);
+            use(p, chart, 0.5);
+            check(p.getOffhandItem().isEmpty() && p.getMainHandItem()==blade && blade.getDamageValue()==17
+                    && BladeSoulService.requireRecord(BladeSoulStore.forInitialization(p.server),blade).equals(bound), "compass exchange");
+            equipKeepsake(p, "charm", "whisker_compass");
             spirit = SpiritTransformationService.manifest(p);
             spirit.setPos(p.getX() + 1, p.getY(), p.getZ());
+            p.setShiftKeyDown(true);
+            p.tickCount += (10 - p.tickCount % 10) % 10;
+            RoseCharms.tick(new net.neoforged.neoforge.event.tick.PlayerTickEvent.Post(p));
+            check(complete(p, "whisker_compass"), "compass trail");
+            p.setShiftKeyDown(false);
+            var level = p.serverLevel();
+            level.setWeatherParameters(0,6000,true,false);
+            level.setRainLevel(1F);
+            p.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.COD, 2));
+            p.setItemInHand(InteractionHand.OFF_HAND,new ItemStack(Items.GLASS_BOTTLE, 2));
+            spirit.interact(p, InteractionHand.MAIN_HAND);
+            check(p.getMainHandItem().getCount()==1 && p.getOffhandItem().getCount()==1, "rain gift");
+            spirit.interact(p, InteractionHand.MAIN_HAND);
+            check(p.getMainHandItem().getCount()==1 && p.getOffhandItem().getCount()==1, "daily gift duplicate");
+            equipKeepsake(p, "necklace", "rainfish_locket");
+            p.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.GLASS_BOTTLE));
+            p.setXRot(-75);
+            p.gameMode.useItem(p,level,p.getMainHandItem(),InteractionHand.MAIN_HAND);
+            check(p.getMainHandItem().is(Items.POTION) && complete(p,"rainfish_locket"), "rain bottle");
+            p.setItemInHand(InteractionHand.OFF_HAND,new ItemStack(Items.RABBIT_FOOT));
             p.getInventory().add(stack("bell_clip"));
             check(SpiritWardrobe.choose(p, spirit, SpiritAdornment.BELL), "wardrobe equip");
             p.setItemInHand(InteractionHand.MAIN_HAND, stack("gentle_brush"));
@@ -105,12 +138,62 @@ public final class RoseWorkshopTest {
                 check(menu.result() != 0 && menu.clickMenuButton(p, SpiritGameMenu.RESTART), "finish and replay " + variant);
                 p.closeContainer();
             }
+            check(p.getOffhandItem().isEmpty(), "game offering");
+            equipKeepsake(p, "feet", "petal_anklet");
+            p.setShiftKeyDown(true);
+            var drop = new net.minecraft.world.entity.item.ItemEntity(p.serverLevel(),p.getX()+2,p.getY(),p.getZ(),new ItemStack(Items.FEATHER));
+            var reserved = new net.minecraft.world.entity.item.ItemEntity(p.serverLevel(),p.getX()+2,p.getY(),p.getZ(),new ItemStack(Items.COAL));
+            reserved.setPickUpDelay(100);
+            var claimed = new net.minecraft.world.entity.item.ItemEntity(p.serverLevel(),p.getX()+2,p.getY(),p.getZ(),new ItemStack(Items.REDSTONE));
+            claimed.setTarget(java.util.UUID.randomUUID());
+            p.serverLevel().addFreshEntity(claimed);
+            p.serverLevel().addFreshEntity(drop);
+            p.serverLevel().addFreshEntity(reserved);
+            p.causeFallDamage(2F,1F,p.damageSources().fall());
+            check(!drop.isRemoved(), "small step collected loot");
+            p.causeFallDamage(4F,1F,p.damageSources().fall());
+            check(drop.isRemoved() && !reserved.isRemoved() && !claimed.isRemoved() && complete(p,"petal_anklet"),"anklet landing");
+            p.setShiftKeyDown(false);
         });
         if (tick == 270) {
             mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
         }
         if (tick == 290) screenshot(mc, "rose-workshop-equipment.png");
-        if (tick == 310) {
+        if (tick == 295) {
+            mc.player.closeContainer();
+            mc.setScreen(null);
+            mc.options.hideGui = true;
+            server(mc,p -> {
+                var level=p.serverLevel();
+                level.setWeatherParameters(6000,0,false,false);
+                level.setRainLevel(0);
+                for (int x=9;x<=15;x++) for (int z=-5;z<=1;z++)
+                    level.setBlockAndUpdate(new BlockPos(x,89,z),Blocks.CHERRY_PLANKS.defaultBlockState());
+                String[] slots={"charm","feet","necklace"};
+                for (int i=0;i<slots.length;i++) {
+                    var wall=new BlockPos(11+i,91,0);
+                    level.setBlockAndUpdate(wall,Blocks.STRIPPED_CHERRY_LOG.defaultBlockState());
+                    var frame=new net.minecraft.world.entity.decoration.GlowItemFrame(level,wall.north(),Direction.NORTH);
+                    var inventory=CuriosApi.getCuriosInventory(p).orElseThrow();
+                    frame.setItem(inventory.getStacksHandler(slots[i]).orElseThrow().getStacks().getStackInSlot(0).copy());
+                    level.addFreshEntity(frame);
+                }
+                p.teleportTo(level,12.5,90,-3.1,java.util.Set.of(),0,2);
+                p.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);
+                spirit.setPos(5,90,0);
+            });
+        }
+        if (tick == 316) screenshot(mc, "blush-keepsakes-world.png");
+        if (tick == 320) {
+            mc.options.hideGui=false;
+            server(mc,p -> {
+                var file=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;
+                var data=file.getTeamData(p).orElseThrow();
+                for (long id : new long[]{0x5406ba805fadbdb3L, 0x1815871d23a3fe7bL, 0x1cb5786f600c5910L}) {
+                    check(data.isCompleted(file.getQuest(id)), "FTB completion " + id);
+                }
+            });
+            com.mojang.logging.LogUtils.getLogger().info("BLUSH_KEEPSAKES_CLIENT_PASS three exchanges, three active effects, daily gate, preserved soul, 51 quests");
             com.mojang.logging.LogUtils.getLogger().info("ROSE_WORKSHOP_CLIENT_PASS kitchen, cooking, rose tools, armor, Curios, FTB, tray, grooming, wardrobe and board");
             mc.stop();
         }
@@ -191,7 +274,7 @@ public final class RoseWorkshopTest {
         for(var effect:java.util.List.of(MobEffects.LUCK,MobEffects.NIGHT_VISION,MobEffects.DIG_SPEED,MobEffects.JUMP,
                 MobEffects.WATER_BREATHING,MobEffects.MOVEMENT_SPEED,MobEffects.SLOW_FALLING)) check(p.hasEffect(effect),"worn effect "+effect);
         var chapter=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-        check(chapter!=null && chapter.getQuests().size()==48,"FTB count");
+        check(chapter!=null && chapter.getQuests().size()==51,"FTB count");
         var pos=ORIGIN.offset(0,1,1);
         var pot=(CookingPotBlockEntity)level.getBlockEntity(pos);
         for(int i=0;i<150 && pot.getMeal().isEmpty() && pot.getInventory().getStackInSlot(8).isEmpty();i++)
@@ -202,6 +285,19 @@ public final class RoseWorkshopTest {
         use(p,pos,0.5);
         check(p.containerMenu instanceof vectorwing.farmersdelight.common.block.entity.container.CookingPotMenu
                 && p.containerMenu.stillValid(p),"pink pot menu validity");
+    }
+
+    private static boolean complete(ServerPlayer p,String key) {
+        var entry=p.server.getAdvancements().get(id("progression/"+key));
+        return entry!=null && p.getAdvancements().getOrStartProgress(entry).isDone();
+    }
+
+    private static void equipKeepsake(ServerPlayer p,String slot,String key) {
+        var stacks=CuriosApi.getCuriosInventory(p).orElseThrow().getStacksHandler(slot).orElseThrow().getStacks();
+        var prior=stacks.extractItem(0,1,false);
+        if (!prior.isEmpty()) p.getInventory().add(prior);
+        int index=p.getInventory().findSlotMatchingItem(stack(key));
+        check(index>=0 && stacks.insertItem(0,p.getInventory().removeItem(index,1),false).isEmpty(),"equip "+key);
     }
 
     private static void use(ServerPlayer p,BlockPos pos,double xz) {

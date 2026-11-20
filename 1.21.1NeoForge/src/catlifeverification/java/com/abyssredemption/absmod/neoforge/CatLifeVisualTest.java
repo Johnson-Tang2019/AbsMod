@@ -182,7 +182,7 @@ public final class CatLifeVisualTest {
             }
             var file = dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;
             var chapter = file.getChapter(0x1C4E810187B7DDC2L);
-            check(chapter != null && chapter.getQuests().size() == 48, "Cat FTB chapter did not load");
+            check(chapter != null && chapter.getQuests().size() == 51, "Cat FTB chapter did not load");
             var team = file.getTeamData(player).orElseThrow();
             long completed = chapter.getQuests().stream().filter(quest -> CAT_QUESTS.contains(quest.id))
                     .filter(team::isCompleted).count();

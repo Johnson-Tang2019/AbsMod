@@ -1,0 +1,20 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:whisker_compass"
+    },
+    "title": {
+      "translate": "advancement.absmod.whisker_compass.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.whisker_compass.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

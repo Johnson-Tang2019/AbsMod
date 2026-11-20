@@ -1,0 +1,20 @@
+{
+  "parent": "absmod:progression/manifest",
+  "display": {
+    "icon": {
+      "id": "absmod:petal_anklet"
+    },
+    "title": {
+      "translate": "advancement.absmod.petal_anklet.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.petal_anklet.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCES = ROOT / "common/src/main/resources"
 COMPANION_QUESTS = {"gentle_brush", "milkshake_tray", "spirit_adornment", "spirit_board_game", "spirit_gomoku", "spirit_reversi"}
-POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | COMPANION_QUESTS | {"paw_crystal", "rose_charms", "rose_tools", "rose_armor", "rose_kitchen"}
+POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | COMPANION_QUESTS | {"paw_crystal", "rose_charms", "rose_tools", "rose_armor", "rose_kitchen", "whisker_compass", "petal_anklet", "rainfish_locket"}
 
 
 def stable_id(name):
@@ -137,11 +137,13 @@ def generate():
     active = ROOT / "1.21.1NeoForge/src/main"
     workshop_text = json.loads((active / "language/zh_cn.json").read_text(encoding="utf-8"))
     workshop_positions = {"paw_crystal": (2, -6), "rose_charms": (4, -6), "rose_tools": (4, -8),
-                          "rose_armor": (4, -10), "rose_kitchen": (4, -12)}
+                          "rose_armor": (4, -10), "rose_kitchen": (4, -12), "whisker_compass": (6, -6),
+                          "petal_anklet": (6, -8), "rainfish_locket": (6, -10)}
     for name, (x, y) in workshop_positions.items():
         advancement = json.loads((active / "resources/data/absmod/advancement/progression" / (name + ".json")).read_text(encoding="utf-8"))
         desc = [workshop_text["advancement.absmod." + name + ".description"]]
-        pages = [39, 40] if name == "rose_charms" else [41] if name != "paw_crystal" else []
+        pages = {"paw_crystal": [], "rose_charms": [39, 40], "whisker_compass": [42],
+                 "petal_anklet": [43], "rainfish_locket": [44]}.get(name, [41])
         desc.extend(workshop_text[f"guide.absmod.page.{page}"] for page in pages)
         legacy_quests.append({"id": stable_id(name), "title": workshop_text["advancement.absmod." + name + ".title"],
                               "description": desc, "x": x, "y": y,

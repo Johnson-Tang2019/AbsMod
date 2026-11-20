@@ -1,12 +1,13 @@
 package com.abyssredemption.absmod.spirit;
 
 import com.abyssredemption.absmod.entity.BladeSpiritEntity;
+import com.abyssredemption.absmod.item.SpiritKeepsake;
+import java.util.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import java.util.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Items;
 
 /** Growth rewards are separate from short-lived combo stacks and damage amounts. */
 public final class BladeAffection {
@@ -71,6 +72,7 @@ public final class BladeAffection {
         double earned = award(owner,spirit.soulId(),gift?2:1);
         if(gift && !owner.hasInfiniteMaterials())owner.getItemInHand(hand).shrink(1);
         store.put(new BladeGrowthStore.Day(d.soul(),d.day(),d.walking(),d.follow(),d.hits(),d.combat(),d.talked()||!gift,d.gifted()||gift,d.targets()));
+        if (gift) SpiritKeepsake.receiveGift(owner, spirit);
         if (owner.connection != null) {
             var message = earned > 0
                     ? net.minecraft.network.chat.Component.translatable("resonance.absmod.affection_gained",

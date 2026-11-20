@@ -25,6 +25,12 @@ public final class RoseStandaloneTest {
         player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(BuiltInRegistries.ITEM.get(charm)));
         RoseCharms.tick(new PlayerTickEvent.Post(player));
         if (!player.hasEffect(MobEffects.LUCK)) throw new IllegalStateException("Missing offhand effect");
+        var compass=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("absmod","whisker_compass"));
+        player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(compass));
+        player.setShiftKeyDown(true);
+        RoseCharms.tick(new PlayerTickEvent.Post(player));
+        if (!player.getCooldowns().isOnCooldown(compass)) throw new IllegalStateException("Standalone companion search");
+        com.mojang.logging.LogUtils.getLogger().info("BLUSH_STANDALONE_PASS offhand compass activated with Curios absent");
         com.mojang.logging.LogUtils.getLogger().info("ROSE_STANDALONE_PASS optional integrations absent, offhand charm active");
         server.halt(false);
     }

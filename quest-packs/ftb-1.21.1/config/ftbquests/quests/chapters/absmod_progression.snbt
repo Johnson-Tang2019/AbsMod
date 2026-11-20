@@ -1117,6 +1117,72 @@
         }
       ],
       "rewards": []
+    },
+    {
+      "id": "5406BA805FADBDB3",
+      "title": "循须寻伴",
+      "description": [
+        "用寻伴针找到一只自己的猫或显现中的剑灵。",
+        "主手持自己的二阶以上喵刀，副手拿普通指南针，站立右击制图台校准。佩戴寻伴针后潜行，花瓣指向 24 格内最近的自家猫或剑灵，提示栏显示距离。"
+      ],
+      "x": 6,
+      "y": -6,
+      "dependencies": [
+        "D093C5A19DFEFCB0"
+      ],
+      "tasks": [
+        {
+          "id": "5496FF0F46E0111F",
+          "type": "advancement",
+          "advancement": "absmod:progression/whisker_compass",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "1815871D23A3FE7B",
+      "title": "落地拾穗",
+      "description": [
+        "佩戴拾穗铃，潜行落地并收集一堆掉落物。",
+        "让自己的三阶以上剑灵显现，副手拿兔子脚，陪她下完任一盘棋，胜负均可。戴好脚铃，潜行落下至少 2.5 格，可拾取 4 格内最多 12 堆可见且能拾取的物品。注意落差伤害。"
+      ],
+      "x": 6,
+      "y": -8,
+      "dependencies": [
+        "C0A7C3C1C2EE40FF"
+      ],
+      "tasks": [
+        {
+          "id": "012F819657B356E3",
+          "type": "advancement",
+          "advancement": "absmod:progression/petal_anklet",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "1CB5786F600C5910",
+      "title": "接一瓶月露",
+      "description": [
+        "佩戴游鱼坠，在露天下雨时用玻璃瓶接水。",
+        "下雨时，让自己的剑灵站在露天。副手拿玻璃瓶，主手用生鳕鱼完成当天首次赠礼。戴好吊坠，雨中露天仰头至少 45°，主手用空瓶右击空气，得到一瓶水。"
+      ],
+      "x": 6,
+      "y": -10,
+      "dependencies": [
+        "6B3C47D1AA6174D9"
+      ],
+      "tasks": [
+        {
+          "id": "062F379F63EABD91",
+          "type": "advancement",
+          "advancement": "absmod:progression/rainfish_locket",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
     }
   ]
 }

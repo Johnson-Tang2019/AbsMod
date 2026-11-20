@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.registry;
 
 import com.abyssredemption.absmod.item.RoseCharmItem;
+import com.abyssredemption.absmod.item.SpiritKeepsake;
 import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -32,6 +33,9 @@ public final class RoseEquipment {
         ModItems.ITEMS.registerItem("rose_axe", p -> new AxeItem(tier, p.attributes(AxeItem.createAttributes(tier, 6, -3.1F))));
         ModItems.ITEMS.registerItem("rose_shovel", p -> new ShovelItem(tier, p.attributes(ShovelItem.createAttributes(tier, 1.5F, -3F))));
         ModItems.ITEMS.registerItem("rose_hoe", p -> new HoeItem(tier, p.attributes(HoeItem.createAttributes(tier, -2, -1F))));
+        for (var kind : SpiritKeepsake.Kind.values()) {
+            ModItems.ITEMS.registerItem(kind.id(), p -> new SpiritKeepsake(kind, p));
+        }
         for (var charm : RoseCharmItem.Kind.values()) {
             ModItems.ITEMS.registerItem(charm.id(), p -> new RoseCharmItem(charm, p));
         }

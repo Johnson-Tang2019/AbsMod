@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.2.0+1.21.1'
+version = '0.3.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -41,7 +41,8 @@ tasks.withType(JavaCompile).configureEach {
 
 processResources {
     from('../common/src/main/resources') {
-        exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**'
+        exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**',
+                'assets/absmod/textures/item/pink_milkshake.png', 'assets/absmod/textures/item/resonance_heart.png'
     }
     from('../client-bedrock/src/main/resources')
     inputs.dir 'src/main/language'

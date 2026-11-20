@@ -1,5 +1,14 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-20 · 1.21.1 剑灵信物 0.3.0
+
+- LIFE-KEEPSAKE：`SpiritKeepsake`、`RoseCharms`、`BladeAffection` 与 `SpiritGameMenu` 接入三种交换。制图台检查剑魂所有者和阶位；棋局仅在完成时收兔子脚；雨天收瓶共用剑灵原有的每日鳕鱼赠礼。三件分别用于寻找主人伙伴、落地拾物与接雨。Curios 对应栏或单独游玩时的副手激活效果。
+- ART：50 张已有 PNG 的粉色部分调浅，包含 29 张厨房方块材质、17 张工坊物品图、两张护甲穿戴层及粉色奶昔、共鸣之心的 1.21.1 专用图。对照上版 PNG，尺寸及逐像素透明度全部一致，455872 个着色像素发生变化。三件新图标各为 32×32。[贴图预览](../art/rose_workshop/blush-keepsakes.png) · [游戏内展示框](../art/rose_workshop/blush-keepsakes-world.png)
+- GUIDE：中英文观察手册增至 44 页，新增 3 个首次成功使用的原版进度。`tools/quests/export_quests.py` 导出 51 项 FTB 任务；对比旧章节，原有 48 条任务的全部字段相同。
+- 实机自动化：`runClient -PworkshopTest` 在中文生存测试世界加载 NeoForge 21.1.265、Curios 9.6.0、FTB Quests 2101.1.37 及农夫乐事 1.3.4。用已绑定的一阶和三阶测试剑验证门槛、消耗及剑魂和耐久；实际完成对局、每日赠礼与接水，验证重复赠礼、伙伴指引、两种落差、拾取延时和他人保留的掉落物。三项进度及三项 FTB 任务均完成。客户端模型解析和展示框截图通过。日志 `build/blush-client-final.log`。
+- 独立服务端：`runServer -PstandaloneTest` 在无 Curios、无农夫乐事的环境，通过测试玩家验证副手寻伴针和原有戒指。日志 `build/blush-standalone.log`。本轮未做双人联机和长期生存平衡验收。
+- 交付：根目录正式构建通过，JAR 已排除实测类；历史 26.2 Fabric、NeoForge 构建回归通过。已备份并安装至指定的 1.21.1 PCL2 实例，正式 JAR 的 SHA-256 为 `64646bec94dc8c11d38f2add993648aee080e17842b99b7609576d613c0ec4c5`，任务章节与中文任务文本复制后均已核对。备份目录 `absmod-backups/20261120-132301`。实测使用独立测试世界；本次未打开玩家的 PCL2 存档。
+
 ## 2026-11-20 · 1.21.1 樱爪工坊 0.2.0
 
 - CONFIRMED（PORT-1211／LIFE／GEAR／GUIDE）：后续仅开发 1.21.1 NeoForge。根目录默认构建与启动指向该版本。旧 26.x 目录保留为历史实现。

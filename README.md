@@ -1,8 +1,10 @@
 # Ab's Mod
 
-**Minecraft 1.21.1 NeoForge is the sole active development target.** The 0.2.0 Rose Workshop brings the companion activities and shared milkshake tray to this version. The field guide has 41 pages and the optional FTB chapter has 48 quests. [Setup](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 44 pages. The optional FTB chapter has 51 quests. [Setup](docs/PORT_1211.md)
 
-Hold a physical Meow Blade in your main hand and an amethyst shard offhand. Use a smithing table while standing to engrave a Paw Crystal. Craft seven wearable charms with crystals, from quarry mittens to a slow-falling cat cape. Curios supplies seven slots. Without Curios, one charm works in your offhand. The smithing table also upgrades four iron tools, a full suit of iron armor and eight optional Farmer’s Delight kitchen implements. Put pink dye on the left, the original gear in the middle and a Paw Crystal on the right. Recipes are on guide pages 38–41.
+**0.3.0 adds three companion keepsakes.** Calibrate a compass with your bound stage 2+ blade at a cartography table to trace a nearby companion. Finish a game with your stage 3+ spirit while holding a rabbit foot offhand to earn a drop-gathering anklet. Give your spirit the first raw cod of the day in open rain with a bottle offhand to earn a rain-catching locket. Wear them in Curios or hold one offhand when playing without Curios. See guide pages 42–44 and the [item artwork](art/rose_workshop/blush-keepsakes.png).
+
+Hold a physical Meow Blade in your main hand and an amethyst shard offhand. Use a smithing table while standing to engrave a Paw Crystal. Craft seven wearable charms with crystals, from quarry mittens to a slow-falling cat cape. Each workshop charm has a matching Curios slot. Without Curios, one charm works in your offhand. The smithing table also upgrades four iron tools, a full suit of iron armor and eight optional Farmer’s Delight kitchen implements. Put pink dye on the left, the original gear in the middle and a Paw Crystal on the right. Recipes are on guide pages 38–41.
 
 Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
 
@@ -43,7 +45,7 @@ The Milkshake Tray displays up to four drinks for anyone to take. Right-click a 
 
 ## Build and run
 
-Install JDK 25 for Gradle and JDK 21 for the game. Import the repository root in your IDE. The root build produces `1.21.1NeoForge/build/libs/absmod-neoforge-0.2.0+1.21.1.jar`.
+Install JDK 25 for Gradle and JDK 21 for the game. Import the repository root in your IDE. The root build produces `1.21.1NeoForge/build/libs/absmod-neoforge-0.3.0+1.21.1.jar`.
 
 ```powershell
 ./gradlew.bat build

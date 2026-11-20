@@ -74,6 +74,9 @@ public final class AbsModNeoForge {
         BLOCK_ENTITIES.register(modEventBus);
         com.abyssredemption.absmod.registry.RoseEquipment.register(modEventBus);
         NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::engrave);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::tune);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::land);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::catchRain);
         NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::tick);
         if (net.neoforged.fml.ModList.get().isLoaded("farmersdelight")) {
             com.abyssredemption.absmod.compat.RoseKitchen.register(modEventBus);
