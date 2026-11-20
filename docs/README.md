@@ -1,5 +1,8 @@
 # Ab's Mod 文档入口
 
+2026-11-20 起唯一开发目标为 Minecraft 1.21.1 NeoForge。当前游玩版本与测试入口见 [PORT_1211.md](PORT_1211.md)，交付证据见 [STATUS.md](STATUS.md)。
+
+
 26.1.2 Fabric 和 FTB：[安装与验证](PORT_2612.md)。粉色共鸣工坊见[成长实现](IMPLEMENTATION_PROGRESSION.md)。
 
 最新猫咪玩法：[收藏、家谱、猫窝、结缘铃与猫遗传](CAT_GENETICS.md)。FTB导出及1.21.1移植验证状态看STATUS顶部。

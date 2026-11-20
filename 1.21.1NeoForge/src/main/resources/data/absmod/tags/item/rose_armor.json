@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "absmod:rose_helmet",
+    "absmod:rose_chestplate",
+    "absmod:rose_leggings",
+    "absmod:rose_boots"
+  ]
+}

@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.1.0+1.21.1'
+version = '0.2.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -17,6 +17,16 @@ neoForge {
     }
     mods { absmod { sourceSet sourceSets.main } }
 }
+// Compile against the same optional integrations used by the isolated client.
+repositories { maven { url = 'https://api.modrinth.com/maven'; content { includeGroup 'maven.modrinth' } } }
+dependencies {
+    ['farmers-delight': ['XTVZDOol', 'FarmersDelight-1.21.1-1.3.4.jar'],
+     'curios': ['KJsZIQrT', 'curios-neoforge-9.6.0+1.21.1.jar']].each { slug, release ->
+        def local = file("run/mods/" + release[1])
+        compileOnly(local.exists() ? files(local) : "maven.modrinth:${slug}:${release[0]}")
+    }
+}
+
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 
 sourceSets.main.java.srcDir "../common/src/minecraft1211/java"
@@ -32,25 +42,24 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
     from('../common/src/main/resources') {
         exclude 'absmod.mixins.json', 'assets/absmod/items/**', 'data/absmod/cat_variant/**'
-        exclude 'assets/absmod/models/item/gentle_brush.json', 'data/absmod/**/gentle_brush.json'
-        exclude 'assets/absmod/**/milkshake_tray.json', 'data/absmod/**/milkshake_tray.json'
-        exclude 'assets/absmod/models/item/blossom_clip.json', 'assets/absmod/models/item/moon_clip.json', 'data/absmod/**/blossom_clip.json', 'data/absmod/**/moon_clip.json',
-                'data/absmod/advancement/progression/spirit_adornment.json', 'data/absmod/advancement/progression/spirit_board_game.json'
-        exclude 'assets/absmod/models/item/spirit_adornment/**', 'data/absmod/recipe/spirit_adornment/**',
-                'data/absmod/advancement/recipes/spirit_adornment/**', 'data/absmod/advancement/progression/spirit_gomoku.json',
-                'data/absmod/advancement/progression/spirit_reversi.json'
     }
     from('../client-bedrock/src/main/resources')
+    inputs.dir 'src/main/language'
     inputs.property 'version', project.version
     filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }
     doLast {
+        fileTree('src/main/language').matching { include '*.json' }.each { overlay ->
+            def target = new File(destinationDir, 'assets/absmod/lang/' + overlay.name)
+            def parser = new groovy.json.JsonSlurper()
+            target.setText(groovy.json.JsonOutput.toJson(parser.parse(target) + parser.parse(overlay)), 'UTF-8')
+        }
         def rootAdvancement = new File(destinationDir, 'data/absmod/advancement/progression/root.json')
         if(rootAdvancement.exists()) {
             def advancement = new groovy.json.JsonSlurper().parse(rootAdvancement)
             advancement.display.background = 'minecraft:textures/gui/advancements/backgrounds/stone.png'
             rootAdvancement.setText(groovy.json.JsonOutput.toJson(advancement), 'UTF-8')
         }
-        fileTree(destinationDir).matching { include 'data/absmod/recipe/*.json' }.each { recipe ->
+        fileTree(destinationDir).matching { include 'data/absmod/recipe/**/*.json' }.each { recipe ->
             def json = new groovy.json.JsonSlurper().parse(recipe)
             def ingredient = { value -> value instanceof String ? (value.startsWith('#') ? [tag:value.substring(1)] : [item:value]) : value }
             if(json.ingredients) json.ingredients = json.ingredients.collect(ingredient)
@@ -98,4 +107,14 @@ if (providers.gradleProperty("spiritTransferPhase").isPresent()) {
     sourceSets.main.java.srcDir "src/transfertest/java"
     neoForge.runs.client.systemProperty "absmod.transferPhase", providers.gradleProperty("spiritTransferPhase").get()
     neoForge.runs.client.systemProperty "absmod.transferWorld", providers.gradleProperty("spiritTransferWorld").get()
+}
+
+if (providers.gradleProperty("workshopTest").isPresent()) {
+    sourceSets.main.java.srcDir "src/workshoptest/java"
+    dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") }
+}
+
+if (providers.gradleProperty("standaloneTest").isPresent()) {
+    sourceSets.main.java.srcDir "src/standalonetest/java"
+    neoForge.runs.server.gameDirectory = layout.buildDirectory.dir("standalone-test")
 }

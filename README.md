@@ -1,6 +1,8 @@
 # Ab's Mod
 
-Supports Minecraft 26.1.2 Fabric, 26.2 Fabric and NeoForge, and 1.21.1 NeoForge. The field guide and vanilla advancements are available on each target. The optional FTB packs contain 43 quests for 26.1.2 and 37 for 1.21.1. [26.1.2 setup](docs/PORT_2612.md) · [1.21.1 setup](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge is the sole active development target.** The 0.2.0 Rose Workshop brings the companion activities and shared milkshake tray to this version. The field guide has 41 pages and the optional FTB chapter has 48 quests. [Setup](docs/PORT_1211.md)
+
+Hold a physical Meow Blade in your main hand and an amethyst shard offhand. Use a smithing table while standing to engrave a Paw Crystal. Craft seven wearable charms with crystals, from quarry mittens to a slow-falling cat cape. Curios supplies seven slots. Without Curios, one charm works in your offhand. The smithing table also upgrades four iron tools, a full suit of iron armor and eight optional Farmer’s Delight kitchen implements. Put pink dye on the left, the original gear in the middle and a Paw Crystal on the right. Recipes are on guide pages 38–41.
 
 Craft the **Cat Field Guide** with a book and raw cod. Use it in the air to read the guide or on a cat to see its genes, coat and lineage. Sneak-use on the first cat, then observe another nearby to see breeding odds. Offspring can have 2048 ordinary and 256 rare blush-pink coat combinations. Existing cats retain their saved coats. [Cat genetics and breeding odds](docs/CAT_GENETICS.md)
 
@@ -33,52 +35,28 @@ English | [简体中文](README.zh-CN.md)
 
 Base package: `com.abyssredemption.absmod`. Mod ID: `absmod`.
 
-Sneak-use the Field Guide in the air to open your cat collection and family trees. Observe cats with the guide and filter by coat, pattern, or eyes. Use a Bond Bell on your cat and then on a placed Moonfelt Cat Nest to assign a rest spot. Use the bell in the air for companion details, or sneak-use to call a nearby cat. Recipes and controls are on guide pages 25–28. In 26.1.2, select your manifested spirit from the Bell menu to see affection, durability, the next stage requirement and today’s activity. See page 29 for the controls. Page 30 explains the Gentle Brush, an optional reusable tool for your cat or manifested spirit. Brushing a spirit shares the existing daily talk reward. See [cat collection and home setup](docs/CAT_GENETICS.md).
+Sneak-use the Field Guide in the air to open your cat collection and family trees. Observe cats with the guide and filter by coat, pattern, or eyes. Use a Bond Bell on your cat and then on a placed Moonfelt Cat Nest to assign a rest spot. Use the bell in the air for companion details, or sneak-use to call a nearby cat. Recipes and controls are on guide pages 25–28. In 1.21.1 and the archived 26.1.2 build, select your manifested spirit from the Bell menu to see affection, durability, the next stage requirement and today’s activity. See page 29 for the controls. Page 30 explains the Gentle Brush, an optional reusable tool for your cat or manifested spirit. Brushing a spirit shares the existing daily talk reward. See [cat collection and home setup](docs/CAT_GENETICS.md).
 
-In 26.1.2, the spirit’s Bell menu offers 12 craftable accessories and three games against the spirit: tic-tac-toe, Gomoku, and Reversi. The accessory selection follows the same sword after recall. Any completed round counts toward that game’s FTB quest. Field guide pages 31–35 cover every recipe and the rules of each game.
+In 1.21.1 and the archived 26.1.2 build, the spirit’s Bell menu offers 12 craftable accessories and three games against the spirit: tic-tac-toe, Gomoku, and Reversi. The accessory selection follows the same sword after recall. Any completed round counts toward that game’s FTB quest. Field guide pages 31–35 cover every recipe and the rules of each game.
 
-The Milkshake Tray displays up to four drinks for anyone to take. Right-click a coaster with a milkshake in your main hand to place one, then use an empty main hand to pick it up. Breaking the tray drops any drinks left on it. The recipe and controls are on pages 36–37 of the 26.1.2 field guide.
-
-## Project layout
-
-| Directory | Purpose |
-| --- | --- |
-| `common/src/main/java` | Shared Minecraft 26.2 item behavior, commands and constants |
-| `common/src/main/resources` | Shared translations, models and item tags |
-| `26.2NeoForge` | NeoForge entry point, registration and metadata |
-| `26.2Fabric` | Fabric entry point, registration and metadata |
-
-The root project builds separate JARs for both loaders without an Architectury runtime dependency.
-Build the separate Java 21 target with `./gradlew.bat -p 1.21.1NeoForge build`.
+The Milkshake Tray displays up to four drinks for anyone to take. Right-click a coaster with a milkshake in your main hand to place one, then use an empty main hand to pick it up. Breaking the tray drops any drinks left on it. The recipe and controls are on pages 36–37 of the field guide.
 
 ## Build and run
 
-Install JDK 25, import the root `settings.gradle` in your IDE, and select JDK 25 as the Gradle JVM.
-The first build downloads Gradle, Minecraft and loader dependencies.
-
-Open the repository root, not only `26.2NeoForge` or `26.2Fabric`, as the Gradle project.
-If the IDE reports `Task 'wrapper' not found in project ':neoforge'`, reimport the root
-`settings.gradle`. Both loader subprojects also provide a `wrapper` task that delegates
-to the root task, so `:neoforge:wrapper` and `:fabric:wrapper` generate the same root Wrapper.
-The Wrapper task is pinned to Gradle 9.5.1 with its distribution checksum.
-When intentionally changing Wrapper options, target `:wrapper` at the root.
+Install JDK 25 for Gradle and JDK 21 for the game. Import the repository root in your IDE. The root build produces `1.21.1NeoForge/build/libs/absmod-neoforge-0.2.0+1.21.1.jar`.
 
 ```powershell
 ./gradlew.bat build
-./gradlew.bat :neoforge:runClient
-./gradlew.bat :fabric:runClient
+./gradlew.bat runClient
 ```
 
-On Linux or macOS, use `./gradlew` instead of `./gradlew.bat`.
-Build separately with `:neoforge:build` or `:fabric:build`.
-Outputs are in `26.2NeoForge/build/libs` and `26.2Fabric/build/libs`.
-Install the JAR matching your loader, excluding `-sources` JARs. Fabric requires Fabric API.
+The active gameplay sources are in `common/src/minecraft1211/java`, with NeoForge registration and version-specific resources in `1.21.1NeoForge`. The shared assets remain in `common/src/main/resources`. To load the optional kitchen, accessory slots and FTB tasks in the development world, see [1.21.1 setup](docs/PORT_1211.md). The historical 26.2 loader projects can be built explicitly with `-ParchivedTargets`.
 
 ## Meow Blade
 
 - Nine independent stages appear in stage order in the Combat creative tab.
 - Stage 1 retains `absmod:meow_blade`. Stages 2–9 use `absmod:meow_blade_stage_2` through `absmod:meow_blade_stage_9`.
-- Independent damage values are defined in `common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java`.
+- Independent damage values are defined in `common/src/minecraft1211/java/com/abyssredemption/absmod/item/MeowBladeStage.java`.
   They represent totals for a player with vanilla base attributes. The PROPOSED PvE profile now supplies
   stage damage **7/8/9/10/12/14/16/18/22** and total speed **1.6/2/2.2/2.5/2.8/3.2/3.6/4/5**.
   Successful hits build a normal blade combo that increases damage and attack speed. These values are balance prototypes.
@@ -253,7 +231,7 @@ Open the **Ab's Mod** creative tab (Meow Blade icon) to find all nine blade stag
 
 ## Runtime combat tests
 
-Run `./gradlew.bat --gradle-user-home .gradle-user-home -PgameTests :fabric:runGameTest` with JDK 25. The opt-in `-PgameTests build` also runs these tests alongside both loader builds. The separate test mod is excluded from release JARs.
+Run `./gradlew.bat --gradle-user-home .gradle-user-home -ParchivedTargets -PgameTests :fabric:runGameTest` with JDK 25. The opt-in `-PgameTests build` also runs these tests alongside both loader builds. The separate test mod is excluded from release JARs.
 
 Eight AbsMod server-world tests cover repeated full-strength damage, 60 actual hits over 200 game ticks, vanilla attack charge, armor, immunity, ordinary damage cooldown history, primary hit confirmation (including absorption) and creative-tab registration/icon. These controlled fixtures use mock players with explicit attributes; they do not verify physical input, targeting/networking, shields, multiplayer visuals, NeoForge runtime or final balance. See [runtime validation](docs/RUNTIME_VALIDATION.md).
 

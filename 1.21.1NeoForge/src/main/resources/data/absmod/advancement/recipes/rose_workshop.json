@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:paw_crystal"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:paw_signet",
+      "absmod:dusk_ears",
+      "absmod:quarry_mittens",
+      "absmod:spring_slippers",
+      "absmod:tide_pendant",
+      "absmod:fishbone_sash",
+      "absmod:cloud_mantle",
+      "absmod:rose_pickaxe",
+      "absmod:rose_axe",
+      "absmod:rose_shovel",
+      "absmod:rose_hoe",
+      "absmod:rose_helmet",
+      "absmod:rose_chestplate",
+      "absmod:rose_leggings",
+      "absmod:rose_boots"
+    ]
+  }
+}

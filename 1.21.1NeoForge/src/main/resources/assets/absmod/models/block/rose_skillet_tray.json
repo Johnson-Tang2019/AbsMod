@@ -1,0 +1,11 @@
+{
+  "parent": "farmersdelight:block/skillet_tray",
+  "textures": {
+    "particle": "absmod:block/rose_skillet_top",
+    "top": "absmod:block/rose_skillet_top",
+    "side": "absmod:block/rose_skillet_side",
+    "bottom": "absmod:block/rose_skillet_bottom",
+    "tray_top": "absmod:block/rose_heating_tray_top",
+    "tray_side": "absmod:block/rose_heating_tray_side"
+  }
+}

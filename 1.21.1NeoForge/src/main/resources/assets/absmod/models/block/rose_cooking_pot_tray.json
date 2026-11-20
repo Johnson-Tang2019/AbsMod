@@ -1,0 +1,12 @@
+{
+  "parent": "farmersdelight:block/cooking_pot_tray",
+  "textures": {
+    "top": "absmod:block/rose_cooking_pot_top",
+    "particle": "absmod:block/rose_cooking_pot_side",
+    "side": "absmod:block/rose_cooking_pot_side",
+    "parts": "absmod:block/rose_cooking_pot_parts",
+    "bottom": "absmod:block/rose_cooking_pot_bottom",
+    "tray_top": "absmod:block/rose_heating_tray_top",
+    "tray_side": "absmod:block/rose_heating_tray_side"
+  }
+}

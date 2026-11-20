@@ -1,0 +1,9 @@
+{
+  "parent": "farmersdelight:block/wooden_basket",
+  "textures": {
+    "bottom": "absmod:block/rose_wooden_basket_bottom",
+    "handle": "absmod:block/rose_wooden_basket_handle",
+    "side": "absmod:block/rose_wooden_basket_side",
+    "top": "absmod:block/rose_wooden_basket_top"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "farmersdelight:block/cutting_board",
+  "textures": {
+    "particle": "absmod:block/rose_cutting_board",
+    "main": "absmod:block/rose_cutting_board"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "farmersdelight:block/skillet",
+  "textures": {
+    "particle": "absmod:block/rose_skillet_top",
+    "top": "absmod:block/rose_skillet_top",
+    "side": "absmod:block/rose_skillet_side",
+    "bottom": "absmod:block/rose_skillet_bottom"
+  }
+}

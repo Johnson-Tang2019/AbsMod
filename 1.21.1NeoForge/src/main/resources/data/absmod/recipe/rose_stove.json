@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_dye"
+  },
+  "base": {
+    "item": "farmersdelight:stove"
+  },
+  "addition": {
+    "item": "absmod:paw_crystal"
+  },
+  "result": {
+    "id": "absmod:rose_stove"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
+}

@@ -11,7 +11,8 @@
       "title": "朝夕相伴",
       "description": [
         "交流、赠送生鳕鱼、活跃同行或战斗获得好感，每日奖励有上限。",
-        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。"
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "查看剑灵关系：先显现自家剑灵，持结缘铃对空气右键，再点击剑灵。面板显示好感、下阶门槛和今日记录。空手右键交流，手持生鳕鱼右键赠礼。完成后重开详情，或点击「刷新」。"
       ],
       "x": 6.0,
       "y": 0.0,
@@ -604,6 +605,31 @@
       ]
     },
     {
+      "id": "4A47756BA2B0D3F5",
+      "title": "梳梳毛，理理发",
+      "description": [
+        "用樱绒梳照顾一只自己的驯服猫或已显现的剑灵。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "工作台合成：粉红色羊毛、白色羊毛并排。白色羊毛下面两格依次放线、木棍。",
+        "拿在主手，靠近并右键自家的驯服猫或已显现的剑灵。猫会转头和发出呼噜声，剑灵会低头回应。",
+        "剑灵梳理与当天的普通交流共用一次好感奖励。当天已记录后仍可梳理。"
+      ],
+      "x": 0.0,
+      "y": 8.0,
+      "tasks": [
+        {
+          "id": "542A62A3D0E6E409",
+          "type": "advancement",
+          "advancement": "absmod:progression/gentle_brush",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "AEE6DAB584A476BC"
+      ]
+    },
+    {
       "id": "C0A7C3C1C2EE40FF",
       "title": "初见剑灵",
       "description": [
@@ -626,6 +652,31 @@
       "rewards": [],
       "dependencies": [
         "94107493DB5542A5"
+      ]
+    },
+    {
+      "id": "0CCBF2B94EB71E5E",
+      "title": "奶昔茶会",
+      "description": [
+        "从已放置的奶昔茶盘中取出一杯奶昔。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "前置：完成观察手册任务。准备五块樱花木板、两块粉红色羊毛、一枚紫水晶碎片和任意一杯已有奶昔。",
+        "合成三行：樱花木板／空／樱花木板；粉红色羊毛／紫水晶碎片／粉红色羊毛；樱花木板×3。",
+        "放置茶盘，主手持奶昔右键任意空杯垫，再用空主手右键同一个杯垫取回，完成任务。访客可取用，打破会掉出剩余奶昔。"
+      ],
+      "x": 0.0,
+      "y": 10.0,
+      "tasks": [
+        {
+          "id": "6E54C12A3A290C80",
+          "type": "advancement",
+          "advancement": "absmod:progression/milkshake_tray",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "AEE6DAB584A476BC"
       ]
     },
     {
@@ -852,6 +903,216 @@
           "id": "1A6D19B2AFB5DF0F",
           "type": "advancement",
           "advancement": "absmod:progression/root",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "4C1B8CF84280F105",
+      "title": "今天戴哪一款",
+      "description": [
+        "为已显现的剑灵佩戴一件自制饰品。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "金粒、线和一份专用材料无序合成。樱花发夹用粉红色羊毛，月纹发夹用紫水晶碎片。其余十款材料见观察手册第 32–33 页。",
+        "把饰品带在背包里。先显现自己的剑灵，再持结缘铃对空气右键，进入附近剑灵的详情，点「剑灵饰品」。",
+        "可翻页换款或收起。饰品可重复使用，外观随同一把剑保存。"
+      ],
+      "x": 4.0,
+      "y": -4.0,
+      "tasks": [
+        {
+          "id": "5C94B4A1EB8197E2",
+          "type": "advancement",
+          "advancement": "absmod:progression/spirit_adornment",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "C0A7C3C1C2EE40FF"
+      ]
+    },
+    {
+      "id": "03E3D6EFF96763A4",
+      "title": "再来一局",
+      "description": [
+        "在结缘铃中和自己的剑灵下一局完整的井字棋。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "前置：自己的剑灵已显现且在附近，无需额外材料。持结缘铃对空气右键，打开该剑灵的详情，点「陪伴游戏」。",
+        "选择「剑灵井字棋」。你先落 X，剑灵落 O，先在一条线上连三枚获胜。",
+        "下完一局即可完成，获胜、落败或平局都算。"
+      ],
+      "x": 6.0,
+      "y": -4.0,
+      "tasks": [
+        {
+          "id": "0495871BB19FC87B",
+          "type": "advancement",
+          "advancement": "absmod:progression/spirit_board_game",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "C0A7C3C1C2EE40FF"
+      ]
+    },
+    {
+      "id": "36ED45ABD53F632E",
+      "title": "五子成线",
+      "description": [
+        "和剑灵下完一局五子棋。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "前置：自己的剑灵已显现且在附近，无需额外材料。持结缘铃对空气右键，打开该剑灵的详情，点「陪伴游戏」。",
+        "选择「五子棋」。在 9×9 的棋盘上横、竖或斜连出五子即可获胜。",
+        "下完一局即可完成，获胜、落败或平局都算。"
+      ],
+      "x": 8.0,
+      "y": -4.0,
+      "tasks": [
+        {
+          "id": "54D07B35BCA2D7F1",
+          "type": "advancement",
+          "advancement": "absmod:progression/spirit_gomoku",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "C0A7C3C1C2EE40FF"
+      ]
+    },
+    {
+      "id": "77E539A2439BD876",
+      "title": "黑白翻转",
+      "description": [
+        "和剑灵下完一局黑白棋。",
+        "操作与配方详见游戏内观察手册（书 + 生鳕鱼）。",
+        "前置：自己的剑灵已显现且在附近，无需额外材料。持结缘铃对空气右键，打开该剑灵的详情，点「陪伴游戏」。",
+        "选择「黑白棋」。你执黑先走。点带圆点的格子，夹住并翻转白子。自动跳过无合法落点的一方，终局棋子多者胜。",
+        "下完一局即可完成，获胜、落败或平局都算。"
+      ],
+      "x": 10.0,
+      "y": -4.0,
+      "tasks": [
+        {
+          "id": "49D21141256497C1",
+          "type": "advancement",
+          "advancement": "absmod:progression/spirit_reversi",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "C0A7C3C1C2EE40FF"
+      ]
+    },
+    {
+      "id": "0D575533E7E4BE32",
+      "title": "爪印初刻",
+      "description": [
+        "爪印工坊：主手持任意实体喵刀，副手持紫水晶碎片，站立右键锻造台。每次刻一枚爪印晶，原剑和耐久保留。虚化剑无法刻印。"
+      ],
+      "x": 2,
+      "y": -6,
+      "dependencies": [
+        "10D294E7E7DE7BAA"
+      ],
+      "tasks": [
+        {
+          "id": "7EBCDA2AD3FDFD82",
+          "type": "advancement",
+          "advancement": "absmod:progression/paw_crystal",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "73663AD296E12DB4",
+      "title": "随身的喵之奇物",
+      "description": [
+        "用爪印晶合成任一灵饰，装备后获得对应能力。",
+        "每款灵饰用一枚爪印晶无序合成。戒：金粒＋兔子脚；头箍：皮革＋金胡萝卜；手套：兔子皮＋铁锭；鞋：粉红羊毛＋兔子脚。",
+        "月坠：线＋鹦鹉螺壳；腰带：皮革＋糖；披风：粉红羊毛＋幻翼膜。放入对应 Curios 佩戴栏生效。未安装 Curios 时，副手可启用一件。"
+      ],
+      "x": 4,
+      "y": -6,
+      "dependencies": [
+        "0D575533E7E4BE32"
+      ],
+      "tasks": [
+        {
+          "id": "21D29F5AC3EDF25E",
+          "type": "advancement",
+          "advancement": "absmod:progression/rose_charms",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "7392A4DC071C23DC",
+      "title": "樱色工具箱",
+      "description": [
+        "在锻造台改造任意一件铁工具。",
+        "粉樱锻造：锻造台左放粉红染料，中放铁工具、铁甲或农夫乐事原厨具，右放爪印晶。可染炉灶、砧板、厨锅、煎锅、木篮、竹篮、橡木厨柜和铁刀。炉灶用打火石点燃。"
+      ],
+      "x": 4,
+      "y": -8,
+      "dependencies": [
+        "0D575533E7E4BE32"
+      ],
+      "tasks": [
+        {
+          "id": "21FA4CBE129DB470",
+          "type": "advancement",
+          "advancement": "absmod:progression/rose_tools",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "3162B5683E346F88",
+      "title": "樱纹护甲",
+      "description": [
+        "在锻造台改造任意一件铁甲。",
+        "粉樱锻造：锻造台左放粉红染料，中放铁工具、铁甲或农夫乐事原厨具，右放爪印晶。可染炉灶、砧板、厨锅、煎锅、木篮、竹篮、橡木厨柜和铁刀。炉灶用打火石点燃。"
+      ],
+      "x": 4,
+      "y": -10,
+      "dependencies": [
+        "0D575533E7E4BE32"
+      ],
+      "tasks": [
+        {
+          "id": "0F168BF7505A3AC9",
+          "type": "advancement",
+          "advancement": "absmod:progression/rose_armor",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "4693819EF9BFE0C8",
+      "title": "粉樱厨房",
+      "description": [
+        "安装农夫乐事后，在锻造台改造任一件原版厨具。",
+        "粉樱锻造：锻造台左放粉红染料，中放铁工具、铁甲或农夫乐事原厨具，右放爪印晶。可染炉灶、砧板、厨锅、煎锅、木篮、竹篮、橡木厨柜和铁刀。炉灶用打火石点燃。"
+      ],
+      "x": 4,
+      "y": -12,
+      "dependencies": [
+        "0D575533E7E4BE32"
+      ],
+      "tasks": [
+        {
+          "id": "0A07EDB27B708380",
+          "type": "advancement",
+          "advancement": "absmod:progression/rose_kitchen",
           "criterion": ""
         }
       ],

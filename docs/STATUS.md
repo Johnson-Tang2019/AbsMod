@@ -1,5 +1,16 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-20 · 1.21.1 樱爪工坊 0.2.0
+
+- CONFIRMED（PORT-1211／LIFE／GEAR／GUIDE）：后续仅开发 1.21.1 NeoForge。根目录默认构建与启动指向该版本。旧 26.x 目录保留为历史实现。
+- 实现位于 `common/src/minecraft1211/java` 与 `1.21.1NeoForge`：剑灵当日记录、樱绒梳、按剑魂保存的十二款饰品、三种棋局、四杯奶昔茶盘与头骨骼挂饰已移植。爪印晶由主手实体喵刀、副手紫水晶在锻造台刻制。七件粉色玩家灵饰、四把铁级工具、全套樱纹甲和八件依赖农夫乐事的粉樱厨具共用这一生存入口。刀光叠加爪印尾迹，沿用原攻击确认及结算。玩家饰品与剑灵衣柜各自独立。
+- 资源与指南：七款灵饰、一枚爪印晶、八件工具护甲使用生成图集分切出的图标。农夫乐事 1.3.4 原模型与交互为厨房联动提供基础，MIT 许可随包。Curios 9.6.0 提供七个佩戴栏。两种语言手册更新至 41 页。1.21.1 FTB 从 37 项扩展到 48 项，旧任务 ID 保留。
+- 实际客户端：隔离中文世界使用真实实体喵刀刻印，检查原剑耐久及消耗、粉樱工具锻造保留磨损、四件护甲共 15 防御、七种佩戴效果、粉刀切肉、炉灶点火、煎锅接收食材、厨锅番茄酱与菜单持续打开、茶盘放杯、剑灵梳理与饰品。五子棋走子由客户端发包，同一世界三种棋局分别完成并重开。任务章节实际载入 48 项。工作台客户端记录为 `build/rose-workshop-client-final.log`。[饰品图标](../art/rose_workshop/charm-lineup.png) · [厨房](../art/rose_workshop/kitchen.png) · [穿戴](../art/rose_workshop/equipment.png) · [厨锅](../art/rose_workshop/cooking.png) · [五子棋](../art/rose_workshop/gomoku.png)
+- 独立的原有客户端回归检查了升阶、手册、FTB（48 项中本流程完成 9 项）、显现召回、挥刀和资源重载，见 `build/rose-progression-client.log` 和 [刀光实拍](../art/rose_workshop/blade-trail.png)。无 Curios、无农夫乐事的独立服务器实际启动并检查了副手灵饰、可选厨具及配方缺席，见 `build/rose-standalone.log`。
+- 正式构建与安装：根目录默认 build 成功，历史 26.2 Fabric／NeoForge 使用 `-ParchivedTargets` 编译与共享检查通过。发布 JAR 共 17,609,676 字节，排除了测试类和第三方模组。已安装至指定 1.21.1 PCL 实例，核对 JAR、两份 FTB 文件以及两项可选依赖的 SHA-256。JAR 为 `925b38b6310a77a037147bb4a1104dca5e7228b7bc28008a99e8c6df882d29e9`，备份 `absmod-backups/20261120-124346`。实际游戏截图来自开发客户端；PCL 实例完成文件安装验证。
+- 仍待验证：双玩家联机、全套长期生存平衡与每款厨具的所有外部配方和自动化组合。参考仅用于物品用途与可选接口：[Artifacts](https://github.com/ochotonida/artifacts) · [Farmer’s Delight](https://github.com/vectorwing/FarmersDelight/tree/1.21)。
+
+
 ## 2026-11-20 · 26.1.2 奶昔茶盘
 
 基线 `main/3484e55`。PLAN-LIFE-02、PLAN-GUIDE-01、PLAN-PORT-01。`MilkshakeTrayBlock` 和 `MilkshakeTrayBlockEntity` 处理四个独立杯垫、保存原瓶组件和打破掉落。`MilkshakeTrayRenderer` 只读取收到的方块实体状态，摆放现有的四种奶昔模型。首版公共取用。新增樱花木茶盘模型、方块和方块实体注册、配方、掉落以及「奶昔茶会」原版进度。观察手册第 36–37 页和双语 README 同步。FTB 增至 43 项，原 42 项章内定义逐项一致。见 [26.1.2 指南](PORT_2612.md)。

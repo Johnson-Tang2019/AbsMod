@@ -1,0 +1,43 @@
+plugins {
+    id 'base'
+    id 'net.neoforged.moddev' version '2.0.146' apply false
+    id 'net.fabricmc.fabric-loom' version '1.17.20' apply false
+}
+
+tasks.named('wrapper', Wrapper) {
+    gradleVersion = '9.5.1'
+    distributionType = Wrapper.DistributionType.BIN
+    distributionSha256Sum = 'bafc141b619ad6350fd975fc903156dd5c151998cc8b058e8c1044ab5f7b031f'
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    group = rootProject.mod_group_id
+    version = "${rootProject.mod_version}+${rootProject.minecraft_version}"
+    base.archivesName = "absmod-${project.name}"
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(25)
+        withSourcesJar()
+    }
+    sourceSets.main.java.srcDir rootProject.file('common/src/main/java')
+    sourceSets.main.resources.srcDir rootProject.file('common/src/main/resources')
+    // Isolated client-only source adapter, compiled against each loader's real 26.2 API.
+    apply from: rootProject.file('client-bedrock/module.gradle')
+    tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+    tasks.withType(ProcessResources).configureEach { filteringCharset = 'UTF-8' }
+    // IDEs may request wrapper relative to a loader subproject.
+    tasks.register('wrapper') {
+        group = 'build setup'
+        description = 'Generate the shared Gradle Wrapper in the repository root.'
+        dependsOn rootProject.tasks.named('wrapper')
+    }
+}
+
+tasks.named('build') {
+    dependsOn gradle.includedBuild('absmod-neoforge-1.21.1').task(':build')
+    if (providers.gradleProperty('archivedTargets').isPresent()) dependsOn ':fabric:build', ':neoforge:build'
+}
+tasks.register('runClient') {
+    group = 'mod development'
+    dependsOn gradle.includedBuild('absmod-neoforge-1.21.1').task(':runClient')
+}

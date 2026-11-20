@@ -1,0 +1,9 @@
+{
+  "parent": "farmersdelight:block/stove_on",
+  "textures": {
+    "bottom": "absmod:block/rose_stove_bottom",
+    "front": "absmod:block/rose_stove_front_on",
+    "side": "absmod:block/rose_stove_side",
+    "top": "absmod:block/rose_stove_top_on"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "absmod:rose_cutting_board",
+      "required": false
+    }
+  ]
+}

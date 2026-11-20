@@ -1,0 +1,27 @@
+{
+  "parent": "absmod:progression/normal_stage_1",
+  "display": {
+    "icon": {
+      "id": "absmod:paw_crystal"
+    },
+    "title": {
+      "translate": "advancement.absmod.paw_crystal.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.paw_crystal.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "acquire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:paw_crystal"
+          }
+        ]
+      }
+    }
+  }
+}

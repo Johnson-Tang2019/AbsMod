@@ -4,6 +4,10 @@ import com.abyssredemption.absmod.spirit.BladeAffection;
 import com.abyssredemption.absmod.spirit.BladeSoulStore;
 import com.abyssredemption.absmod.spirit.SpiritTransformationService;
 import java.util.UUID;
+import net.minecraft.network.syncher.*;
+import com.abyssredemption.absmod.item.GentleBrushItem;
+import com.abyssredemption.absmod.spirit.SpiritAdornment;
+import com.abyssredemption.absmod.spirit.SpiritWardrobe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
@@ -25,12 +29,19 @@ import net.minecraft.nbt.CompoundTag;
 
 /** The loaded companion of one authoritative blade soul. */
 public final class BladeSpiritEntity extends PathfinderMob {
+    private static final EntityDataAccessor<Boolean> GROOMING =
+            SynchedEntityData.defineId(BladeSpiritEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> ADORNMENT =
+            SynchedEntityData.defineId(BladeSpiritEntity.class, EntityDataSerializers.INT);
     private UUID ownerId;
     private UUID soulId;
     private static final int FOLLOW_INTERVAL = 10;
     private static final int CATCH_UP_DISTANCE = 24;
     private Vec3 lastGrowthPosition;
     private GlobalPos lastRecordedLocation;
+
+    private int groomingEnd;
+    private int groomingVisualTicks;
 
     public BladeSpiritEntity(EntityType<? extends BladeSpiritEntity> type, Level level) {
         super(type, level);
@@ -47,6 +58,38 @@ public final class BladeSpiritEntity extends PathfinderMob {
     public UUID soulId() { return soulId; }
     public UUID ownerId() { return ownerId; }
 
+    @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(GROOMING, false);
+        builder.define(ADORNMENT, SpiritAdornment.NONE.ordinal());
+    }
+
+    public SpiritAdornment adornment() {
+        return SpiritAdornment.fromNetwork(entityData.get(ADORNMENT));
+    }
+
+    public void setAdornment(SpiritAdornment style) {
+        entityData.set(ADORNMENT, style.ordinal());
+    }
+
+    public boolean startGrooming(ServerPlayer owner) {
+        if (isGrooming() || tickCount < groomingEnd) {
+            return false;
+        }
+        groomingEnd = tickCount + GentleBrushItem.RESPONSE_TICKS;
+        entityData.set(GROOMING, true);
+        getLookControl().setLookAt(owner, 30, 30);
+        return true;
+    }
+
+    public boolean isGrooming() {
+        return entityData.get(GROOMING);
+    }
+
+    public float groomingProgress(float partialTick) {
+        return isGrooming() ? Math.clamp((groomingVisualTicks + partialTick) / GentleBrushItem.RESPONSE_TICKS, 0, 1) : 0;
+    }
+
     /** Spirit form is immune to damage, including sources that bypass the vanilla invulnerable flag. */
     @Override
     public boolean hurt(net.minecraft.world.damagesource.DamageSource source, float amount) {
@@ -56,6 +99,11 @@ public final class BladeSpiritEntity extends PathfinderMob {
     @Override
     protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand) {
+        if (hand == net.minecraft.world.InteractionHand.MAIN_HAND && !player.isShiftKeyDown()
+                && player.getItemInHand(hand).getItem() instanceof GentleBrushItem) {
+            return player instanceof ServerPlayer serverPlayer ? GentleBrushItem.groomSpirit(serverPlayer, this, hand)
+                    : net.minecraft.world.InteractionResult.SUCCESS;
+        }
         if(player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
             var growth=com.abyssredemption.absmod.spirit.BladeAffection.interact(serverPlayer,this,hand);
             if(growth!=net.minecraft.world.InteractionResult.PASS)return growth;
@@ -75,8 +123,25 @@ public final class BladeSpiritEntity extends PathfinderMob {
     @Override
     public void tick() {
         super.tick();
+        if (level().isClientSide()) {
+            groomingVisualTicks = isGrooming() ? Math.min(groomingVisualTicks + 1, GentleBrushItem.RESPONSE_TICKS) : 0;
+        }
         if (!(level() instanceof ServerLevel level) || isRemoved()) { return; }
         if ((tickCount == 1 || tickCount % FOLLOW_INTERVAL == 0) && retireStaleCarrier(level)) { return; }
+        if (tickCount == 1 && soulId != null) {
+            try {
+                setAdornment(SpiritWardrobe.read(level.getServer(), soulId));
+            } catch (IllegalStateException unavailable) {
+                com.mojang.logging.LogUtils.getLogger().warn("Could not read adornment for {}", soulId, unavailable);
+            }
+        }
+        if (isGrooming()) {
+            var owner = ownerId == null ? null : level.getPlayerByUUID(ownerId);
+            if (tickCount >= groomingEnd || !(owner instanceof ServerPlayer player)
+                    || !GentleBrushItem.canGroom(player, this) || !active()) {
+                entityData.set(GROOMING, false);
+            }
+        }
         rememberLocation(level);
         if (tickCount % FOLLOW_INTERVAL != 0 || isNoAi()) { return; }
 

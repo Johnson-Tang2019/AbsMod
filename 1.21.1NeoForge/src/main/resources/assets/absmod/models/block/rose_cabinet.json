@@ -1,0 +1,8 @@
+{
+  "parent": "farmersdelight:block/oak_cabinet",
+  "textures": {
+    "front": "absmod:block/rose_oak_cabinet_front",
+    "side": "absmod:block/rose_oak_cabinet_side",
+    "top": "absmod:block/rose_oak_cabinet_top"
+  }
+}

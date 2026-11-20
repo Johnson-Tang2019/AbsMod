@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_dye"
+  },
+  "base": {
+    "item": "minecraft:iron_leggings"
+  },
+  "addition": {
+    "item": "absmod:paw_crystal"
+  },
+  "result": {
+    "id": "absmod:rose_leggings"
+  }
+}

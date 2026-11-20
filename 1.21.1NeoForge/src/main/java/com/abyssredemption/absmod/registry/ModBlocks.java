@@ -13,5 +13,10 @@ public final class ModBlocks {
             BlockBehaviour.Properties.of().noCollission().strength(0.4F).sound(SoundType.WOOL)
                     .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
 
+    public static final DeferredBlock<com.abyssredemption.absmod.block.MilkshakeTrayBlock> MILKSHAKE_TRAY =
+            BLOCKS.registerBlock("milkshake_tray", com.abyssredemption.absmod.block.MilkshakeTrayBlock::new,
+                    BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.CHERRY_WOOD).noOcclusion()
+                            .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+
     private ModBlocks() {}
 }

@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:paw_crystal"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:rose_stove",
+      "absmod:rose_cutting_board",
+      "absmod:rose_cooking_pot",
+      "absmod:rose_skillet",
+      "absmod:rose_wooden_basket",
+      "absmod:rose_bamboo_basket",
+      "absmod:rose_cabinet",
+      "absmod:rose_knife"
+    ]
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
+}

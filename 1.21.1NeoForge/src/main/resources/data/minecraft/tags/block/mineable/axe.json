@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "absmod:rose_cutting_board",
+      "required": false
+    },
+    {
+      "id": "absmod:rose_wooden_basket",
+      "required": false
+    },
+    {
+      "id": "absmod:rose_bamboo_basket",
+      "required": false
+    },
+    {
+      "id": "absmod:rose_cabinet",
+      "required": false
+    }
+  ]
+}

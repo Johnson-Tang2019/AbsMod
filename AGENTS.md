@@ -4,7 +4,7 @@
 - Write code comments and docstrings in English; preserve localized user-facing text.
 - Keep `README.md` (English) and `README.zh-CN.md` (Simplified Chinese) in sync.
 - Implement shared behavior in `common`; register platform events in the Fabric and NeoForge modules.
-- Validate both loader builds and follow `CONTRIBUTING.md` before pushing.
+- Implement new features only on Minecraft 1.21.1 NeoForge. Preserve historical targets in place. Validate the active build and follow `CONTRIBUTING.md` before pushing.
 - Stage values may use the PROPOSED PvE table in docs/BALANCE.md for clearly labeled prototypes; they are not final or gameplay-validated. The nine stage textures have been supplied and integrated; preserve the original artwork. Do not invent progression or stage-switching mechanics.
 - Before implementation, read `docs/STATUS.md` and all relevant specifications completely.
 - After implementation, update `docs/STATUS.md` with actual code and validation evidence; distinguish automated checks from in-game acceptance.
@@ -25,7 +25,11 @@
 - Keep existing English identifiers/comments and synchronized English/Chinese READMEs. Do not change licensing automatically.
 - Do not commit or push unless authorized for the current task.
 
-## Confirmed delivery workflow (2026-11-01)
+## Active delivery workflow (2026-11-20)
+
+- Develop in common/src/minecraft1211/java and 1.21.1NeoForge. Install verified features and FTB guidance only into the named 1.21.1 instance. The 26.x builds are archived. Automatic commit and push remain authorized.
+
+## Historical delivery workflow (2026-11-01)
 
 - After each completed feature, update the FTB quest pack with prerequisites, concrete steps, controls, materials and remaining limitations. Keep quest IDs stable.
 - For 26.2, retain the FTB export and use vanilla advancements plus the in-game guide until a compatible official FTB Quests build is verified. Do not install an incompatible dependency or silently substitute another quest mod.

@@ -1,0 +1,1 @@
+Pink kitchen assets adapt Farmer's Delight 1.3.4 for NeoForge 1.21.1 by vectorwing and contributors. Models inherit upstream geometry at runtime. State variants, loot, item displays and recolored textures derive from assets/farmersdelight and data/farmersdelight. Original license: FarmersDelight-LICENSE.txt. Release: https://modrinth.com/mod/farmers-delight/version/XTVZDOol

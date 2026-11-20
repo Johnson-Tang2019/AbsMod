@@ -18,5 +18,15 @@
     "file": "ftb-teams-neoforge-2101.1.11.jar",
     "url": "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-teams-neoforge/2101.1.11/ftb-teams-neoforge-2101.1.11.jar",
     "sha256": "e6bcd670493624e6906df872a9c6af4a33fe6405cac57a32c59cd4cd5838c655"
+  },
+  {
+    "file": "FarmersDelight-1.21.1-1.3.4.jar",
+    "url": "https://cdn.modrinth.com/data/R2OftAxM/versions/XTVZDOol/FarmersDelight-1.21.1-1.3.4.jar",
+    "sha256": "139ad7696462c89c03eea463f805abffa552526c5dadaadae221dd9624cb197c"
+  },
+  {
+    "file": "curios-neoforge-9.6.0+1.21.1.jar",
+    "url": "https://cdn.modrinth.com/data/vvuO3ImH/versions/KJsZIQrT/curios-neoforge-9.6.0%2B1.21.1.jar",
+    "sha256": "5ae6703ac25a5cfb138ce34924799b642021c8109aacef578e899e8591d67a3e"
   }
 ]

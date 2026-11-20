@@ -35,5 +35,12 @@ public final class ModItems {
             ITEMS.registerItem("cat_nest", properties -> new net.minecraft.world.item.BlockItem(ModBlocks.CAT_NEST.get(), properties));
 
     public static final DeferredItem<com.abyssredemption.absmod.item.FieldGuideItem> FIELD_GUIDE=ITEMS.registerItem("field_guide",com.abyssredemption.absmod.item.FieldGuideItem::new);
+    public static final DeferredItem<com.abyssredemption.absmod.item.GentleBrushItem> GENTLE_BRUSH =
+            ITEMS.registerItem("gentle_brush", com.abyssredemption.absmod.item.GentleBrushItem::new);
+    public static final DeferredItem<net.minecraft.world.item.BlockItem> TRAY = ITEMS.registerSimpleBlockItem(ModBlocks.MILKSHAKE_TRAY);
+    static {
+        for (var style : com.abyssredemption.absmod.spirit.SpiritAdornment.items())
+            ITEMS.registerSimpleItem(style.getSerializedName(), new net.minecraft.world.item.Item.Properties().stacksTo(1));
+    }
     private ModItems() {}
 }

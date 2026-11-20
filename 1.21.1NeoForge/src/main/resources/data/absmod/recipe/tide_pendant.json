@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "absmod:paw_crystal"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:nautilus_shell"
+    }
+  ],
+  "result": {
+    "id": "absmod:tide_pendant"
+  }
+}

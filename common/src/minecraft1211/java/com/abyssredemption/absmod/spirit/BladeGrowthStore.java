@@ -12,6 +12,10 @@ import java.util.*;
 /** Persistent per-soul daily budgets; relogging never resets earned rewards. */
 public final class BladeGrowthStore extends SavedData {
     public record Day(UUID soul,long day,int walking,int follow,int hits,int combat,boolean talked,boolean gifted,List<UUID> targets) {
+        static Day empty(UUID soul, long day) {
+            return new Day(soul, day, 0, 0, 0, 0, false, false, List.of());
+        }
+
         static final Codec<Day> CODEC=RecordCodecBuilder.create(i->i.group(
             UUIDUtil.CODEC.fieldOf("soul").forGetter(Day::soul),Codec.LONG.fieldOf("day").forGetter(Day::day),
             Codec.INT.fieldOf("walking").forGetter(Day::walking),Codec.INT.fieldOf("follow").forGetter(Day::follow),
@@ -47,15 +51,19 @@ public final class BladeGrowthStore extends SavedData {
     @Override public net.minecraft.nbt.CompoundTag save(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries) {
         return (net.minecraft.nbt.CompoundTag)CODEC.encodeStart(registries.createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE),this).getOrThrow();
     }
+    static Optional<BladeGrowthStore> find(MinecraftServer server) {
+        if (!server.isSameThread()) throw new IllegalStateException("server_thread");
+        var store = server.overworld().getDataStorage().get(TYPE, STORAGE_ID);
+        if (store == null && !java.nio.file.Files.notExists(server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT)
+                .resolve("data").resolve(STORAGE_ID + ".dat"))) throw new IllegalStateException("growth_store_unreadable");
+        return Optional.ofNullable(store);
+    }
     public static BladeGrowthStore get(MinecraftServer server) {
-        if(!server.isSameThread())throw new IllegalStateException("server_thread");
-        var store=server.overworld().getDataStorage().get(TYPE,STORAGE_ID);
-        if(store==null) {
-            if(!java.nio.file.Files.notExists(server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("data").resolve(STORAGE_ID+".dat")))
-                throw new IllegalStateException("growth_store_unreadable");
-            store=new BladeGrowthStore();server.overworld().getDataStorage().set(STORAGE_ID,store);
-        }
-        return store;
+        return find(server).orElseGet(() -> {
+            var store = new BladeGrowthStore();
+            server.overworld().getDataStorage().set(STORAGE_ID, store);
+            return store;
+        });
     }
     public Day day(UUID soul,long now) {
         var previous=days.get(soul);

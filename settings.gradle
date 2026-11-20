@@ -7,6 +7,10 @@ pluginManagement {
 }
 
 rootProject.name = 'absmod'
-include 'neoforge', 'fabric'
-project(':neoforge').projectDir = file('26.2NeoForge')
-project(':fabric').projectDir = file('26.2Fabric')
+includeBuild('1.21.1NeoForge') { name = 'absmod-neoforge-1.21.1' }
+if (providers.gradleProperty('archivedTargets').isPresent()) {
+    rootProject.buildFileName = 'build-archive.gradle'
+    include 'neoforge', 'fabric'
+    project(':neoforge').projectDir = file('26.2NeoForge')
+    project(':fabric').projectDir = file('26.2Fabric')
+}

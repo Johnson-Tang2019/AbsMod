@@ -3,8 +3,16 @@ package com.abyssredemption.absmod.cat;
 import com.abyssredemption.absmod.cat.CatJournalMenu.Control;
 import com.abyssredemption.absmod.cat.CatJournalMenu.Row;
 import com.abyssredemption.absmod.cat.CatLifeStore.Observation;
+import com.abyssredemption.absmod.item.BladeRoute;
 import com.abyssredemption.absmod.spirit.BladeAdvancements;
+import com.abyssredemption.absmod.spirit.BladeAffection;
 import com.abyssredemption.absmod.spirit.BladeSoulRecord;
+import com.abyssredemption.absmod.spirit.ResonanceMenu;
+import com.abyssredemption.absmod.spirit.SpiritAdornment;
+import com.abyssredemption.absmod.spirit.SpiritGameMenu;
+import com.abyssredemption.absmod.spirit.SpiritGameType;
+import com.abyssredemption.absmod.spirit.SpiritWardrobe;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -46,7 +54,7 @@ final class CatJournalViews {
         var all = CatLife.store(player).observations(player.getUUID());
         var results = all.values().stream().filter(filter::matches).sorted(ORDER).toList();
         int last = lastPage(results.size(), PAGE_SIZE);
-        int page = Math.min(last, Math.max(requested, 0));
+        int page = Math.clamp(requested, 0, last);
         var rows = results.stream().skip((long) page * PAGE_SIZE).limit(PAGE_SIZE).map(row ->
                 new Row(CatLife.name(row), appearance(row), () -> family(player, row.cat(), filter, page, 0))).toList();
         CatJournalMenu.show(player, label("collection"), label(results.isEmpty() ? "empty_collection" : "page",
@@ -86,7 +94,7 @@ final class CatJournalViews {
                         || candidate.genome().secondParent().filter(id::equals).isPresent())
                 .sorted(ORDER).toList();
         int last = lastPage(children.size(), FAMILY_PAGE_SIZE);
-        int page = Math.min(last, Math.max(requested, 0));
+        int page = Math.clamp(requested, 0, last);
         var rows = new ArrayList<Row>();
         rows.add(new Row(CatLife.name(row), label("family_traits", genome.generation(), genome.fullNotation(), appearance(row)), null));
         rows.add(relative(player, all, genome.firstParent().orElse(null), "first_parent", filter, collectionPage));
@@ -115,7 +123,7 @@ final class CatJournalViews {
         var spirits = CatLife.spirits(player);
         int count = cats.size() + spirits.size();
         int last = lastPage(count, PAGE_SIZE);
-        int page = Math.min(last, Math.max(requested, 0));
+        int page = Math.clamp(requested, 0, last);
         var rows = new ArrayList<Row>();
         for (int index = page * PAGE_SIZE; index < Math.min(count, (page + 1) * PAGE_SIZE); index++) {
             if (index < cats.size()) {
@@ -127,7 +135,7 @@ final class CatJournalViews {
                 var spirit = spirits.get(index - cats.size());
                 var name = label("spirit_kind", spirit.carrier().orElseThrow().sword().getHoverName());
                 rows.add(new Row(name, label(CatLife.nearbySpirit(player, spirit) == null ? "away" : "nearby"),
-                        () -> partnerSpirit(player, spirit, page)));
+                        () -> partnerSpirit(player, spirit.soulId(), page)));
             }
         }
         CatJournalMenu.show(player, label("partners"), label(count == 0 ? "empty_partners" : "page", page + 1, last + 1, count),
@@ -167,18 +175,111 @@ final class CatJournalViews {
                 })));
     }
 
-    private static void partnerSpirit(ServerPlayer player, BladeSoulRecord spirit, int page) {
+    private static void partnerSpirit(ServerPlayer player, UUID id, int page) {
+        var spirit = CatLife.spirit(player, id).orElse(null);
+        if (spirit == null) {
+            partners(player, page);
+            return;
+        }
         var carrier = spirit.carrier().orElseThrow();
         var nearby = CatLife.nearbySpirit(player, spirit);
+        var day = BladeAffection.dailyStatus(player, spirit).orElse(null);
+        double affection = spirit.affection().orElse(0D);
+        var stage = label(spirit.route() == BladeRoute.NORMAL ? "spirit_normal" : "spirit_dark", spirit.stage());
+        var bond = label(affection >= BladeAffection.MAX_AFFECTION ? "spirit_bond_cap" : "spirit_bond", decimal(affection));
+        var status = label(!spirit.form().equals("spirit") ? "spirit_pending" : nearby == null ? "away" : "nearby");
+        var unknown = label("spirit_activity_unknown");
+        var sword = carrier.sword();
         var rows = List.of(
-                new Row(label("spirit_kind", carrier.sword().getHoverName()), label(nearby == null ? "away" : "nearby"), null),
-                new Row(label("last_seen"), carrier.lastLocation().map(CatLife::position).orElse(label("unrecorded")), null));
+                new Row(label("spirit_kind", sword.getHoverName()), label("spirit_overview", stage, bond,
+                        Math.max(0, sword.getMaxDamage() - sword.getDamageValue()), sword.getMaxDamage()), null),
+                new Row(label("spirit_progress"), nextAffection(spirit, affection), null),
+                new Row(label("spirit_interactions"), day == null ? unknown : label("spirit_claims",
+                        label(day.talked() ? "spirit_recorded" : "spirit_unrecorded"),
+                        label(day.gifted() ? "spirit_recorded" : "spirit_unrecorded")), null),
+                new Row(label("spirit_daily_rewards"), day == null ? unknown : label("spirit_daily_counts",
+                        day.follow(), BladeAffection.DAILY_FOLLOW_LIMIT, day.combat(), BladeAffection.DAILY_COMBAT_LIMIT), null),
+                new Row(label("last_seen"), label("spirit_where", status,
+                        carrier.lastLocation().map(CatLife::position).orElse(label("unrecorded"))), null));
         CatJournalMenu.show(player, label("partners"), label("partner_details"), rows, List.of(
                 new Control(label("back"), () -> partners(player, page)),
                 new Control(label("recall"), nearby == null ? null : () -> {
                     CatLife.recall(player, spirit);
                     partners(player, page);
-                })));
+                }),
+                new Control(label("spirit_refresh"), () -> partnerSpirit(player, id, page)),
+                new Control(leisure("wardrobe"), nearby == null ? null : () -> wardrobe(player, id, page, 0)),
+                new Control(leisure("play"), nearby == null ? null : () -> spiritGames(player, id, page))));
+    }
+
+    private static void spiritGames(ServerPlayer player, UUID id, int partnerPage) {
+        var rows = java.util.Arrays.stream(SpiritGameType.values()).map(type ->
+                new Row(type.title(), type.rules(), () -> {
+                    var found = CatLife.spirit(player, id).map(record -> CatLife.nearbySpirit(player, record)).orElse(null);
+                    if (found == null) {
+                        partnerSpirit(player, id, partnerPage);
+                    } else {
+                        SpiritGameMenu.open(player, found, type, () -> spiritGames(player, id, partnerPage));
+                    }
+                })).toList();
+        CatJournalMenu.show(player, leisure("play"), leisure("choose_game"), rows,
+                List.of(new Control(label("back"), () -> partnerSpirit(player, id, partnerPage))));
+    }
+
+    private static void wardrobe(ServerPlayer player, UUID id, int partnerPage, int stylePage) {
+        var target = CatLife.spirit(player, id).map(record -> CatLife.nearbySpirit(player, record)).orElse(null);
+        if (target == null) {
+            partnerSpirit(player, id, partnerPage);
+            return;
+        }
+        try {
+            var equipped = SpiritWardrobe.read(player.level().getServer(), id);
+            int last = SpiritAdornment.items().size() / CatJournalMenu.PAGE_SIZE;
+            var rows = java.util.Arrays.stream(SpiritAdornment.values())
+                    .skip((long) stylePage * CatJournalMenu.PAGE_SIZE).limit(CatJournalMenu.PAGE_SIZE).map(style -> {
+                boolean available = SpiritWardrobe.canChoose(player, style);
+                var detail = leisure(style == equipped ? "equipped" : available ? "available" : "needs_item");
+                return new Row(style.displayName(), detail, available && style != equipped ? () -> {
+                    try {
+                        SpiritWardrobe.choose(player, target, style);
+                    } catch (IllegalStateException unavailable) {
+                        player.sendSystemMessage(leisure("wardrobe_unavailable"), true);
+                    }
+                    wardrobe(player, id, partnerPage, stylePage);
+                } : null);
+            }).toList();
+            CatJournalMenu.show(player, leisure("wardrobe"), Component.translatable("leisure.absmod.wardrobe_hint", stylePage + 1, last + 1), rows,
+                    List.of(new Control(label("back"), () -> partnerSpirit(player, id, partnerPage)),
+                            new Control(label("previous"), stylePage > 0 ? () -> wardrobe(player, id, partnerPage, stylePage - 1) : null),
+                            new Control(label("next"), stylePage < last ? () -> wardrobe(player, id, partnerPage, stylePage + 1) : null)));
+        } catch (IllegalStateException unavailable) {
+            player.sendSystemMessage(leisure("wardrobe_unavailable"), true);
+            partnerSpirit(player, id, partnerPage);
+        }
+    }
+
+    private static Component leisure(String key) {
+        return Component.translatable("leisure.absmod." + key);
+    }
+
+    private static Component nextAffection(BladeSoulRecord spirit, double affection) {
+        int next = spirit.stage() + 1;
+        if (!spirit.route().accepts(next)) {
+            return label("spirit_max_stage");
+        }
+        if (next == 9) {
+            return label("spirit_trial_locked");
+        }
+        int required = ResonanceMenu.affection(spirit.route(), next);
+        if (affection >= required) {
+            return label("spirit_requirement_met", next, required);
+        }
+        var shortage = BigDecimal.valueOf(required).subtract(BigDecimal.valueOf(affection));
+        return label("spirit_requirement_short", next, required, shortage.stripTrailingZeros().toPlainString());
+    }
+
+    private static String decimal(double value) {
+        return BigDecimal.valueOf(value).stripTrailingZeros().toPlainString();
     }
 
     private static Component appearance(Observation row) {

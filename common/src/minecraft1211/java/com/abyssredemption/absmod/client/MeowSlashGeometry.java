@@ -33,6 +33,8 @@ public final class MeowSlashGeometry {
         if (progress >= 1.0F || slash.age() < 0.0F) {
             return;
         }
+        // Camera-facing paw prints follow the world-space arc and dissolve from heel to toes.
+        pawTrail(slash, progress, cameraRight, cameraUp, sink);
         if (slash.style() != BladeSwingStyle.NORMAL) {
             emitDark(slash, progress, sink);
             return;
@@ -69,6 +71,30 @@ public final class MeowSlashGeometry {
             vertex(point.add(petalUp.scale(-size * 1.3)), color, sink);
             vertex(point.add(petalRight.scale(-size)), color, sink);
         }
+    }
+
+    private static void pawTrail(Slash slash, float progress, Vec3 right, Vec3 up, VertexSink sink) {
+        int count = slash.style().isHeavy() ? 5 : 3;
+        int rgb = slash.style() == BladeSwingStyle.NORMAL ? 0xFFC9E3 : 0xD3AAFF;
+        for (int i = 0; i < count; i++) {
+            float age = progress - i * 0.075F;
+            if (age <= 0 || age >= 0.8F) continue;
+            Vec3 pad = point(slash, -0.85 + i * 0.44 + age * 0.45, 1.85 + age * 0.45, 0.12 + age * 0.68);
+            double size = 0.078 * (1 - age * 0.5);
+            int color = color(rgb, (float)Math.sin(Math.PI * age / 0.8F) * 0.87F);
+            pawPad(pad, right, up, size, color, sink);
+            for (int toe = -1; toe <= 1; toe++) {
+                Vec3 center = pad.add(right.scale(toe * size * 0.95)).add(up.scale(size * (1.5 - Math.abs(toe) * 0.35)));
+                pawPad(center, right, up, size * 0.43, color, sink);
+            }
+        }
+    }
+
+    private static void pawPad(Vec3 center, Vec3 right, Vec3 up, double size, int color, VertexSink sink) {
+        vertex(center.add(up.scale(size)), color, sink);
+        vertex(center.add(right.scale(size)), color, sink);
+        vertex(center.subtract(up.scale(size * 0.8)), color, sink);
+        vertex(center.subtract(right.scale(size)), color, sink);
     }
 
     private static void emitDark(Slash slash, float progress, VertexSink sink) {

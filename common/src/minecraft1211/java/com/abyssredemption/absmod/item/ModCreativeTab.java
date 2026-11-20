@@ -22,6 +22,14 @@ public final class ModCreativeTab {
                     output.accept(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("absmod","field_guide")));
                     for (var stage : MeowBladeStage.values()) { output.accept(blades.apply(stage)); }
                     for(var stage:DarkBladeStage.values())output.accept(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("absmod",stage.itemId())));
+                    var registry = net.minecraft.core.registries.BuiltInRegistries.ITEM;
+                    for (var item : registry) {
+                        if (registry.getKey(item).getNamespace().equals("absmod")
+                                && !(item instanceof MeowBladeItem || item instanceof SpectralBladeItem || item instanceof MilkshakeItem)
+                                && !java.util.Set.of("resonance_heart", "field_guide").contains(registry.getKey(item).getPath())) {
+                            output.accept(item);
+                        }
+                    }
                     for (var variant : MilkshakeVariant.values()) { output.accept(milkshakes.apply(variant)); }
                 }).build();
     }

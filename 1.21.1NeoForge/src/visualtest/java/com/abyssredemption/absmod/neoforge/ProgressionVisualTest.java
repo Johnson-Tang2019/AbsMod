@@ -218,7 +218,7 @@ public final class ProgressionVisualTest {
             var p=server.getPlayerList().getPlayers().getFirst();
             var file=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;
             var chapter=file.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-            if(chapter==null || chapter.getQuests().size()!=37)throw new IllegalStateException("FTB chapter missing or wrong quest count");
+            if(chapter==null || chapter.getQuests().size()!= 48)throw new IllegalStateException("FTB chapter missing or wrong quest count");
             var data=file.getTeamData(p).orElseThrow();
             int completed=0;
             for(var quest:chapter.getQuests()) {
@@ -227,7 +227,7 @@ public final class ProgressionVisualTest {
             }
             if(completed<4)throw new IllegalStateException("FTB advancement detection incomplete: "+completed);
             data.saveIfChanged();
-            com.mojang.logging.LogUtils.getLogger().info("FTB_PORT_CHECK chapter={} quests=37 completed={} team={}",chapter.getTitle().getString(),completed,p.getUUID());
+            com.mojang.logging.LogUtils.getLogger().info("FTB_PORT_CHECK chapter={} quests=48 completed={} team={}",chapter.getTitle().getString(),completed,p.getUUID());
         });
         if(tick==680)dev.ftb.mods.ftbquests.client.ClientQuestFile.openGui();
         if(tick==705)Screenshot.grab(mc.gameDirectory,"ftb-port-quests.png",mc.getMainRenderTarget(),message->{});

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "absmod:paw_crystal"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:golden_carrot"
+    }
+  ],
+  "result": {
+    "id": "absmod:dusk_ears"
+  }
+}

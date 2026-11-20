@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "absmod:rose_stove",
+      "required": false
+    },
+    {
+      "id": "absmod:rose_cooking_pot",
+      "required": false
+    },
+    {
+      "id": "absmod:rose_skillet",
+      "required": false
+    }
+  ]
+}

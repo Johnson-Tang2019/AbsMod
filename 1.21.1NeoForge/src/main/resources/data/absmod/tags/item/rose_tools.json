@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "absmod:rose_pickaxe",
+    "absmod:rose_axe",
+    "absmod:rose_shovel",
+    "absmod:rose_hoe"
+  ]
+}

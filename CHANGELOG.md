@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 · Rose Workshop
+
+Minecraft 1.21.1 NeoForge is the active target. Adds seven blade-crafted player charms, four tools, four armor pieces, eight optional Farmer’s Delight implements and paw-print slash trails. Ports the spirit journal, brush, wardrobe, three board games and milkshake tray. The field guide and 48 FTB quests cover the new paths.
+
+
 ## Unreleased
 
 - Apply the proposed nine-stage PvE damage/speed table with shared attribute and command semantics.

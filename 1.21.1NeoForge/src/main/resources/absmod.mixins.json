@@ -15,7 +15,8 @@
     "BladeCombineMenuMixin",
     "BladeStunMixin",
     "MobGoalAccessor",
-    "CatGeneticsMixin"
+    "CatGeneticsMixin",
+    "RosePotMenuMixin"
   ],
   "client": [
     "client.MinecraftAttackMixin",

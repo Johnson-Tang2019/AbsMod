@@ -1,0 +1,27 @@
+{
+  "parent": "absmod:progression/paw_crystal",
+  "display": {
+    "icon": {
+      "id": "absmod:rose_chestplate"
+    },
+    "title": {
+      "translate": "advancement.absmod.rose_armor.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.rose_armor.description"
+    },
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "acquire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#absmod:rose_armor"
+          }
+        ]
+      }
+    }
+  }
+}

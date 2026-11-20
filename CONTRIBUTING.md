@@ -14,21 +14,17 @@
 
 ## Validation before pushing
 
-Use JDK 25 and run from the repository root:
+Use the root wrapper with JDK 25 and a Java 21 runtime. The default build targets Minecraft 1.21.1 NeoForge. Install the pinned optional test dependencies with `tools/quests/fetch_1211_dependencies.ps1` and merge the project's FTB chapter into the development instance for integration testing.
 
 ```powershell
 ./gradlew.bat build
+./gradlew.bat -p 1.21.1NeoForge runClient -PworkshopTest
 git diff --check
 git diff --cached --check
 git diff --cached --stat
 ```
 
-On Linux or macOS, use `./gradlew build`. Both loader builds must pass.
-The build includes `:fabric:verifyCommands` for shared command grammar, stage bounds and permissions.
-NeoForge is compiled too; runtime validation requires launching FML and remains an in-game check.
-For item changes, inspect both output JARs for matching shared assets, language keys,
-models and tags. Test gameplay in both loaders when changing gameplay behavior,
-and explicitly report when game testing has not been performed.
+Rebuild after a fixture run to exclude verification classes from the release. For an explicit historical 26.2 regression build, use `./gradlew.bat build -ParchivedTargets`.
 
 ## Commits and review
 
@@ -45,4 +41,4 @@ without confirming their licensing and attribution requirements.
 
 ## Minecraft 1.21.1 port
 
-The independent `1.21.1NeoForge` project compiles `common/src/minecraft1211/java` against NeoForge 21.1.265. Keep gameplay fixes synchronized with the 26.2 sources. Also run `./gradlew.bat -p 1.21.1NeoForge build` when changing port or shared resources. Runtime mods and optional fixture instructions are documented in docs/PORT_1211.md; never package fixture classes or third-party runtime jars.
+The independent `1.21.1NeoForge` project compiles `common/src/minecraft1211/java` against NeoForge 21.1.265. This is the sole target for ongoing gameplay development. Also run `./gradlew.bat -p 1.21.1NeoForge build` when changing port or shared resources. Runtime mods and optional fixture instructions are documented in docs/PORT_1211.md; never package fixture classes or third-party runtime jars.

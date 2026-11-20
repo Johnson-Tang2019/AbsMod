@@ -5,8 +5,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RESOURCES = ROOT / "common/src/main/resources"
-MODERN_ONLY_QUESTS = {"gentle_brush", "milkshake_tray", "spirit_adornment", "spirit_board_game", "spirit_gomoku", "spirit_reversi"}
-POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | MODERN_ONLY_QUESTS
+COMPANION_QUESTS = {"gentle_brush", "milkshake_tray", "spirit_adornment", "spirit_board_game", "spirit_gomoku", "spirit_reversi"}
+POSITIVE_QUEST_IDS = {"cat_collection", "cat_pedigree", "cat_nest", "cat_bell"} | COMPANION_QUESTS | {"paw_crystal", "rose_charms", "rose_tools", "rose_armor", "rose_kitchen"}
 
 
 def stable_id(name):
@@ -132,7 +132,25 @@ def generate():
     chapter = {"id": stable_id("chapter"), "filename": "absmod_progression", "title": "喵刀与猫咪生活",
                "order_index": 0, "group": "", "default_quest_shape": "square", "quests": quests}
     translations = {"chapter." + chapter["id"] + ".title": chapter["title"]}
-    legacy_quests = [quest for quest in quests if quest["tasks"][0]["advancement"].rsplit("/", 1)[-1] not in MODERN_ONLY_QUESTS]
+    bond_tip = "查看剑灵关系：先显现自家剑灵，持结缘铃对空气右键，再点击剑灵。面板显示好感、下阶门槛和今日记录。空手右键交流，手持生鳕鱼右键赠礼。完成后重开详情，或点击「刷新」。"
+    legacy_quests = [dict(q, description=q["description"] + [bond_tip]) if q["id"] == stable_id("bond") else q for q in quests]
+    active = ROOT / "1.21.1NeoForge/src/main"
+    workshop_text = json.loads((active / "language/zh_cn.json").read_text(encoding="utf-8"))
+    workshop_positions = {"paw_crystal": (2, -6), "rose_charms": (4, -6), "rose_tools": (4, -8),
+                          "rose_armor": (4, -10), "rose_kitchen": (4, -12)}
+    for name, (x, y) in workshop_positions.items():
+        advancement = json.loads((active / "resources/data/absmod/advancement/progression" / (name + ".json")).read_text(encoding="utf-8"))
+        desc = [workshop_text["advancement.absmod." + name + ".description"]]
+        pages = [39, 40] if name == "rose_charms" else [41] if name != "paw_crystal" else []
+        desc.extend(workshop_text[f"guide.absmod.page.{page}"] for page in pages)
+        legacy_quests.append({"id": stable_id(name), "title": workshop_text["advancement.absmod." + name + ".title"],
+                              "description": desc, "x": x, "y": y,
+                              "dependencies": [stable_id(advancement["parent"].split("/")[-1])],
+                              "tasks": [{"id": stable_id(name + "/task"), "type": "advancement",
+                                         "advancement": "absmod:progression/" + name, "criterion": ""}], "rewards": []})
+    legacy_ids = [chapter["id"]] + [i for q in legacy_quests for i in (q["id"], q["tasks"][0]["id"])]
+    assert len(legacy_ids) == len(set(legacy_ids))
+
     for quest in legacy_quests:
         translations["quest." + quest["id"] + ".title"] = quest["title"]
         translations["quest." + quest["id"] + ".quest_desc"] = quest["description"]
@@ -152,7 +170,6 @@ def generate():
         data["tasks"] = [dict(task, id=modern_id(task["id"]), type="ftbquests:" + task["type"]) for task in quest["tasks"]]
         modern_chapter["quests"].append(data)
     write_json(modern / "chapters/absmod_progression.json5", modern_chapter)
-    bond_tip = "查看剑灵关系：先显现自家剑灵，持结缘铃对空气右键，再点击剑灵。面板显示好感、下阶门槛和今日记录。空手右键交流，手持生鳕鱼右键赠礼。完成后重开详情，或点击「刷新」。"
     modern_translations = {}
     for quest in quests:
         prefix = f"quest.{modern_id(quest['id'])}"
@@ -169,12 +186,12 @@ def generate():
     modern_ids = [modern_id(value) for value in ids]
     assert len(modern_ids) == len(set(modern_ids)) and all(int(value, 16) > 1 for value in modern_ids)
     assert all(q["tasks"][0]["advancement"].split("/")[-1] in names for q in quests)
-    print(f"Exported {len(quests)} quests; stable IDs and advancement references verified. Runtime not implied.")
+    print(f"Exported {len(legacy_quests)} active quests and {len(quests)} archived quests; stable IDs and advancement references verified. Runtime not implied.")
 
 
 def write_json(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

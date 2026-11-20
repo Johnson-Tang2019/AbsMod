@@ -1,0 +1,9 @@
+{
+  "parent": "farmersdelight:block/bamboo_basket",
+  "textures": {
+    "bottom": "absmod:block/rose_bamboo_basket_bottom",
+    "handle": "absmod:block/rose_bamboo_basket_handle",
+    "side": "absmod:block/rose_bamboo_basket_side",
+    "top": "absmod:block/rose_bamboo_basket_top"
+  }
+}

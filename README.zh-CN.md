@@ -1,6 +1,8 @@
 # Ab's Mod
 
-支持 Minecraft 26.1.2 Fabric、26.2 Fabric／NeoForge 和 1.21.1 NeoForge。各版本均提供手册与原版进度。26.1.2 有 43 项可选 FTB 任务，1.21.1 有 37 项。[26.1.2 安装](docs/PORT_2612.md) · [1.21.1 安装](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge 是后续唯一开发版本。** 0.2.0「樱爪工坊」带来了剑灵陪伴玩法与奶昔茶盘。观察手册共 41 页，FTB 可选章节共 48 个任务。[安装说明](docs/PORT_1211.md)
+
+主手持实体喵刀，副手放紫水晶碎片，站立右键锻造台即可刻出爪印晶。用它合成七款可佩戴灵饰，包括寻矿肉球手套与缓降猫耳披风。安装 Curios 时可分栏佩戴，单独游玩时可用副手激活一件。锻造台还可改造四种铁工具、全套铁甲和八件农夫乐事厨具。左格放粉红染料，中格放原物，右格放爪印晶。手册第 38–41 页列有配方。
 
 用书和生鳕鱼合成**猫咪观察手册**。右键空气阅读指南，右键猫查看基因、外观和谱系。潜行右键选中第一只猫，再观察附近另一只即可预测配对概率。新生后代有 2048 种普通外观和 256 种稀有奶粉色组合；旧猫保留已保存的毛色。[猫遗传及稀有概率](docs/CAT_GENETICS.md)
 
@@ -33,52 +35,28 @@
 
 包名：`com.abyssredemption.absmod`，模组 ID：`absmod`。
 
-潜行用观察手册对空气右键打开猫咪收藏和家谱，按毛色、花纹或眼睛筛选观察记录。拿结缘铃先右键自家猫，再右键绒月猫窝为它安置休息点。持铃对空气右键查看伙伴，潜行右键呼唤附近已选的猫。配方和操作见手册第 25–28 页。26.1.2 可从结缘铃点开已显现的剑灵，查看好感、耐久、升阶差值和当日互动，详见第 29 页。第 30 页介绍樱绒梳，可重复给自家猫或已显现的剑灵梳理。剑灵梳理与普通交流共用每日好感额度。参见[猫咪收藏与安置](docs/CAT_GENETICS.md)。
+潜行用观察手册对空气右键打开猫咪收藏和家谱，按毛色、花纹或眼睛筛选观察记录。拿结缘铃先右键自家猫，再右键绒月猫窝为它安置休息点。持铃对空气右键查看伙伴，潜行右键呼唤附近已选的猫。配方和操作见手册第 25–28 页。可从结缘铃点开已显现的剑灵，查看好感、耐久、升阶差值和当日互动，详见第 29 页。第 30 页介绍樱绒梳，可重复给自家猫或已显现的剑灵梳理。剑灵梳理与普通交流共用每日好感额度。参见[猫咪收藏与安置](docs/CAT_GENETICS.md)。
 
-26.1.2 的结缘铃剑灵详情提供 12 款可合成的饰品，以及井字棋、五子棋和黑白棋三种陪伴游戏。召回后再次显现，同一把剑保留饰品选择。下完一局即可完成对应 FTB 任务。完整配方和玩法见观察手册第 31–35 页。
+结缘铃剑灵详情提供 12 款可合成的饰品，以及井字棋、五子棋和黑白棋三种陪伴游戏。召回后再次显现，同一把剑保留饰品选择。下完一局即可完成对应 FTB 任务。完整配方和玩法见观察手册第 31–35 页。
 
-奶昔茶盘可同时摆四杯，访客也可取用。主手持奶昔右键空杯垫放入一杯，空主手右键对应杯垫取回。打破茶盘会掉出剩余奶昔。26.1.2 的观察手册第 36–37 页收录配方与操作。
+奶昔茶盘可同时摆四杯，访客也可取用。主手持奶昔右键空杯垫放入一杯，空主手右键对应杯垫取回。打破茶盘会掉出剩余奶昔。观察手册第 36–37 页收录配方与操作。
 
-## 项目结构
+## 构建与启动
 
-| 目录 | 用途 |
-| --- | --- |
-| `common/src/main/java` | 26.2 两种加载器共用的物品行为、命令与常量 |
-| `common/src/main/resources` | 共用语言、模型和物品标签 |
-| `26.2NeoForge` | NeoForge 入口、注册与元数据 |
-| `26.2Fabric` | Fabric 入口、注册与元数据 |
-
-根项目统一构建两种加载器，分别输出 JAR，无需 Architectury 运行时。
-1.21.1 单独运行 `./gradlew.bat -p 1.21.1NeoForge build`，产物使用 Java 21。
-
-## 构建与运行
-
-安装 JDK 25，在 IDE 中以根目录的 `settings.gradle` 导入项目，将 Gradle JVM 设置为 JDK 25。
-首次构建需要联网下载 Gradle、Minecraft 和加载器依赖。
-
-请将仓库根目录作为 Gradle 项目打开，而不是仅导入 `26.2NeoForge` 或 `26.2Fabric`。
-若 IDE 报错 `Task 'wrapper' not found in project ':neoforge'`，请重新导入根目录的
-`settings.gradle`。两个加载器子项目也提供转发到根任务的 `wrapper` 入口，
-`:neoforge:wrapper` 和 `:fabric:wrapper` 均生成同一套根目录 Wrapper。
-Wrapper 任务固定为 Gradle 9.5.1，并保留发行包校验值。
-需要主动修改 Wrapper 参数时，请调用根项目的 `:wrapper`。
+Gradle 使用 JDK 25，游戏使用 JDK 21。在 IDE 导入仓库根目录，默认生成 `1.21.1NeoForge/build/libs/absmod-neoforge-0.2.0+1.21.1.jar`。
 
 ```powershell
 ./gradlew.bat build
-./gradlew.bat :neoforge:runClient
-./gradlew.bat :fabric:runClient
+./gradlew.bat runClient
 ```
 
-分别构建：`./gradlew.bat :neoforge:build` 或 `./gradlew.bat :fabric:build`。
-Linux 或 macOS 下将 `./gradlew.bat` 换成 `./gradlew`。
-产物位于 `26.2NeoForge/build/libs` 与 `26.2Fabric/build/libs`；安装不带 `-sources` 的 JAR，
-并选择与加载器对应的文件。Fabric 端需要安装 Fabric API。
+当前玩法源码位于 `common/src/minecraft1211/java`，NeoForge 注册与版本专属资源位于 `1.21.1NeoForge`，共用资源位于 `common/src/main/resources`。在开发世界安装可选厨房、饰品栏和 FTB 任务见 [1.21.1 配置](docs/PORT_1211.md)。归档的 26.2 双加载器可用 `-ParchivedTargets` 显式构建。
 
 ## 喵刀
 
 - 共九个独立阶段，显示为“喵刀·1阶”至“喵刀·9阶”，按阶段顺序加入战斗栏。
 - 一阶段保留 ID `absmod:meow_blade`；二至九阶段为 `absmod:meow_blade_stage_2` 至 `absmod:meow_blade_stage_9`。
-- 各阶段的独立伤害参数集中在 `common/src/main/java/com/abyssredemption/absmod/item/MeowBladeStage.java`。
+- 各阶段的独立伤害参数集中在 `common/src/minecraft1211/java/com/abyssredemption/absmod/item/MeowBladeStage.java`。
   参数表示玩家默认基础属性下的总值。已采用 PROPOSED PvE 候选表：
   伤害 **7/8/9/10/12/14/16/18/22**，总攻速 **1.6/2/2.2/2.5/2.8/3.2/3.6/4/5**。
   目前普通刀按有效命中增加伤害与攻速，数值仍为平衡原型。
@@ -246,7 +224,7 @@ Linux 或 macOS 下将 `./gradlew.bat` 换成 `./gradlew`。
 
 ## 战斗运行时测试
 
-使用 JDK 25 执行 `./gradlew.bat --gradle-user-home .gradle-user-home -PgameTests :fabric:runGameTest`。`-PgameTests build` 会同时运行这些测试和双加载器构建。测试模组独立，不进入发布 JAR。
+使用 JDK 25 执行 `./gradlew.bat --gradle-user-home .gradle-user-home -ParchivedTargets -PgameTests :fabric:runGameTest`。`-PgameTests build` 会同时运行这些测试和双加载器构建。测试模组独立，不进入发布 JAR。
 
 八项 AbsMod 服务器世界测试覆盖连续满强度伤害、200 游戏 tick 内 60 次实际命中、原版蓄力、护甲、无敌保护、普通伤害冷却历史、主命中确认（含吸收值）和创造标签注册/图标。受控测试使用显式属性的模拟玩家；不代表真实按键、选目标/网络、盾牌、多人视觉、NeoForge 运行时或最终平衡已验收。详见[运行时验证](docs/RUNTIME_VALIDATION.md)。
 

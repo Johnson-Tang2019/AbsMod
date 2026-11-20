@@ -62,7 +62,22 @@ public final class AbsModNeoForge {
 
     private static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPES = net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER,AbsMod.MOD_ID);
     static { RECIPES.register("meow_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.SERIALIZER); RECIPES.register("dark_blade_crafting",()->com.abyssredemption.absmod.item.MeowBladeRecipe.DARK_SERIALIZER); }
+    private static final DeferredRegister<net.minecraft.world.level.block.entity.BlockEntityType<?>> BLOCK_ENTITIES =
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, AbsMod.MOD_ID);
+    static {
+        BLOCK_ENTITIES.register("milkshake_tray", () -> net.minecraft.world.level.block.entity.BlockEntityType.Builder.of(
+                com.abyssredemption.absmod.block.MilkshakeTrayBlockEntity::new,
+                com.abyssredemption.absmod.registry.ModBlocks.MILKSHAKE_TRAY.get()).build(null));
+        MENUS.register("spirit_game", () -> com.abyssredemption.absmod.spirit.SpiritGameMenu.TYPE);
+    }
     public AbsModNeoForge(IEventBus modEventBus) {
+        BLOCK_ENTITIES.register(modEventBus);
+        com.abyssredemption.absmod.registry.RoseEquipment.register(modEventBus);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::engrave);
+        NeoForge.EVENT_BUS.addListener(com.abyssredemption.absmod.neoforge.RoseCharms::tick);
+        if (net.neoforged.fml.ModList.get().isLoaded("farmersdelight")) {
+            com.abyssredemption.absmod.compat.RoseKitchen.register(modEventBus);
+        }
         MENUS.register(modEventBus);
         CAT_COATS.register(modEventBus);
         RECIPES.register(modEventBus);
