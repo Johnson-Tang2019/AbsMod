@@ -1,5 +1,14 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-23 · 1.21.1 樱花职业、随身提灯与存档升级 0.7.0
+
+- SAVE-UPGRADE。WorldUpgradeMixin 在同一份已上锁的世界首次读模组数据、原版恢复或首次写入元数据前保护原档。WorldUpgradeBackup 完整归档包括两个 level.dat、维度、区域、玩家、模组数据与 FTB 队伍，并逐项回读校验。WorldUpgrade 在取得注册表后校验旧剑魂、交接、成长和猫咪账本，再原子写入格式／发行版本。CatLifeStore 会保留不可读原件并拒绝重复索引。旧记录无需重建或重新绑定。
+- 旧档实测。复制 0.6.0 实际生成的中文集成服存档。升级档案的 34 个常规文件（5,330,587 字节，排除会话锁）与启动前副本逐个相同，包括 level.dat_old。重开后同一把普通九阶剑的身份、命名、耐久、附魔、250 好感与镜试炼保留，另一把八阶剑仍未通关，两只猫的独立回窝记录可读。原 FTB completed 表的 135 条时间戳全部相同。损坏猫账本和未来格式均触发拒绝，修正后能重试，同版重开保留一份备份。普通开档、实测数据与世界 ZIP 的保证范围见[升级与恢复](BLOSSOM_PATHS.md)。
+- BLOSSOM-WEAPONS。BlossomBowItem、BlossomStaffItem 与 34 个配方接入两职业普通九阶和暗樱八阶。客户端使用 34 张独立静态图及 51 张拉弓帧。实际客户端验证所有升级配方、属性继承、普通箭与穿透箭命中、两种法术和墙体遮挡，检查 85 个烘焙模型。35 项新进度和对应 FTB 项在给测试角色系列物品后全部完成。再启一个游戏进程，35 件新物品在容器中保留，FTB 再次读回。[游戏内武器总览](../art/blossom_vocations/in-game-weapons.png)
+- LIGHT-LANTERN。CherryLanternLighting 向客户端方块光照引擎提供移动光源，Curios 腰间与副手共用同一灯模。原版光照及 Iris 1.8.12、Sodium 0.6.13、MakeUp Ultra Fast 9.6a 下均进入世界，覆测跨维度、移动、装备切换与区块光照更新。中心 14、三格外 11，服务端同格为空气且方块亮度为 0。独立服与两名真实客户端验证同格重叠、另一名玩家腰佩、分开六格、断线熄灯。[关闭](../art/blossom_lantern/makeup-unlit.png) · [副手](../art/blossom_lantern/makeup-offhand.png) · [腰佩](../art/blossom_lantern/makeup-worn.png)
+- GUIDE。FieldGuideItem、两份语言表、原版进度和 1.21.1 FTB 章节同步。观察手册 68 页，FTB 共 101 项。四条武器路线逐阶段给出设备、材料顺序和操作。首版伤害、耐久与材料经济记为 PROPOSED；长期生存平衡和其他光影包待验。
+- 验证与交付。独立客户端旧档开服、二次重登、原工坊客户端与无 Curios 的独立服务器均已运行。证据包括 ways-accepted、ways-reopen、ways-workshop、ways-standalone 的本地构建日志和 LANTERN_PEERS_PASS。根项目及活动子项目正式构建成功，JAR 保留 0.6.0 的原有游戏资源，已排除验证类。已安装至指定 PCL 1.21.1 实例，JAR 的 SHA-256 为 `b28cc92d50d77bac0b84dc7b09747e0df357e2c30412286cf1adf56146c9361a`，旧 JAR 和任务配置位于该实例 `absmod-backups/20261123-205630`。游戏测试使用独立实例。
+
 ## 2026-11-20 · 1.21.1 茶约、猫窝与心镜 0.6.0
 
 - HOME-TEA。矮桌顶面可安装原奶昔茶盘，沿用四个独立杯位。结缘铃先选剑灵再点杯，剑灵寻路、转向主人、举杯后才结算。访客可在结算前拿走饮品。喝完返一个空桶并复用每日交流额度。主要改动为 TeaTableBlock、MilkshakeTrayBlock、SpiritTea、BladeSpiritEntity 与 BedrockSpiritModel。

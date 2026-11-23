@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/bow_pulling_1",
+  "textures": {
+    "layer0": "absmod:item/dark_blossom_bow_stage_3_pulling_1"
+  }
+}

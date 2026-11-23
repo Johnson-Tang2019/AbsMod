@@ -1,5 +1,7 @@
 # Ab's Mod 文档入口
 
+[0.7.0 樱花三职业、随身提灯、世界备份与恢复](BLOSSOM_PATHS.md)
+
 [1.21.1 茶室、猫咪与九阶试炼的路线与首版规则](CHERRY_HOME_ROADMAP.md)
 
 2026-11-20 起唯一开发目标为 Minecraft 1.21.1 NeoForge。当前游玩版本与测试入口见 [PORT_1211.md](PORT_1211.md)，交付证据见 [STATUS.md](STATUS.md)。

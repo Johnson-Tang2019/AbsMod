@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [" C ", "PLP", " W "],
+  "key": {
+    "C": {"item": "minecraft:chain"},
+    "P": {"item": "minecraft:pink_petals"},
+    "L": {"item": "minecraft:lantern"},
+    "W": {"item": "minecraft:cherry_planks"}
+  },
+  "result": {"id": "absmod:cherry_blossom_lantern"}
+}

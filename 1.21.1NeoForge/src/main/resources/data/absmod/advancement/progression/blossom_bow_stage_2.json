@@ -1,0 +1,33 @@
+{
+  "parent": "absmod:progression/blossom_bow",
+  "display": {
+    "icon": {
+      "id": "absmod:blossom_bow_stage_2"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_bow_stage_2.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_bow_stage_2.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:blossom_bow_stage_2"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:blossom_bow_stage_3"
+    ]
+  }
+}

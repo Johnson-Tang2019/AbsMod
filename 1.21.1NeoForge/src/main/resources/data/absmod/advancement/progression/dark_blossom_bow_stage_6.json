@@ -1,0 +1,33 @@
+{
+  "parent": "absmod:progression/dark_blossom_bow_stage_5",
+  "display": {
+    "icon": {
+      "id": "absmod:dark_blossom_bow_stage_6"
+    },
+    "title": {
+      "translate": "advancement.absmod.dark_blossom_bow_stage_6.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.dark_blossom_bow_stage_6.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:dark_blossom_bow_stage_6"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:dark_blossom_bow_stage_7"
+    ]
+  }
+}

@@ -18,6 +18,13 @@ public final class RoseStandaloneTest {
     private void started(ServerStartedEvent event) {
         var server = event.getServer();
         if (ModList.get().isLoaded("curios") || ModList.get().isLoaded("farmersdelight")) throw new IllegalStateException("Expected standalone environment");
+        for (String path : java.util.List.of("cherry_blossom_lantern", "blossom_bow_stage_9", "blossom_staff_stage_9",
+                "dark_blossom_bow_stage_8", "dark_blossom_staff_stage_8")) {
+            var id = ResourceLocation.fromNamespaceAndPath("absmod", path);
+            if (!BuiltInRegistries.ITEM.containsKey(id) || server.getRecipeManager().byKey(id).isEmpty())
+                throw new IllegalStateException("Missing standalone blossom item or recipe: " + path);
+        }
+        com.mojang.logging.LogUtils.getLogger().info("BLOSSOM_STANDALONE_PASS lantern and professions available");
         var kitchen = ResourceLocation.fromNamespaceAndPath("absmod", "rose_cooking_pot");
         if (BuiltInRegistries.BLOCK.containsKey(kitchen) || server.getRecipeManager().byKey(kitchen).isPresent()) throw new IllegalStateException("Unloaded kitchen");
         if (ModList.get().isLoaded("kaleidoscope_cookery") ||

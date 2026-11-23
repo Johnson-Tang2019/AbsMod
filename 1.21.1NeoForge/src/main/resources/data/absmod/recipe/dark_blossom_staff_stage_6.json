@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_petals"
+  },
+  "base": {
+    "item": "absmod:dark_blossom_staff_stage_5"
+  },
+  "addition": {
+    "item": "minecraft:ancient_debris"
+  },
+  "result": {
+    "id": "absmod:dark_blossom_staff_stage_6"
+  }
+}

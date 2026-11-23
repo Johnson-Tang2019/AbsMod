@@ -62,7 +62,7 @@ public final class CatLifeStore extends SavedData {
         ).apply(i, Selection::new));
     }
 
-    static final Codec<CatLifeStore> CODEC = RecordCodecBuilder.create(i -> i.group(
+    public static final Codec<CatLifeStore> CODEC = RecordCodecBuilder.create(i -> i.group(
             Observation.CODEC.listOf().fieldOf("observations").forGetter(store -> store.observations.values().stream()
                     .flatMap(entries -> entries.values().stream()).toList()),
             Home.CODEC.listOf().fieldOf("homes").forGetter(store -> List.copyOf(store.homes.values())),
@@ -88,19 +88,36 @@ public final class CatLifeStore extends SavedData {
     private CatLifeStore() {}
 
     private CatLifeStore(List<Observation> records, List<Home> homes, List<Selection> selections, List<RestVisit> visits) {
-        visits.forEach(v -> this.visits.put(new Selection(v.owner(), v.cat()), v));
-        records.forEach(row -> this.observations.computeIfAbsent(row.observer(), ignored -> new HashMap<>()).put(row.cat(), row));
+        for (var visit : visits) {
+            if (this.visits.putIfAbsent(new Selection(visit.owner(), visit.cat()), visit) != null)
+                throw new IllegalArgumentException("Duplicate rest visit");
+        }
+        for (var row : records) {
+            var observed = this.observations.computeIfAbsent(row.observer(), ignored -> new HashMap<>());
+            if (observed.putIfAbsent(row.cat(), row) != null) throw new IllegalArgumentException("Duplicate cat observation");
+        }
         homes.forEach(home -> {
             if (this.homes.containsKey(home.spot()) || home.cat().filter(byCat::containsKey).isPresent()) {
                 throw new IllegalArgumentException("Duplicate cat home");
             }
             putHome(home);
         });
-        selections.forEach(selection -> this.selections.put(selection.player(), selection.cat()));
+        for (var selection : selections) {
+            if (this.selections.putIfAbsent(selection.player(), selection.cat()) != null)
+                throw new IllegalArgumentException("Duplicate cat selection");
+        }
     }
 
     public static CatLifeStore get(MinecraftServer server) {
-        return server.overworld().getDataStorage().computeIfAbsent(TYPE, STORAGE_ID);
+        var storage = server.overworld().getDataStorage();
+        var existing = storage.get(TYPE, STORAGE_ID);
+        if (existing != null) return existing;
+        var file = server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT)
+                .resolve("data").resolve(STORAGE_ID + ".dat");
+        if (!java.nio.file.Files.notExists(file)) throw new IllegalStateException("Unreadable cat ledger: " + file);
+        var empty = new CatLifeStore();
+        storage.set(STORAGE_ID, empty);
+        return empty;
     }
 
     public void observe(ServerPlayer player, Cat cat) {

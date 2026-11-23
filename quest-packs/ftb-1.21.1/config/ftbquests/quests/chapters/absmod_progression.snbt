@@ -1521,6 +1521,767 @@
         }
       ],
       "rewards": []
+    },
+    {
+      "id": "304CDDB1808E6D52",
+      "title": "樱花弓 I",
+      "description": [
+        "工作台无序合成：弓、樱花木板、粉红色花簇、紫水晶碎片各一。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 0,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "3B4DA28F8B14D5D8",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "3D469DAF29DEC846",
+      "title": "樱花弓 II",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 I 阶弓、铜锭，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 2,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "3AFABBD9963B916F",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_2",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "304CDDB1808E6D52"
+      ]
+    },
+    {
+      "id": "36394CC49FFC4D47",
+      "title": "樱花弓 III",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 II 阶弓、紫水晶块，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 4,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "37EB700C9E7C6B4C",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_3",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3D469DAF29DEC846"
+      ]
+    },
+    {
+      "id": "34D8CBEE3CB3AD16",
+      "title": "樱花弓 IV",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 III 阶弓、金锭，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 6,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "3FAA3B354B0C08DB",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_4",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "36394CC49FFC4D47"
+      ]
+    },
+    {
+      "id": "3EADF7739319F65F",
+      "title": "樱花弓 V",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 IV 阶弓、钻石，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 8,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "3C18D604BF4E42A5",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_5",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "34D8CBEE3CB3AD16"
+      ]
+    },
+    {
+      "id": "399F6A15ED077412",
+      "title": "樱花弓 VI",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 V 阶弓、烈焰棒，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 10,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "37CE19ECDC760A89",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_6",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3EADF7739319F65F"
+      ]
+    },
+    {
+      "id": "3D3F955EA2A09F37",
+      "title": "樱花弓 VII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VI 阶弓、回响碎片，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 12,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "3C531E6A83F86D73",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_7",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "399F6A15ED077412"
+      ]
+    },
+    {
+      "id": "304C00F9E860C049",
+      "title": "樱花弓 VIII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VII 阶弓、下界合金锭，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 14,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "318F6786AAB9F867",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_8",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3D3F955EA2A09F37"
+      ]
+    },
+    {
+      "id": "31703DC23F552B22",
+      "title": "樱花弓 IX",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VIII 阶弓、下界之星，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 16,
+      "y": 18,
+      "tasks": [
+        {
+          "id": "3382F5072D85691D",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bow_stage_9",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "304C00F9E860C049"
+      ]
+    },
+    {
+      "id": "3DCE378556824A08",
+      "title": "暗樱弓 I",
+      "description": [
+        "锻造台从左至右放入回响碎片、普通一阶弓、哭泣的黑曜石。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 0,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "3BDDC164AA760758",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "304CDDB1808E6D52"
+      ]
+    },
+    {
+      "id": "380EC64EC934F225",
+      "title": "暗樱弓 II",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 I 阶弓、黑曜石，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 2,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "3F957617A3AACEE2",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow_stage_2",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3DCE378556824A08"
+      ]
+    },
+    {
+      "id": "31AE763569C31C67",
+      "title": "暗樱弓 III",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 II 阶弓、岩浆膏，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 4,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "3377635120A75ED7",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow_stage_3",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "380EC64EC934F225"
+      ]
+    },
+    {
+      "id": "38C010EF79A3AF11",
+      "title": "暗樱弓 IV",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 III 阶弓、凋灵骷髅头颅，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 6,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "31D4D73E926C784D",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow_stage_4",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "31AE763569C31C67"
+      ]
+    },
+    {
+      "id": "3DAAF32EFF8F9928",
+      "title": "暗樱弓 V",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 IV 阶弓、幽匿催发体，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 8,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "39DE1341A69CC2B6",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow_stage_5",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "38C010EF79A3AF11"
+      ]
+    },
+    {
+      "id": "343408E7CC1C70EB",
+      "title": "暗樱弓 VI",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 V 阶弓、远古残骸，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 10,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "3F4A08C0521314E2",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow_stage_6",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3DAAF32EFF8F9928"
+      ]
+    },
+    {
+      "id": "3B3F1C0650BE16FC",
+      "title": "暗樱弓 VII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VI 阶弓、下界合金锭，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 12,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "35D60198F2B15AA3",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow_stage_7",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "343408E7CC1C70EB"
+      ]
+    },
+    {
+      "id": "30AF505BFF1F4C7A",
+      "title": "暗樱弓 VIII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VII 阶弓、下界之星，各一件。",
+        "按住使用键拉弓，松开射箭。满弦普通箭带轮廓光，暗樱满弦箭可多穿过一个目标。"
+      ],
+      "x": 14,
+      "y": 20,
+      "tasks": [
+        {
+          "id": "36103FCF43593A6E",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_bow_stage_8",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3B3F1C0650BE16FC"
+      ]
+    },
+    {
+      "id": "3F137186A7CD1935",
+      "title": "樱花权杖 I",
+      "description": [
+        "工作台无序合成：木棍、樱花木板、粉红色花簇、紫水晶碎片各一。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 0,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "318BD8C2135A00E1",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "31EA630E5F6F42F4",
+      "title": "樱花权杖 II",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 I 阶权杖、铜锭，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 2,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "3BC4DDA866518287",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_2",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3F137186A7CD1935"
+      ]
+    },
+    {
+      "id": "329CEF0F006ED82A",
+      "title": "樱花权杖 III",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 II 阶权杖、紫水晶块，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 4,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "34603C7948E36B4E",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_3",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "31EA630E5F6F42F4"
+      ]
+    },
+    {
+      "id": "3C4735571E4AA1C4",
+      "title": "樱花权杖 IV",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 III 阶权杖、金锭，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 6,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "3C05BB9896CC0F64",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_4",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "329CEF0F006ED82A"
+      ]
+    },
+    {
+      "id": "354B728F1B0DE6FD",
+      "title": "樱花权杖 V",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 IV 阶权杖、钻石，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 8,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "39B08F51020D594A",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_5",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3C4735571E4AA1C4"
+      ]
+    },
+    {
+      "id": "377022CC1C7E36F5",
+      "title": "樱花权杖 VI",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 V 阶权杖、烈焰棒，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 10,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "3DFABD6B7ACD3C98",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_6",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "354B728F1B0DE6FD"
+      ]
+    },
+    {
+      "id": "3DCFB3903FC61289",
+      "title": "樱花权杖 VII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VI 阶权杖、回响碎片，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 12,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "38F08A09251312EA",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_7",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "377022CC1C7E36F5"
+      ]
+    },
+    {
+      "id": "387563190825287B",
+      "title": "樱花权杖 VIII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VII 阶权杖、下界合金锭，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 14,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "3A2CF8501B36B3C9",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_8",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3DCFB3903FC61289"
+      ]
+    },
+    {
+      "id": "39D7557EE060E2F1",
+      "title": "樱花权杖 IX",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VIII 阶权杖、下界之星，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 16,
+      "y": 22,
+      "tasks": [
+        {
+          "id": "38B3172AA982784E",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_staff_stage_9",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "387563190825287B"
+      ]
+    },
+    {
+      "id": "385B07E58A8E5D2D",
+      "title": "暗樱权杖 I",
+      "description": [
+        "锻造台从左至右放入回响碎片、普通一阶权杖、哭泣的黑曜石。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 0,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "3F772B50E07EC5D7",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3F137186A7CD1935"
+      ]
+    },
+    {
+      "id": "3CAB09CACF6176AC",
+      "title": "暗樱权杖 II",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 I 阶权杖、黑曜石，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 2,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "36A8C8C9F69DC32F",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff_stage_2",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "385B07E58A8E5D2D"
+      ]
+    },
+    {
+      "id": "3C623C42F23FE9DF",
+      "title": "暗樱权杖 III",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 II 阶权杖、岩浆膏，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 4,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "3B9B07A8524D91D8",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff_stage_3",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3CAB09CACF6176AC"
+      ]
+    },
+    {
+      "id": "352CCF13F509EBAE",
+      "title": "暗樱权杖 IV",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 III 阶权杖、凋灵骷髅头颅，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 6,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "3764AB222B1330E5",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff_stage_4",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3C623C42F23FE9DF"
+      ]
+    },
+    {
+      "id": "37A7157A296E09A4",
+      "title": "暗樱权杖 V",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 IV 阶权杖、幽匿催发体，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 8,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "38A0507AFD2CCF83",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff_stage_5",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "352CCF13F509EBAE"
+      ]
+    },
+    {
+      "id": "3C9004046D43B5B5",
+      "title": "暗樱权杖 VI",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 V 阶权杖、远古残骸，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 10,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "30C5B42DDA39A812",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff_stage_6",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "37A7157A296E09A4"
+      ]
+    },
+    {
+      "id": "37ED49C8DEF7E2ED",
+      "title": "暗樱权杖 VII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VI 阶权杖、下界合金锭，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 12,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "3C25DB6C332E851A",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff_stage_7",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "3C9004046D43B5B5"
+      ]
+    },
+    {
+      "id": "310D50901A802FEC",
+      "title": "暗樱权杖 VIII",
+      "description": [
+        "锻造台从左至右放入粉红色花簇、同路线 VII 阶权杖、下界之星，各一件。",
+        "瞄准并按使用键释放魔法。普通权杖直击首个目标；暗樱命中后可波及附近至多三个可见敌怪。"
+      ],
+      "x": 14,
+      "y": 24,
+      "tasks": [
+        {
+          "id": "356C4BF5BBA0B95F",
+          "type": "advancement",
+          "advancement": "absmod:progression/dark_blossom_staff_stage_8",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "37ED49C8DEF7E2ED"
+      ]
+    },
+    {
+      "id": "380BF67747B66180",
+      "title": "樱花提灯",
+      "description": [
+        "工作台上排中央放锁链，中排花簇、灯笼、花簇，下排中央放樱花木板。",
+        "把提灯放进副手或 Curios 腰带槽，走入暗处。普通背包内的提灯不会点亮。"
+      ],
+      "x": 0,
+      "y": 16,
+      "tasks": [
+        {
+          "id": "3CC2B4C9CEE7C22A",
+          "type": "advancement",
+          "advancement": "absmod:progression/cherry_blossom_lantern",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
     }
   ]
 }

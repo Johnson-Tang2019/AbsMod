@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "absmod:item/dark_blossom_staff_stage_8"
+  }
+}

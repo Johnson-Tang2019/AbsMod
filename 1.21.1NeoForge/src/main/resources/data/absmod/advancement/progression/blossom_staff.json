@@ -1,0 +1,34 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:blossom_staff"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_staff.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_staff.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:blossom_staff"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:blossom_staff_stage_2",
+      "absmod:dark_blossom_staff"
+    ]
+  }
+}

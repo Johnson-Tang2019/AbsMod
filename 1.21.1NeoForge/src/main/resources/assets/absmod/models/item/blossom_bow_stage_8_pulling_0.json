@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/bow_pulling_0",
+  "textures": {
+    "layer0": "absmod:item/blossom_bow_stage_8_pulling_0"
+  }
+}

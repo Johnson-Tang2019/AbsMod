@@ -1,5 +1,9 @@
 # 下一批开发任务单
 
+## 1.21.1 · 樱花三职业与旧档升级
+
+SAVE-UPGRADE、BLOSSOM-WEAPONS、LIGHT-LANTERN、GUIDE 已接入 0.7.0。普通九阶、暗樱八阶共 34 件弓杖，手册第 62–68 页和 35 项新任务已接入。玩法与兼容边界见 [职业路线](BLOSSOM_PATHS.md)，实测见 [STATUS](STATUS.md)。
+
 ## 1.21.1 · 茶约、安置与同魂九阶
 
 HOME-TEA、CAT-REST、TRIAL-IX、ART-DARK、GUIDE 已接入活动版本；逐项实测及验收边界见 [STATUS](STATUS.md)。普通八升九使用同魂资格、250 好感、16 紫水晶块，暗黑八阶封顶。手册第 56–61 页与六项新任务覆盖三条路线。

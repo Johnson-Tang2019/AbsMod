@@ -1,0 +1,28 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:cherry_blossom_lantern"
+    },
+    "title": {
+      "translate": "advancement.absmod.cherry_blossom_lantern.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cherry_blossom_lantern.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:cherry_blossom_lantern"
+          }
+        ]
+      }
+    }
+  }
+}

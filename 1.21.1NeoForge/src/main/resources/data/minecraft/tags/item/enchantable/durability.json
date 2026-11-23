@@ -4,6 +4,8 @@
     {
       "id": "absmod:rose_skillet",
       "required": false
-    }
+    },
+    "#absmod:blossom_bows",
+    "#absmod:blossom_staves"
   ]
 }

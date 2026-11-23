@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "materials": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:pink_petals",
+              "minecraft:cherry_planks"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:blossom_bow",
+      "absmod:blossom_staff",
+      "absmod:cherry_blossom_lantern"
+    ]
+  }
+}

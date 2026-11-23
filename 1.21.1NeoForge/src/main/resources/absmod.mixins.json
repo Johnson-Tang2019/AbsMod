@@ -4,6 +4,7 @@
   "package": "com.abyssredemption.absmod.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ArrowPiercingInvoker",
     "PlayerAttackMixin",
     "PlayerListSaveInvoker",
     "ResonancePlayerStorageMixin",
@@ -24,9 +25,12 @@
     "CookeryDefinitionMixin",
     "CookeryCupMixin",
     "CookeryDrinkMixin",
-    "CookeryMilkTeaMixin"
+    "CookeryMilkTeaMixin",
+    "WorldUpgradeMixin"
   ],
   "client": [
+    "client.LanternBlockLightMixin",
+    "client.LanternLightPacketMixin",
     "client.MinecraftAttackMixin",
     "client.BladeMotionReloadMixin",
     "client.BladeAttackIndicatorMixin",

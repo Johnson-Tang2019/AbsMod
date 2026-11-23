@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_petals"
+  },
+  "base": {
+    "item": "absmod:dark_blossom_bow_stage_6"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "id": "absmod:dark_blossom_bow_stage_7"
+  }
+}

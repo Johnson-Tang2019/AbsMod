@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_petals"
+  },
+  "base": {
+    "item": "absmod:blossom_staff_stage_5"
+  },
+  "addition": {
+    "item": "minecraft:blaze_rod"
+  },
+  "result": {
+    "id": "absmod:blossom_staff_stage_6"
+  }
+}

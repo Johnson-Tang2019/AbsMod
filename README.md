@@ -1,6 +1,8 @@
 # Ab's Mod
 
-**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 61 pages. The optional FTB chapter has 66 quests. [Setup](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 68 pages. The optional FTB chapter has 101 quests. [Setup](docs/PORT_1211.md)
+
+**0.7.0 · Blossom paths and a travelling lantern.** Equip a bow or staff to play either ranged profession. Each has nine blossom tiers and eight dark tiers with individual sprites. Carry the lantern in your offhand or on a Curios belt for moving light. Opening an existing world on a new release automatically backs up the entire world. Guide pages 62–68 cover recipes, controls and restoration. [Progression table](docs/BLOSSOM_PATHS.md) · [In-game weapon sheet](art/blossom_vocations/in-game-weapons.png)
 
 **0.6.0 · Tea, cats and the Heart Mirror.** Mount a tray on a low cherry table, then use the Bond Bell to invite your spirit to a particular cup. Cats can lie in their own nests or cherry cushions. The bell remembers each cat’s last rest. Carry your bound normal VIII blade into the Heart Mirror trial, dodge the sweep and slam, then attack the open echo. At 250 affection, combine the winning blade with 16 amethyst blocks in the Resonance Workshop to reach IX. The eight dark blades each have their own sprite. See guide pages 56–61.
 

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:echo_shard"
+  },
+  "base": {
+    "item": "absmod:blossom_bow"
+  },
+  "addition": {
+    "item": "minecraft:crying_obsidian"
+  },
+  "result": {
+    "id": "absmod:dark_blossom_bow"
+  }
+}

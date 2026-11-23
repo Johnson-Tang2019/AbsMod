@@ -1,0 +1,33 @@
+{
+  "parent": "absmod:progression/dark_blossom_staff_stage_4",
+  "display": {
+    "icon": {
+      "id": "absmod:dark_blossom_staff_stage_5"
+    },
+    "title": {
+      "translate": "advancement.absmod.dark_blossom_staff_stage_5.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.dark_blossom_staff_stage_5.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:dark_blossom_staff_stage_5"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:dark_blossom_staff_stage_6"
+    ]
+  }
+}

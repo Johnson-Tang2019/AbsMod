@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_petals"
+  },
+  "base": {
+    "item": "absmod:dark_blossom_bow"
+  },
+  "addition": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+    "id": "absmod:dark_blossom_bow_stage_2"
+  }
+}

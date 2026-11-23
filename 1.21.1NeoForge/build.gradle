@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.6.0+1.21.1'
+version = '0.7.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -146,4 +146,18 @@ if (providers.gradleProperty("homePeerTest").isPresent()) {
     if (!(role in ["HomeOwner", "HomeGuest"])) throw new GradleException("Unknown home test role")
     neoForge.runs.client.gameDirectory = layout.buildDirectory.dir("home-peers/" + role)
     neoForge.runs.client.programArguments.addAll("--username", role)
+}
+
+if (providers.gradleProperty("wayVerification").isPresent()) {
+    sourceSets.main.java.srcDir "src/wayverification/java"
+    dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") }
+    neoForge.runs.client.systemProperty "absmod.wayWorld", providers.gradleProperty("wayVerification").get()
+    neoForge.runs.client.systemProperty "absmod.wayReadback", providers.gradleProperty("wayReadback").isPresent().toString()
+}
+
+if (providers.gradleProperty("lanternVisualTest").isPresent()) {
+    sourceSets.main.java.srcDir "src/lanternverification/java"
+    if (providers.gradleProperty("verifyLanternShader").isPresent()) {
+        neoForge.runs.client.systemProperty "absmod.verifyShader", "true"
+    }
 }

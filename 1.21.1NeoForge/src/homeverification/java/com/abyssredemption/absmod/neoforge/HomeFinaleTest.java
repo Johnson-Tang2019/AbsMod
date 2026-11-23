@@ -156,7 +156,7 @@ public final class HomeFinaleTest {
                     check(complete(p,name),"advancement "+name);
                 var ftb=ServerQuestFile.INSTANCE;
                 var chapter=ftb.getChapter(0x1C4E810187B7DDC2L);
-                check(chapter!=null && chapter.getQuests().size()==66,"66 FTB quests loaded");
+                check(chapter!=null && chapter.getQuests().size() == 101,"101 FTB quests loaded");
                 var team=ftb.getTeamData(p).orElseThrow();
                 for (long id: NEW_QUESTS) if (!team.isCompleted(ftb.getQuest(id))) return;
                 p.serverLevel().getServer().saveEverything(true,true,true);

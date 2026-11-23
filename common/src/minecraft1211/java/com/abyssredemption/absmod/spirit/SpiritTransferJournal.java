@@ -31,12 +31,15 @@ final class SpiritTransferJournal {
     }
 
     static List<BladeSoulRecord> read(MinecraftServer server) {
-        Path directory = directory(server);
+        return read(directory(server), server.registryAccess());
+    }
+
+    static List<BladeSoulRecord> read(Path directory, net.minecraft.core.HolderLookup.Provider registries) {
         if (Files.notExists(directory)) { return List.of(); }
         try (var files = Files.newDirectoryStream(directory, "*.dat")) {
             var records = new ArrayList<BladeSoulRecord>();
             for (Path file : files) {
-                var record = BladeSoulRecord.CODEC.parse(server.registryAccess().createSerializationContext(NbtOps.INSTANCE),
+                var record = BladeSoulRecord.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE),
                         NbtIo.readCompressed(file, NbtAccounter.unlimitedHeap())).getOrThrow();
                 if (!file.getFileName().toString().equals(record.soulId() + ".dat")) {
                     throw new IOException("Handoff file does not match its soul");

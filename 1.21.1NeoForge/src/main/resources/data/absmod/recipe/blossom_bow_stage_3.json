@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_petals"
+  },
+  "base": {
+    "item": "absmod:blossom_bow_stage_2"
+  },
+  "addition": {
+    "item": "minecraft:amethyst_block"
+  },
+  "result": {
+    "id": "absmod:blossom_bow_stage_3"
+  }
+}

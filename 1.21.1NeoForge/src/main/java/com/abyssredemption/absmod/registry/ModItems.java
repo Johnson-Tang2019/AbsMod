@@ -1,17 +1,37 @@
 package com.abyssredemption.absmod.registry;
 
 import com.abyssredemption.absmod.AbsMod;
+import com.abyssredemption.absmod.item.BladeRoute;
+import com.abyssredemption.absmod.item.BlossomBowItem;
+import com.abyssredemption.absmod.item.BlossomStaffItem;
+import com.abyssredemption.absmod.item.BlossomWeaponStage;
 import com.abyssredemption.absmod.item.MeowBladeItem;
 import com.abyssredemption.absmod.item.MeowBladeStage;
 import com.abyssredemption.absmod.item.MilkshakeItem;
 import com.abyssredemption.absmod.item.MilkshakeVariant;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(AbsMod.MOD_ID);
+    public static final List<DeferredItem<BlossomBowItem>> BLOSSOM_BOWS;
+    public static final List<DeferredItem<BlossomStaffItem>> BLOSSOM_STAVES;
+    static {
+        var bows = new ArrayList<DeferredItem<BlossomBowItem>>();
+        var staves = new ArrayList<DeferredItem<BlossomStaffItem>>();
+        for (BladeRoute route : BladeRoute.values()) {
+            for (int tier = 1; route.accepts(tier); tier++) {
+                var stage = new BlossomWeaponStage(route, tier);
+                bows.add(ITEMS.registerItem(stage.itemId("bow"), properties -> new BlossomBowItem(properties, stage)));
+                staves.add(ITEMS.registerItem(stage.itemId("staff"), properties -> new BlossomStaffItem(properties, stage)));
+            }
+        }
+        BLOSSOM_BOWS = List.copyOf(bows);
+        BLOSSOM_STAVES = List.copyOf(staves);
+    }
     public static final List<DeferredItem<MeowBladeItem>> MEOW_BLADES =
             Arrays.stream(MeowBladeStage.values())
                     .map(stage -> ITEMS.registerItem(stage.itemId(),

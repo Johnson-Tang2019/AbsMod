@@ -120,6 +120,8 @@ public final class AbsModNeoForge {
             event.accept(ModItems.CAT_NEST);
         }
         if (event.getTabKey().equals(CreativeModeTabs.COMBAT)) {
+            ModItems.BLOSSOM_BOWS.forEach(event::accept);
+            ModItems.BLOSSOM_STAVES.forEach(event::accept);
             ModItems.MEOW_BLADES.forEach(item -> event.accept(item));
             ModItems.DARK_BLADES.forEach(item -> event.accept(item));
             event.accept(ModItems.RESONANCE_HEART);

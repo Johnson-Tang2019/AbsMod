@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "minecraft:pink_petals"
+  },
+  "base": {
+    "item": "absmod:dark_blossom_staff_stage_3"
+  },
+  "addition": {
+    "item": "minecraft:wither_skeleton_skull"
+  },
+  "result": {
+    "id": "absmod:dark_blossom_staff_stage_4"
+  }
+}

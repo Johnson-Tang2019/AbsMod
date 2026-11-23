@@ -15,6 +15,15 @@ public final class AbsModNeoForgeClient {
     private final MeowSlashEffects effects=new MeowSlashEffects();
     private final BladeCombatClient combat=new BladeCombatClient();
     public AbsModNeoForgeClient(IEventBus bus) {
+        bus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) -> event.enqueueWork(() -> {
+            for (String name : java.util.List.of("pull", "pulling")) {
+                var key = net.minecraft.resources.ResourceLocation.withDefaultNamespace(name);
+                var predicate = net.minecraft.client.renderer.item.ItemProperties.getProperty(
+                        net.minecraft.world.item.Items.BOW.getDefaultInstance(), key);
+                com.abyssredemption.absmod.registry.ModItems.BLOSSOM_BOWS.forEach(bow ->
+                        net.minecraft.client.renderer.item.ItemProperties.register(bow.get(), key, predicate));
+            }
+        }));
         bus.addListener((net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) -> {
             event.register(com.abyssredemption.absmod.spirit.ResonanceMenu.TYPE,
                     com.abyssredemption.absmod.client.ResonanceScreen::new);
