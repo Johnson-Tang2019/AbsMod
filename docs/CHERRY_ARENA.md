@@ -10,9 +10,18 @@ Minecraft 1.21.1 NeoForge。CONFIRMED 范围为樱花门、专属虚空维度、
 
 ## 建筑与保护
 
-0.11.0 采用直径约 111 格的圆形浮台。六层看台沿战斗区外缘排布，阶梯过道连接到环形步道，北侧设玻璃观赛席。场顶为放射状樱粉悬挑雨棚，白色承重肋之间夹着粉色玻璃采光带。浅樱木、樱粉座席与白色通道形成色差，外圈有连续灯带。中央半径 34 格的圆场统一铺浅樱木运动地板。从南门穿过通道，沿中轴北行即可抵达原位心镜。竞技场固定镜以场心为试炼范围中心，自建心镜以镜为中心、半径 12 格。
+圆形浮台直径约 111 格。中央半径 34 格为素面浅樱木地板，周围的六层看台通过阶梯连接环形步道。棚面交替使用浅暖色陶面、去皮樱木和石英收边，白色玻璃天窗间留少量粉玻璃。0.11.1 的四个方向各有地标。
 
-[可编辑投影](../art/cherry_arena/cherry_arena.litematic) · [游戏内全景](../art/cherry_arena/round-court.png) · [正上方俯视](../art/cherry_arena/round-plan.png) · [入场视角](../art/cherry_arena/round-entry.png) · [看台和雨棚近景](../art/cherry_arena/round-stands.png)
+| 方位 | 从战斗场能看到的地标 |
+| --- | --- |
+| 南 | 三道由低到高的拱门迎向入场者，朝北沿中轴前进即可找到心镜。 |
+| 东 | 露天樱庭栽着三株高低不同的樱树，矮花池和带遮阴的座位连接步道。 |
+| 北 | 观景廊的屋顶向两翼升高，椭圆窗朝向赛场，西端阶梯通往上层。 |
+| 西 | 三段锯齿形采光棚以竖向磨砂色玻璃采光，棚下沿用连续步道。 |
+
+竞技场固定镜以场心为试炼范围中心，自建心镜以镜为中心、半径 12 格。
+
+[可编辑投影](../art/cherry_arena/cherry_arena.litematic) · [游戏内全景](../art/cherry_arena/gallery-court.png) · [俯视屋面](../art/cherry_arena/gallery-plan.png) · [南侧拱门](../art/cherry_arena/gallery-gate.png) · [东侧樱庭](../art/cherry_arena/gallery-east.png) · [西侧采光棚](../art/cherry_arena/gallery-west.png) · [入场看北廊](../art/cherry_arena/gallery-entry.png)
 
 0.10.0 曾借鉴《灾变》焰魔竞技场的层次及《暮色森林》娜迦庭院的分段围墙。旧版建筑投影用于计算原址更新时应清除的方块。[《灾变》原生成器](https://github.com/lender544/new1.20.1/blob/819937203e22b4fa72fdeccc6c56ad415d65eeef/src/main/java/com/github/L_Ender/cataclysm/structures/Burning_Arena_Structure.java) · [《暮色森林》原庭院结构](https://github.com/TeamTwilight/twilightforest/tree/2bfc2df7d12dae8d3cbe067beeb0c63d1bab1d5e/src/main/resources/data/twilightforest/structure/courtyard) · [上版投影](../art/cherry_arena/grand-court-0.10.litematic) · [旧版全景](../art/cherry_arena/grand-court.png)
 
@@ -20,7 +29,7 @@ Minecraft 1.21.1 NeoForge。CONFIRMED 范围为樱花门、专属虚空维度、
 
 ## 复查和修改建筑
 
-设计源为 `tools/arena/design.py`。依次生成 frame、envelope、roof、ornament，在 v16 中分别检查六视图和方块差异。用 seat_banks 修整分段椅背及内外棚沿厚度，再用 rose_finish 给整个场馆做粉色饰面。导出器 `tools/arena/export_template.py` 接收技能目录、最终投影和目标 NBT，将 0.9.0 的原场地范围、0.10.0 的实际建筑位置与新投影一起处理。圆场外的旧角楼、树木和屋顶以空气原址替换。服务器在原坐标设置心镜和南门，按新场馆重算覆盖区块的天空光照，并将更新后的区段发送给玩家。
+设计源为 `tools/arena/design.py`。依次生成 frame、envelope、roof、ornament，在 v16 中分别检查六视图和方块差异。用 seat_banks 修整分段椅背及内外棚沿厚度，再用 rose_finish 给整个场馆做粉色饰面。0.11.1 在这一基础上用 `tools/arena/gallery_details.py` 分 muted_materials 和 four_galleries 两步改变饰面、打开雨棚并塑造四个方向。导出器 `tools/arena/export_template.py` 接收技能目录、最终投影和目标 NBT，将 0.9.0 的原场地范围、0.10.0 和 [0.11.0](../art/cherry_arena/round-court-0.11.litematic) 的实际建筑位置与新投影一起处理。圆场外的旧角楼、树木和屋顶以空气原址替换。服务器在原坐标设置心镜和南门，按新场馆重算覆盖区块的天空光照，并将更新后的区段发送给玩家。
 
 ## 首领识别
 

@@ -22,11 +22,16 @@ def read_region(path):
 
 size, palette, indices = read_region(schematic)
 sx, sy, sz = size
-archive = Path(__file__).resolve().parents[2] / "art/cherry_arena/grand-court-0.10.litematic"
-prior_size, prior_palette, prior_indices = read_region(archive)
-if prior_size != size:
-    raise ValueError("Expected the new and previous arena to share a placement origin and canvas")
-old_air = prior_palette.index("minecraft:air")
+archive_dir = Path(__file__).resolve().parents[2] / "art/cherry_arena"
+prior_cells = bytearray(math.prod(size))
+for name in ("grand-court-0.10.litematic", "round-court-0.11.litematic"):
+    prior_size, prior_palette, prior_indices = read_region(archive_dir / name)
+    if prior_size != size:
+        raise ValueError(f"Placement origin and canvas must match the archived {name}")
+    old_air = prior_palette.index("minecraft:air")
+    for index, state in enumerate(prior_indices):
+        if state != old_air:
+            prior_cells[index] = 1
 air = palette.index("minecraft:air")
 blocks = []
 for i, material in enumerate(indices):
@@ -39,7 +44,7 @@ for i, material in enumerate(indices):
         continue
     # The 0.9 exit is inside its original envelope. The 0.10 mirror and portal keep their positions.
     first_arena = abs(x) <= 24 and abs(z) <= 24 and y <= 16
-    if material != air or first_arena or prior_indices[i] != old_air:
+    if material != air or first_arena or prior_cells[i]:
         blocks.append(n_compound({"pos": n_list(TAG_INT,pos), "state": n_int(material)}))
 output.parent.mkdir(parents=True, exist_ok=True)
 write_nbt_gzip(output, n_compound({"DataVersion":n_int(3955), "size":n_list(TAG_INT,list(size)),

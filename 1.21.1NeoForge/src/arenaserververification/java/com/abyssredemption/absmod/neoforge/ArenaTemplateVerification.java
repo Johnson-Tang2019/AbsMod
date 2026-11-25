@@ -42,6 +42,8 @@ public final class ArenaTemplateVerification {
                 var cell = (CompoundTag)entry;
                 var xyz = cell.getList("pos",Tag.TAG_INT);
                 BlockPos pos = CherryArena.ORIGIN.offset(xyz.getInt(0),xyz.getInt(1),xyz.getInt(2));
+                if (palette.get(cell.getInt("state")).is(net.minecraft.world.level.block.Blocks.PINK_CONCRETE))
+                    throw new IllegalStateException("saturated concrete at " + pos);
                 check(level.getBlockState(pos) == palette.get(cell.getInt("state")),"world mismatch at "+pos);
             }
             check(level.isEmptyBlock(new BlockPos(0,70,19)) && level.isEmptyBlock(new BlockPos(0,80,-18)), "obsolete exit and roof removed");
@@ -56,6 +58,10 @@ public final class ArenaTemplateVerification {
                 if (!pos.equals(CherryArena.MIRROR)) check(level.isEmptyBlock(pos), "obstructed floor " + pos);
                 check(level.isEmptyBlock(pos.above()), "missing headroom " + pos);
             }
+            check(level.getBlockState(new BlockPos(51,77,0)).is(net.minecraft.world.level.block.Blocks.CHERRY_LOG), "orchard trunk");
+            check(level.isEmptyBlock(new BlockPos(0,83,-41)), "north gallery oculus");
+            check(level.getBlockState(new BlockPos(0,94,50)).is(net.minecraft.world.level.block.Blocks.SMOOTH_QUARTZ), "south arch crown");
+            check(level.getBlockState(new BlockPos(-46,85,-7)).is(net.minecraft.world.level.block.Blocks.WHITE_STAINED_GLASS), "west clerestory");
             check(!level.destroyBlock(CherryArena.MIRROR,true),"protected mirror");
             check(level.getChunk(15,15).getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,0,0)<0,"void");
             System.out.println("ARENA_DEDICATED_TEMPLATE_PASS cells="+blocks.size()+" palette="+palette.size());

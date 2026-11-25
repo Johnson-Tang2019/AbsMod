@@ -1,5 +1,9 @@
 # Ab's Mod quest export / 任务导出
 
+## 0.11.1
+
+The arena entry quest identifies the three south arches and the landmarks along the promenade. 手册第 76 页及入场任务同步标出南侧拱门、东樱庭、北观景廊和西侧采光棚，沿用原任务进度。
+
 ## 0.11.0
 
 The arena entry quest follows the new south tunnel, plain cherry court and ring walk. 入场引导改为南侧通道、浅樱粉圆场与环形步道，保留原任务 ID 和前置。
