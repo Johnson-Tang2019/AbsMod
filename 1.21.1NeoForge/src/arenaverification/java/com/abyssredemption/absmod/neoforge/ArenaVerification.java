@@ -30,7 +30,7 @@ public final class ArenaVerification {
     private final String world=System.getProperty("absmod.arenaWorld");
     private final boolean reopen=Boolean.getBoolean("absmod.arenaReopen");
     private static final BlockPos BASE=new BlockPos(52,105,54);
-    private boolean started, photo, entrancePhoto;
+    private boolean started, photo, entrancePhoto, galleryPhoto;
     private float trialHealth;
     private int frames, phase, ticks, openingTicks;
     private UUID wither, dragon;
@@ -45,7 +45,8 @@ public final class ArenaVerification {
             started=true;
             mc.options.pauseOnLostFocus=false;
             mc.options.hideGui=true;
-            mc.options.renderDistance().set(7);
+            mc.options.renderDistance().set(12);
+            mc.options.cloudStatus().set(net.minecraft.client.CloudStatus.OFF);
             mc.getWindow().setWindowed(1080,700);
             mc.createWorldOpenFlows().openWorld(world,()->{throw new AssertionError("missing fixture");});
         }
@@ -62,10 +63,10 @@ public final class ArenaVerification {
             }
         }
         if (mc.player==null || mc.level==null || mc.getSingleplayerServer()==null || ++frames<45) return;
-        check(frames<800,"timeout in phase "+phase);
+        check(frames<1400,"timeout in phase "+phase);
         var server=mc.getSingleplayerServer();
         server.submit(()->step(server.getPlayerList().getPlayers().getFirst())).join();
-        if (phase==4 && !photo && ticks>=45) {
+        if (phase==4 && !photo && ticks>=150 && renderedCourt(mc)) {
             mc.getToasts().clear();
             Screenshot.grab(mc.gameDirectory,"cherry-arena-court.png",mc.getMainRenderTarget(),ignored->{});
             photo=true;
@@ -75,7 +76,18 @@ public final class ArenaVerification {
             Screenshot.grab(mc.gameDirectory,"cherry-arena-entry.png",mc.getMainRenderTarget(),ignored->{});
             entrancePhoto=true;
         }
+        if (phase==15 && !galleryPhoto && ticks>=50) {
+            mc.getToasts().clear();
+            Screenshot.grab(mc.gameDirectory,"cherry-arena-gallery.png",mc.getMainRenderTarget(),ignored->{});
+            galleryPhoto=true;
+        }
         if (phase==8) mc.stop();
+    }
+    private static boolean renderedCourt(Minecraft mc) {
+        for (int x = -48; x <= 48; x += 16) for (int z = -48; z <= 48; z += 16) {
+            if (!mc.levelRenderer.isSectionCompiled(new BlockPos(x,CherryArena.FLOOR,z))) return false;
+        }
+        return true;
     }
     private static void check(boolean condition,String why) { if(!condition) throw new AssertionError(why); }
     private static boolean portal(ServerLevel level,BlockPos pos) {return level.getBlockState(pos).getBlock() instanceof CherryPortalBlock;}
@@ -90,13 +102,14 @@ public final class ArenaVerification {
         check(arena!=null,"dimension registered");
         ticks++;
         if (phase==0 && reopen) {
-            check(level==arena && portal(arena,new BlockPos(0,70,19)),"reopened arena");
+            check(level==arena && portal(arena,CherryArena.EXIT),"reopened arena");
             check(arena.getBlockState(CherryArena.MIRROR).is(BuiltInRegistries.BLOCK.get(ResourceLocation.parse("absmod:heart_mirror"))),"mirror");
             p.setPortalCooldown(0);
-            move(p,.5,70,19.5);
+            move(p,.5,70,CherryArena.EXIT.getZ()+.5);
             phase=6; return;
         }
         if (phase==0) {
+            p.server.getPlayerList().setViewDistance(12);
             check(level==p.server.overworld(),"start in overworld");
             p.setGameMode(GameType.SURVIVAL);
             p.server.setDifficulty(net.minecraft.world.Difficulty.NORMAL, true);
@@ -121,7 +134,7 @@ public final class ArenaVerification {
             phase=1;return;
         }
         if (phase==1 && level==arena) {
-            check(portal(level,new BlockPos(-3,73,19)),"exit");
+            check(portal(level,CherryArena.EXIT.offset(-3,3,0)),"exit");
             for(int chunk:new int[]{-22,-5,7,19}) {
                 var sample=level.getChunk(chunk,4);
                 for(var section:sample.getSections()) check(section.hasOnlyAir(),"void-only chunk");
@@ -144,6 +157,10 @@ public final class ArenaVerification {
             var w=(WitherBoss)arena.getEntity(wither); var d=(LivingEntity)arena.getEntity(dragon);
             check(w!=null && d!=null && w.getY()>=70 && w.getY()<=71 && d.getY()>=70 && d.getY()<=71,"grounded flying bosses");
             check(!CherryArena.isBoss(EntityType.CAT.create(arena)),"ordinary cat");
+            w.setNoAi(true);
+            w.moveTo(42,92,.5);
+            CherryArena.contain(w,arena);
+            check(w.getX()>32 && w.getX()<35 && w.getY()==CherryArena.FLOOR,"expanded boss movement area");
             d.discard();
             phase=11;ticks=0;return;
         }
@@ -168,7 +185,19 @@ public final class ArenaVerification {
             var echoes=arena.getEntitiesOfClass(com.abyssredemption.absmod.entity.MirrorEchoEntity.class,
                     new AABB(CherryArena.MIRROR).inflate(10));
             check(echoes.size()==1 && echoes.getFirst().onGround() && p.getHealth()<trialHealth,"grounded mirror sweep deals damage");
-            echoes.getFirst().discard();
+            move(p,22.5,70,.5);
+            phase=16;ticks=0;return;
+        }
+        if (phase==16 && ticks>=6) {
+            var echoes=arena.getEntitiesOfClass(com.abyssredemption.absmod.entity.MirrorEchoEntity.class,
+                    new AABB(CherryArena.MIRROR).inflate(10));
+            check(echoes.size()==1,"mirror trial continues in the extended court");
+            move(p,37.5,70,.5);
+            phase=17;ticks=0;return;
+        }
+        if (phase==17 && ticks>=6) {
+            check(arena.getEntitiesOfClass(com.abyssredemption.absmod.entity.MirrorEchoEntity.class,
+                    new AABB(CherryArena.MIRROR).inflate(10)).isEmpty(),"leaving the court ends the trial");
             System.out.println("ARENA_MIRROR_GROUND_ATTACK_PASS");
             move(p,90,57,60);
             phase=3;ticks=0;return;
@@ -180,12 +209,16 @@ public final class ArenaVerification {
             check(team.isCompleted(file.getQuest(0x71E0E638CC9A8001L)) && team.isCompleted(file.getQuest(0x71E0E638CC9A8002L)),"both arena quests");
             System.out.println("ARENA_PORTAL_VOID_PROTECTION_BOSSES_FTB_PASS");
             p.setGameMode(GameType.SPECTATOR);
-            move(p,30,98,37);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(.5,70.5,-1));
+            move(p,58,146,70);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(.5,69,-1));
             phase=4;ticks=0;return;
         }
-        if (phase==4 && ticks>=65 && photo) {
-            p.setGameMode(GameType.SURVIVAL);move(p,.5,70,13.5);
-            p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(.5,73,-18));
+        if (phase==4 && ticks>=165 && photo) {
+            move(p,31,88,38);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(41,78,-18));
+            phase=15;ticks=0;return;
+        }
+        if (phase==15 && ticks>=65 && galleryPhoto) {
+            p.setGameMode(GameType.SURVIVAL);move(p,.5,70,CherryArena.SPAWN.getZ()+.5);
+            p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(.5,81,-46));
             phase=12;ticks=0;return;
         }
         if (phase==12 && entrancePhoto && ticks>=32) {
@@ -213,7 +246,7 @@ public final class ArenaVerification {
             phase=13; return;
         }
         if (phase==13 && level==arena) {
-            p.setPortalCooldown(0);move(p,.5,70,19.5);
+            p.setPortalCooldown(0);move(p,.5,70,CherryArena.EXIT.getZ()+.5);
             phase=14;return;
         }
         if (phase==14 && level==p.server.overworld()) {

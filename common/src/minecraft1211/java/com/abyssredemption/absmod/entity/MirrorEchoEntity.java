@@ -1,5 +1,6 @@
 package com.abyssredemption.absmod.entity;
 
+import com.abyssredemption.absmod.arena.CherryArena;
 import com.abyssredemption.absmod.block.HeartMirrorBlock;
 import com.abyssredemption.absmod.item.BladeRoute;
 import com.abyssredemption.absmod.spirit.*;
@@ -94,7 +95,11 @@ public final class MirrorEchoEntity extends PathfinderMob {
     }
     private boolean participating(ServerPlayer player) {
         if (!player.isAlive() || player.isSpectator() || player.level() != level() || !player.getUUID().equals(owner)
-                || anchor == null || player.distanceToSqr(Vec3.atCenterOf(anchor)) > 144) return false;
+                || anchor == null) return false;
+        boolean court = level().dimension() == CherryArena.DIMENSION && CherryArena.MIRROR.equals(anchor);
+        var center = court ? new Vec3(.5, CherryArena.FLOOR + .5, .5) : Vec3.atCenterOf(anchor);
+        int radius = court ? CherryArena.FIGHT_RADIUS : 12;
+        if (player.distanceToSqr(center) > radius * radius) return false;
         var ref = player.getMainHandItem().get(BladeSoulComponents.REFERENCE);
         return ref != null && soul.equals(ref.soulId()) && blade(player) != null;
     }

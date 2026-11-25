@@ -10,13 +10,20 @@ Minecraft 1.21.1 NeoForge。CONFIRMED 范围为樱花门、专属虚空维度、
 
 ## 建筑与保护
 
-v16 建筑技能产出的单区域投影为 49×49×17（宽、深、高）。竞技场依照参考研究中的开放比赛区、分层座席和进场视线布置。依次验看骨架六视图、看台、屋面与场地装饰，最后对北亭屋檐补木衬层与阶梯、半砖，并将场心的五瓣拼花改成有缺口的圆瓣。模型包含 12,338 个实心位置。导出器把实际方块与方向逐项写为 1.21.1 原生结构模板。运行时再安装花瓣门和心镜。[可编辑投影](../art/cherry_arena/cherry_arena.litematic) · [游戏内俯视](../art/cherry_arena/cherry-arena-court.png) · [出生台视角](../art/cherry_arena/cherry-arena-entry.png)
+0.10.0 的投影范围为 113×113×38（宽、深、高），实际方块占 109×109×37。战斗半径从 15 格扩大到 34 格，约为原来 5.14 倍面积。场地的双环与五瓣花铺装均与地面齐平，心镜保留在原坐标。竞技场固定镜以场心为试炼范围中心。自建心镜仍以镜为中心，半径 12 格。
+
+沿南门中轴可直达心镜，抬头对准最高的双檐北殿即可辨认方向。看台间有上行阶梯，连接五层看台与屋檐下的回廊。东西两侧分别设鼓台和观景亭，四角设双檐灯楼与樱树。外墙的石墩、绿篱窗和伸出的灯架分段重复。[投影文件](../art/cherry_arena/cherry_arena.litematic) · [实机全景](../art/cherry_arena/grand-court.png) · [南门入场](../art/cherry_arena/grand-entry.png) · [东侧回廊](../art/cherry_arena/grand-gallery.png)
+
+### 已有模组参照
+
+- 《灾变》焰魔竞技场。核对生成器与 `burning_arena1–8.nbt`。上下两层分别高 48 与 34 格，各由四块拼接。借鉴开阔场心、分层围合与远处可辨认的建筑高点，改为浮空白石场、低回廊与高北殿。[原生成器和固定版本](https://github.com/lender544/new1.20.1/blob/819937203e22b4fa72fdeccc6c56ad415d65eeef/src/main/java/com/github/L_Ender/cataclysm/structures/Burning_Arena_Structure.java)
+- 《暮色森林》娜迦庭院。实读 11×8×3 的墙段、5×8×5 的转角、1×6×5 的绿篱和 5×11×5 的端柱（宽、高、深）。取其墙段与较高端柱交替的节奏，把绿篱窗安排在樱木柱廊后方。两项参照均只用于布局研究，发布包使用本项目自行布置的原版方块。[原结构目录和固定版本](https://github.com/TeamTwilight/twilightforest/tree/2bfc2df7d12dae8d3cbe067beeb0c63d1bab1d5e/src/main/resources/data/twilightforest/structure/courtyard)
 
 维度使用无地层、无原版结构的平坦生成器，专用群系的生物与地物列表为空。服务器在每次开档时准备固定场地。场内的玩家拆建、爆炸破坏及通常通过世界或区块写入的方块变化受保护。此保护应用在竞技场维度，允许生物受伤及掉落战利品。
 
 ## 复查和修改建筑
 
-设计源为 tools/arena/design.py。按 frame、envelope、roof、ornament 生成对应输入，在 v16 的 stage_frame 与 stage_refinement_pass 中分别检查六视图和差异，再进行下一阶段。gallery_eaves 和 court_inlay 是两个有边界的局部修整，用 stage_local_repair 作用于上一个已验收的结果。最终投影通过 validate_litematic。用 tools/arena/export_template.py 依次传入技能目录、最终投影和目标 NBT 文件。独立服的 runServer -ParenaServerTest 会按 1.21.1 的注册表逐项校验调色板，并在维度中逐格比对生成结果。
+设计源为 `tools/arena/design.py`。依次生成 frame、envelope、roof、ornament 的输入，在 v16 中检查每阶段的六视图和方块差异，验收后再叠加下一层。用 gate_lintel 修整南门内框。实机首轮看图后，另用 pavilion_screens 补上正殿花纹屏与角楼纸灯窗。eave_caps 将铜脊饰下的半砖换为整瓦，消除可见空隙。三个局部修改均检查作用范围，最后经 validate_litematic 检查。导出器 `tools/arena/export_template.py` 接收技能目录、最终投影和目标 NBT。旧版固定场地包围盒中的空气随模板一起写入，清除旧花门、建筑和树冠。维度 ID、地面高度和心镜位置沿用原值。独立服夹具按注册表逐项核对方块状态与场内结果。
 
 ## 首领识别
 

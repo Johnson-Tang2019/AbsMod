@@ -157,7 +157,7 @@
   "guide.absmod.page.57": "Serving a Cup\n\nA finished drink returns one bucket and shares the daily talk reward. Ring the spirit again to cancel. Leaving, taking the cup or breaking the table interrupts. Guests can take cups.",
   "guide.absmod.page.58": "Nest Diary\n\nBind a nest and leave a path within 16 blocks. Lying down records the place and world tick. Select your cat from the first row of its pedigree. Check its rest history in the bell.",
   "guide.absmod.page.59": "A Cherry Corner\n\nA cushion works as a nest: pink petals over pink wool, cherry slab, pink wool. For a post, center pink wool over string on three cherry slabs. Use the bell on the post beside your selected, awake cat.",
-  "guide.absmod.page.60": "Heart Mirror\n\nCraft with an amethyst block above shard, pink glowing glass, shard, and crying obsidian below. Use your own bound normal VIII blade. Leave two blocks above; keep the blade drawn within 12 blocks.",
+  "guide.absmod.page.60": "Heart Mirror\n\nCraft with an amethyst block above shard, pink glowing glass, shard, and crying obsidian below. Use your own bound normal VIII blade. Leave two blocks above; keep the blade drawn. Stay within 12 blocks of a placed mirror, or 34 of the arena centre.",
   "guide.absmod.page.61": "Final Resonance\n\nDodge the white line and purple landing circle. Attack as the shards open. Retry freely. Victory belongs to that blade. At 250 affection, bring it and 16 amethyst blocks to resonance. Recover the blade under your world’s normal death rules.",
   "guide.absmod.page.6": "Normal stages VII–IX\n\nVII: 140 affection, 16 chorus fruits, 2 shulker shells, 4 diamonds.\nVIII: 190 affection, 1 nether star and 1 heart of the sea.\nIX: 250 affection, 16 amethyst blocks and a victory on this blade. See pp. 60–61.",
   "advancement.absmod.set_tea_table.title": "Set the Table",
@@ -324,5 +324,5 @@
   "advancement.absmod.enter_cherry_arena.title": "Court of Falling Blossoms",
   "advancement.absmod.enter_cherry_arena.description": "Enter the suspended cherry arena.",
   "guide.absmod.page.75": "Cherry portal\n\nBuild an upright cherry-log frame four wide and five high. Leave a 2 by 3 opening; corners are optional. Use a fragrant cherry blossom on top of an inner sill log and walk through.",
-  "guide.absmod.page.76": "Blossom arena\n\nFalling returns you to the south landing. The south gate leads back toward your entry gate. The arena is protected and bosses fight on the floor. The north mirror accepts your own normal stage-eight blade."
+  "guide.absmod.page.76": "Blossom arena\n\nEnter from the south. Your own normal stage-eight blade opens the mirror north of the blossom centre. Bosses fight on the protected floor. Stairs lead to the north hall, east drums and west pavilion. Falls return you to the landing. Leave by the south gate."
 }

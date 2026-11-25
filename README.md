@@ -2,6 +2,8 @@
 
 **Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 76 pages. The optional FTB chapter has 111 quests. [Setup](docs/PORT_1211.md)
 
+**0.10.0 · Grand Court of Falling Blossoms.** The fighting radius grows from 15 to 34 blocks. Five tiers of seats overlook the blossom mosaic. Take the stair aisles to the north hall, the east drum stage or the west lookout. Existing arena worlds upgrade in place. [Arena guide](docs/CHERRY_ARENA.md)
+
 **0.9.0 · Court of Falling Blossoms.** Build a four-wide, five-high cherry-log frame and use a fragrant cherry blossom on its sill. Inside the void arena, bosses fight on the floor, the structure is protected, and falling returns you to the south landing. The south gate takes you back. Guide pages 75–76 explain both journeys.
 
 **0.8.0 · Cherry orchard and hot springs.** Gather fragrant blossoms from vanilla cherry trees and pick the hanging cherries once they turn pale pink. Make honey tea, cherry cordial, blossom dumplings or a cherry tart. Find a spring in a cherry grove or warm a shallow pool at home with a spring stone. Bathing grants Regeneration and Resistance. Soaking with your own manifested spirit for five seconds earns daily affection. See guide pages 69–74.

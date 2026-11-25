@@ -17,11 +17,14 @@ palette = [palette_entry_to_state(x) for x in region["BlockStatePalette"]]
 indices = decode_indices(region["BlockStates"], sx * sy * sz, max(2, math.ceil(math.log2(len(palette)))))
 blocks = []
 for i, material in enumerate(indices):
-    if palette[material] != "minecraft:air":
-        pos = [i % sx, i // (sx * sz), i // sx % sz]
+    pos = [i % sx, i // (sx * sz), i // sx % sz]
+    x, y, z = pos[0] - sx // 2, pos[1], pos[2] - sz // 2
+    # Air in the previous immutable structure removes its stands, trees and old exit on upgrade.
+    legacy_cell = abs(x) <= 24 and abs(z) <= 24 and y <= 16 and (x, y, z) != (0, 6, -8)
+    if palette[material] != "minecraft:air" or legacy_cell:
         blocks.append(n_compound({"pos":n_list(TAG_INT,pos), "state":n_int(material)}))
 output.parent.mkdir(parents=True, exist_ok=True)
 write_nbt_gzip(output, n_compound({"DataVersion":n_int(3955), "size":n_list(TAG_INT,[sx,sy,sz]),
                                  "palette":n_list(TAG_COMPOUND,[palette_entry(x) for x in palette]),
                                  "blocks":n_list(TAG_COMPOUND,blocks), "entities":n_list(TAG_COMPOUND,[])}))
-print(f"{len(blocks)} occupied positions, {len(palette)} palette states, {sx} by {sz} by {sy}")
+print(f"{len(blocks)} template positions (including migration air), {len(palette)} palette states, {sx} by {sz} by {sy}")

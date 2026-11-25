@@ -1,5 +1,9 @@
 # Ab's Mod quest export / 任务导出
 
+## 0.10.0
+
+The arena entry quest now guides players around the enlarged court. 手册第 60、76 页与心镜、竞技场任务同步更新，本章沿用 111 个任务和原有进度。
+
 ## 0.9.0
 
 Two new quests track lighting a cherry portal and entering the arena. 两项任务分别由点亮花门与实际跨维度触发。本章现有 111 项。

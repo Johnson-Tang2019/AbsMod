@@ -24,9 +24,11 @@ import net.minecraft.world.phys.Vec3;
 public final class CherryArena {
     public static final ResourceLocation ID = ResourceLocation.parse("absmod:cherry_arena");
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ID);
-    public static final BlockPos ORIGIN = new BlockPos(-24, 64, -24);
+    public static final BlockPos ORIGIN = new BlockPos(-56, 64, -56);
     public static final int FLOOR = 70;
-    public static final BlockPos SPAWN = new BlockPos(0, FLOOR, 13);
+    public static final BlockPos SPAWN = new BlockPos(0, FLOOR, 38);
+    public static final int FIGHT_RADIUS = 34;
+    public static final BlockPos EXIT = new BlockPos(0, FLOOR, 47);
     public static final BlockPos MIRROR = new BlockPos(0, FLOOR, -8);
     private static final TagKey<EntityType<?>> BOSSES = TagKey.create(Registries.ENTITY_TYPE,
             ResourceLocation.parse("absmod:arena_bosses"));
@@ -59,7 +61,7 @@ public final class CherryArena {
     public static void prepare(ServerLevel level) {
         if (level.dimension() != DIMENSION || READY.containsKey(level)) return;
         var template = level.getStructureManager().get(ID).orElseThrow(() -> new IllegalStateException("Missing " + ID));
-        if (!template.getSize().equals(new net.minecraft.core.Vec3i(49,17,49)))
+        if (!template.getSize().equals(new net.minecraft.core.Vec3i(113, 38, 113)))
             throw new IllegalStateException("Unexpected cherry arena template dimensions");
         PLACING.set(level);
         try {
@@ -70,7 +72,7 @@ public final class CherryArena {
             var portal = BuiltInRegistries.BLOCK.get(CherryPortalBlock.ID).defaultBlockState()
                     .setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X);
             for (int x = -3; x <= 3; x++) for (int y = 0; y < 4; y++)
-                level.setBlock(new BlockPos(x, FLOOR + y, 19), portal, flags);
+                level.setBlock(EXIT.offset(x, y, 0), portal, flags);
             level.setBlock(MIRROR, BuiltInRegistries.BLOCK.get(ResourceLocation.parse("absmod:heart_mirror")).defaultBlockState(), flags);
             if (!level.getBlockState(SPAWN.below()).isFaceSturdy(level, SPAWN.below(), Direction.UP))
                 throw new IllegalStateException("Cherry arena landing is missing");
@@ -96,7 +98,7 @@ public final class CherryArena {
         }
         if (!(entity instanceof LivingEntity boss) || !isBoss(boss) || !boss.isAlive()) return;
         // Keep horizontal attacks and AI. Reserve room for the body of a full-size dragon.
-        double radius = Math.max(1, 15.0 - boss.getBbWidth() / 2);
+        double radius = Math.max(1, FIGHT_RADIUS - boss.getBbWidth() / 2);
         double dx = boss.getX() - .5, dz = boss.getZ() - .5;
         double scale = Math.min(1, radius / Math.max(.001, Math.hypot(dx, dz)));
         double x = .5 + dx * scale, z = .5 + dz * scale;

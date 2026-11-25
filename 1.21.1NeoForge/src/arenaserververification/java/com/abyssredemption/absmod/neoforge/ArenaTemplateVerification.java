@@ -44,6 +44,14 @@ public final class ArenaTemplateVerification {
                 BlockPos pos = CherryArena.ORIGIN.offset(xyz.getInt(0),xyz.getInt(1),xyz.getInt(2));
                 check(level.getBlockState(pos) == palette.get(cell.getInt("state")),"world mismatch at "+pos);
             }
+            check(level.isEmptyBlock(new BlockPos(0,70,19)) && level.isEmptyBlock(new BlockPos(0,80,-18)), "obsolete exit and roof removed");
+            for (int x = -34; x <= 34; x++) for (int z = -34; z <= 34; z++) {
+                if (x*x + z*z > 34*34) continue;
+                var pos = new BlockPos(x, CherryArena.FLOOR, z);
+                check(!level.isEmptyBlock(pos.below()), "gap in fighting floor " + pos);
+                if (!pos.equals(CherryArena.MIRROR)) check(level.isEmptyBlock(pos), "obstructed floor " + pos);
+                check(level.isEmptyBlock(pos.above()), "missing headroom " + pos);
+            }
             check(!level.destroyBlock(CherryArena.MIRROR,true),"protected mirror");
             check(level.getChunk(15,15).getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,0,0)<0,"void");
             System.out.println("ARENA_DEDICATED_TEMPLATE_PASS cells="+blocks.size()+" palette="+palette.size());
