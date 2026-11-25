@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " F ",
+    "CHC",
+    " C "
+  ],
+  "key": {
+    "F": {
+      "item": "absmod:fragrant_cherry_blossom"
+    },
+    "C": {
+      "item": "minecraft:calcite"
+    },
+    "H": {
+      "item": "minecraft:campfire"
+    }
+  },
+  "result": {
+    "id": "absmod:blossom_spring_stone"
+  }
+}

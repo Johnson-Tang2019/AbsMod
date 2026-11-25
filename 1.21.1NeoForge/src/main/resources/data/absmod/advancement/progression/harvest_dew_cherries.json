@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:dew_cherries"
+    },
+    "title": {
+      "translate": "advancement.absmod.harvest_dew_cherries.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.harvest_dew_cherries.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

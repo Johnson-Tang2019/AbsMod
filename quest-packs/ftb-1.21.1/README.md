@@ -1,5 +1,7 @@
 # Ab's Mod quest export / 任务导出
 
+0.8.0 adds eight orchard, kitchen and bathing quests to the existing chapter (109 total). 新增采花、亲手采果、四道食谱、泡温泉及主人剑灵共浴，保留原章节和既有任务 ID。
+
 0.7.0 在相同章节末尾追加 35 项樱花弓、权杖与提灯任务，共 101 项。弓杖分四条线按前置逐阶展开；入门武器与提灯可直接开始。实际配方与操作见[职业路线](../../docs/BLOSSOM_PATHS.md)。
 
 ## 0.5.0 · Cherry interiors / 樱花家居

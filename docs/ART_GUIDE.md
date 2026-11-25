@@ -1,5 +1,9 @@
 # Ab's Mod 美术与生图执行指南
 
+## 樱花果园与花泉
+
+六件物品以独立的 64×64 透明贴图入包，蜜茶为淡花瓣粉，果饮为玫瑰粉，露樱桃与果挞顶果为浅樱粉。垂枝模型由两根果梗和垂果构成，花蕾、青果、转色、粉熟四期可凭轮廓和颜色分辨。泉石采用方解石、粉陶边与釉面泉眼，热水表面有蒸汽。[料理图集](../art/cherry_orchard/orchard-kitchen.png) · [游戏中六件物品与四期果枝](../art/cherry_orchard/orchard-pink-kitchen.png)
+
 ## 1.21.1 · 樱花弓与权杖
 
 CONFIRMED。弓、杖采用樱枝、花蕾、五瓣花和枝冠。普通线从浅木与粉白花蕾长成繁樱，暗樱线用紫黑枝条、深红花瓣和日蚀花冠。每阶 64×64 独立 RGBA 贴图，17 把弓各有三段拉弦姿态。四线共 34 张静态图与 51 张动作图。提灯为挂环和樱花灯纸围成的立体灯罩，使用既有材质。[全阶段](../art/blossom_vocations/weapon-stages.png) · [拉弓](../art/blossom_vocations/bow-draw.png) · [实机](../art/blossom_vocations/in-game-weapons.png)

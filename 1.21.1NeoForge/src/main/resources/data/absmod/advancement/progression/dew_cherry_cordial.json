@@ -1,0 +1,28 @@
+{
+  "parent": "absmod:progression/harvest_dew_cherries",
+  "display": {
+    "icon": {
+      "id": "absmod:dew_cherry_cordial"
+    },
+    "title": {
+      "translate": "advancement.absmod.dew_cherry_cordial.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.dew_cherry_cordial.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:dew_cherry_cordial"
+          }
+        ]
+      }
+    }
+  }
+}

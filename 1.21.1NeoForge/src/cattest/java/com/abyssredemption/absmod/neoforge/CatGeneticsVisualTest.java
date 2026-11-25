@@ -79,7 +79,7 @@ public final class CatGeneticsVisualTest {
                 if(advancement==null || !p.getAdvancements().getOrStartProgress(advancement).isDone())throw new IllegalStateException("Missing goal "+goal);
             }
             var file=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;var chapter=file.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-            if(chapter==null || chapter.getQuests().size()!= 60)throw new IllegalStateException("FTB chapter count");
+            if(chapter==null || chapter.getQuests().size()!= 109)throw new IllegalStateException("FTB chapter count");
             var data=file.getTeamData(p).orElseThrow();long completed=chapter.getQuests().stream().filter(data::isCompleted).count();
             if(completed<8)throw new IllegalStateException("FTB goals incomplete: "+completed);data.saveIfChanged();
             com.mojang.logging.LogUtils.getLogger().info("CAT_FTB_PASS quests=60 completed={}",completed);

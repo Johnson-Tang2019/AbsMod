@@ -1,5 +1,15 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-25 · 1.21.1 樱花果园、料理与温泉 0.8.0
+
+- ORCHARD。CherryLeafFruitingMixin 与 HangingCherriesBlock 让原版樱花叶在合适的位置挂果。额外掉花由 NeoForge 掉落修饰器处理。天然果枝和用香樱花种下的果枝共用四期生长与右键采收，采后可再长。成熟露樱桃的方块表面与物品取自同一套浅粉贴图。
+- KITCHEN。CherryOrchard、BlossomDrinkItem 与四份料理配方加入淡粉蜜茶、玫瑰粉果饮、樱花团子和春樱果挞。游戏客户端从实际加载的六种物品模型取图，并绘制四个年龄对应的方块模型。[游戏内配色与果期](../art/cherry_orchard/orchard-pink-kitchen.png)
+- SPRING。BlossomSpringFeature 生成樱花树林浅泉，BlossomSpringBlock 支持家用樱泉石。入浴获得生命恢复 I、抗性提升 I。BladeSpiritEntity、BladeAffection 和 BladeGrowthStore 按剑魂及主世界日历记录连续同泡奖励。旧记录缺少共浴字段时从未领取开始。首版时长、掉率与好感数值见[果园规格](CHERRY_ORCHARD.md)。
+- GUIDE。观察手册第 69–74 页、原版进度和 1.21.1 FTB 章节同步。原有 101 项任务保留，新加 8 项，涵盖采花、采果、制作四种料理、入浴及与自己的剑灵同泡。
+- 中文客户端实测。0.7.0 世界副本在集成服升级，归档中的 35 个文件共 11,074,576 字节，与启动前原件逐项相同。OrchardVerification 通过真实掉落表、配方管理器、方块及物品交互验证掉花与树苗共存，剪刀、精准采集和放置叶除外，挂果、骨粉、采后再生、食用与返瓶均通过。测试直接推进随机刻。检查了干岸、断开的对角水、离水中断、连续同泡、两项状态和八个新增 FTB 任务的完成记录。另起游戏进程读回未熟果枝及共浴记录，同日重泡不重复领取，次日可再得 1 点。证据为 orchard-accepted、orchard-pink-reopen、orchard-pink。
+- 天然生成实测。SpringGenerationVerification 启动 NeoForge 独立服，在种子 20261125 的普通主世界检查到樱花树林天然樱泉石（-2591，110，3114）及完整九格水源；客户端打开该服世界副本拍摄池面、蒸汽与花岸。此批尚未统计多种子的密度和自然等待采收时长。[自然温泉实景](../art/cherry_orchard/natural-blossom-spring.png)
+- 交付。原工坊客户端回归通过（ROSE_WORKSHOP_CLIENT_PASS、ROSE_ALLOY_CLIENT_PASS）。根项目和活动子项目正式构建通过，发布包已验 CRC、资源清单和测试类排除。已安装至指定 PCL 1.21.1 实例，JAR 及两份 FTB 配置的副本哈希均已回读确认。JAR 的 SHA-256 为 9d0e4108273cd8c7c8e07e146ee953ff674172636c87f142663d182fe732ac2d，旧 JAR 和任务配置位于该实例 absmod-backups/20261125-191633。本轮 Minecraft 运行验收使用独立开发实例。
+
 ## 2026-11-23 · 1.21.1 樱花职业、随身提灯与存档升级 0.7.0
 
 - SAVE-UPGRADE。WorldUpgradeMixin 在同一份已上锁的世界首次读模组数据、原版恢复或首次写入元数据前保护原档。WorldUpgradeBackup 完整归档包括两个 level.dat、维度、区域、玩家、模组数据与 FTB 队伍，并逐项回读校验。WorldUpgrade 在取得注册表后校验旧剑魂、交接、成长和猫咪账本，再原子写入格式／发行版本。CatLifeStore 会保留不可读原件并拒绝重复索引。旧记录无需重建或重新绑定。

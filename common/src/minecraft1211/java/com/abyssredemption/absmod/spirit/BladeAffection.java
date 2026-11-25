@@ -52,7 +52,7 @@ public final class BladeAffection {
         if(d.follow()>=DAILY_FOLLOW_LIMIT)return;
         int walking=d.walking()+10;int earned=walking>=6000?1:0;
         if(earned>0)award(owner,spirit.soulId(),earned);
-        store.put(new BladeGrowthStore.Day(d.soul(),d.day(),walking%6000,d.follow()+earned,d.hits(),d.combat(),d.talked(),d.gifted(),d.targets()));
+        store.put(new BladeGrowthStore.Day(d.soul(),d.day(),walking%6000,d.follow()+earned,d.hits(),d.combat(),d.talked(),d.gifted(),d.targets(), d.bathed()));
     }
     public static InteractionResult interact(ServerPlayer owner,BladeSpiritEntity spirit,InteractionHand hand) {
         try { return interactUnchecked(owner,spirit,hand); }
@@ -71,7 +71,7 @@ public final class BladeAffection {
         }
         double earned = award(owner,spirit.soulId(),gift?2:1);
         if(gift && !owner.hasInfiniteMaterials())owner.getItemInHand(hand).shrink(1);
-        store.put(new BladeGrowthStore.Day(d.soul(),d.day(),d.walking(),d.follow(),d.hits(),d.combat(),d.talked()||!gift,d.gifted()||gift,d.targets()));
+        store.put(new BladeGrowthStore.Day(d.soul(),d.day(),d.walking(),d.follow(),d.hits(),d.combat(),d.talked()||!gift,d.gifted()||gift,d.targets(), d.bathed()));
         if (gift) SpiritKeepsake.receiveGift(owner, spirit);
         if (owner.connection != null) {
             var message = earned > 0
@@ -89,11 +89,27 @@ public final class BladeAffection {
             if (d.talked()) return;
             award(owner, spirit.soulId(), 1);
             store.put(new BladeGrowthStore.Day(d.soul(), d.day(), d.walking(), d.follow(), d.hits(),
-                    d.combat(), true, d.gifted(), d.targets()));
+                    d.combat(), true, d.gifted(), d.targets(), d.bathed()));
         } catch (IllegalStateException unavailable) {
             reportUnavailable(unavailable);
         }
     }
+    public static void bathe(ServerPlayer owner, BladeSpiritEntity spirit) {
+        try {
+            var store = BladeGrowthStore.get(owner.server);
+            var d = store.day(spirit.soulId(), day(owner));
+            if (d.bathed()) return;
+            double gained = award(owner, spirit.soulId(), 1);
+            store.put(new BladeGrowthStore.Day(d.soul(), d.day(), d.walking(), d.follow(), d.hits(),
+                    d.combat(), d.talked(), d.gifted(), d.targets(), true));
+            BladeAdvancements.award(owner, "spirit_bath");
+            owner.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                    gained > 0 ? "spring.absmod.shared" : "resonance.absmod.affection_at_cap"), true);
+        } catch (IllegalStateException unavailable) {
+            reportUnavailable(unavailable);
+        }
+    }
+
     public static void hit(ServerPlayer owner,Entity target) {
         try { hitUnchecked(owner,target); }
         catch(IllegalStateException error) { reportUnavailable(error); }
@@ -110,7 +126,7 @@ public final class BladeAffection {
         var targets=new ArrayList<>(d.targets());targets.add(target.getUUID());
         int hits=d.hits()+1,earned=hits>=10?1:0;
         if(earned>0)award(owner,ref.soulId(),earned);
-        store.put(new BladeGrowthStore.Day(d.soul(),d.day(),d.walking(),d.follow(),hits%10,d.combat()+earned,d.talked(),d.gifted(),List.copyOf(targets)));
+        store.put(new BladeGrowthStore.Day(d.soul(),d.day(),d.walking(),d.follow(),hits%10,d.combat()+earned,d.talked(),d.gifted(),List.copyOf(targets), d.bathed()));
     }
     private static final Set<String> REPORTED=new HashSet<>();
     private static void reportUnavailable(IllegalStateException error) {

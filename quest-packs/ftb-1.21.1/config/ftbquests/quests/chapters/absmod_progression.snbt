@@ -2282,6 +2282,175 @@
         }
       ],
       "rewards": []
+    },
+    {
+      "id": "4CCA65CFC041C1DB",
+      "title": "枝间寻香",
+      "description": [
+        "在樱花树上取得香樱花。",
+        "香樱花\n\n自然生长的原版樱花树掉叶或徒手打叶，有八分之一机会掉一朵香樱花。剪刀、精准采集或玩家放的叶子不会掉花。花可做料理，也能对准樱花树叶底面种下垂枝樱桃。"
+      ],
+      "x": 0,
+      "y": 28,
+      "tasks": [
+        {
+          "id": "4AF141DBF63DA9C7",
+          "type": "advancement",
+          "advancement": "absmod:progression/fragrant_cherry_blossom",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "4826AA0A572418C6",
+      "title": "粉熟的枝头",
+      "description": [
+        "空手右键亲自采下一串成熟的露樱桃。",
+        "枝头采樱\n\n原版樱花树的部分叶底在亮度达到 9、下方有空位时自然结花。花蕾、青果、转色、粉熟四期。空手右键浅粉熟果收 2–3 颗露樱桃，留枝再生。骨粉一次促长一期。"
+      ],
+      "x": 0,
+      "y": 30,
+      "tasks": [
+        {
+          "id": "47AF8DDDCC12507F",
+          "type": "advancement",
+          "advancement": "absmod:progression/harvest_dew_cherries",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "4D1BB9AD0FF872C1",
+      "title": "樱花蜜茶",
+      "description": [
+        "在工作台调制樱花蜜茶。",
+        "花与果饮\n\n樱花蜜茶：香樱花、蜂蜜瓶、空玻璃瓶各一。蜂蜜的瓶子在合成时返还，喝完茶再得一个空瓶。露樱桃果饮：两颗露樱桃、一份糖和一个空瓶。两款都可在饱腹时饮用。"
+      ],
+      "x": 2,
+      "y": 26,
+      "tasks": [
+        {
+          "id": "474E335DC2D51C11",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_tea",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "4CCA65CFC041C1DB"
+      ]
+    },
+    {
+      "id": "4417FF41885006BC",
+      "title": "把春天装进瓶里",
+      "description": [
+        "调制露樱桃果饮。",
+        "花与果饮\n\n樱花蜜茶：香樱花、蜂蜜瓶、空玻璃瓶各一。蜂蜜的瓶子在合成时返还，喝完茶再得一个空瓶。露樱桃果饮：两颗露樱桃、一份糖和一个空瓶。两款都可在饱腹时饮用。"
+      ],
+      "x": 2,
+      "y": 32,
+      "tasks": [
+        {
+          "id": "483D22D7AD62F916",
+          "type": "advancement",
+          "advancement": "absmod:progression/dew_cherry_cordial",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "4826AA0A572418C6"
+      ]
+    },
+    {
+      "id": "4B862CE9293E047F",
+      "title": "花见团子",
+      "description": [
+        "把花和小麦做成一串樱花团子。",
+        "春日点心\n\n樱花团子：香樱花、小麦、糖、木棍各一。春樱果挞：露樱桃、香樱花、小麦、鸡蛋、糖各一。两款均为工作台无序合成。"
+      ],
+      "x": 2,
+      "y": 28,
+      "tasks": [
+        {
+          "id": "4E196AD93B54146B",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_dumplings",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "4CCA65CFC041C1DB"
+      ]
+    },
+    {
+      "id": "4AB30C381479BA4D",
+      "title": "春樱果挞",
+      "description": [
+        "用果实与花做一份春樱果挞。",
+        "春日点心\n\n樱花团子：香樱花、小麦、糖、木棍各一。春樱果挞：露樱桃、香樱花、小麦、鸡蛋、糖各一。两款均为工作台无序合成。"
+      ],
+      "x": 2,
+      "y": 30,
+      "tasks": [
+        {
+          "id": "489B26C4EA1367B2",
+          "type": "advancement",
+          "advancement": "absmod:progression/cherry_tart",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "4826AA0A572418C6"
+      ]
+    },
+    {
+      "id": "4EC12E877A6B9481",
+      "title": "春泉初浴",
+      "description": [
+        "在樱泉石温暖的水源中泡澡。",
+        "筑一池樱泉\n\n樱花树林的平缓空地偶有温泉。自建时，工作台上排中放香樱花，中排放方解石、营火、方解石，下排中放方解石。用樱泉石作池底，在它上面铺一层 3×3 相通的静水源。"
+      ],
+      "x": 0,
+      "y": 34,
+      "tasks": [
+        {
+          "id": "4EF1F46E453A04C0",
+          "type": "advancement",
+          "advancement": "absmod:progression/blossom_bath",
+          "criterion": ""
+        }
+      ],
+      "rewards": []
+    },
+    {
+      "id": "4565BF284D5262AF",
+      "title": "花泉相伴",
+      "description": [
+        "让自己的剑灵与你连续同浴五秒。",
+        "与剑灵同浴\n\n进入泉石上方这片静水，可获得生命恢复 I 和抗性提升 I。先显现自己的剑灵，带它走进同一片泉水，连续同泡 5 秒，好感 +1。每魂每个主世界日一次，与交流、茶会额度分开。",
+        "显现与跟随：主手持实体喵刀，潜行对空气使用。带剑灵走进浅池后，在同一块泉石周围停留。"
+      ],
+      "x": 2,
+      "y": 34,
+      "tasks": [
+        {
+          "id": "42096E181CFBCBFF",
+          "type": "advancement",
+          "advancement": "absmod:progression/spirit_bath",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "4EC12E877A6B9481",
+        "C0A7C3C1C2EE40FF"
+      ]
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "materials": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "absmod:dew_cherries"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:dew_cherry_cordial",
+      "absmod:cherry_tart"
+    ]
+  }
+}

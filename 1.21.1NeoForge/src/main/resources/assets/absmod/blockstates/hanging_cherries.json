@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "absmod:block/hanging_cherries_0"
+    },
+    "age=1": {
+      "model": "absmod:block/hanging_cherries_1"
+    },
+    "age=2": {
+      "model": "absmod:block/hanging_cherries_2"
+    },
+    "age=3": {
+      "model": "absmod:block/hanging_cherries_3"
+    }
+  }
+}

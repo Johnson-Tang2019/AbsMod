@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "materials": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "absmod:fragrant_cherry_blossom"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "absmod:blossom_tea",
+      "absmod:blossom_dumplings",
+      "absmod:cherry_tart",
+      "absmod:blossom_spring_stone"
+    ]
+  }
+}

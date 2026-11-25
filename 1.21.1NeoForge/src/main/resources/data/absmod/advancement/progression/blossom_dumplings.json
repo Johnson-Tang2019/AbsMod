@@ -1,0 +1,28 @@
+{
+  "parent": "absmod:progression/fragrant_cherry_blossom",
+  "display": {
+    "icon": {
+      "id": "absmod:blossom_dumplings"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_dumplings.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_dumplings.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:blossom_dumplings"
+          }
+        ]
+      }
+    }
+  }
+}

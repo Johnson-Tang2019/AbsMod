@@ -1,6 +1,8 @@
 # Ab's Mod
 
-**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 68 pages. The optional FTB chapter has 101 quests. [Setup](docs/PORT_1211.md)
+**Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 74 pages. The optional FTB chapter has 109 quests. [Setup](docs/PORT_1211.md)
+
+**0.8.0 · Cherry orchard and hot springs.** Gather fragrant blossoms from vanilla cherry trees and pick the hanging cherries once they turn pale pink. Make honey tea, cherry cordial, blossom dumplings or a cherry tart. Find a spring in a cherry grove or warm a shallow pool at home with a spring stone. Bathing grants Regeneration and Resistance. Soaking with your own manifested spirit for five seconds earns daily affection. See guide pages 69–74.
 
 **0.7.0 · Blossom paths and a travelling lantern.** Equip a bow or staff to play either ranged profession. Each has nine blossom tiers and eight dark tiers with individual sprites. Carry the lantern in your offhand or on a Curios belt for moving light. Opening an existing world on a new release automatically backs up the entire world. Guide pages 62–68 cover recipes, controls and restoration. [Progression table](docs/BLOSSOM_PATHS.md) · [In-game weapon sheet](art/blossom_vocations/in-game-weapons.png)
 

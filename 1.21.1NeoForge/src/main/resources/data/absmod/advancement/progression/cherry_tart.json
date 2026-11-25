@@ -1,0 +1,28 @@
+{
+  "parent": "absmod:progression/harvest_dew_cherries",
+  "display": {
+    "icon": {
+      "id": "absmod:cherry_tart"
+    },
+    "title": {
+      "translate": "advancement.absmod.cherry_tart.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.cherry_tart.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:cherry_tart"
+          }
+        ]
+      }
+    }
+  }
+}

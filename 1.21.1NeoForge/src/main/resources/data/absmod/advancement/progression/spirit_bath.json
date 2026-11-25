@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/blossom_bath",
+  "display": {
+    "icon": {
+      "id": "absmod:bond_bell"
+    },
+    "title": {
+      "translate": "advancement.absmod.spirit_bath.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.spirit_bath.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

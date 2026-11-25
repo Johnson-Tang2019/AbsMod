@@ -79,7 +79,7 @@ public final class WayVerification {
                         0x0CE33A72B13EAAD6L, 0x19EF437F13F31165L, 0x4ACE82CA4A3C572BL}) {
                     require(team.isCompleted(ftb.getQuest(quest)), "retained FTB progress");
                 }
-                require(ftb.getChapter(0x1C4E810187B7DDC2L).getQuests().size() == 101, "101 FTB entries");
+                require(ftb.getChapter(0x1C4E810187B7DDC2L).getQuests().size() == 109, "109 FTB entries");
                 if (readback) {
                     for (String name : items) require(team.isCompleted(ftb.getQuest(questId(name))), "saved quest " + name);
                     checkCache(player, false);

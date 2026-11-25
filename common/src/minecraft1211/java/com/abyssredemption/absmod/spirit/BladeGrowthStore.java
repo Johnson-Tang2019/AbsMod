@@ -11,9 +11,9 @@ import java.util.*;
 
 /** Persistent per-soul daily budgets; relogging never resets earned rewards. */
 public final class BladeGrowthStore extends SavedData {
-    public record Day(UUID soul,long day,int walking,int follow,int hits,int combat,boolean talked,boolean gifted,List<UUID> targets) {
+    public record Day(UUID soul,long day,int walking,int follow,int hits,int combat,boolean talked,boolean gifted,List<UUID> targets, boolean bathed) {
         static Day empty(UUID soul, long day) {
-            return new Day(soul, day, 0, 0, 0, 0, false, false, List.of());
+            return new Day(soul, day, 0, 0, 0, 0, false, false, List.of(), false);
         }
 
         static final Codec<Day> CODEC=RecordCodecBuilder.create(i->i.group(
@@ -21,7 +21,8 @@ public final class BladeGrowthStore extends SavedData {
             Codec.INT.fieldOf("walking").forGetter(Day::walking),Codec.INT.fieldOf("follow").forGetter(Day::follow),
             Codec.INT.fieldOf("hits").forGetter(Day::hits),Codec.INT.fieldOf("combat").forGetter(Day::combat),
             Codec.BOOL.fieldOf("talked").forGetter(Day::talked),Codec.BOOL.fieldOf("gifted").forGetter(Day::gifted),
-            UUIDUtil.CODEC.listOf().fieldOf("targets").forGetter(Day::targets)).apply(i,Day::new));
+            UUIDUtil.CODEC.listOf().fieldOf("targets").forGetter(Day::targets),
+            Codec.BOOL.optionalFieldOf("bathed", false).forGetter(Day::bathed)).apply(i,Day::new));
     }
     private final Map<UUID,Day> days=new HashMap<>();
     private static final Codec<BladeGrowthStore> RECORDS=Day.CODEC.listOf().fieldOf("days").codec().flatXmap(list->{
@@ -67,7 +68,7 @@ public final class BladeGrowthStore extends SavedData {
     }
     public Day day(UUID soul,long now) {
         var previous=days.get(soul);
-        return previous==null || now>previous.day?new Day(soul,now,0,0,0,0,false,false,List.of()):previous;
+        return previous==null || now>previous.day?Day.empty(soul, now):previous;
     }
     public void put(Day day){days.put(day.soul,day);setDirty();}
 }

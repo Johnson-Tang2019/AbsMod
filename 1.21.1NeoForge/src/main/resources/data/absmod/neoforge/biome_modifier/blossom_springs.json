@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "minecraft:cherry_grove",
+  "features": "absmod:blossom_spring",
+  "step": "vegetal_decoration"
+}

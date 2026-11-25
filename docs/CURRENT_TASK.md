@@ -1,5 +1,9 @@
 # 下一批开发任务单
 
+## 1.21.1 · 果园、料理与花泉
+
+ORCHARD、KITCHEN、SPRING、GUIDE 覆盖原版樱花树掉花、挂果再生、两款饮品、两款点心与主人剑灵共浴。手册第 69–74 页、FTB 八个新任务。验收记录见 [STATUS](STATUS.md)。
+
 ## 1.21.1 · 樱花三职业与旧档升级
 
 SAVE-UPGRADE、BLOSSOM-WEAPONS、LIGHT-LANTERN、GUIDE 已接入 0.7.0。普通九阶、暗樱八阶共 34 件弓杖，手册第 62–68 页和 35 项新任务已接入。玩法与兼容边界见 [职业路线](BLOSSOM_PATHS.md)，实测见 [STATUS](STATUS.md)。

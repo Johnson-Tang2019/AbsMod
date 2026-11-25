@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/root",
+  "display": {
+    "icon": {
+      "id": "absmod:blossom_spring_stone"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_bath.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_bath.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

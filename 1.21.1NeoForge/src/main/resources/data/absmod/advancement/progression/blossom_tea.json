@@ -1,0 +1,28 @@
+{
+  "parent": "absmod:progression/fragrant_cherry_blossom",
+  "display": {
+    "icon": {
+      "id": "absmod:blossom_tea"
+    },
+    "title": {
+      "translate": "advancement.absmod.blossom_tea.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.blossom_tea.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "absmod:blossom_tea"
+          }
+        ]
+      }
+    }
+  }
+}

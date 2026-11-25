@@ -1,6 +1,7 @@
 package com.abyssredemption.absmod.entity;
 
 import com.abyssredemption.absmod.spirit.BladeAffection;
+import com.abyssredemption.absmod.block.BlossomSpringBlock;
 import com.abyssredemption.absmod.spirit.BladeSoulStore;
 import com.abyssredemption.absmod.spirit.SpiritTransformationService;
 import java.util.UUID;
@@ -44,6 +45,10 @@ public final class BladeSpiritEntity extends PathfinderMob {
     private static final int CATCH_UP_DISTANCE = 24;
     private Vec3 lastGrowthPosition;
     private GlobalPos lastRecordedLocation;
+
+    private BlockPos bathingSpring;
+    private int bathingPlayerId;
+    private int bathingTicks;
 
     private int groomingEnd;
     private int groomingVisualTicks;
@@ -154,6 +159,7 @@ public final class BladeSpiritEntity extends PathfinderMob {
             }
         }
         rememberLocation(level);
+        tickSpringBath(level);
         if (tea.tick(this, level)) return;
         if (tickCount % FOLLOW_INTERVAL != 0 || isNoAi()) { return; }
 
@@ -177,6 +183,28 @@ public final class BladeSpiritEntity extends PathfinderMob {
         } else if (distance > 9) {
             getNavigation().moveTo(player, 1.0);
         }
+    }
+
+    private void tickSpringBath(ServerLevel level) {
+        var water = BlossomSpringBlock.waterAt(this);
+        if (water != null && ownerId != null && level.getPlayerByUUID(ownerId) instanceof ServerPlayer owner) {
+            var ownerWater = BlossomSpringBlock.waterAt(owner);
+            var center = ownerWater == null ? null : BlossomSpringBlock.springFor(level, water, ownerWater);
+            if (center != null) {
+                if (!center.equals(bathingSpring) || bathingPlayerId != owner.getId()) {
+                    bathingSpring = center;
+                    bathingPlayerId = owner.getId();
+                    bathingTicks = 0;
+                }
+                if (++bathingTicks == 100) {
+                    bathingTicks = 0;
+                    if (active()) BladeAffection.bathe(owner, this);
+                }
+                return;
+            }
+        }
+        bathingTicks = 0;
+        bathingSpring = null;
     }
 
     private void rememberLocation(ServerLevel level) {
