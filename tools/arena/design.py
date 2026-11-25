@@ -1,4 +1,4 @@
-"""Generate editable v16 stages for the 1.21.1 Court of Falling Blossoms."""
+"""Build the circular Blossom Arena as four editable v16 architectural stages."""
 import json
 import math
 import sys
@@ -7,330 +7,257 @@ from pathlib import Path
 OUT = Path("build/arena-design")
 HALF = 56
 SIZE = {"x": 113, "y": 38, "z": 113}
-BASE = "polished_deepslate"
-WOOD = "dark_oak_planks"
-CHERRY = "cherry_planks"
-POST = "stripped_cherry_log[axis=y]"
 WHITE = "smooth_quartz"
-TILE = "deepslate_tiles"
-LEAF = "cherry_leaves[distance=1,persistent=true,waterlogged=false]"
-LAMP = "lantern[hanging=true,waterlogged=false]"
-operations = []
+SHELL = "white_concrete"
+SILVER = "polished_diorite"
+ROSE = "pink_concrete"
+GLASS = "light_blue_stained_glass"
+LIGHT = "pearlescent_froglight[axis=y]"
+SLAB = "smooth_quartz_slab[type=bottom,waterlogged=false]"
+STAGES = ("envelope", "roof", "ornament")
+cells = {}
 
 
-def fill(x, y, z, u, v, w, block):
-    low = [min(x, u) + HALF, min(y, v), min(z, w) + HALF]
-    high = [max(x, u) + HALF, max(y, v), max(z, w) + HALF]
-    if any(a < 0 or b >= SIZE[k] for a, b, k in zip(low, high, "xyz")):
-        raise ValueError((low, high))
-    operations.append({"op": "fill", "from": low, "to": high, "block": "minecraft:" + block})
+def put(x, y, z, block):
+    if not (-HALF <= x <= HALF and -HALF <= z <= HALF and 0 <= y < SIZE["y"]):
+        raise ValueError((x, y, z))
+    cells[x, y, z] = block
 
 
-def dot(x, y, z, block):
-    fill(x, y, z, x, y, z, block)
+def pillar(x, z, low, high, block):
+    for y in range(low, high + 1):
+        put(x, y, z, block)
 
 
-def side(which, along, depth):
-    return [(along, -depth), (depth, along), (-along, depth), (-depth, -along)][which]
+def polar_cells(inner, outer):
+    """Yield block centres within a concentric band; angle zero is the south gate."""
+    reach = math.floor(outer)
+    for z in range(-reach, reach + 1):
+        for x in range(-reach, reach + 1):
+            r = math.hypot(x, z)
+            if inner <= r <= outer:
+                yield x, z, r, math.atan2(x, z)
 
 
-def bay(which, a, y, d, b, top, end, block):
-    x, z = side(which, a, d)
-    u, w = side(which, b, end)
-    fill(x, y, z, u, top, w, block)
+def radial_gap(r, angle, count, offset=0):
+    """Perpendicular distance to the nearest spoke for aisles, fins and glazing bars."""
+    return r * abs(math.sin(math.remainder(angle - offset, math.tau / count)))
 
 
-def stairs(direction, wood="cherry"):
-    return f"{wood}_stairs[facing={direction},half=bottom,shape=straight,waterlogged=false]"
+MAST_OFFSET = math.pi / 16
 
 
-# Entries specify the centre, half-spans, platform height and main eave height.
-# The side stages have distinct silhouettes: an elongated east music hall and a west belvedere.
-HALLS = [(0, -46, 14, 6, 10, 20), (0, 47, 9, 5, 5, 17),
-         (47, 0, 5, 12, 10, 18), (-47, 0, 5, 7, 10, 19)]
-TOWERS = [(x, z, 5, 5, 10, 18) for x in (-44, 44) for z in (-44, 44)]
-
-
-def posts(x, z, a, b, deck, eave):
-    for dx in {-a + 2, a - 2}:
-        for dz in {-b + 2, b - 2}:
-            px, pz = x + dx, z + dz
-            fill(px-1, deck, pz-1, px+1, deck+1, pz+1, "quartz_bricks")
-            fill(px, deck+2, pz, px, eave-2, pz, POST)
-            fill(px-1, eave-2, pz, px+1, eave-2, pz, WOOD)
-            fill(px, eave-2, pz-1, px, eave-2, pz+1, WOOD)
-    for dz in (-b+2, b-2):
-        fill(x-a, eave-1, z+dz, x+a, eave-1, z+dz, WOOD)
-    for dx in (-a+2, a-2):
-        fill(x+dx, eave-1, z-b, x+dx, eave-1, z+b, WOOD)
+def roof_height(radius, angle):
+    # One inclined roof ribbon, rising towards its outer edge and the two entries.
+    return 17 + round((radius - 41) * .4 + 2.5 * math.cos(2 * angle))
 
 
 def frame():
-    for y, r, material in [(0,47,BASE),(1,49,"tuff_bricks"),(2,51,BASE),
-                           (3,53,"polished_tuff"),(4,54,"chiseled_tuff_bricks"),(5,54,WHITE)]:
-        for z in range(-r, r+1):
-            span = min(r, 2*r-10-abs(z))
-            fill(-span, y, z, span, y, z, material)
-    for x,z,a,b,deck,eave in HALLS + TOWERS:
-        if deck > 5:
-            fill(x-a,6,z-b,x+a,deck-1,z+b,"tuff_bricks")
-            fill(x-a,deck,z-b,x+a,deck,z+b,CHERRY)
-        posts(x,z,a,b,deck,eave)
-    # A second, narrower open storey carries the high northern roof.
-    posts(0,-46,9,4,23,30)
-    for which in range(4):
-        for sign in (-1,1):
-            for a in (18,25,32,39):
-                for d in (46,50):
-                    bay(which, sign*a,6,d,sign*a,14,d,POST)
-                bay(which,sign*a,14,45,sign*a,14,51,WOOD)
-            for d in (46,50):
-                bay(which,sign*16,14,d,sign*39,14,d,WOOD)
+    for y, radius, block in [(0,45,SILVER),(1,49,"quartz_bricks"),(2,52,SHELL),
+                             (3,54,WHITE),(4,55,"white_terracotta"),(5,55,WHITE)]:
+        for x,z,_,_ in polar_cells(0,radius):
+            put(x,y,z,block)
+    # Outer masts and their continuous radial beams expose the cantilever load path.
+    for x,z,r,a in polar_cells(41,54.5):
+        gap = radial_gap(r,a,16,MAST_OFFSET)
+        if gap <= .85:
+            y = roof_height(r,a)
+            if r >= 51 and gap <= .70:
+                pillar(x,z,6,y-1,SHELL)
+            pillar(x,z,y-1,y,WHITE)
+    for sign in (-1,1):
+        for z in range(45,50):
+            pillar(sign*5,z,6,12,WHITE)
+        for x in range(0,6):
+            put(sign*x,12,47,SHELL)
 
 
 def envelope():
-    for which in range(4):
-        facing = ("north","east","south","west")[which]
-        # Five accessible tiers. Radial stair aisles also reach the continuous raised promenade.
-        for tier in range(5):
-            d = 35+2*tier
-            for sign in (-1,1):
-                for a,b in ((5,17),(21,33)):
-                    bay(which,sign*a,6,d,sign*b,6+tier,d+1,
-                        "stripped_cherry_wood[axis="+("x" if which%2==0 else "z")+"]" if tier%2 else CHERRY)
-                bay(which,sign*18,6+tier,d,sign*20,6+tier,d,stairs(facing))
-                bay(which,sign*18,6,d+1,sign*20,6+tier,d+1,CHERRY)
-            # North/east/west approaches rise to the pavilion decks; south stays at portal level.
-            if which != 2:
-                bay(which,-4,6+tier,d,4,6+tier,d,stairs(facing))
-                bay(which,-4,6,d+1,4,6+tier,d+1,WHITE)
-        for sign in (-1,1):
-            start = 10 if which == 2 else 5
-            bay(which,sign*start,6,45,sign*44,9,51,"tuff_bricks")
-            bay(which,sign*start,10,45,sign*44,10,51,"smooth_quartz")
-            # Alternating masonry panels, open windows, and hedge beds behind the gallery.
-            for a in (17,24,31,38):
-                bay(which,sign*a,6,52,sign*(a+6),10,52,"stone_bricks")
-                bay(which,sign*a,11,52,sign*(a+6),11,52,"quartz_bricks")
-                bay(which,sign*a,11,52,sign*a,16,52,"polished_tuff")
-                bay(which,sign*(a+1),12,52,sign*(a+5),12,52,LEAF)
-                bay(which,sign*(a+2),13,52,sign*(a+4),13,52,LEAF)
-                bay(which,sign*a,16,51,sign*a,16,53,BASE)
-                bay(which,sign*a,2,53,sign*a,5,53,BASE)
-        for a in (-32,-25,-18,18,25,32):
-            bay(which,a,13,45,a,13,46,"stripped_dark_oak_wood[axis=y]")
-    # Keep the southern approach walkable at floor level between the two wings.
-    for sign in (-1,1):
-        fill(sign*8,6,48,sign*12,8,51,"quartz_bricks")
-        fill(sign*6,14,46,sign*9,15,48,CHERRY)
-    fill(-11,16,47,11,16,47,"dark_oak_planks")
-    fill(-9,13,47,9,13,47,CHERRY)
-    for x,z,a,b,deck,eave in TOWERS:
-        fill(x-3,21,z-3,x+3,21,z+3,CHERRY)
-        posts(x,z,4,4,21,26)
-    for dx in (-11,-6,6,11):
-        fill(dx,11,-42,dx,18,-42,POST)
-    fill(-9,23,-50,9,23,-42,CHERRY)
-    # Gold screen and timber back wall, visible through the open columns.
-    for x in range(-12,13):
-        fill(x,11,-50,x,18,-50,POST if x%4==0 else "white_terracotta")
-        if x%4:
-            dot(x,15,-50,"pink_terracotta")
-    for x in (-47,47):
-        for z in (-4,4):
-            fill(x,11,z,x,14,z,WOOD)
-            fill(x,15,z-1,x,15,z+1,CHERRY)
+    for x,z,r,a in polar_cells(34.5,55):
+        tunnel = z > 0 and abs(x) <= 4
+        if r < 35.5:
+            if not tunnel:
+                put(x,5,z,"white_terracotta")
+        elif r < 47.5:
+            d = math.floor(r-35.5)
+            top = 6+d//2
+            if tunnel:
+                continue
+            aisle = radial_gap(r,a,8) <= 1.45
+            pillar(x,z,6,top-1,"quartz_bricks")
+            if aisle:
+                put(x,top,z,SLAB if d%2 == 0 else WHITE)
+            else:
+                # Wrap pale and deeper pink seating in alternating sections of four rows.
+                section = math.floor((a+math.pi/8)/(math.pi/4)) % 2
+                seat = ("pink_terracotta" if section else "pink_concrete") if d//2 in (1,4) else "white_terracotta"
+                put(x,top,z,seat if d%2 else "quartz_bricks")
+        elif r < 54.6:
+            put(x,11,z,WHITE)
+            if r >= 53 and not tunnel:
+                put(x,6,z,SHELL)
+                pillar(x,z,7,10,GLASS)
+                put(x,12,z,"white_stained_glass")
+    # The northern box follows the curve of the concourse. Its two ends open onto the ring.
+    for x,z,r,a in polar_cells(47.8,53.5):
+        if z >= 0 or abs(x)>14:
+            continue
+        if r < 49 or r > 52.3:
+            panel = SHELL if abs(x)%6 == 2 else GLASS
+            pillar(x,z,12,14,panel)
+        put(x,15,z,SLAB)
+    # Glazed perimeter alternates with leaning uprights, following the circular plinth.
+    for y in range(6,13):
+        for x,z,r,a in polar_cells(53,55):
+            if z>0 and abs(x)<6:
+                continue
+            if radial_gap(r,a+(y-6)*.012,32,MAST_OFFSET) < .72:
+                put(x,y,z,SHELL)
 
 
-def hip(x,z,a,b,lip):
-    # Curled corners rise above the central eave. A contrasting soffit lies below each tile course.
-    for dz in range(-b,b+1):
-        run = None
-        for dx in range(-a,a+2):
-            state = None
-            if dx <= a:
-                inset = min(a-abs(dx), b-abs(dz))
-                tip = max(0, 3-(a-abs(dx))-(b-abs(dz)))
-                height = lip + (inset+1)//2 + (tip+1)//2
-                slab = inset%2 == 0
-                material = "deepslate_tile_slab[type=bottom,waterlogged=false]" if slab else TILE
-                if inset == min(a,b): material = "oxidized_cut_copper"
-                state = (height,material)
-            if state == run: continue
-            if run is not None:
-                y,mat = run
-                fill(x+start,y-1,z+dz,x+dx-1,y-1,z+dz,WOOD)
-                fill(x+start,y,z+dz,x+dx-1,y,z+dz,mat)
-            run, start = state, dx
-    for dx in (-a,a):
-        for dz in (-b,b):
-            dot(x+dx,lip+3,z+dz,"lightning_rod[facing=up,powered=false,waterlogged=false]")
-
-
-def roofs():
-    for x,z,a,b,deck,eave in HALLS + TOWERS:
-        hip(x,z,a+2,b+2,eave)
-    hip(0,-46,11,6,30)
-    for x,z,*_ in TOWERS:
-        hip(x,z,5,5,26)
-        dot(x,30,z,"chiseled_quartz_block")
-        dot(x,31,z,"lightning_rod[facing=up,powered=false,waterlogged=false]")
-    for sign in (-1,1):
-        hip(sign*28,-48,13,4,15)
-        hip(sign*28,48,13,4,15)
-        hip(-48,sign*28,4,13,15)
-        hip(48,sign*28,4,13,15)
-    # Tall finials emphasize the ridge of the principal hall, not every facade.
-    for x in (-5,5):
-        fill(x,34,-46,x,35,-46,"waxed_cut_copper")
-        dot(x,36,-46,"lightning_rod[facing=up,powered=false,waterlogged=false]")
-
-
-def orchard(x,z,flip):
-    fill(x,6,z,x,12,z,"cherry_log[axis=y]")
-    for dx,dz,height,r in [(-3*flip,-1,13,3),(3*flip,1,14,3),(flip,0,16,3)]:
-        fill(x,11,z,x+dx,11,z,"cherry_log[axis=x]")
-        fill(x+dx,11,z,x+dx,height,z+dz,"cherry_log[axis=y]")
-        for dy in (-1,0,1):
-            width = r - abs(dy)
-            for k in range(-width,width+1):
-                span = width - max(0,abs(k)-1)
-                fill(x+dx-span,height+dy,z+dz+k,x+dx+span,height+dy,z+dz+k,LEAF)
+def roof():
+    for x,z,r,a in polar_cells(40.5,55.5):
+        # Narrow open joints separate the roof into panels. The ribs span each joint.
+        joint = radial_gap(r,a,16,MAST_OFFSET)
+        if .85 < joint < 1.50:
+            continue
+        y = roof_height(r,a)
+        rib = joint <= .85
+        if 47.5 < r < 50.8 and not rib:
+            put(x,y,z,"white_stained_glass")
+        else:
+            put(x,y,z,WHITE if rib or r < 42 else SHELL)
+            if r < 42 or r > 54:
+                put(x,y-1,z,"white_terracotta")
+        if rib and r >= 51:
+            put(x,y+1,z,SLAB)
 
 
 def ornament():
-    # Merge horizontal runs so the large, flush inlay remains cheap to regenerate.
-    for z in range(-35,36):
-        run = None
-        for x in range(-35,37):
-            r = math.hypot(x,z)
-            mat = None
-            if x <= 35 and r <= 35:
-                if abs(r-33)<.65 or abs(r-21)<.52:
-                    mat = "pink_terracotta" if min(abs(x),abs(z))>1 else "pearlescent_froglight[axis=y]"
-                elif 20<r<33 and min(abs(x),abs(z))==1:
-                    mat = "white_terracotta"
-                for i in range(5):
-                    angle = i*2*math.pi/5-math.pi/2
-                    along = x*math.cos(angle)+z*math.sin(angle)
-                    cross = abs(-x*math.sin(angle)+z*math.cos(angle))
-                    ellipse = ((along-9.5)/8.5)**2+(cross/5.4)**2
-                    if ellipse<=1 and not (along>15.1 and cross<(along-15.1)*.53):
-                        mat = "pink_concrete" if ellipse>.73 else ("pink_wool" if cross>1 else "white_terracotta")
-                if r<3: mat = "pearlescent_froglight[axis=y]" if r<1.5 else "honeycomb_block"
-            if run == mat: continue
-            if run: fill(start,5,z,x-1,5,z,run)
-            run,start = mat,x
-    for which in range(4):
-        for sign in (-1,1):
-            for a in (18,25,32,39):
-                bay(which,sign*a,12,45,sign*a,12,45,LAMP)
-            for a in (12,28):
-                bay(which,sign*a,5,33,sign*a,5,33,"pearlescent_froglight[axis=y]")
-    for x in (-35,35):
-        for z in (-35,35):
-            orchard(x,z,1 if x*z>0 else -1)
-    for x,z,a,b,deck,eave in HALLS + TOWERS:
-        for dx in (-a+2,a-2):
-            for dz in (-b+2,b-2):
-                outward = 1 if dz>0 else -1
-                dot(x+dx,eave-3,z+dz+outward,LAMP)
-    # Drum pair on the east music platform and a lit alcove on the west.
-    for z in (-6,6):
-        fill(48,11,z-1,48,11,z+1,WOOD)
-        fill(48,12,z-1,49,13,z+1,"stripped_mangrove_wood[axis=x]")
-        fill(47,12,z-1,47,13,z+1,"stripped_birch_log[axis=x]")
-    fill(-49,11,-2,-49,12,2,"quartz_bricks")
-    for z in (-2,0,2):
-        dot(-49,13,z,"ochre_froglight[axis=y]")
-    for x in (-5,5):
-        fill(x,12,46,x,13,46,WOOD)
-        dot(x,11,46,LAMP)
+    # Two horizontal light bands articulate the floating base and gallery soffit.
+    for x,z,r,a in polar_cells(53.6,55):
+        put(x,4,z,LIGHT if radial_gap(r,a,32) < 1 else "pink_terracotta")
+        if r <= 54.5 and not (z > 0 and abs(x)<6):
+            put(x,10,z,LIGHT if radial_gap(r,a,32) < 1.1 else WHITE)
+    for x,z,r,a in polar_cells(40.5,55):
+        rib = radial_gap(r,a,16,MAST_OFFSET)
+        if rib <= .80 and 41.3 < r < 46.5:
+            put(x,roof_height(r,a)-2,z,LIGHT)
+        if 46.5 < r < 47.5 and radial_gap(r,a,8)<1 and not (z>0 and abs(x)<=4):
+            put(x,11,z,WHITE)
+    # Recessed glass and two light pylons mark the portal without crossing its 7x4 opening.
+    for sign in (-1,1):
+        for z in range(42,51):
+            pillar(sign*6,z,6,9,"pink_stained_glass" if z%4 else WHITE)
+        for x in range(4,8):
+            put(sign*x,10,47,WHITE)
+        pillar(sign*4,47,6,9,LIGHT)
+        pillar(sign*5,46,6,10,"pink_terracotta")
+        pillar(sign*5,48,6,10,SHELL)
+    for x in range(-4,5):
+        put(x,10,47,WHITE)
+        put(x,11,46,LIGHT)
+    # Frosted-glass balcony rails flank the press box. Leave four openings for circulation.
+    for x,z,r,a in polar_cells(47.4,48.45):
+        if z < 0 and 16<=abs(x)<=23:
+            put(x,12,z,"pink_stained_glass")
 
 
-def save(name, data):
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / (name+".json")).write_text(json.dumps(data,indent=2),encoding="utf-8")
+def seat_banks():
+    # Short banks of seats have backs facing away from the court. Leave each radial aisle clear.
+    for x,z,r,a in polar_cells(35.5,47.49):
+        d = math.floor(r-35.5)
+        if d%2 == 0 or radial_gap(r,a,8) < 2.3 or (z>0 and abs(x)<6):
+            continue
+        if radial_gap(r,a,48) < .65:
+            continue
+        direction = ("east" if x>0 else "west") if abs(x)>abs(z) else ("south" if z>0 else "north")
+        material = "cherry" if d//2 in (1,2,4) else "smooth_quartz"
+        put(x,7+d//2,z,f"{material}_stairs[facing={direction},half=bottom,shape=straight,waterlogged=false]")
+    # Half-height outer and inner lips break up the stepped profile of the inclined canopy.
+    for x,z,r,a in polar_cells(40.5,55.5):
+        if radial_gap(r,a,16,MAST_OFFSET)<1.5 or not (r<42 or r>=54):
+            continue
+        put(x,roof_height(r,a),z,SLAB)
+
+
+def rose_finish():
+    # Use the already-approved block shapes so changes to the palette never fill an aisle or roof joint.
+    for layer in (frame,envelope,roof,ornament,seat_banks):
+        layer()
+    architecture = cells.copy()
+    cells.clear()
+    for (x,y,z),material in architecture.items():
+        r = math.hypot(x,z)
+        a = math.atan2(x,z)
+        finish = material
+        if y==5 and r<34.5:
+            finish = "cherry_planks"
+        elif y>=14 and r>=40.5:
+            if material=="white_stained_glass":
+                finish = "pink_stained_glass"
+            elif material==SHELL and r>=42 and radial_gap(r,a,16,MAST_OFFSET)>1.5:
+                finish = ROSE
+            elif material=="white_terracotta":
+                finish = "pink_concrete"
+            elif material==SLAB and r>=54:
+                finish = "cherry_slab[type=bottom,waterlogged=false]"
+        elif 35.5<=r<47.5 and y>=6:
+            if material=="white_terracotta": finish = "pink_wool"
+            elif material.startswith("smooth_quartz_stairs") and math.floor(r-35.5)//2!=0:
+                finish = material.replace("smooth_quartz","cherry")
+        elif r>=47.5 and y>=6 and material==GLASS:
+            finish = "pink_stained_glass"
+        if material != finish:
+            put(x,y,z,finish)
+
+
+def operations():
+    # Encode contiguous block runs so the stage files stay readable and compact.
+    result = []
+    for (x,y,z), material in sorted(cells.items(),key=lambda pair:(pair[0][1],pair[0][2],pair[0][0])):
+        pos = [x+HALF,y,z+HALF]
+        if result and result[-1]["block"] == "minecraft:"+material and result[-1]["to"] == [pos[0]-1,y,pos[2]]:
+            result[-1]["to"] = pos
+        else:
+            result.append({"op":"fill","from":pos,"to":pos,"block":"minecraft:"+material})
+    return result
+
+
+def save(name,value):
+    OUT.mkdir(parents=True,exist_ok=True)
+    (OUT/(name+".json")).write_text(json.dumps(value,indent=2),encoding="utf-8")
 
 
 if __name__ == "__main__":
     stage = sys.argv[1]
-    passes = {"envelope":envelope, "roof":roofs, "ornament":ornament}
+    {"frame":frame,"envelope":envelope,"roof":roof,"ornament":ornament,"seat_banks":seat_banks,"rose_finish":rose_finish}[stage]()
     if stage == "frame":
-        frame()
-        brief = {"name":"Grand Court of Falling Blossoms","source_mode":"text","dimensions":SIZE,
-                 "front_direction":"south","hard_constraints":["One floating arena","Open combat radius 34","Ground level 70"],
+        brief = {"name":"Blossom Forum","source_mode":"text","dimensions":SIZE,"front_direction":"south",
+                 "hard_constraints":["Circular massing including plinth, seating and roof","Plain level floor of radius 34","Light roof surfaces","Portal and mirror coordinates preserved"],
                  "must_preserve":[{"feature":f,"priority":5,"evidence":e} for f,e in [
-                     ("Open court and vertically layered enclosing buildings","Cataclysm Burning Arena eight measured NBT modules"),
-                     ("Alternating enclosure bays, raised end piers and hedge beds","Twilight Forest Naga Courtyard wall and hedge modules"),
-                     ("South gate opposite high north hall","Existing Ab's Mod portal arrival axis")]],
-                 "massing":{"floor_count":2,"description":"A chamfered plinth carries a ring of towers and stepped halls",
-                            "major_volumes":["court","north hall","gate","east music hall","west belvedere","corner towers"],"symmetry":"bilateral_x"},
-                 "roof":{"system":"hipped tile roofs with raised corners","ridge_axis":"x","tiers":2,"pitch":"moderate","overhang":2,"silhouette_notes":"north ridge dominates"},
-                 "facade_rhythm":{"primary_bays":4,"vertical_layers":3,"repeating_modules":["open timber colonnade","hedge and stone piers"],"notes":"roofed promenade behind terraces"},
-                 "program":{"require_interior":False,"spaces":["combat floor","grandstands","promenade","halls"],"circulation":"South approach and paired stair aisles rise to the promenades"},
-                 "palette_roles":{"foundation":"minecraft:tuff_bricks","floor":"minecraft:smooth_quartz","structure":"minecraft:cherry_planks","roof":"minecraft:deepslate_tiles"},
-                 "uncertainties":["The two references inform layout and rhythm. All block arrangements and dimensions are original."]}
+                     ("Unobstructed central fighting floor","Existing server radius and original mirror position"),
+                     ("Circular stepped bowl with radial aisles","Arena sightline studies and requested circular silhouette"),
+                     ("Pale cantilever canopy with an open centre","Requested contemporary style and light roof")]],
+                 "massing":{"floor_count":2,"description":"Low floating circular stadium with a raised northern press box",
+                            "major_volumes":["arena bowl","south entry tunnel","outer concourse","north viewing box"],"symmetry":"bilateral_x"},
+                 "roof":{"system":"inclined annular cantilever ribbon","ridge_axis":"x","tiers":1,"pitch":"shallow","overhang":11,"silhouette_notes":"a wave crest at the north and south"},
+                 "facade_rhythm":{"primary_bays":16,"vertical_layers":3,"repeating_modules":["radial cantilever","leaning facade fin"],"notes":"continuous pale fascia"},
+                 "program":{"require_interior":False,"spaces":["plain field","stands","glazed concourse"],"circulation":"South tunnel to open floor, stair aisles to promenade"},
+                 "palette_roles":{"floor":"minecraft:smooth_quartz","structure":"minecraft:white_concrete","roof":"minecraft:smooth_quartz","glazing":"minecraft:white_stained_glass"},
+                 "uncertainties":["Material choices and roof profile are design decisions."]}
         save("brief",brief)
         save(stage,{"name":brief["name"],"dimensions":SIZE,"stage":stage,"strict_block_states":True,
-                    "workflow":{"mode":"staged","refinement_passes":list(passes)},
-                    "quality":{"require_interior":False,"require_roof_detail":True,"front_direction":"south"},"operations":operations})
-    elif stage == "gate_lintel":
-        for x in (-4,4):
-            fill(x,6,47,x,10,47,POST)
-            dot(x,6,47,"chiseled_quartz_block")
-            fill(x,11,46,x,11,48,WOOD)
-        fill(-5,10,47,5,10,47,WOOD)
-        fill(-6,11,47,6,11,47,CHERRY)
-        for x in (-6,6):
-            dot(x,12,47,"deepslate_tile_slab[type=bottom,waterlogged=false]")
-            dot(x,10,47,LAMP)
-        save(stage,{"mode":"local_repair","name":"Frame the seven-wide return portal beneath the gatehouse",
-                    "scope":{"from":[50,6,102],"to":[62,12,104]},"operations":operations})
-    elif stage == "pavilion_screens":
-        # A full-height blossom crest and layered sill give the north hall a readable front.
-        fill(-11,11,-49,11,11,-49,"quartz_bricks")
-        for tx in (-9,-5,5,9):
-            fill(tx,12,-49,tx,17,-49,POST)
-            for height in (13,16):
-                fill(tx-1,height,-49,tx+1,height,-49,WOOD)
-        crest = ("..P.P..",".PP.PP.","PPPLPPP",".PLGLP.","..PLP..",".PP.PP.","..P.P..")
-        fill(-4,11,-49,4,19,-49,"white_terracotta")
-        for row,pattern in enumerate(crest):
-            for col,cell in enumerate(pattern):
-                if cell != ".":
-                    dot(col-3,18-row,-48,{"P":"pink_concrete","L":"pearlescent_froglight[axis=y]","G":"gold_block"}[cell])
-        for x in (-5,5):
-            fill(x,12,-48,x,18,-48,"stripped_dark_oak_log[axis=y]")
-            fill(x,18,-40,x,19,-40,"dark_oak_planks")
-            dot(x,17,-40,LAMP)
-        # Lit paper screens have timber mullions. The outer galleries and stairs stay open.
-        for x,z,a,b,deck,eave in [(0,-46,7,2,23,30)]+[(x,z,2,2,21,26) for x,z,*_ in TOWERS]:
-            for dx in range(-a,a+1):
-                for dz in range(-b,b+1):
-                    if abs(dx)!=a and abs(dz)!=b: continue
-                    mullion = abs(dx)==a and abs(dz)==b or (a>2 and abs(dz)==b and dx%3==0)
-                    fill(x+dx,deck+1,z+dz,x+dx,eave-2,z+dz, POST if mullion else "pearlescent_froglight[axis=y]")
-                    dot(x+dx,eave-3,z+dz,WOOD if mullion else "white_terracotta")
-        save(stage,{"mode":"local_repair","name":"Articulate lantern chambers and the north hall blossom screen",
-                    "scope":{"from":[10,11,6],"to":[102,28,102]},"operations":operations})
-    elif stage == "eave_caps":
-        # A bottom slab leaves half a block of visible air under each vertical finial.
-        roofs_to_cap = [(x,z,a+2,b+2,eave) for x,z,a,b,_,eave in HALLS + TOWERS]
-        roofs_to_cap += [(0,-46,11,6,30)] + [(x,z,5,5,26) for x,z,*_ in TOWERS]
-        for sign in (-1,1):
-            roofs_to_cap += [(sign*28,-48,13,4,15),(sign*28,48,13,4,15),
-                             (-48,sign*28,4,13,15),(48,sign*28,4,13,15)]
-        for x,z,a,b,lip in roofs_to_cap:
-            for dx in (-a,a):
-                for dz in (-b,b):
-                    dot(x+dx,lip+2,z+dz,TILE)
-        save(stage,{"mode":"local_repair","name":"Seat copper finials on solid tile caps",
-                    "scope":{"from":[2,17,2],"to":[110,32,110]},"operations":operations})
+                    "workflow":{"mode":"staged","refinement_passes":list(STAGES)},
+                    "quality":{"require_interior":False,"require_roof_detail":True,"front_direction":"south"},"operations":operations()})
+    elif stage == "rose_finish":
+        save(stage,{"mode":"local_repair","name":"Finish the court, roof panels and seating in cherry and rose",
+                    "scope":{"from":[1,5,1],"to":[111,26,111]},"operations":operations()})
+    elif stage == "seat_banks":
+        save(stage,{"mode":"local_repair","name":"Shape the seat backs and thin the canopy edges",
+                    "scope":{"from":[1,7,1],"to":[111,26,111]},"operations":operations()})
     else:
-        passes[stage]()
-        save(stage,{"mode":"refinement_pass","name":stage,"category":stage,
-                    "intent":[{"envelope":"Five tiers, stair aisles, gallery piers and planted walls",
-                               "roof":"Eight main pavilions and connecting eaves frame an unroofed combat floor",
-                               "ornament":"Flush blossom inlay, lantern bays, corner cherry groves and independent east and west stages"}[stage]],
-                    "operations":operations})
+        intents = {"envelope":"Circular seating, accessible stair aisles and glazed facade",
+                   "roof":"Continuous pale canopy panels, rooflights and exposed radial ribs",
+                   "ornament":"Integral lights and portal trim around a uniform unmarked field"}
+        save(stage,{"mode":"refinement_pass","name":stage,"category":stage,"intent":[intents[stage]],"operations":operations()})

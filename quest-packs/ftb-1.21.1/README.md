@@ -1,5 +1,9 @@
 # Ab's Mod quest export / 任务导出
 
+## 0.11.0
+
+The arena entry quest follows the new south tunnel, plain cherry court and ring walk. 入场引导改为南侧通道、浅樱粉圆场与环形步道，保留原任务 ID 和前置。
+
 ## 0.10.0
 
 The arena entry quest now guides players around the enlarged court. 手册第 60、76 页与心镜、竞技场任务同步更新，本章沿用 111 个任务和原有进度。

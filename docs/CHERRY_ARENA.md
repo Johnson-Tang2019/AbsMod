@@ -10,20 +10,17 @@ Minecraft 1.21.1 NeoForge。CONFIRMED 范围为樱花门、专属虚空维度、
 
 ## 建筑与保护
 
-0.10.0 的投影范围为 113×113×38（宽、深、高），实际方块占 109×109×37。战斗半径从 15 格扩大到 34 格，约为原来 5.14 倍面积。场地的双环与五瓣花铺装均与地面齐平，心镜保留在原坐标。竞技场固定镜以场心为试炼范围中心。自建心镜仍以镜为中心，半径 12 格。
+0.11.0 采用直径约 111 格的圆形浮台。六层看台沿战斗区外缘排布，阶梯过道连接到环形步道，北侧设玻璃观赛席。场顶为放射状樱粉悬挑雨棚，白色承重肋之间夹着粉色玻璃采光带。浅樱木、樱粉座席与白色通道形成色差，外圈有连续灯带。中央半径 34 格的圆场统一铺浅樱木运动地板。从南门穿过通道，沿中轴北行即可抵达原位心镜。竞技场固定镜以场心为试炼范围中心，自建心镜以镜为中心、半径 12 格。
 
-沿南门中轴可直达心镜，抬头对准最高的双檐北殿即可辨认方向。看台间有上行阶梯，连接五层看台与屋檐下的回廊。东西两侧分别设鼓台和观景亭，四角设双檐灯楼与樱树。外墙的石墩、绿篱窗和伸出的灯架分段重复。[投影文件](../art/cherry_arena/cherry_arena.litematic) · [实机全景](../art/cherry_arena/grand-court.png) · [南门入场](../art/cherry_arena/grand-entry.png) · [东侧回廊](../art/cherry_arena/grand-gallery.png)
+[可编辑投影](../art/cherry_arena/cherry_arena.litematic) · [游戏内全景](../art/cherry_arena/round-court.png) · [正上方俯视](../art/cherry_arena/round-plan.png) · [入场视角](../art/cherry_arena/round-entry.png) · [看台和雨棚近景](../art/cherry_arena/round-stands.png)
 
-### 已有模组参照
-
-- 《灾变》焰魔竞技场。核对生成器与 `burning_arena1–8.nbt`。上下两层分别高 48 与 34 格，各由四块拼接。借鉴开阔场心、分层围合与远处可辨认的建筑高点，改为浮空白石场、低回廊与高北殿。[原生成器和固定版本](https://github.com/lender544/new1.20.1/blob/819937203e22b4fa72fdeccc6c56ad415d65eeef/src/main/java/com/github/L_Ender/cataclysm/structures/Burning_Arena_Structure.java)
-- 《暮色森林》娜迦庭院。实读 11×8×3 的墙段、5×8×5 的转角、1×6×5 的绿篱和 5×11×5 的端柱（宽、高、深）。取其墙段与较高端柱交替的节奏，把绿篱窗安排在樱木柱廊后方。两项参照均只用于布局研究，发布包使用本项目自行布置的原版方块。[原结构目录和固定版本](https://github.com/TeamTwilight/twilightforest/tree/2bfc2df7d12dae8d3cbe067beeb0c63d1bab1d5e/src/main/resources/data/twilightforest/structure/courtyard)
+0.10.0 曾借鉴《灾变》焰魔竞技场的层次及《暮色森林》娜迦庭院的分段围墙。旧版建筑投影用于计算原址更新时应清除的方块。[《灾变》原生成器](https://github.com/lender544/new1.20.1/blob/819937203e22b4fa72fdeccc6c56ad415d65eeef/src/main/java/com/github/L_Ender/cataclysm/structures/Burning_Arena_Structure.java) · [《暮色森林》原庭院结构](https://github.com/TeamTwilight/twilightforest/tree/2bfc2df7d12dae8d3cbe067beeb0c63d1bab1d5e/src/main/resources/data/twilightforest/structure/courtyard) · [上版投影](../art/cherry_arena/grand-court-0.10.litematic) · [旧版全景](../art/cherry_arena/grand-court.png)
 
 维度使用无地层、无原版结构的平坦生成器，专用群系的生物与地物列表为空。服务器在每次开档时准备固定场地。场内的玩家拆建、爆炸破坏及通常通过世界或区块写入的方块变化受保护。此保护应用在竞技场维度，允许生物受伤及掉落战利品。
 
 ## 复查和修改建筑
 
-设计源为 `tools/arena/design.py`。依次生成 frame、envelope、roof、ornament 的输入，在 v16 中检查每阶段的六视图和方块差异，验收后再叠加下一层。用 gate_lintel 修整南门内框。实机首轮看图后，另用 pavilion_screens 补上正殿花纹屏与角楼纸灯窗。eave_caps 将铜脊饰下的半砖换为整瓦，消除可见空隙。三个局部修改均检查作用范围，最后经 validate_litematic 检查。导出器 `tools/arena/export_template.py` 接收技能目录、最终投影和目标 NBT。旧版固定场地包围盒中的空气随模板一起写入，清除旧花门、建筑和树冠。维度 ID、地面高度和心镜位置沿用原值。独立服夹具按注册表逐项核对方块状态与场内结果。
+设计源为 `tools/arena/design.py`。依次生成 frame、envelope、roof、ornament，在 v16 中分别检查六视图和方块差异。用 seat_banks 修整分段椅背及内外棚沿厚度，再用 rose_finish 给整个场馆做粉色饰面。导出器 `tools/arena/export_template.py` 接收技能目录、最终投影和目标 NBT，将 0.9.0 的原场地范围、0.10.0 的实际建筑位置与新投影一起处理。圆场外的旧角楼、树木和屋顶以空气原址替换。服务器在原坐标设置心镜和南门，按新场馆重算覆盖区块的天空光照，并将更新后的区段发送给玩家。
 
 ## 首领识别
 

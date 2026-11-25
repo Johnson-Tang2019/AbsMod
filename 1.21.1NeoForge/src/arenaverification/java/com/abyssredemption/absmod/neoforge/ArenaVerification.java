@@ -30,7 +30,7 @@ public final class ArenaVerification {
     private final String world=System.getProperty("absmod.arenaWorld");
     private final boolean reopen=Boolean.getBoolean("absmod.arenaReopen");
     private static final BlockPos BASE=new BlockPos(52,105,54);
-    private boolean started, photo, entrancePhoto, galleryPhoto;
+    private boolean started, photo, entrancePhoto, galleryPhoto, planPhoto;
     private float trialHealth;
     private int frames, phase, ticks, openingTicks;
     private UUID wither, dragon;
@@ -66,7 +66,22 @@ public final class ArenaVerification {
         check(frames<1400,"timeout in phase "+phase);
         var server=mc.getSingleplayerServer();
         server.submit(()->step(server.getPlayerList().getPlayers().getFirst())).join();
-        if (phase==4 && !photo && ticks>=150 && renderedCourt(mc)) {
+        // Keep input from nudging the test camera during chunk streaming and screenshot capture.
+        if (phase==4 || phase==18 || phase==15 || phase==12) {
+            Vec3 subject = switch (phase) {
+                case 4 -> new Vec3(.5,73,.5);
+                case 18 -> new Vec3(.5,69,.5);
+                case 15 -> new Vec3(45,78,-5);
+                default -> new Vec3(.5,81,-46);
+            };
+            mc.player.lookAt(EntityAnchorArgument.Anchor.EYES,subject);
+        }
+        if ((phase==4 || phase==18) && ticks==20) mc.levelRenderer.allChanged();
+        if (phase==18 && !planPhoto && ticks>=140 && renderedCourt(mc)) {
+            Screenshot.grab(mc.gameDirectory,"cherry-arena-plan.png",mc.getMainRenderTarget(),ignored->{});
+            planPhoto=true;
+        }
+        if (phase==4 && !photo && ticks>=170 && renderedCourt(mc)) {
             mc.getToasts().clear();
             Screenshot.grab(mc.gameDirectory,"cherry-arena-court.png",mc.getMainRenderTarget(),ignored->{});
             photo=true;
@@ -84,8 +99,19 @@ public final class ArenaVerification {
         if (phase==8) mc.stop();
     }
     private static boolean renderedCourt(Minecraft mc) {
-        for (int x = -48; x <= 48; x += 16) for (int z = -48; z <= 48; z += 16) {
-            if (!mc.levelRenderer.isSectionCompiled(new BlockPos(x,CherryArena.FLOOR,z))) return false;
+        if (!mc.levelRenderer.hasRenderedAllSections()) return false;
+        for (int x=-48; x<=48; x+=8) for (int z=-48; z<=48; z+=8) {
+            if (x*x+z*z>54*54) continue;
+            var floor=new BlockPos(x,CherryArena.FLOOR-1,z);
+            if (mc.level.isEmptyBlock(floor) || !mc.levelRenderer.isSectionCompiled(floor)) return false;
+        }
+        var sample=new BlockPos.MutableBlockPos();
+        int radius=CherryArena.FIGHT_RADIUS;
+        for (int x=-radius; x<=radius; x++) for (int z=-radius; z<=radius; z++) {
+            if (x*x+z*z>radius*radius) continue;
+            sample.set(x,CherryArena.FLOOR,z);
+            if (sample.equals(CherryArena.MIRROR)) sample.move(Direction.UP);
+            if (mc.level.getBrightness(LightLayer.SKY,sample)<15) return false;
         }
         return true;
     }
@@ -208,12 +234,27 @@ public final class ArenaVerification {
             check(file.getChapter(0x1C4E810187B7DDC2L).getQuests().size()==111,"quest count");
             check(team.isCompleted(file.getQuest(0x71E0E638CC9A8001L)) && team.isCompleted(file.getQuest(0x71E0E638CC9A8002L)),"both arena quests");
             System.out.println("ARENA_PORTAL_VOID_PROTECTION_BOSSES_FTB_PASS");
-            p.setGameMode(GameType.SPECTATOR);
-            move(p,58,146,70);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(.5,69,-1));
+            p.setGameMode(GameType.CREATIVE);
+            p.getAbilities().flying=true;
+            p.onUpdateAbilities();
+            move(p,17,137,73);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(.5,73,.5));
             phase=4;ticks=0;return;
         }
         if (phase==4 && ticks>=165 && photo) {
-            move(p,31,88,38);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(41,78,-18));
+            int radius=CherryArena.FIGHT_RADIUS;
+            for (int x=-radius; x<=radius; x++) for (int z=-radius; z<=radius; z++) {
+                if (x*x+z*z>radius*radius) continue;
+                var pos=new BlockPos(x, CherryArena.FLOOR+1, z);
+                check(arena.getBrightness(LightLayer.SKY,pos)==15,"stale skylight over floor at "+pos);
+                if (!pos.below().equals(CherryArena.MIRROR))
+                    check(arena.getBrightness(LightLayer.SKY,pos.below())==15,"stale skylight on floor at "+pos);
+            }
+            System.out.println("ARENA_ROUND_DAYLIGHT_PASS");
+            move(p,.5,161,1.5);
+            phase=18;ticks=0;return;
+        }
+        if (phase==18 && ticks>=145 && planPhoto) {
+            move(p,24,78,24);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(45,78,-5));
             phase=15;ticks=0;return;
         }
         if (phase==15 && ticks>=65 && galleryPhoto) {

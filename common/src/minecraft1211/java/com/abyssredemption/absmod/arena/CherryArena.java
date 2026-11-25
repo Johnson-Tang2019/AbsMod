@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -15,8 +16,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.phys.Vec3;
@@ -32,7 +36,7 @@ public final class CherryArena {
     public static final BlockPos MIRROR = new BlockPos(0, FLOOR, -8);
     private static final TagKey<EntityType<?>> BOSSES = TagKey.create(Registries.ENTITY_TYPE,
             ResourceLocation.parse("absmod:arena_bosses"));
-    private static final Map<ServerLevel, Boolean> READY = new WeakHashMap<>();
+    private static final Map<ServerLevel, Long> NEXT_SKY_CHECK = new WeakHashMap<>();
     private static final ThreadLocal<ServerLevel> PLACING = new ThreadLocal<>();
 
     // Boss bars owned by an entity are common in mods that supply no entity-type tag.
@@ -59,7 +63,15 @@ public final class CherryArena {
 
     /** Reapply the immutable template once per loaded server level. Interrupted placement is retryable. */
     public static void prepare(ServerLevel level) {
-        if (level.dimension() != DIMENSION || READY.containsKey(level)) return;
+        if (level.dimension() != DIMENSION) return;
+        Long nextCheck = NEXT_SKY_CHECK.get(level);
+        if (nextCheck != null) {
+            if (!level.players().isEmpty() && level.getGameTime() >= nextCheck) {
+                NEXT_SKY_CHECK.put(level, level.getGameTime() + 40);
+                refreshStaleCourtLight(level);
+            }
+            return;
+        }
         var template = level.getStructureManager().get(ID).orElseThrow(() -> new IllegalStateException("Missing " + ID));
         if (!template.getSize().equals(new net.minecraft.core.Vec3i(113, 38, 113)))
             throw new IllegalStateException("Unexpected cherry arena template dimensions");
@@ -76,9 +88,57 @@ public final class CherryArena {
             level.setBlock(MIRROR, BuiltInRegistries.BLOCK.get(ResourceLocation.parse("absmod:heart_mirror")).defaultBlockState(), flags);
             if (!level.getBlockState(SPAWN.below()).isFaceSturdy(level, SPAWN.below(), Direction.UP))
                 throw new IllegalStateException("Cherry arena landing is missing");
-            READY.put(level, true);
+            // A saved chunk can retain the previous roof's shadows after bulk template placement.
+            var limits = template.getSize();
+            var firstChunk = new ChunkPos(ORIGIN);
+            var lastChunk = new ChunkPos(ORIGIN.offset(limits.getX()-1, 0, limits.getZ()-1));
+            var chunks = ChunkPos.rangeClosed(firstChunk, lastChunk).toList();
+            for (var chunk : chunks) level.getChunk(chunk.x, chunk.z).initializeLightSources();
+            for (var chunk : chunks) publishArenaLight(level, level.getChunk(chunk.x, chunk.z));
+            NEXT_SKY_CHECK.put(level, 0L);
         } finally {
             PLACING.remove();
+        }
+    }
+
+    private static void publishArenaLight(ServerLevel level, LevelChunk chunk) {
+        var source = level.getChunkSource();
+        // Bulk skylight propagation writes section arrays directly. Publish the finished arrays
+        // to watching clients and mark the chunk for saving even if no block state changed.
+        source.getLightEngine().lightChunk(chunk, false).thenRunAsync(() -> {
+            chunk.setUnsaved(true);
+            if (source.getChunkNow(chunk.getPos().x, chunk.getPos().z) != chunk) return;
+            int lowest = SectionPos.blockToSectionCoord(ORIGIN.getY()) - 1;
+            int highest = SectionPos.blockToSectionCoord(ORIGIN.getY() + 37) + 1;
+            for (int sectionY = lowest; sectionY <= highest; sectionY++)
+                source.onLightUpdate(LightLayer.SKY, SectionPos.of(chunk.getPos(), sectionY));
+        }, level.getServer());
+    }
+
+    // Chunk lighting can finish asynchronously after a legacy roof has been removed.
+    // Only revisit loaded chunks above the open playing field, and only relight stale columns.
+    private static void refreshStaleCourtLight(ServerLevel level) {
+        var lighting = level.getChunkSource().getLightEngine();
+        var pos = new BlockPos.MutableBlockPos();
+        int radiusSquared = FIGHT_RADIUS * FIGHT_RADIUS;
+        for (int cx = -FIGHT_RADIUS >> 4; cx <= FIGHT_RADIUS >> 4; cx++) {
+            for (int cz = -FIGHT_RADIUS >> 4; cz <= FIGHT_RADIUS >> 4; cz++) {
+                var chunk = level.getChunkSource().getChunkNow(cx, cz);
+                if (chunk == null) continue;
+                boolean stale = false;
+                for (int x = cx * 16; x < cx * 16 + 16; x++) {
+                    for (int z = cz * 16; z < cz * 16 + 16; z++) {
+                        if (x*x + z*z > radiusSquared) continue;
+                        pos.set(x, (x==MIRROR.getX() && z==MIRROR.getZ()) ? FLOOR+1 : FLOOR, z);
+                        if (level.getBrightness(LightLayer.SKY,pos) < 15) {
+                            if (!stale) chunk.initializeLightSources();
+                            stale = true;
+                            lighting.checkBlock(pos);
+                        }
+                    }
+                }
+                if (stale) publishArenaLight(level,chunk);
+            }
         }
     }
 

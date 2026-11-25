@@ -45,10 +45,14 @@ public final class ArenaTemplateVerification {
                 check(level.getBlockState(pos) == palette.get(cell.getInt("state")),"world mismatch at "+pos);
             }
             check(level.isEmptyBlock(new BlockPos(0,70,19)) && level.isEmptyBlock(new BlockPos(0,80,-18)), "obsolete exit and roof removed");
+            for (int x : new int[]{-44,44}) for (int z : new int[]{-44,44}) {
+                for (int y = 64; y <= 100; y++)
+                    check(level.isEmptyBlock(new BlockPos(x,y,z)), "former corner tower remains");
+            }
             for (int x = -34; x <= 34; x++) for (int z = -34; z <= 34; z++) {
                 if (x*x + z*z > 34*34) continue;
                 var pos = new BlockPos(x, CherryArena.FLOOR, z);
-                check(!level.isEmptyBlock(pos.below()), "gap in fighting floor " + pos);
+                check(level.getBlockState(pos.below()).is(net.minecraft.world.level.block.Blocks.CHERRY_PLANKS), "marked or incomplete playing surface " + pos);
                 if (!pos.equals(CherryArena.MIRROR)) check(level.isEmptyBlock(pos), "obstructed floor " + pos);
                 check(level.isEmptyBlock(pos.above()), "missing headroom " + pos);
             }
