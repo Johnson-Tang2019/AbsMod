@@ -75,6 +75,7 @@ public final class AbsModNeoForge {
     }
     public AbsModNeoForge(IEventBus modEventBus) {
         RECIPES.register("rose_upgrade", () -> com.abyssredemption.absmod.item.RoseUpgradeRecipe.SERIALIZER);
+        com.abyssredemption.absmod.registry.ArenaEvents.register();
         com.abyssredemption.absmod.registry.CherryOrchard.register(modEventBus);
         com.abyssredemption.absmod.registry.CherryInteriors.register(modEventBus);
         com.abyssredemption.absmod.registry.RoseGold.register(modEventBus);

@@ -1,0 +1,24 @@
+{
+  "parent": "absmod:progression/open_cherry_gate",
+  "display": {
+    "icon": {
+      "id": "absmod:heart_mirror"
+    },
+    "title": {
+      "translate": "advancement.absmod.enter_cherry_arena.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.enter_cherry_arena.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "absmod:cherry_arena"
+      }
+    }
+  }
+}

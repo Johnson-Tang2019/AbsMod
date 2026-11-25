@@ -1,0 +1,21 @@
+{
+  "parent": "absmod:progression/fragrant_cherry_blossom",
+  "display": {
+    "icon": {
+      "id": "minecraft:cherry_log"
+    },
+    "title": {
+      "translate": "advancement.absmod.open_cherry_gate.title"
+    },
+    "description": {
+      "translate": "advancement.absmod.open_cherry_gate.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

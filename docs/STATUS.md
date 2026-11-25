@@ -1,5 +1,14 @@
 # Ab's Mod 当前状态、TODO 与下一批任务
 
+## 2026-11-25 · 樱花竞技场 0.9.0（1.21.1 NeoForge）
+
+- ARENA-ART。使用 Minecraft Litematica Architect v16 的阶段骨架、审批、逐层细化和有边界的局部修整。六视图确认南门、北亭、两侧看台和中央净空。初稿通用建筑评分 69/72，改进北亭台阶屋面、木衬层和场心铺装后最终为 74/72，二进制验证 VALID。设计脚本与投影在 tools/arena、art/cherry_arena；1.21.1 加载原生结构模板。[实机俯视](../art/cherry_arena/cherry-arena-court.png) · [出生台视角](../art/cherry_arena/cherry-arena-entry.png)
+- ARENA-WORLD。CherryArena、CherryPortalBlock、ArenaEvents 和维度资源接入空地层维度、两轴樱花门、按玩家保存的回程位置、场内出生台与虚空救回。ArenaChunkMixin、ArenaLevelMixin 与平台事件拦截拆建、爆炸和方块掉落。北侧心镜复用既有八阶原剑资格。首领在服务端实体 tick 前后被限制于地面战区。
+- ARENA-TEST。中文客户端打开 0.8.0 世界副本并实际触发花门和跨维度。验证拆框熄灭、四个远端区块全空、场内玩家拆除被拒、原始方块读写保护、TNT 爆炸、落下救回、凋灵穿门及受伤、AI 启用的末影龙和凋灵落地，持绑定八阶原剑开启心魔后，地面横斩实际扣血。另起客户端进程在场内重登，走南门回原门，再验证另一朝向、缺边拒绝、可省四角、目的地缺少落脚地时回主世界出生点。两项新 FTB 任务在世界内完成。证据为 arena-verified 与 arena-verified-return。
+- ARENA-SERVER。独立 NeoForge 服务器按 1.21.1 注册表回读模板的 27 个调色板条目，逐一比对实际维度中 12,338 个建筑方块及其状态，并核验场外虚空。证据为 arena-server 中的 ARENA_DEDICATED_TEMPLATE_PASS。常规 Boss 标签和实体自带服务端血条的识别路径已实现，外部模组的专有飞行阶段、自定义血条以及真实双客户端同场仍待对应实例验证。
+- GUIDE。中英文手册新增 75–76 页，原版进度和 1.21.1 FTB 章节新增「花门启程」「踏入樱花竞技场」，原 109 项任务与既有 ID 保留，共 111 项。[建门、对战和返回说明](CHERRY_ARENA.md)
+- 交付。工坊和玫瑰金客户端回归通过，根项目、活动子项目构建与正式包资源检查通过。安装至指定 PCL 1.21.1 实例后回读校验 JAR 和两份 FTB 配置。JAR SHA-256 为 ae655fbe8016231811524dbcc17cbaad57d6a12a65d62e766dfbb1b4d581fc8e。旧包及配置保存在该实例 absmod-backups/20261125-200254。游戏实测使用独立的测试世界副本。
+
 ## 2026-11-25 · 1.21.1 樱花果园、料理与温泉 0.8.0
 
 - ORCHARD。CherryLeafFruitingMixin 与 HangingCherriesBlock 让原版樱花叶在合适的位置挂果。额外掉花由 NeoForge 掉落修饰器处理。天然果枝和用香樱花种下的果枝共用四期生长与右键采收，采后可再长。成熟露樱桃的方块表面与物品取自同一套浅粉贴图。

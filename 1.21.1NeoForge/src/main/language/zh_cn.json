@@ -317,5 +317,12 @@
   "advancement.absmod.blossom_bath.title": "春泉初浴",
   "advancement.absmod.blossom_bath.description": "在樱泉石温暖的水源中泡澡。",
   "advancement.absmod.spirit_bath.title": "花泉相伴",
-  "advancement.absmod.spirit_bath.description": "让自己的剑灵与你连续同浴五秒。"
+  "advancement.absmod.spirit_bath.description": "让自己的剑灵与你连续同浴五秒。",
+  "block.absmod.cherry_portal": "樱花传送门",
+  "advancement.absmod.open_cherry_gate.title": "花门启程",
+  "advancement.absmod.open_cherry_gate.description": "用香樱花点亮樱木门框。",
+  "advancement.absmod.enter_cherry_arena.title": "踏入樱花竞技场",
+  "advancement.absmod.enter_cherry_arena.description": "穿过花门，到达虚空中的竞技场。",
+  "guide.absmod.page.75": "樱花传送门\n\n樱花原木搭外宽 4、高 5 的竖直框，留空 2×3，四角可省。手持香樱花，右键底边中间任一原木顶面。踏入花门前往竞技场。",
+  "guide.absmod.page.76": "樱花竞技场\n\n落入虚空会回到场内南侧出生台。南门送回来时门边。场地受保护，首领在地面战斗。北侧心镜沿用普通八阶原剑试炼。"
 }

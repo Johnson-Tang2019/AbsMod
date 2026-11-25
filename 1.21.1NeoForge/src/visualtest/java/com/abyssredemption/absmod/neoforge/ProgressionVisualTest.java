@@ -218,7 +218,7 @@ public final class ProgressionVisualTest {
             var p=server.getPlayerList().getPlayers().getFirst();
             var file=dev.ftb.mods.ftbquests.quest.ServerQuestFile.INSTANCE;
             var chapter=file.getChapter(Long.parseUnsignedLong("1C4E810187B7DDC2",16));
-            if(chapter==null || chapter.getQuests().size()!= 109)throw new IllegalStateException("FTB chapter missing or wrong quest count");
+            if(chapter==null || chapter.getQuests().size()!= 111)throw new IllegalStateException("FTB chapter missing or wrong quest count");
             var data=file.getTeamData(p).orElseThrow();
             int completed=0;
             for(var quest:chapter.getQuests()) {

@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "absmod:block/cherry_portal"
+    },
+    "axis=z": {
+      "model": "absmod:block/cherry_portal",
+      "y": 90
+    }
+  }
+}

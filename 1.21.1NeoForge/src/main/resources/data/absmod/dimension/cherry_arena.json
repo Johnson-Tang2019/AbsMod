@@ -1,0 +1,13 @@
+{
+  "type": "absmod:cherry_arena",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "absmod:blossom_sky",
+      "lakes": false,
+      "features": false,
+      "layers": [],
+      "structure_overrides": []
+    }
+  }
+}

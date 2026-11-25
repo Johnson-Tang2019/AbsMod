@@ -27,7 +27,9 @@
     "CookeryDrinkMixin",
     "CookeryMilkTeaMixin",
     "WorldUpgradeMixin",
-    "CherryLeafFruitingMixin"
+    "CherryLeafFruitingMixin",
+    "ArenaLevelMixin",
+    "ArenaChunkMixin"
   ],
   "client": [
     "client.LanternBlockLightMixin",

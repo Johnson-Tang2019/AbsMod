@@ -1,5 +1,7 @@
 # Ab's Mod 文档入口
 
+[1.21.1 樱花传送门与虚空竞技场](CHERRY_ARENA.md)
+
 [1.21.1 樱花果园、食谱与温泉](CHERRY_ORCHARD.md)
 
 [0.7.0 樱花三职业、随身提灯、世界备份与恢复](BLOSSOM_PATHS.md)

@@ -2451,6 +2451,50 @@
         "4EC12E877A6B9481",
         "C0A7C3C1C2EE40FF"
       ]
+    },
+    {
+      "id": "71E0E638CC9A8001",
+      "title": "花门启程",
+      "description": [
+        "用樱花原木搭一座竖直门框。外宽 4 格、高 5 格，内部净空 2×3，四角可省。",
+        "手持一朵香樱花，右键底边中间任一原木的上表面。门内出现花瓣后，走入传送门。"
+      ],
+      "x": 0,
+      "y": 37,
+      "tasks": [
+        {
+          "id": "71E0E638CC9A8101",
+          "type": "advancement",
+          "advancement": "absmod:progression/open_cherry_gate",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "4CCA65CFC041C1DB"
+      ]
+    },
+    {
+      "id": "71E0E638CC9A8002",
+      "title": "踏入樱花竞技场",
+      "description": [
+        "穿过花门，在虚空竞技场南侧落地。掉落会送回场内出生台。南门返回来时门边，没有安全落脚处时回主世界出生点。",
+        "场内无法拆建。飞行首领在地面战斗。北侧心镜可用自己的普通八阶喵刀开启原有试炼。"
+      ],
+      "x": 2,
+      "y": 37,
+      "tasks": [
+        {
+          "id": "71E0E638CC9A8102",
+          "type": "advancement",
+          "advancement": "absmod:progression/enter_cherry_arena",
+          "criterion": ""
+        }
+      ],
+      "rewards": [],
+      "dependencies": [
+        "71E0E638CC9A8001"
+      ]
     }
   ]
 }

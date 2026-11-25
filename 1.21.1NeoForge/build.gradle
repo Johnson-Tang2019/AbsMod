@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.8.0+1.21.1'
+version = '0.9.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -175,4 +175,16 @@ if (providers.gradleProperty("orchardTest").isPresent()) {
 if (providers.gradleProperty("orchardGenerationTest").isPresent()) {
     sourceSets.main.java.srcDir "src/orchardworldverification/java"
     neoForge.runs.server.gameDirectory = layout.buildDirectory.dir("orchard-generation")
+}
+
+if (providers.gradleProperty("arenaTest").isPresent()) {
+    sourceSets.main.java.srcDir "src/arenaverification/java"
+    dependencies { compileOnly fileTree(dir: "run/mods", include: "*.jar") }
+    neoForge.runs.client.systemProperty "absmod.arenaWorld", providers.gradleProperty("arenaTest").get()
+    neoForge.runs.client.systemProperty "absmod.arenaReopen", providers.gradleProperty("arenaReopen").isPresent().toString()
+}
+
+if (providers.gradleProperty("arenaServerTest").isPresent()) {
+    sourceSets.main.java.srcDir "src/arenaserververification/java"
+    neoForge.runs.server.gameDirectory = layout.buildDirectory.dir("arena-server")
 }

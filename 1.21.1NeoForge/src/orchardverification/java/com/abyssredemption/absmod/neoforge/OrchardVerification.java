@@ -315,7 +315,7 @@ public final class OrchardVerification {
     private static void verifyQuests(ServerPlayer p) {
         var file=ServerQuestFile.INSTANCE;
         var team=file.getTeamData(p).orElseThrow();
-        require(file.getChapter(0x1C4E810187B7DDC2L).getQuests().size()==109,"updated chapter");
+        require(file.getChapter(0x1C4E810187B7DDC2L).getQuests().size()==111,"updated chapter");
         for(String k:List.of("fragrant_cherry_blossom","harvest_dew_cherries","blossom_tea","dew_cherry_cordial","blossom_dumplings","cherry_tart","blossom_bath","spirit_bath")) {
             try {
                 var hash=java.security.MessageDigest.getInstance("SHA-256").digest(("absmod/orchard/"+k).getBytes(java.nio.charset.StandardCharsets.UTF_8));
