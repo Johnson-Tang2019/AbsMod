@@ -1,5 +1,9 @@
 # Ab's Mod quest export / 任务导出
 
+## 0.11.2
+
+The arena entry quest points to the stairs up to the north terrace and the three trees in the east garden. 入场任务与手册第 76 页同步更新北看台和东樱庭路线。
+
 ## 0.11.1
 
 The arena entry quest identifies the three south arches and the landmarks along the promenade. 手册第 76 页及入场任务同步标出南侧拱门、东樱庭、北观景廊和西侧采光棚，沿用原任务进度。

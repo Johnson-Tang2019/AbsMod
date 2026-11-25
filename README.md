@@ -2,7 +2,7 @@
 
 **Minecraft 1.21.1 NeoForge is the sole active development target.** The field guide has 76 pages. The optional FTB chapter has 111 quests. [Setup](docs/PORT_1211.md)
 
-**0.11.1 · Blossom Arena.** Three pearl arches mark the south entrance. Follow the circular stands past an open cherry garden, a folded-roof observatory and three sawtooth skylights. The pale timber court has a clear 34-block fighting radius. [Arena guide](docs/CHERRY_ARENA.md)
+**0.11.2 · Blossom Arena.** Climb the steps at the east end of the north pavilion to a curved viewing terrace. Three cherry trees overlook the eastern stands: one leans into the court, one splits into tall twin leaders, and one trails blossoms down to the walk. [Arena guide and screenshots](docs/CHERRY_ARENA.md)
 
 **0.10.0 · Grand Court of Falling Blossoms.** The fighting radius grows from 15 to 34 blocks. Five tiers of seats overlook the blossom mosaic. Take the stair aisles to the north hall, the east drum stage or the west lookout. Existing arena worlds upgrade in place. [Arena guide](docs/CHERRY_ARENA.md)
 

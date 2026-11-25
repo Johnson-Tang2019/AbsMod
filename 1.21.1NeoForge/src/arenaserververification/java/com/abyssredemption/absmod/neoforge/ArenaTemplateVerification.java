@@ -2,8 +2,13 @@ package com.abyssredemption.absmod.neoforge;
 
 import com.abyssredemption.absmod.arena.CherryArena;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashSet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
@@ -58,8 +63,14 @@ public final class ArenaTemplateVerification {
                 if (!pos.equals(CherryArena.MIRROR)) check(level.isEmptyBlock(pos), "obstructed floor " + pos);
                 check(level.isEmptyBlock(pos.above()), "missing headroom " + pos);
             }
-            check(level.getBlockState(new BlockPos(51,77,0)).is(net.minecraft.world.level.block.Blocks.CHERRY_LOG), "orchard trunk");
-            check(level.isEmptyBlock(new BlockPos(0,83,-41)), "north gallery oculus");
+            checkGrove(level);
+            check(level.isEmptyBlock(new BlockPos(16,95,-46)), "old gallery roof tip removed");
+            check(level.getBlockState(new BlockPos(-7,84,-45)).is(net.minecraft.world.level.block.Blocks.GLASS), "upper lounge glazing");
+            for (int step = 0; step < 6; step++) {
+                var stair = new BlockPos(15 - step, 77 + step, -46);
+                check(level.getBlockState(stair).is(net.minecraft.world.level.block.Blocks.SMOOTH_QUARTZ_STAIRS), "terrace stair");
+                check(level.isEmptyBlock(stair.above()) && level.isEmptyBlock(stair.above(2)), "terrace stair headroom");
+            }
             check(level.getBlockState(new BlockPos(0,94,50)).is(net.minecraft.world.level.block.Blocks.SMOOTH_QUARTZ), "south arch crown");
             check(level.getBlockState(new BlockPos(-46,85,-7)).is(net.minecraft.world.level.block.Blocks.WHITE_STAINED_GLASS), "west clerestory");
             check(!level.destroyBlock(CherryArena.MIRROR,true),"protected mirror");
@@ -68,5 +79,39 @@ public final class ArenaTemplateVerification {
             server.halt(false);
         } catch (IOException e) { throw new IllegalStateException(e); }
     }
+    private static void checkGrove(ServerLevel level) {
+        var wood = new HashSet<BlockPos>();
+        var foliage = new HashSet<BlockPos>();
+        for (var p : BlockPos.betweenClosed(37, 77, -22, 56, 96, 20)) {
+            var state = level.getBlockState(p);
+            if (state.is(Blocks.CHERRY_WOOD)) wood.add(p.immutable());
+            if (state.is(Blocks.CHERRY_LEAVES)) foliage.add(p.immutable());
+        }
+        var branches = new HashSet<>(wood);
+        for (var root : new BlockPos[]{new BlockPos(49,77,-12), new BlockPos(51,77,0), new BlockPos(48,77,11)}) {
+            check(branches.remove(root), "missing or joined tree at " + root);
+            var queue = new ArrayDeque<BlockPos>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                var p = queue.removeFirst();
+                for (var direction : Direction.values()) {
+                    var next = p.relative(direction);
+                    if (branches.remove(next)) queue.addLast(next);
+                }
+            }
+        }
+        check(branches.isEmpty(), "detached wood in planted trees");
+        check(!foliage.isEmpty(), "missing cherry canopy");
+        var queue = new ArrayDeque<>(wood);
+        while (!queue.isEmpty()) {
+            var p = queue.removeFirst();
+            for (var direction : Direction.values()) {
+                var next = p.relative(direction);
+                if (foliage.remove(next)) queue.addLast(next);
+            }
+        }
+        check(foliage.isEmpty(), "detached cherry canopy");
+    }
+
     private static void check(boolean ok,String label) { if (!ok) throw new IllegalStateException(label); }
 }

@@ -1,5 +1,9 @@
 # 下一批开发任务单
 
+## 1.21.1 · 北看台与东樱庭
+
+ARENA-PAVILION、ARENA-GROVE 覆盖北侧双层观景厅、三株独立树形、旧圆窗与树冠清理。见[游览说明](CHERRY_ARENA.md)和[实测记录](STATUS.md)。
+
 ## 1.21.1 · 樱花竞技场四面看台
 
 ARENA-GALLERIES 涵盖低饱和饰面、四向地标、0.11.0 存档迁移和手册入场指引。见[建筑与游览路线](CHERRY_ARENA.md)和[验收记录](STATUS.md)。
