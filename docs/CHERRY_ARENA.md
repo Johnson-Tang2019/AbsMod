@@ -10,18 +10,25 @@ Minecraft 1.21.1 NeoForge。CONFIRMED 范围为樱花门、专属虚空维度、
 
 ## 建筑与保护
 
-圆形浮台直径约 111 格。中央半径 34 格为素面浅樱木地板，周围的六层看台通过阶梯连接环形步道。棚面交替使用浅暖色陶面、去皮樱木和石英收边，白色玻璃天窗间留少量粉玻璃。0.11.2 的四个方向各有地标。
+0.12.0 的樱月试炼花庭是露天的圆形首领场地，台面直径约 111 格。中央半径 34 格为素面浅樱木，南门到心镜全程平地。六层看台、座椅、悬挑雨棚、观景厅和露台均已拆除。
 
-| 方位 | 从战斗场能看到的地标 |
+| 方位 | 地标与用法 |
 | --- | --- |
-| 南 | 三道由低到高的拱门迎向入场者，朝北沿中轴前进即可找到心镜。 |
-| 东 | 三株樱树从北向南依次为向赛场侧展的斜樱、高处分叉的双干樱，以及枝梢垂落的垂樱。 |
-| 北 | 双层观景厅顺着看台弧线展开。由东端楼梯登上露台，左侧是内退的玻璃雅座，右侧是木格遮阳架。 |
-| 西 | 三段锯齿形采光棚以竖向磨砂色玻璃采光，棚下沿用连续步道。 |
+| 南 | 两束高低不同的樱枝在门上交叠，枝下垂着暖色提灯。离场时穿过枝下的粉色花门。 |
+| 北 | 弦月雕塑从浅水池畔升起，小星垂在月缺里，花枝从另一侧探过来。月池用于辨认方向，试炼在场心偏北的原心镜开启。 |
+| 西 | 弯曲的浅溪由原版水方块构成，两处踏石横过水面，岸边长有牡丹、粉色郁金香和落英，水面散着睡莲。 |
+| 东 | 斜樱、双干樱和垂樱与战斗地面同高。 |
+| 场缘 | 西北、东南各有一朵带凹口和浅色花蕊的立体五瓣樱花，另外两处布置低矮的卷瓣花苞，瓣间留出看向虚空的空隙。 |
 
 竞技场固定镜以场心为试炼范围中心，自建心镜以镜为中心、半径 12 格。
 
-[可编辑投影](../art/cherry_arena/cherry_arena.litematic) · [游戏内全景](../art/cherry_arena/pavilion-court.png) · [俯视屋面](../art/cherry_arena/pavilion-plan.png) · [东侧樱庭](../art/cherry_arena/pavilion-grove.png) · [近看垂樱](../art/cherry_arena/pavilion-boughs.png) · [北看台近景](../art/cherry_arena/pavilion-north.png) · [露台花槽与玻璃栏杆](../art/cherry_arena/pavilion-terrace.png) · [南门入场视角](../art/cherry_arena/pavilion-entry.png)
+[可编辑投影](../art/cherry_arena/cherry_arena.litematic) · [花庭全景](../art/cherry_arena/moon-court.png) · [入场](../art/cherry_arena/moon-entry.png) · [弦月花池](../art/cherry_arena/moon-altar.png) · [西侧花溪](../art/cherry_arena/moon-brook.png) · [五瓣樱花](../art/cherry_arena/moon-blossom.png) · [垂灯花门](../art/cherry_arena/moon-gate.png) · [心镜战斗](../art/cherry_arena/moon-fight.png)
+
+### 《灾变》的场地参考
+
+核对了 L_Ender 的 Burning Arena 八个模板，文件与指定提交的 Git 摘要逐件一致。按生成器拼接后包围盒为 85×85×82 格（X、Z、Y），上半部分抬高 48 格。火焰祭坛位于模板坐标 (42, 44, 42)，断面可见开敞的战斗空间。花庭借鉴「穿门入场、留出战斗空间、由祭坛定位」的关系，转译成垂灯樱门、开敞圆场和弦月花池。建筑方块均为本项目独立布置。[焰魔竞技场生成器](https://github.com/lender544/new1.20.1/blob/819937203e22b4fa72fdeccc6c56ad415d65eeef/src/main/java/com/github/L_Ender/cataclysm/structures/Burning_Arena_Structure.java) · [原模板目录](https://github.com/lender544/new1.20.1/tree/819937203e22b4fa72fdeccc6c56ad415d65eeef/src/main/resources/data/cataclysm/structures)
+
+0.11.2 留档：[北侧观景厅](../art/cherry_arena/pavilion-north.png) · [旧投影](../art/cherry_arena/pavilion-0.11.2.litematic)。
 
 0.11.1 实景留档：[旧版全景](../art/cherry_arena/gallery-court.png) · [南侧拱门](../art/cherry_arena/gallery-gate.png) · [西侧采光棚](../art/cherry_arena/gallery-west.png)。
 
@@ -31,7 +38,7 @@ Minecraft 1.21.1 NeoForge。CONFIRMED 范围为樱花门、专属虚空维度、
 
 ## 复查和修改建筑
 
-设计源为 `tools/arena/design.py`。依次生成 frame、envelope、roof、ornament，在 v16 中分别检查六视图和方块差异。用 seat_banks 修整分段椅背及内外棚沿厚度，再用 rose_finish 给整个场馆做粉色饰面。0.11.1 在这一基础上用 `tools/arena/gallery_details.py` 分 muted_materials 和 four_galleries 两步改变饰面、打开雨棚并塑造四个方向。0.11.2 用 `tools/arena/pavilion_garden.py` 分三次局部修整。第一步布置平台和无叶树骨，第二步安装窗带、顶棚及座椅，第三步沿各自的枝梢造冠。每层树冠均有独立标高，部分相邻枝团间可以看到天空。导出器 `tools/arena/export_template.py` 接收技能目录、最终投影和目标 NBT，将 0.9.0 的原场地范围、0.10.0、[0.11.0](../art/cherry_arena/round-court-0.11.litematic) 和 [0.11.1](../art/cherry_arena/galleries-0.11.1.litematic) 的实际建筑位置与新投影一起处理。圆场外的旧角楼、树木和屋顶以空气原址替换。服务器在原坐标设置心镜和南门，按新场馆重算覆盖区块的天空光照，并将更新后的区段发送给玩家。
+以 `tools/arena/moon_garden.scene.json` 的混合场景方案确定门、月、溪流和樱树的位置，用 v16 的 compile_world_scene 检查南北视线。从 0.11.2 投影依次应用 `tools/arena/moon_garden.py` 生成的 garden_silhouette、garden_planting、garden_grove 三个补丁，分开检查剪影、植物水面和东侧树冠。导出器读取历代投影，将旧建筑多出的位置写为空气。游戏加载的是 1.21.1 原生结构模板（DataVersion 3955）。运行时放置花门与心镜并重算天空光照。
 
 ## 首领识别
 

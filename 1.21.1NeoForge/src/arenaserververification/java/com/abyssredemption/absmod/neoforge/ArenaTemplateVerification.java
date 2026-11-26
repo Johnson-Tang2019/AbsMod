@@ -49,7 +49,8 @@ public final class ArenaTemplateVerification {
                 BlockPos pos = CherryArena.ORIGIN.offset(xyz.getInt(0),xyz.getInt(1),xyz.getInt(2));
                 if (palette.get(cell.getInt("state")).is(net.minecraft.world.level.block.Blocks.PINK_CONCRETE))
                     throw new IllegalStateException("saturated concrete at " + pos);
-                check(level.getBlockState(pos) == palette.get(cell.getInt("state")),"world mismatch at "+pos);
+                var expected = palette.get(cell.getInt("state"));
+                check(level.getBlockState(pos) == expected,"world mismatch at "+pos);
             }
             check(level.isEmptyBlock(new BlockPos(0,70,19)) && level.isEmptyBlock(new BlockPos(0,80,-18)), "obsolete exit and roof removed");
             for (int x : new int[]{-44,44}) for (int z : new int[]{-44,44}) {
@@ -64,15 +65,36 @@ public final class ArenaTemplateVerification {
                 check(level.isEmptyBlock(pos.above()), "missing headroom " + pos);
             }
             checkGrove(level);
-            check(level.isEmptyBlock(new BlockPos(16,95,-46)), "old gallery roof tip removed");
-            check(level.getBlockState(new BlockPos(-7,84,-45)).is(net.minecraft.world.level.block.Blocks.GLASS), "upper lounge glazing");
-            for (int step = 0; step < 6; step++) {
-                var stair = new BlockPos(15 - step, 77 + step, -46);
-                check(level.getBlockState(stair).is(net.minecraft.world.level.block.Blocks.SMOOTH_QUARTZ_STAIRS), "terrace stair");
-                check(level.isEmptyBlock(stair.above()) && level.isEmptyBlock(stair.above(2)), "terrace stair headroom");
+            for (int radius = 36; radius <= 40; radius++) {
+                for (var direction : new Direction[]{Direction.NORTH, Direction.SOUTH}) {
+                    var path = new BlockPos(0, CherryArena.FLOOR, 0).relative(direction, radius);
+                    check(!level.isEmptyBlock(path.below()), "missing edge of combat floor");
+                    for (int height = 0; height <= 4; height++)
+                        check(level.isEmptyBlock(path.above(height)), "raised seating bank at " + path);
+                }
             }
-            check(level.getBlockState(new BlockPos(0,94,50)).is(net.minecraft.world.level.block.Blocks.SMOOTH_QUARTZ), "south arch crown");
-            check(level.getBlockState(new BlockPos(-46,85,-7)).is(net.minecraft.world.level.block.Blocks.WHITE_STAINED_GLASS), "west clerestory");
+            // Cross two former six-tier seating banks from their inner edge to the back row.
+            for (int radius = 36; radius <= 47; radius++) {
+                for (int z : new int[]{-4, 4}) {
+                    var bank = new BlockPos(-radius, CherryArena.FLOOR, z);
+                    check(!level.isEmptyBlock(bank.below()), "missing pavement below former seats");
+                    for (int height = 0; height < 7; height++) {
+                        var state = level.getBlockState(bank.above(height));
+                        boolean flower = state.is(Blocks.PEONY) || state.is(Blocks.PINK_TULIP) || state.is(Blocks.PINK_PETALS)
+                                || state.is(Blocks.AZURE_BLUET) || state.is(Blocks.FLOWERING_AZALEA) || state.is(Blocks.LILY_PAD);
+                        check(state.isAir() || (height <= 1 && flower), "former bank still raised at " + bank);
+                    }
+                }
+            }
+            check(level.isEmptyBlock(new BlockPos(0,82,-50)), "former glazed lounge");
+            check(level.isEmptyBlock(new BlockPos(-46,85,-7)), "former western canopy");
+            check(level.getBlockState(new BlockPos(-14,83,-46)).is(Blocks.SMOOTH_QUARTZ), "carved moon");
+            check(level.getBlockState(new BlockPos(-43,69,-1)).is(Blocks.WATER), "western blossom brook");
+            check(level.getBlockState(new BlockPos(-5,79,46)).is(Blocks.LANTERN), "blossom lantern");
+            check(level.getBlockState(new BlockPos(-29,78,-37)).is(Blocks.PEARLESCENT_FROGLIGHT)
+                    && level.getBlockState(new BlockPos(28,76,36)).is(Blocks.PEARLESCENT_FROGLIGHT), "five-petal blossom centres");
+            check(level.getBlockState(new BlockPos(-5,89,-45)).is(Blocks.PEARLESCENT_FROGLIGHT)
+                    && level.getBlockState(new BlockPos(-5,95,-45)).is(Blocks.CHAIN), "hanging moon star");
             check(!level.destroyBlock(CherryArena.MIRROR,true),"protected mirror");
             check(level.getChunk(15,15).getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,0,0)<0,"void");
             System.out.println("ARENA_DEDICATED_TEMPLATE_PASS cells="+blocks.size()+" palette="+palette.size());
@@ -82,13 +104,13 @@ public final class ArenaTemplateVerification {
     private static void checkGrove(ServerLevel level) {
         var wood = new HashSet<BlockPos>();
         var foliage = new HashSet<BlockPos>();
-        for (var p : BlockPos.betweenClosed(37, 77, -22, 56, 96, 20)) {
+        for (var p : BlockPos.betweenClosed(37, 70, -22, 56, 91, 20)) {
             var state = level.getBlockState(p);
             if (state.is(Blocks.CHERRY_WOOD)) wood.add(p.immutable());
             if (state.is(Blocks.CHERRY_LEAVES)) foliage.add(p.immutable());
         }
         var branches = new HashSet<>(wood);
-        for (var root : new BlockPos[]{new BlockPos(49,77,-12), new BlockPos(51,77,0), new BlockPos(48,77,11)}) {
+        for (var root : new BlockPos[]{new BlockPos(49,70,-12), new BlockPos(51,70,0), new BlockPos(48,70,11)}) {
             check(branches.remove(root), "missing or joined tree at " + root);
             var queue = new ArrayDeque<BlockPos>();
             queue.add(root);

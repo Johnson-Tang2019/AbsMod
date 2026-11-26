@@ -30,7 +30,7 @@ public final class ArenaVerification {
     private final String world=System.getProperty("absmod.arenaWorld");
     private final boolean reopen=Boolean.getBoolean("absmod.arenaReopen");
     private static final BlockPos BASE=new BlockPos(52,105,54);
-    private boolean started, photo, entrancePhoto, galleryPhoto, westPhoto, gatePhoto, pavilionPhoto, grovePhoto, terracePhoto, planPhoto;
+    private boolean started, photo, entrancePhoto, gardenPhoto, westPhoto, gatePhoto, moonPhoto, flowerPhoto, fightPhoto, planPhoto;
     private float trialHealth;
     private int frames, phase, ticks, openingTicks;
     private UUID wither, dragon;
@@ -67,21 +67,20 @@ public final class ArenaVerification {
         var server=mc.getSingleplayerServer();
         server.submit(()->step(server.getPlayerList().getPlayers().getFirst())).join();
         // Keep input from nudging the test camera during chunk streaming and screenshot capture.
-        if (phase==4 || phase==18 || phase==15 || phase==19 || phase==20 || phase==21 || phase==22 || phase==23 || phase==12) {
+        if (phase==4 || phase==18 || phase==15 || phase==19 || phase==20 || phase==21 || phase==22 || phase==12) {
             Vec3 subject = switch (phase) {
                 case 4 -> new Vec3(.5,73,.5);
                 case 18 -> new Vec3(.5,69,.5);
-                case 15 -> new Vec3(49,85,0);
-                case 19 -> new Vec3(-47,84,-3);
-                case 22 -> new Vec3(48,85,2);
-                case 23 -> new Vec3(-5,79,-11);
-                case 21 -> new Vec3(-1,84,-47);
-                case 20 -> new Vec3(.5,83,46);
+                case 15 -> new Vec3(49,77,0);
+                case 19 -> new Vec3(-44,70,-1);
+                case 22 -> new Vec3(-29,77,-37);
+                case 21 -> new Vec3(-1,82,-46);
+                case 20 -> new Vec3(.5,80,47);
                 default -> new Vec3(.5,81,-46);
             };
             mc.player.lookAt(EntityAnchorArgument.Anchor.EYES,subject);
         }
-        if ((phase==4 || phase==18) && ticks==20) mc.levelRenderer.allChanged();
+        if ((phase==4 || phase==18) && (ticks==20 || ticks==90)) mc.levelRenderer.allChanged();
         if (phase==18 && !planPhoto && ticks>=140 && renderedCourt(mc)) {
             Screenshot.grab(mc.gameDirectory,"cherry-arena-plan.png",mc.getMainRenderTarget(),ignored->{});
             planPhoto=true;
@@ -96,10 +95,10 @@ public final class ArenaVerification {
             Screenshot.grab(mc.gameDirectory,"cherry-arena-entry.png",mc.getMainRenderTarget(),ignored->{});
             entrancePhoto=true;
         }
-        if (phase==15 && !galleryPhoto && ticks>=50) {
+        if (phase==15 && !gardenPhoto && ticks>=50) {
             mc.getToasts().clear();
-            Screenshot.grab(mc.gameDirectory,"cherry-arena-gallery.png",mc.getMainRenderTarget(),ignored->{});
-            galleryPhoto=true;
+            Screenshot.grab(mc.gameDirectory,"cherry-arena-grove.png",mc.getMainRenderTarget(),ignored->{});
+            gardenPhoto=true;
         }
         if (phase==19 && !westPhoto && ticks>=50) {
             Screenshot.grab(mc.gameDirectory,"cherry-arena-west.png",mc.getMainRenderTarget(),ignored->{});
@@ -109,34 +108,55 @@ public final class ArenaVerification {
             Screenshot.grab(mc.gameDirectory,"cherry-arena-gate.png",mc.getMainRenderTarget(),ignored->{});
             gatePhoto=true;
         }
-        if (phase==21 && !pavilionPhoto && ticks>=50) {
-            Screenshot.grab(mc.gameDirectory,"cherry-arena-pavilion.png",mc.getMainRenderTarget(),ignored->{});
-            pavilionPhoto=true;
+        if (phase==21 && !moonPhoto && ticks>=50) {
+            Screenshot.grab(mc.gameDirectory,"cherry-arena-moon.png",mc.getMainRenderTarget(),ignored->{});
+            moonPhoto=true;
         }
-        if (phase==22 && !grovePhoto && ticks>=50) {
-            Screenshot.grab(mc.gameDirectory,"cherry-arena-grove-walk.png",mc.getMainRenderTarget(),ignored->{});
-            grovePhoto=true;
+        if (phase==22 && !flowerPhoto && ticks>=50) {
+            Screenshot.grab(mc.gameDirectory,"cherry-arena-blossom.png",mc.getMainRenderTarget(),ignored->{});
+            flowerPhoto=true;
         }
-        if (phase==23 && !terracePhoto && ticks>=50) {
-            Screenshot.grab(mc.gameDirectory,"cherry-arena-terrace.png",mc.getMainRenderTarget(),ignored->{});
-            terracePhoto=true;
+        if (phase==10 && !fightPhoto && ticks>=12) {
+            var echoes = mc.level.getEntitiesOfClass(com.abyssredemption.absmod.entity.MirrorEchoEntity.class,
+                    mc.player.getBoundingBox().inflate(20));
+            if (!echoes.isEmpty()) {
+                mc.player.lookAt(EntityAnchorArgument.Anchor.EYES, echoes.getFirst().getEyePosition());
+                // Allow the submitted camera pose to reach the render target.
+                if (ticks>=20) {
+                    Screenshot.grab(mc.gameDirectory,"cherry-arena-mirror-fight.png",mc.getMainRenderTarget(),ignored->{});
+                    fightPhoto = true;
+                }
+            }
         }
         if (phase==8) mc.stop();
     }
-    private static boolean renderedCourt(Minecraft mc) {
-        if (!mc.levelRenderer.hasRenderedAllSections()) return false;
+    private boolean renderedCourt(Minecraft mc) {
+        if (!mc.levelRenderer.hasRenderedAllSections()) {
+            if (ticks%100==0) System.out.println("ARENA_RENDER_WAIT sections");
+            return false;
+        }
         for (int x=-48; x<=48; x+=8) for (int z=-48; z<=48; z+=8) {
             if (x*x+z*z>54*54) continue;
             var floor=new BlockPos(x,CherryArena.FLOOR-1,z);
-            if (mc.level.isEmptyBlock(floor) || !mc.levelRenderer.isSectionCompiled(floor)) return false;
+            if (mc.level.isEmptyBlock(floor) || !mc.levelRenderer.isSectionCompiled(floor)) {
+                if (ticks%100==0) System.out.println("ARENA_RENDER_WAIT mesh " + floor);
+                return false;
+            }
         }
         var sample=new BlockPos.MutableBlockPos();
-        int radius=CherryArena.FIGHT_RADIUS;
+        int radius=55;
         for (int x=-radius; x<=radius; x++) for (int z=-radius; z<=radius; z++) {
             if (x*x+z*z>radius*radius) continue;
-            sample.set(x,CherryArena.FLOOR,z);
-            if (sample.equals(CherryArena.MIRROR)) sample.move(Direction.UP);
-            if (mc.level.getBrightness(LightLayer.SKY,sample)<15) return false;
+            sample.set(x,mc.level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,x,z),z);
+            if (mc.level.getBrightness(LightLayer.SKY,sample)<15) {
+                if (ticks%100==0) {
+                    var pos=sample.immutable();
+                    var server=mc.getSingleplayerServer();
+                    var peer=server.submit(()->server.getLevel(CherryArena.DIMENSION).getBrightness(LightLayer.SKY,pos)).join();
+                    System.out.println("ARENA_RENDER_WAIT skylight " + pos + " client=" + mc.level.getBrightness(LightLayer.SKY,pos) + " server=" + peer);
+                }
+                return false;
+            }
         }
         return true;
     }
@@ -232,7 +252,7 @@ public final class ArenaVerification {
             trialHealth=p.getHealth();
             phase=10;ticks=0;return;
         }
-        if (phase==10 && ticks>=34) {
+        if (phase==10 && ticks>=34 && fightPhoto) {
             var echoes=arena.getEntitiesOfClass(com.abyssredemption.absmod.entity.MirrorEchoEntity.class,
                     new AABB(CherryArena.MIRROR).inflate(10));
             check(echoes.size()==1 && echoes.getFirst().onGround() && p.getHealth()<trialHealth,"grounded mirror sweep deals damage");
@@ -279,11 +299,11 @@ public final class ArenaVerification {
             phase=18;ticks=0;return;
         }
         if (phase==18 && ticks>=145 && planPhoto) {
-            move(p,20,83,8);p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(49,85,0));
+            move(p,22,76,7);
             phase=15;ticks=0;return;
         }
-        if (phase==15 && ticks>=65 && galleryPhoto) {
-            move(p,-24,79,18);
+        if (phase==15 && ticks>=65 && gardenPhoto) {
+            move(p,-23,85,17);
             phase=19;ticks=0;return;
         }
         if (phase==19 && ticks>=62 && westPhoto) {
@@ -291,18 +311,14 @@ public final class ArenaVerification {
             phase=20;ticks=0;return;
         }
         if (phase==20 && ticks>=62 && gatePhoto) {
-            move(p,10,98,-14);
+            move(p,6,78,-14);
             phase=21;ticks=0;return;
         }
-        if (phase==21 && ticks>=62 && pavilionPhoto) {
-            move(p,37,82,24);
+        if (phase==21 && ticks>=62 && moonPhoto) {
+            move(p,-16,76,-14);
             phase=22;ticks=0;return;
         }
-        if (phase==22 && ticks>=62 && grovePhoto) {
-            move(p,7.5,83,-47.5);
-            phase=23;ticks=0;return;
-        }
-        if (phase==23 && ticks>=62 && terracePhoto) {
+        if (phase==22 && ticks>=62 && flowerPhoto) {
             p.setGameMode(GameType.SURVIVAL);move(p,.5,70,CherryArena.SPAWN.getZ()+.5);
             p.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(.5,81,-46));
             phase=12;ticks=0;return;

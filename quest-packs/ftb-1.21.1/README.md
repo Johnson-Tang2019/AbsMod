@@ -1,5 +1,9 @@
 # Ab's Mod quest export / 任务导出
 
+## 0.12.0
+
+The arena entry quest follows the flat path to the heart mirror and explains the northern moon pool, pink brook and stepping stones and eastern grove. 手册第 76 页与入场任务均指向垂灯花门、心镜、弦月花池与粉色花溪与踏石。
+
 ## 0.11.2
 
 The arena entry quest points to the stairs up to the north terrace and the three trees in the east garden. 入场任务与手册第 76 页同步更新北看台和东樱庭路线。

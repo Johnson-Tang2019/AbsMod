@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.146'
 }
 group = 'com.abyssredemption.absmod'
-version = '0.11.2+1.21.1'
+version = '0.12.0+1.21.1'
 base.archivesName = 'absmod-neoforge'
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)

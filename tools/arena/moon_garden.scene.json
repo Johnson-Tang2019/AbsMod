@@ -1,0 +1,94 @@
+{
+  "name": "Moonlit Blossom Trial Garden",
+  "asset_type": "mixed_scene",
+  "dimensions": {
+    "x": 113,
+    "y": 38,
+    "z": 113
+  },
+  "seed": 1126,
+  "description": "Open-air romantic trial garden on an established round platform. Preserve the flat cherry fighting floor, portal, mirror and long sightline. The north crescent is the focus, the paired flowering threshold its foreground. The sky and void show through the garden edge.",
+  "terrain": {
+    "base_y": 5,
+    "amplitude": 0,
+    "surface_block": "minecraft:cherry_planks"
+  },
+  "assets": [
+    {
+      "id": "moon_altar",
+      "kind": "monument",
+      "size": {
+        "x": 37,
+        "y": 32,
+        "z": 13
+      },
+      "anchor": [
+        54,
+        10
+      ],
+      "priority": 100
+    },
+    {
+      "id": "blossom_gate",
+      "kind": "structure",
+      "size": {
+        "x": 32,
+        "y": 22,
+        "z": 12
+      },
+      "anchor": [
+        56,
+        103
+      ],
+      "priority": 90
+    },
+    {
+      "id": "cherry_grove",
+      "kind": "tree",
+      "size": {
+        "x": 17,
+        "y": 24,
+        "z": 40
+      },
+      "anchor": [
+        104,
+        55
+      ],
+      "priority": 70
+    },
+    {
+      "id": "petal_brook",
+      "kind": "pond",
+      "size": {
+        "x": 15,
+        "y": 4,
+        "z": 47
+      },
+      "anchor": [
+        12,
+        55
+      ],
+      "priority": 60
+    }
+  ],
+  "constraints": {
+    "min_clearance": 1,
+    "boundary_margin": 0,
+    "layout_trials": 30,
+    "relationships": [
+      {
+        "type": "view",
+        "a": "blossom_gate",
+        "b": "moon_altar",
+        "clearance": 1,
+        "hard": true
+      },
+      {
+        "type": "align_x",
+        "a": "blossom_gate",
+        "b": "moon_altar",
+        "tolerance": 3
+      }
+    ]
+  }
+}

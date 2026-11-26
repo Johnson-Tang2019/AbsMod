@@ -24,7 +24,7 @@ size, palette, indices = read_region(schematic)
 sx, sy, sz = size
 archive_dir = Path(__file__).resolve().parents[2] / "art/cherry_arena"
 prior_cells = bytearray(math.prod(size))
-for name in ("grand-court-0.10.litematic", "round-court-0.11.litematic", "galleries-0.11.1.litematic"):
+for name in ("grand-court-0.10.litematic", "round-court-0.11.litematic", "galleries-0.11.1.litematic", "pavilion-0.11.2.litematic"):
     prior_size, prior_palette, prior_indices = read_region(archive_dir / name)
     if prior_size != size:
         raise ValueError(f"Placement origin and canvas must match the archived {name}")
